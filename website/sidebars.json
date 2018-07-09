@@ -1,0 +1,56 @@
+{
+  "guides": {
+    "Overview": [
+      "Start",
+      "TrustModelOverview",
+      "ArchitectureOverview"
+    ],
+    "Use Cases": [
+      "ReservesUseCase",
+      "DappsUseCase",
+      "VendorsUseCase",
+      "WalletsUseCase"
+    ],
+    "Guides": [
+      "ReservesGuide",
+      "DappsGuide",
+      "VendorsGuide",
+      "WalletsGuide",
+      "TrackerAPIGuide",
+      "WidgetsGuide",
+      "MiscellaneousGuide",
+      "GettingHelpGuide"
+    ]
+  },
+  "api": {
+    "Overview": [
+      "APIs"
+    ],
+    "Smart Contracts": [
+      "KyberNetwork",
+      "KyberReserve",
+      "KyberReserveInterface",
+      "ConversionRates",
+      "ConversionRatesInterface",
+      "ERC20Interface",
+      "ExpectedRate",
+      "ExpectedRateInterface",
+      "FeeBurner",
+      "FeeBurnerInterface",
+      "PermissionGroups",
+      "SanityRates",
+      "SanityRatesInterface",
+      "Utils",
+      "VolumeImbalanceRecorder",
+      "WhiteList",
+      "WhiteListInterface",
+      "Withdrawable",
+      "Wrapper"
+    ],
+    "Appendix": [
+      "NetworksAppendix",
+      "TokensAppendix",
+      "CodesAppendix"
+    ]
+  }
+}
