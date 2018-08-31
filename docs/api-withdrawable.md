@@ -51,21 +51,6 @@ function __withdrawEther__(uint amount, address sendTo) external onlyAdmin
 | `amount`  | uint    | amount of ETH in wei  |
 | `sendTo`  | address | recipient's address   |
 Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
-___
-Web3 Example:
-```js
-const amount = new web3.utils.BN('10000000000000000000');
-const sendTo = '<RECIPIENT ADDRESS>';
-
-const tx = Withdrawable.methods.withdrawEther(
-  amount,
-  sendTo
-);
-
-broadcastTx(tx);
-```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
-
 <br />
 
 
@@ -79,20 +64,4 @@ function __withdrawToken__(ERC20 token, uint amount, address sendTo) external on
 | `amount`  | uint    | amount of ERC20 tokens in wei |
 | `sendTo`  | address | recipient's address           |
 Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
-___
-Web3 Example:
-```js
-const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
-const amount = new web3.utils.BN('10000000000000000000');
-const sendTo = '<RECIPIENT ADDRESS>';
-
-const tx = Withdrawable.methods.withdrawEther(
-  token,
-  amount,
-  sendTo
-);
-
-broadcastTx(tx);
-```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
 <br />

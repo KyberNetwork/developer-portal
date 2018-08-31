@@ -17,6 +17,25 @@ ___
 
 ## REFERENCE
 
+### Structs
+
+### `TokenControlInfo`
+| Property          | Type            | Description                              |
+| ------------------ |:---------------:|:----------------------------------------:|
+| `minimalRecordResolution`           | uint | minimum denominator in token wei that can be changed |
+| `maxPerBlockImbalance`               | uint | maximum wei amount of net absolute (+/-) change for a token in an ethereum block |
+| `maxTotalImbalance`                     | uint | wei amount of the maximum net token change allowable that happens between 2 price updates |
+<br />
+
+### `TokenImbalanceData `
+| Property          | Type            | Description                              |
+| ------------------ |:---------------:|:----------------------------------------:|
+| `lastBlockBuyUnitsImbalance`           | uint | token wei imbalance in the last block |
+| `lastBlock`                                          | uint | last block number |
+| `totalBuyUnitsImbalance`                  | int   | token wei imbalance since the last rate update |
+| `lastRateUpdateBlock`                       | uint | block number which contained the rate update transaction |
+<br />
+
 ### Functions
 
 ### `VolumeImbalanceRecorder`
@@ -26,7 +45,6 @@ function VolumeImbalanceRecorder(address \_admin) public
 | Parameter   | Type    | Description               |
 | ----------- |:-------:|:-------------------------:|
 | `_admin`    | address | admin's wallet address    |
-
 <br />
 
 ### `addImbalance`
@@ -43,17 +61,7 @@ function __addImbalance__(ERC20 token, int buyAmount, uint rateUpdateBlock, uint
 <br />
 
 ### `decodeTokenImbalanceData`
-Decodes the TokenImbalanceData, which has the structure below.
-
-```
-struct TokenImbalanceData {
-        int  lastBlockBuyUnitsImbalance;
-        uint lastBlock;
-
-        int  totalBuyUnitsImbalance;
-        uint lastRateUpdateBlock;
-    }
-```
+Decodes the [TokenImbalanceData](#tokenimbalancedata)
 ___
 function __decodeTokenImbalanceData__(uint input) internal pure returns (TokenImbalanceData)
 | Parameter | Type  | Description  |
@@ -65,16 +73,7 @@ TokenImbalanceData comprising lastBlockBuyUnitsImbalance, lastBlock, totalBuyUni
 <br />
 
 ### `encodeTokenImbalanceData`
-Encodes the TokenImbalanceData to the specified structure below.
-```
-struct TokenImbalanceData {
-        int  lastBlockBuyUnitsImbalance;
-        uint lastBlock;
-
-        int  totalBuyUnitsImbalance;
-        uint lastRateUpdateBlock;
-    }
-```
+Encodes the TokenImbalanceData to the [specified structure](#tokenimbalancedata)
 ___
 function __encodeTokenImbalanceData__(TokenImbalanceData data) internal pure returns (uint)
 | Parameter | Type               | Description  |
@@ -96,7 +95,19 @@ function __getImbalance__(ERC20 token, uint rateUpdateBlock, uint currentBlock) 
 | `currentBlock`    | uint  | current block height or block number |
 **Returns:**\
 Data comprising totalImbalance and currentBlockImbalance
+<br />
 
+### `getImbalanceInRange`
+Gets the imbalance data for a specified range.
+___
+function __getImbalance__(ERC20 token, uint startBlock, uint endBlock) internal view returns (int buyImbalance)
+| Parameter         | Type  | Description                          |
+| ----------------- |:-----:|:------------------------------------:|
+| `token`           | ERC20 | ERC20 token contract address         |
+| `startBlock` | uint  | starting block number to get data from    |
+| `endBlock`    | uint  | ending block number to get data till       |
+**Returns:**\
+buyImbalance
 <br />
 
 ### `getImbalanceSinceRateUpdate`
@@ -110,7 +121,6 @@ function __getImbalanceSinceRateUpdate__(ERC20 token, uint rateUpdateBlock, uint
 | `currentBlock`    | uint  | current block height or block number |
 **Returns:**\
 Data comprising buyImbalance and currentBlockImbalance
-
 <br />
 
 ### `getMaxPerBlockImbalance`
@@ -164,7 +174,7 @@ function __setGarbageToVolumeRecorder__(ERC20 token) internal
 ### `setTokenControlInfo`
 Set the `minimalRecordResolution`, `maxPerBlockImbalance` and `maxTotalImbalance` of an ERC20 token
 ___
-function __setTokenControlInfo__(ERC20 token, uint minimalRecordResolution, uint maxPerBlockImbalance, uint maxTotalImbalance) public
+function __setTokenControlInfo__(ERC20 token, uint minimalRecordResolution, uint maxPerBlockImbalance, uint maxTotalImbalance) public onlyAdmin
 | Parameter                 | Type  | Description                  |
 | ------------------------- |:-----:|:----------------------------:|
 | `token`                   | ERC20 | ERC20 token contract address |

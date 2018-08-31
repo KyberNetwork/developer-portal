@@ -22,6 +22,4 @@ class Index extends React.Component {
   }
 }
 
-Index.title = 'KyberDeveloper';
-
 module.exports = Index;

@@ -4,11 +4,11 @@ title: FeeBurner
 ---
 # contract FeeBurner
 is [FeeBurnerInterface](api-feeburnerinterface.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md)\
-imports [ERC20Interface](api-erc20interface.md), [FeeBurnerInterface](api-feeburnerinterface.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md)
+imports [FeeBurnerInterface](api-feeburnerinterface.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md)
 
 *Source*: [FeeBurner.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/FeeBurner.sol)
 
-The FeeBurner contract's role is used mainly for the [Affliate Program](MiscellaneousGuide#affiliate-program) to distribute and burn fees
+The FeeBurner contract's role is used mainly for the [Affliate Program](FeeSharingGuide) to distribute and burn fees
 ___
 
 ## INDEX
@@ -45,7 +45,7 @@ ___
 ### `BurnAssignedFees`
 Burn the fees of a reserve
 ___
-event __BurnAssignedFees__(address reserve, address sender, uint quantity)
+event __BurnAssignedFees__(address indexed reserve, address sender, uint quantity)
 | Parameter  | Type    | Description                          |
 | ---------- |:-------:|:------------------------------------:|
 | `reserve`  | address | reserve's contract address           |
@@ -54,10 +54,22 @@ event __BurnAssignedFees__(address reserve, address sender, uint quantity)
 ___
 <br />
 
+### `ReserveDataSet`
+Sets the KNC wallet and feeInBps for a reserve.
+___
+event __ReserveDataSet__(address reserve, uint feeInBps, address kncWallet)
+| Parameter | Type    | Description                |
+| --------- |:-------:|:--------------------------:|
+| `reserve` | address | reserve's contract address |
+| `feeInBps` | uint | fees in basis points |
+| `kncWallet`  | address | reserve's specified wallet address for KNC |
+___
+<br />
+
 ### `SendTaxFee`
 Send tax fees to `taxWallet` from a reserve
 ___
-event __SendTaxFee__(address reserve, address sender, address taxWallet, uint quantity)
+event __SendTaxFee__(address indexed reserve, address sender, address taxWallet, uint quantity)
 | Parameter    | Type    | Description                |
 | ------------ |:-------:|:--------------------------:|
 | `reserve`    | address | reserve's contract address |
@@ -70,12 +82,43 @@ ___
 ### `SendWalletFees`
 Sends fees to the specified wallet address of a reserve
 ___
-event __SendWalletFees__(address wallet, address reserve, address sender)
+event __SendWalletFees__(address indexed wallet, address reserve, address sender)
 | Parameter | Type    | Description                |
 | --------- |:-------:|:--------------------------:|
 | `wallet`  | address | reserve's specified wallet address           |
 | `reserve` | address | reserve's contract address |
 | `sender ` | address | sender's address           |
+___
+<br />
+
+### `TaxFeesSet`
+Set tax fees for all reserves
+___
+event __TaxFeesSet__(uint feeInBps)
+| Parameter | Type    | Description                |
+| --------- |:-------:|:--------------------------:|
+| `feeInBps` | uint | fees in basis points |
+___
+<br />
+
+### `TaxWalletSet`
+Set tax wallet
+___
+event __TaxWalletSet__(address taxWallet)
+| Parameter | Type    | Description                |
+| --------- |:-------:|:--------------------------:|
+| `taxWallet` | address | tax wallet address |
+___
+<br />
+
+### `WalletFeesSet`
+Set fees for a specified wallet
+___
+event __WalletFeesSet__(address wallet, uint feeInBps)
+| Parameter | Type    | Description                |
+| --------- |:-------:|:--------------------------:|
+| `wallet`  | address | reserve's specified wallet address           |
+| `feeInBps` | uint | fees in basis points |
 ___
 <br />
 
@@ -106,7 +149,7 @@ ___
 ### `handleFees`
 Reserve handles the payment of the fees during a trade.
 ___
-function __handleFees__(uint tradeWeiAmount, address reserve, address wallet) public returns  view returns (uint)
+function __handleFees__(uint tradeWeiAmount, address reserve, address wallet) public returns view returns (bool)
 | Parameter     | Type   | Description                                 |
 | ------------- |:------:|:-------------------------------------------:|
 | `tradeWeiAmount` | uint    | traded amount in wei                    |
@@ -131,7 +174,7 @@ ___
 ### `setKNCRate`
 Sets the rate of the KNC token.
 ___
-function setKNCRate(uint rate) public
+function setKNCRate(uint rate) public onlyAdmin 
 | Parameter | Type  | Description       |
 | --------- |:-----:|:-----------------:|
 | `rate`    | uint  | rate of KNC token |
@@ -142,7 +185,7 @@ ___
 ### `setReserveData`
 Set reserve data
 ___
-function __setReserveData__(address reserve, uint feesInBps, address kncWallet) public
+function __setReserveData__(address reserve, uint feesInBps, address kncWallet) public onlyAdmin
 | Parameter   | Type    | Description                |
 | ----------- |:-------:|:--------------------------:|
 | `reserve`   | address | reserve's contract address |
@@ -155,7 +198,7 @@ ___
 ### `setTaxInBps`
 Sets taxable amount in bps
 ___
-function __setTaxInBps__(uint \_taxFeeBps) public
+function __setTaxInBps__(uint \_taxFeeBps) public onlyAdmin 
 | Parameter   | Type    | Description                |
 | ----------- |:-------:|:--------------------------:|
 | `taxFeeBps` | uint    | fees in basis points (`1 bps = 0.01%`)             |
@@ -166,7 +209,7 @@ ___
 ### `setTaxWallet`
 Sets the tax wallet address
 ___
-function __setTaxWallet__(address \_taxWallet) public
+function __setTaxWallet__(address \_taxWallet) public onlyAdmin 
 | Parameter    | Type    | Description                |
 | ------------ |:-------:|:--------------------------:|
 | `_taxWallet` | address | tax wallet address             |
@@ -177,7 +220,7 @@ ___
 ### `setWalletFees`
 Sets wallet fees receiveable
 ___
-function setWalletFees(address wallet, uint feesInBps) public
+function setWalletFees(address wallet, uint feesInBps) public onlyAdmin
 | Parameter   | Type    | Description                |
 | ----------- |:-------:|:--------------------------:|
 | `wallet`    | address | wallet address to send part of the fees to             |

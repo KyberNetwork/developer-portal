@@ -1,0 +1,104 @@
+.kyber-widget-button {
+    background-repeat: no-repeat;
+    background-image: url('data:image/svg+xml,<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <title>download (1)</title> <desc>Created with Sketch.</desc> <defs> <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1"> <stop stop-color="#31CB9E" offset="0%"></stop> <stop stop-color="#2FC99E" offset="4%"></stop> <stop stop-color="#18B2A1" offset="63%"></stop> <stop stop-color="#0FAAA2" offset="100%"></stop> </linearGradient> </defs> <g id="Kyber-Developer" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g transform="translate(-1156.000000, -233.000000)" fill-rule="nonzero" id="Group-4"> <g transform="translate(1135.000000, 225.000000)"> <g id="Group-2"> <g id="download-(1)" transform="translate(21.000000, 8.000000)"> <circle id="Oval-2" fill="url(#linearGradient-1)" cx="14" cy="14" r="14"></circle> <g id="Group" transform="translate(7.000000, 4.666667)" fill="#FFFFFF"> <g id="Group-2"> <g id="Group-6"> <path d="M5.81187412,9.47833089 L13.0542377,13.5395868 C13.3076794,13.681722 13.6236637,13.5028829 13.6236637,13.2172686 L13.6236637,5.73628818 C13.6236637,5.45062757 13.3075846,5.27178846 13.0540955,5.41406264 L5.81187412,9.47833089 Z" id="Fill-1"></path> <path d="M12.638655,3.66782548 L7.82269346,0.0764914379 C7.60106828,-0.088769062 7.27887251,0.0275064832 7.22031301,0.293841899 L5.46248492,8.28955827 L12.5973551,4.28553641 C12.833063,4.15322606 12.8547324,3.82896141 12.638655,3.66782548" id="Fill-4"></path> <path d="M7.82248957,18.8796096 L12.6420547,15.2860511 C12.8581796,15.1249151 12.8364628,14.8005578 12.6006601,14.6682938 L5.4621862,10.6652915 L7.22015653,18.6622591 C7.27871603,18.9285945 7.60086439,19.0448237 7.82248957,18.8796096" id="Fill-6"></path> <g id="Fill-8"> <path d="M3.95742049,9.47803893 L5.85185579,0.861228558 C5.92601535,0.523709708 5.53027643,0.2783215 5.24947534,0.487747243 L0.395580551,4.10735074 C0.1463115,4.29323405 -1.61184211e-05,4.58218503 -1.61184211e-05,4.88865382 L-1.61184211e-05,14.0677948 C-1.61184211e-05,14.3743099 0.1463115,14.6633072 0.395627968,14.8491905 L5.24933309,18.4684233 C5.53013418,18.6778027 5.9258731,18.4324145 5.85166613,18.0948956 L3.95742049,9.47803893 Z" id="path-4"></path> </g> </g> </g> </g> </g> </g> </g> </g> </g></svg>');
+}
+html:not([data-kyber-widget-edition='etheremon']) .kyber-widget-button {
+    display: inline-block;
+    width: 100%;
+    max-width: 220px;
+    padding: 10px 0;
+    text-indent: 20px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+    text-decoration: none;
+    color: #F8F8F8;
+    background-color: #303955;
+    background-position: 24px center;
+    background-size: auto 26px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+html:not([data-kyber-widget-edition='etheremon']) .kyber-widget-button:hover {
+    color: #fff;
+}
+
+html:not([data-kyber-widget-edition='etheremon']) .kyber-widget-button.kyber-widget-button--light {
+    background-color: white;
+    color: #222;
+    box-shadow: 0 3px 7px 0 #c4c4c4;
+}
+
+html[data-kyber-widget-edition='etheremon'] .kyber-widget-button {
+    padding-left: 36px;
+    background-position: 12px center;
+    background-size: 16px;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#kyber-widget {
+    position: absolute;
+    box-sizing: border-box;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%;
+    max-height: 100%;
+    width: 100%;
+    max-width: 405px;
+}
+
+#kyber-widget-overlay {
+    background-color: rgba(0, 0, 0, .7);
+    position: fixed;
+    z-index: 99999;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    animation: fadein .5s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#kyber-widget-overlay::before {
+    content: "×";
+    position: absolute;
+    top: 16px;
+    right: 8px;
+    display: inline-block;
+    padding: 6px;
+    font-size: 36px;
+    color: #fff;
+    line-height: 0;
+    cursor: pointer;
+}
+
+#kyber-widget-iframe {
+    background-color: #fff;
+    position: absolute;
+    width: 405px;
+    box-sizing: border-box;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%;
+    height: 80%;
+    min-height: 605px;
+    max-height: 1070px;
+    border: 0;
+}

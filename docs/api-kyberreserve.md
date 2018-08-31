@@ -30,6 +30,17 @@ event __DepositToken__(ERC20 token, uint amount)
 
 <br />
 
+### `NewTokenWallet`
+Event for logging new token wallet address
+___
+event __NewTokenWallet__(ERC20 token, address wallet)
+| Parameter | Type  | Description                                                 |
+| --------- |:-----:|:-----------------------------------------------------------:|
+| `token`  | ERC20  | ERC20 token contract address |
+| `wallet`  | address  | token wallet address |
+
+<br />
+
 ### `SetContractAddresses`
 Event for logging the setting of contract addresses.
 ___
@@ -135,7 +146,7 @@ Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
 <br />
 
 ### `approveWithdrawAddress`
-Adds or deletes a reserve to or from the network. Only admin can invoke.
+Adds or deletes a reserve's withdrawal address to or from the network. Only admin can invoke.
 ___
 function __approveWithdrawAddress__(ERC20 token, address addr, bool approve) public onlyAdmin
 | Parameter | Type    | Description                                                            |
@@ -147,19 +158,22 @@ Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
-const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
-const addr = '<WITHDRAWAL ADDRESS>';
-const approve = true;
-const tx = KyberReserve.methods.approveWithdrawAddress(
-  reserve,
+const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+const addr = WITHDRAWAL_ADDRESS
+const approve = true
+
+transactionData = KyberReserve.methods.approveWithdrawAddress(
+  token,
   addr,
   approve
-);
+).encodeABI()
 
-broadcastTx(tx);
+txReceipt = await web3.eth.sendTransaction({
+    from: ADMIN_ADDRESS,
+    to: KYBER_RESERVE_ADDRESS, 
+    data: transactionData
+})
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
-
 <br />
 
 ### `disableTrade`
@@ -172,11 +186,14 @@ Modifiers: [onlyAlerter](api-permissiongroups.md#onlyalerter)\
 ___
 Web3 Example:
 ```js
-const tx = KyberReserve.methods.disableTrade();
+transactionData = KyberReserve.methods.disableTrade().encodeABI()
 
-broadcastTx(tx);
+txReceipt = await web3.eth.sendTransaction({
+    from: ALERTER_ADDRESS,
+    to: KYBER_RESERVE_ADDRESS, 
+    data: transactionData
+})
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
 
 <br />
 
@@ -194,7 +211,6 @@ function __doTrade__(ERC20 srcToken, uint srcAmount, ERC20 destToken, address de
 | `validate`       | bool    | if `true`, additional validations are applicable |
 **Returns:**\
 `true` if the executed trade was successful, otherwise `false`
-
 <br />
 
 ### `enableTrade`
@@ -207,11 +223,14 @@ Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)\
 ___
 Web3 Example:
 ```js
-const tx = KyberReserve.methods.enableTrade();
+transactionData = KyberReserve.methods.enableTrade().encodeABI()
 
-broadcastTx(tx);
+txReceipt = await web3.eth.sendTransaction({
+    from: ADMIN_ADDRESS,
+    to: KYBER_RESERVE_ADDRESS, 
+    data: transactionData
+})
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
 <br />
 
 ### `getBalance`
@@ -227,14 +246,8 @@ ___
 Web3 Example:
 ```js
 const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
-const tx = KyberReserve.methods.getBalance(
-  token
-);
-
-broadcastTx(tx);
+tokenBalance = await KyberReserve.methods.getBalance(token).call()
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
-
 <br />
 
 ### `getConversionRate`
@@ -252,22 +265,18 @@ Current conversion rate of token pairs at block number
 ___
 Web3 Example:
 ```js
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';  // ETH
-const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
-const srcQty = new web3.utils.BN('3000000000000000000000');
-const blockNumber = new web3.utils.BN('5868524000000000000000');
+const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
+const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+const srcQty = new web3.utils.BN('3000000000000000000000')
+const blockNumber = 6015205
 
-const tx = KyberReserve.methods.getConversionRate(
+conversionRate = await KyberReserve.methods.getConversionRate(
   src,
   dest,
   srcQty,
   blockNumber
-);
-
-broadcastTx(tx);
+).call()
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
-
 <br />
 
 ### `getDestQty`
@@ -285,22 +294,18 @@ Calculated destination ERC20 token quantity in wei
 ___
 Web3 Example:
 ```js
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';  // ETH
-const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
-const srcQty = new web3.utils.BN('3000000000000000000000');
-const rate = new web3.utils.BN('55555');
+const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
+const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+const srcQty = new web3.utils.BN('3000000000000000000000')
+const rate = new web3.utils.BN('55555')
 
-const tx = KyberReserve.methods.getDestQty(
+let destQty = await KyberReserve.methods.getDestQty(
   src,
   dest,
   srcQty,
   rate
-);
-
-broadcastTx(tx);
+).call()
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
-
 <br />
 
 ### `getSrcQty`
@@ -318,55 +323,78 @@ Calculated source ERC20 token quantity in wei
 ___
 Web3 Example:
 ```js
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';  // ETH
-const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
-const destQty = new web3.utils.BN('3000000000000000000000');
-const rate = new web3.utils.BN('55555');
+const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
+const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+const destQty = new web3.utils.BN('3000000000000000000000')
+const rate = new web3.utils.BN('55555')
 
-const tx = KyberReserve.methods.getSrcQty(
+let srcQty = KyberReserve.methods.getSrcQty(
   src,
   dest,
   destQty,
   rate
-);
-
-broadcastTx(tx);
+).call()
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
-
 <br />
 
 ### `setContracts`
 Sets the contract addresses. Only admin can invoke.
 ___
-function __setContracts__(address \_kyberNetwork, ConversionRatesInterface \_conversionRates, SanityRatesInterface \_sanityRates) public onlyAdmin
+function __setContracts__(address \_kyberNetwork, ConversionRatesInterface \_conversionRates, SanityRatesInterface \_sanity) public onlyAdmin
 | Parameter          | Type                     | Description                                    |
 | -------------------|:------------------------:|:----------------------------------------------:|
 | `_kyberNetwork`    | address                  | KyberNetwork contract address                  |
 | `_conversionRates` | ConversionRatesInterface | ConversionRates contract address               |
-| `_sanityRates`     | SanityRatesInterface     | SanityRates contract address                   |
+| `_sanity`     | SanityRatesInterface     | SanityRates contract address                   |
 Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
 const _kyberNetwork = '0x964F35fAe36d75B1e72770e244F6595B68508CF5';
 const _conversionRates = '0x798AbDA6Cc246D0EDbA912092A2a3dBd3d11191B';
-const _sanityRates = '0xdfc85C08d5e5924aB49750E006CF8a826ffb7B13';
+const _sanity = '0xdfc85C08d5e5924aB49750E006CF8a826ffb7B13';
 
-const tx = KyberReserve.methods.setContracts(
+transactionData = KyberReserve.methods.setContracts(
   _kyberNetwork,
   _conversionRates,
-  _sanityRates
-);
+  _sanity
+).encodeABI()
 
-broadcastTx(tx);
+txReceipt = await web3.eth.sendTransaction({
+    from: ADMIN_ADDRESS,
+    to: KYBER_RESERVE_ADDRESS, 
+    data: transactionData
+})
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
+<br />
 
+### `setTokenWallet`
+Set the token wallet address to deposit / withdraw the specified token from / to. Only admin can invoke.
+___
+function __setTokenWallet__(ERC20 token, address wallet) public onlyAdmin
+| Parameter          | Type                     | Description                                    |
+| -------------------|:------------------------:|:----------------------------------------------:|
+| `token`    | ERC20                  | ERC20 token contract address                  |
+| `wallet` | address | wallet address               |
+Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+___
+Web3 Example:
+```js
+token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+wallet = WALLET_ADDRESS
+
+transactionData = KyberReserve.methods.setTokenWallet(token,wallet).encodeABI()
+
+txReceipt = await web3.eth.sendTransaction({
+    from: ADMIN_ADDRESS,
+    to: KYBER_RESERVE_ADDRESS, 
+    data: transactionData
+})
+```
 <br />
 
 ### `trade`
-Executes a trade.
+Executes a trade. **Only accepts transactions from `KyberNetwork.sol`**
 ___
 function __trade__(ERC20 srcToken, uint srcAmount, ERC20 destToken, address destAddress, uint conversionRate, bool validate) public payable returns (bool)
 | Parameter        | Type    | Description                                    |
@@ -379,29 +407,6 @@ function __trade__(ERC20 srcToken, uint srcAmount, ERC20 destToken, address dest
 | `walletId`       | address | wallet address to send part of the fees to     |
 **Returns:**\
 `true` if the trade was successful, otherwise `false` if unsuccessful
-___
-Web3 Example:
-```js
-const srcToken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';  // ETH
-const srcAmount = new web3.utils.BN('12345');
-const destToken = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
-const destAddress = '<DESTINATION ADDRESS>';
-const conversionRate = new web3.utils.BN('55555555');
-const walletId = '<WALLET ID ADDRESS>';
-
-const tx = KyberReserve.methods.trade(
-  srcToken,
-  srcAmount,
-  destToken,
-  destAddress,
-  conversionRate,
-  walletId
-);
-
-broadcastTx(tx);
-```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
-
 <br />
 
 ### `withdraw`
@@ -423,14 +428,16 @@ const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
 const amount = new web3.utils.BN('12345');
 const destination = '0x12370dc7321e84ca96fcaedd0c8abcebbaeb68c6';
 
-const tx = KyberReserve.methods.trade(
+transactionData = KyberReserve.methods.withdraw(
   token,
   amount,
   destination,
-);
+).encodeABI()
 
-broadcastTx(tx);
+txReceipt = await web3.eth.sendTransaction({
+    from: OPERATOR_ADDRESS,
+    to: KYBER_RESERVE_ADDRESS, 
+    data: transactionData
+})
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
-
 <br />

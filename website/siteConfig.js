@@ -37,23 +37,17 @@ const createVariableInjectionPlugin = (variables) => {
 
 // List of global site variables
 const siteVariables = {
-  // editBaseURL: 'http://developer.kyber.network:1336',
+  editBaseURL: 'http://localhost:1336',
 };
 
 // List of projects/orgs using your project for the users page
 const users = [
   {
-    caption: 'imToken',
-    image: 'img/users/imToken.png',
-    infoLink: 'https://token.im',
+    caption: 'User1',
+    image: 'img/kybernetwork.svg',
+    infoLink: 'https://www.facebook.com',
     pinned: true,
   },
-  {
-    caption: 'Trust Wallet',
-    image: 'img/users/TrustWallet.png',
-    infoLink: 'https://trustwalletapp.com',
-    pinned: true,
-  }
 ];
 
 const siteConfig = {
@@ -62,13 +56,19 @@ const siteConfig = {
     createVariableInjectionPlugin(siteVariables),
   ],
 
+  // Search bar
+  algolia: {
+    apiKey: 'da025d0828b58484a96005dfb00595a2',
+    indexName: 'kyber'
+  },
+
   // Base details
   title: 'KyberDeveloper · Powering Liquidity for the Ecosystem',
   tagline: 'Platforms and applications of all sizes can tap into Kyber\'s decentralized liquidity network to power their liquidity needs, ranging from inter-token payments to portfolio rebalancing.',
   url: 'https://developer.kyber.network',
   baseUrl: '/',
   projectName: 'kyberdeveloper',
-  organizationName: 'Kyber Network',
+  organizationName: 'kybernetwork',
   twitterUsername: 'kybernetwork',
 
   // Meta card images
@@ -84,7 +84,7 @@ const siteConfig = {
   // URL links on header
   headerLinks: [
     {
-      href: 'https://kyber.network/',
+      href: 'https://developer.kyber.network/',
       label: 'Home',
     },
     {
@@ -119,7 +119,10 @@ const siteConfig = {
   // Remove html extension
   cleanUrl: true,
 
-  editUrl: 'https://github.com/KyberNetwork/developer-portal/edit/master/docs/',
+  // editUrl: 'http://localhost:1336/edit/',
+
+  // Google Analytics tracking ID
+  gaTrackingId: 'UA-99578428-4',
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks
@@ -144,7 +147,7 @@ const siteConfig = {
   onPageNav: 'separate',
 
   // Users set above
-  users,
+  // users,
 };
 
 module.exports = siteConfig;

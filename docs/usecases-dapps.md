@@ -6,6 +6,7 @@ Kyber Network’s technology is open source and can be freely integrated into yo
 
 Kyber Network can benefit your DApp in many ways. For example, by integrating with Kyber Network, ETHLend allows instant liquidation of assets in case of defaulted loans or collateral calling without leaving the ETHLend DApp. Financial DApps like Olympus Labs allows users to invest in different tokens with just a few taps within the app.
 
-DApps have the opportunity to join our *Affiliate Program*, which allows fee sharing on each swap that originates from your app. You can visit [here](MiscellaneousGuide#affiliate-program) to learn more about the program.
+DApps have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your app. Learn more about the program [here](FeeSharingGuide)!
 
+## Integrate Your DApp 
 To learn about how you can integrate with us as a DApp, please visit [here](DappsGuide).

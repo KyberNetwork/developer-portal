@@ -18,7 +18,7 @@ ___
 ### `getSanityRate`
 Gets the sanity rate for a pair of tokens.
 ___
-function __getSanityRate__(ERC20 src, ERC20 dest) public view returns (uint) view returns (uint)
+function __getSanityRate__(ERC20 src, ERC20 dest) public view returns (uint)
 | Parameter     | Type   | Description                              |
 | ------------- |:------:|:----------------------------------------:|
 | `src`         | ERC20  | source ERC20 token contract address      |

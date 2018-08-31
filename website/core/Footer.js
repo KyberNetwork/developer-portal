@@ -24,18 +24,19 @@ class Footer extends React.Component {
         <div className="wrapper">
           <div className="footer-middle">
             <div className="kyber-icon">
-              {this.props.config.footerIcon && (
-                <img
-                  src={this.props.config.baseUrl + this.props.config.footerIcon}
-                  alt={this.props.config.title}
-                  height="100px"
-                  width="100x"
-                />
-              )}
+              <a href="/">
+                {this.props.config.footerIcon && (
+                  <img
+                    src={this.props.config.baseUrl + this.props.config.footerIcon}
+                    alt={this.props.config.title}
+                    width="100x"
+                  />
+                )}
+              </a>
             </div>
             <div className="kyber-link-container">
               <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="/swap">KyberSwap</a>
+                <a className="kyber-link__text semi-b" href="https://kyber.network/swap">KyberSwap</a>
               </div>
               <div className="kyber-link">
                 <a className="kyber-link__text semi-b" href="http://developer.kyber.network">
@@ -44,14 +45,14 @@ class Footer extends React.Component {
               </div>
               <div className="kyber-link">
                 <a className="kyber-link__text semi-b" href="#">About</a>
-                <a className="kyber-link__text" href="/about/company">Kyber Network</a>
-                <a className="kyber-link__text" href="/about/knc">KNC</a>
-                <a className="kyber-link__text" href="/in-the-media">In the Media</a>
+                <a className="kyber-link__text" href="https://kyber.network/about/company">Kyber Network</a>
+                <a className="kyber-link__text" href="https://kyber.network/about/knc">KNC</a>
                 <a className="kyber-link__text" href="https://blog.kyber.network">Blog</a>
+                <a className="kyber-link__text" href="https://tracker.kyber.network/">Tracker</a>
               </div>
               <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="/careers">Careers</a>
-                <a className="kyber-link__text semi-b" href="#">FAQ</a>
+                <a className="kyber-link__text semi-b" href="https://kyber.network/careers">Careers</a>
+                <a className="kyber-link__text semi-b" href="https://kybernetwork.zendesk.com/hc/en-us/sections/360000119052-FAQ">FAQ</a>
                 <a className="kyber-link__text semi-b" href="mailto:support@kyber.network">Contact Us</a>
               </div>
             </div>

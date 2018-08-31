@@ -2,24 +2,6 @@
 id: MiscellaneousGuide
 title: Miscellaneous
 ---
-## Affiliate Program
-### What is the Affiliate Program?
-It’s an opportunity to be an integrated part of Kyber Network and receive commision for each conversion that originates from your DApp, wallet or payment gateway.
-
-### How do I join the program?
-To join this fee sharing program, you will have to be a verified affiliate. Please submit your details to Hello@Kyber.Network and a Kyber Network representative will contact you shortly.
-
-###  Case study for fee sharing
-User A has successfully concluded a transaction of value 10 ETH. 0.25% of the transaction value is to be paid by reserves in KNC. As of now, from the fee paid, 80% of it will be sent for burning, and the remaining 20% will be used for tax payment. In the case where a registered affiliate is involved, 30% of the 0.25% fee will be given to the affiliate.
-
-| Description | Amount | Calculation | % of Transaction Value |
-| ------------- | ------------- | ------------- | ------------- |
-| Trasaction Value | 10 ETH  |  na | 100% <br>
-| Fee Paid by Reserves | 0.025 ETH (in KNC)  | `0.025 = 10 * 0.25%` | 0.25% <br>
-| Fee Shared to Affiliate | 0.0075 ETH (in KNC)  | `0.0075 = 0.025 * 30%` | 0.075% <br>
-
------
-
 ## Trading Strategy
 A reserve manager will need to develop their own strategies to decide on token-to-token conversion rates and reserve size. This strategy could be executed by a person and/or a machine and could change over time.
 
@@ -132,3 +114,13 @@ The numbers on the figure correspond to the examples below.
 | 2          | 100 (1 ETH = 100 KNC) | 10% | 115 | Your reserve **will not** process the conversion as `115 >= 110` <br>
 | 3          | 100 (1 ETH = 100 KNC) | 10% | 95 | Your reserve **will** process the conversion as `95 < 110`. <br>
 | 4          | 100 (1 ETH = 100 KNC) | 10% | 88 | Your reserve **will** process the conversion as `88 < 110`. <br>
+
+## Whitelist Categories & Limits
+| Category No. | Name | Trading Cap (SGD) |
+| -------------- | ------- | -------------------- |
+| - | Default | 5000 |
+| 1 | Users | 5000 |
+| 3 | Email | 5000 |
+| 4 | KYC | 10,000 |
+| 7 | Partner | 500,000 |
+| 9 | Testers | 5000 |

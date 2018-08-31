@@ -2,7 +2,6 @@
 id: ReservesGuide
 title: How to setup a reserve
 ---
-Here, we will walk you through an example to set up a reserve on the Ropsten testnet.
 # Introduction
 As a reserve manager, your primary purpose is to keep your funds safe. To do this, you should maintain conversion rates (prices) of your token inventory such that they reflect changes in market conditions. This is a difficult task since your inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay updates of rates in your contracts. With this in mind, the reserve was designed with various parameters to help secure your funds. 
 
@@ -10,23 +9,71 @@ As a reserve manager, your primary purpose is to keep your funds safe. To do thi
 Before diving into the details, let’s understand the logic of some parameters that are protecting your reserve funds. 
 * Valid duration gives a time limit to the last price update, when the duration is over trades are stopped until the next price update. 
 * Max imbalance values limit inventory changes since the last price update. Once again, if the imbalance threshold is exceeded for a specific token, trades are blocked until the next price update. 
-* Step functions enable “automatic” price updates. When some token price has a clear trend, automatic price changes could could act as a degenerated order book. This way, during periods the reserve manager doesn’t control the price (between updates) steps simulate actual liquidity in an order book market.  
+* Step functions enable “automatic” price updates. When some token price has a clear trend, automatic price changes could act as a degenerated order book. This way, during periods the reserve manager doesn’t control the price (between updates) steps simulate actual liquidity in an order book market.  
 * Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if thist account is compromised).
 
-## Before you begin
+## Local testnet deployment
+Here, we will walk you through an example on running the deployment script on [Truffle's Ganache](https://truffleframework.com/ganache).
+
+### Before you begin
 Check that you have the following:
 1. [node.js](https://nodejs.org/en/download/)
 2. [web3 v1.0.0](https://www.npmjs.com/package/web3)
-3. An ETH account which can be created on [MEW](https://www.myetherwallet.com/), [MyCrypto](https://mycrypto.com/), or [MetaMask](https://metamask.io/).
+3. [Ganache CLI (previously TestRPC)](https://github.com/trufflesuite/ganache-cli)
+
+### Setting up
+Create a  local directory and clone the `master` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
+```
+git clone https://github.com/KyberNetwork/smart-contracts.git
+```
+
+Run the command below in your terminal to install all required dependencies.
+```
+npm install
+```
+
+### Running the script
+In one terminal, run the following command.
+```
+ganache-cli
+```
+
+or, if you're using an older version of testRPC,
+
+```
+testrpc
+```
+
+In another, run the script.
+```
+./node_modules/.bin/truffle test scripts/deployment.js
+```
+
+### Notes
+1. The script uses test tokens, which it generates according to the json file at `smart-contracts/deployment_input.json`.
+2. In the testing part of the script, under `"set eth to dgd rate"`, we initialise rates for 1 token. In order to change/add tokens, this part should be modified.
+3. For more information on how to change/add the set rates functionality, refer to [this section](ReservesGuide#step-2-deploying-contracts).
+4. The validity of rates is determined by calls to `setValidRateDurationInBlocks()`. It is set to a large value (1000000) at the start of the script and reduced to 256 at the end of it. Refer to [the API](ConversionRates#setvalidratedurationinblocks) for more information.
+5. If any problems with rates validity occur, the second call to `setValidRateDurationInBlocks()` can be removed manually.
+
+## Public testnet deployment
+Here, we will walk you through an example to set up a reserve on the Ropsten testnet.
+
+### Before you begin
+Check that you have the following:
+1. [node.js](https://nodejs.org/en/download/)
+2. [web3 v1.0.0](https://www.npmjs.com/package/web3)
+3. An ETH account. You can easily create one on [MEW](https://www.myetherwallet.com/), [MyCrypto](https://mycrypto.com/), or [MetaMask](https://metamask.io/).
 4. Ropsten ETH. You may get some from the [MetaMask faucet](https://faucet.metamask.io/) or [Ropsten faucet](http://faucet.ropsten.be:3001/).
 
-## Step 1: Set reserve 
+### Step 1: Set reserve 
 Create a  local directory and clone the `deployment-tutorial` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
 
 ```
 git clone -b deployment_tutorial https://github.com/KyberNetwork/smart-contracts.git
 ```
-### Adding Tokens
+
+#### Adding Tokens
 After you have a local copy, go to `web3deployment` directory and open `ropsten.json`, where you will find a list of currently supported tokens on Kyber Network.
 
 ```json
@@ -54,7 +101,7 @@ As we are creating a reserve of KNC tokens, we will copy the `symbol`, `decimals
 | Input field | Explanation | Example |
 | ------------- | ------------- | ------------- |
 | `minimalRecordResolution`  | Per trade imbalance values are recorded and stored in the contract. Since this storage of data is an expensive operation, the data is squeezed into one bytes32 object. To prevent overflow while squeezing data, a resolution unit exists. Recommended value is the token wei equivalent of $0.0001. | Assume 1 OMG = $1.<br>$0.0001 = 0.0001 OMG<br>Now OMG has 18 decimals, so `0.0001*(10**18) = 1000000000000`
-| `maxPerBlockImbalance`  | The maximum wei amount of net absolute (+/-) change for a token in an ethereum block. Should be larger than the maximum allowed tradeable token amount for a whitelisted user. Suppose we want the maximum change in 1 block to be 439.79 OMG, then we use `439.79 * (10 ** 18) = 439790000000000000000` | Suppose we have 2 users Alice and Bob. Alice tries to buy 200 OMG and Bob tries to buy 300 OMG. Assuming both transactions are included in the same block and Alice's transaction gets processed first, Bob's transaction will **fail** because the resulting net change of -500 OMG would exceed the limit of 439.79 OMG. However, if Bob decides to sell instead of buy, then the net change becomes +100 OMG, which means an additional 539.79 OMG can be bought, or 339.79 OMG sold. |
+| `maxPerBlockImbalance`  | The maximum wei amount of net absolute (+/-) change for a token in an ethereum block. We recommend this value to be larger than the maximum allowed tradeable token amount for a whitelisted user. Suppose we want the maximum change in 1 block to be 439.79 OMG, then we use `439.79 * (10 ** 18) = 439790000000000000000` | Suppose we have 2 users Alice and Bob. Alice tries to buy 200 OMG and Bob tries to buy 300 OMG. Assuming both transactions are included in the same block and Alice's transaction gets processed first, Bob's transaction will **fail** because the resulting net change of -500 OMG would exceed the limit of 439.79 OMG. However, if Bob decides to sell instead of buy, then the net change becomes +100 OMG, which means an additional 539.79 OMG can be bought, or 339.79 OMG sold. |
 | `maxTotalImbalance`  | Has to be `>= maxPerBlockImbalance`. Represents the amount in wei for the net token change that happens between 2 price updates. This number is reset everytime `setBaseRate()` is called in `ConversionRates.sol`.  This acts as a safeguard measure to prevent reserve depletion from unexpected events between price updates. | If we want the maximum total imbalance to be 922.36 OMG, we will use: `922.36 * (10 ** 18) = 922360000000000000000` |
 
 In essence, an example of the first part of `reserve_reserve_input.json` would be:
@@ -74,7 +121,7 @@ In essence, an example of the first part of `reserve_reserve_input.json` would b
 }
 ```
 
-### Defining withdrawal addresses
+#### Defining withdrawal addresses
 Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the json file, we enable defining per token a few withdrawal addresses and one address per exchange. Note this is only a logical concep,t. This address might be any address you wish to withdraw funds to.  
 
 Let's take a look at the `exchanges` dictionary in `ropsten_reserve_input.json`. Fill in your ETH and KNC withdraw addresses for the purposes of rebalancing your reserve. Note that the `binance` string is just a convention. Also note that **all tokens you wish to support must have withdraw addresses**.
@@ -87,7 +134,8 @@ Let's take a look at the `exchanges` dictionary in `ropsten_reserve_input.json`.
 		}
   },
 ```
-### Setting permissions
+
+#### Setting permissions
 In the `permission` dictionary, you will fill in the addresses for admin, operator, and alerter. We recommend that you use different addresses for each of the 3 roles. It is highly recomended that for sensitive conracts like the reserve, a cold wallet is used as the admin wallet. Notice: It is possible to have multiple operators and alerters, but there can only be 1 admin.
 
 ```json
@@ -108,14 +156,15 @@ In the `permission` dictionary, you will fill in the addresses for admin, operat
 * `admin`: The admin account is unique (usually cold wallet) and handles infrequent, manual operations like listing new tokens in the exchange.
 * `operator`: The operator account is used for frequent updates like setting reserve rates and withdrawing funds from the reserve to certain destinations (e.g. when selling excess tokens in the open market).
 * `alerter`: The alerter account is used to halt the operation of the reserve on alerting conditions (e.g., strange conversion rates). In such cases, the reserve operation can be resumed only by the admin account.
-### Valid price duration
-The `valid duration block` parameter is the time in blocks (Ethereum processes ~4 blocks per minute) that your conversation rate will expire since the last price update. Notice if value remains 60, it will require your price updates to happen at least every ~14 minutes.
+
+#### Valid price duration
+The `valid duration block` parameter is the time in blocks (Ethereum processes ~4 blocks per minute) that your conversation rate will expire since the last price update. If the value remains at 60, your price updates should happen at least approximately every 14 minutes.
 
 ```json
   "valid duration block" : 60,
 ```
 
-## Step 2: Deploying contracts
+### Step 2: Deploying contracts
 
 Run the command below in your terminal to install all required dependencies. Ensure that you are in the `/web3deployment` directory.
 
@@ -126,18 +175,18 @@ npm install
 Then run the command
 
 ```
-node reserveDeployer.js --config-path ropsten_reserve_input.json --gas-price-gwei 30 ----rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x85ecDf8803c35a271a87ad918B5927E5cA6a56D2"
+node reserveDeployer.js --config-path ropsten_reserve_input.json --gas-price-gwei 30 ----rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x91a502C678605fbCe581eae053319747482276b9"
 ```
 * `--gas-price-gwei`: The gas price in gwei
 * `--rpc-url`: The URL of your geth, parity or infura node. Here we use infura's node, `https://ropsten.infura.io`.
-* `--print-private-key`: The script generates a random and one-time ETH account that will send transactions. The `true` value reveals the private key of this generated account to you (you may want to set it to `false` when deploying onto the mainnet).
-* `--network-address`: Kyber’s network contract address (the address above is Ropsten testnet address).
+* `--print-private-key`: The script generates a random and one-time ETH account that will send transactions to deploy and setup your contracts. The `true` value reveals the private key of this generated account to you (you may want to set it to `false` when deploying onto the mainnet).
+* `--network-address`: `KyberNetwork.sol` contract address (the address above is Ropsten testnet address).
 
 You should see something similar to the image below while the script is running.
 
 ![Waitforbalance](/uploads/waitforbalance.jpg "Waitforbalance")
 
-The generated ETH account is waiting for some ETH to be deposited so that it can send transactions. Send around 0.3 ETH to the address. The console will eventually show
+The generated ETH account is waiting for some ETH to be deposited so that it can send transactions to deploy and setup your contracts. Send around 0.3 ETH to the address. The console will eventually show
 
 ![Ethsent](/uploads/ethsent.jpg "Ethsent")
 
@@ -148,7 +197,7 @@ The generated ETH account is waiting for some ETH to be deposited so that it can
 Congratulations, you have successfully deployed contracts on the Ropsten testnet!
 
 
-## Step 3: Setting token conversion rates (prices)
+### Step 3: Setting token conversion rates (prices)
 
 Now, as your reserve contracts are deployed on the Ropsten testnet, you should be able to find them on [Etherscan](https://ropsten.etherscan.io/). As a reserve manager, you will need to interact with `KyberReserve.sol` and `ConversionRates.sol`, both of which have been deployed previous step. In other words, you have to call the functions of these 2 contracts. For example, to update the conversion rate of your tokens, you have to call the `setBaseRate` function of `ConversionRates.sol`. There is another **optional** but recommended contract `SanityRates.sol` that you can deploy and interact with.
 
@@ -158,10 +207,16 @@ Now, as your reserve contracts are deployed on the Ropsten testnet, you should b
 
 One key responsibility of your automated system is to continually set your tokens rate based on your strategy, ie. there should be frequent automated calls made to the `setBaseRate` and / or `setCompactData` function of your `ConversionRates.sol` contract using your operator account.
 
-### How to programmatically call `setBaseRate` / `setCompactData`
+#### How to programmatically call `setBaseRate` / `setCompactData`
 
-First let's understand how the rate in `ConversionRates.sol` is defined and modified. The rate presented by the contract is calculated from 3 different components, namely: base rate, compact data, step functions. Base rate sets basic rate per token, it is set separately for buy and sell values. Compact data and step function enable advanced functionality and serve as modifiers of the base rate. To avoid frequent expensive updates of base rate, compact data enables modification to a group of tokens in one on chain storage operation. Each compact data array is squeezed into one bytes32 parameter and holds  modifiers for buy / sell prices of 14 tokens. If your reserve supports more then 1-2 tokens you better update token rates using setCompactData function and save gas prices for your updates. Finally step functions enable degenerated order book functionality, rates are modified according to imbalance values. See below detailed description.
-Here are the input parameters of the 'setBaseRate' function.
+First let's understand how the rate in `ConversionRates.sol` is defined and modified. The rate presented by the contract is calculated from 3 different components:
+1. Base Rate
+2. Compact Data
+3. Step Functions
+
+Base rate sets the basic rate per token, and is set separately for buy and sell values. Compact data and step functions enable advanced functionality and serve as modifiers of the base rate. To avoid frequent expensive updates of base rates, compact data enables modification to a group of tokens in one on chain storage operation. Each compact data array is squeezed into one bytes32 parameter and holds modifiers for buy / sell prices of 14 tokens. If your reserve supports more than 1-2 tokens, we recommend updating token rates using the `setCompactData` function to save gas costs for your updates. Finally, step functions enable degenerated order book functionality, whereby rates are modified according to imbalance values. Refer to the [step function section](#step-functions) for details.
+
+Here are the input parameters of the `setBaseRate` function.
 
 | Input field | Explanation | Examples |
 | ------------- | ------------- | ------------- |
@@ -173,29 +228,28 @@ Here are the input parameters of the 'setBaseRate' function.
 | `uint blockNumber` | Most recent ETH block number (can be obtained on Etherscan) | `3480805` |
 | `uint[] indices` | Index of array to apply the compact data bps rates on | `[0]` |
 
-### Single token
+#### Single token
 
 If you plan to support just 1 token, set `buy`, `sell` and `indices` to `[0]`. The code below is an example of how to call the `setBaseRate` function. If you plan to use it, kindly take note of the following:
 1. Replace the `CONVERSION_RATES_CONTRACT_ADDRESS` with your own contract address.
-2. Replace the `PRIVATE_KEY` with the private key of an account you own. It is recommended to generate a new account for security reasons. Do not include the `0x` prefix.
+2. Replace the `PRIVATE_KEY` with the private key of an account you own. It is recommended to generate a new account for security reasons. Include the `0x` prefix.
 3. Calculate desired buy and sell rates for your token(s) and set it to `BUY_RATE` and `SELL_RATE`.
 
 ```js
 //REPLACE WITH YOUR ConversionRates.sol CONTRACT ADDRESS
-const CONVERSION_RATES_CONTRACT_ADDRESS = "0xe56d6a9e5bc2228a0c7456c6827def6d3d473f27"
+const CONVERSION_RATES_CONTRACT_ADDRESS = "0x69E3D8B2AE1613bEe2De17C5101E58CDae8a59D4"
 const KNC_TOKEN_CONTRACT_ADDRESS = "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6"
 var Web3 = require('web3')
 const web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io"))
+const BN = require('bignumber.js')
 
-
-const PRIVATE_KEY = "YOUR_PRIVATE_KEY" //Eg. "5fba6c1ccf757875f65dca7098318be8d76dc4d7a40ded4deb14ff4e0a1bd083"
+//REPLACE WITH YOUR PRIVATE KEY
+let PRIVATE_KEY = "YOUR_PRIVATE_KEY" //Eg. "0x5fba6c1ccf757875f65dca7098318be8d76dc4d7a40ded4deb14ff4e0a1bd083"
+let SENDER_ACCOUNT = web3.eth.accounts.privateKeyToAccount(PRIVATE_KEY)
 
 const ConversionRatesABI = [{"constant":false,"inputs":[{"name":"alerter","type":"address"}],"name":"removeAlerter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"reserve","type":"address"}],"name":"setReserveAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"}],"name":"disableTokenTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"validRateDurationInBlocks","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"tokens","type":"address[]"},{"name":"baseBuy","type":"uint256[]"},{"name":"baseSell","type":"uint256[]"},{"name":"buy","type":"bytes14[]"},{"name":"sell","type":"bytes14[]"},{"name":"blockNumber","type":"uint256"},{"name":"indices","type":"uint256[]"}],"name":"setBaseRate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"}],"name":"enableTokenTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"pendingAdmin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getOperators","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getListedTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"amount","type":"uint256"},{"name":"sendTo","type":"address"}],"name":"withdrawToken","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newAlerter","type":"address"}],"name":"addAlerter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"numTokensInCurrentCompactData","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"},{"name":"command","type":"uint256"},{"name":"param","type":"uint256"}],"name":"getStepFunctionData","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"buy","type":"bytes14[]"},{"name":"sell","type":"bytes14[]"},{"name":"blockNumber","type":"uint256"},{"name":"indices","type":"uint256[]"}],"name":"setCompactData","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"duration","type":"uint256"}],"name":"setValidRateDurationInBlocks","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"}],"name":"getTokenBasicData","outputs":[{"name":"","type":"bool"},{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newAdmin","type":"address"}],"name":"transferAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"claimAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getAlerters","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"}],"name":"getRateUpdateBlock","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"xBuy","type":"int256[]"},{"name":"yBuy","type":"int256[]"},{"name":"xSell","type":"int256[]"},{"name":"ySell","type":"int256[]"}],"name":"setQtyStepFunction","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOperator","type":"address"}],"name":"addOperator","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"reserveContract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"tokenImbalanceData","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"operator","type":"address"}],"name":"removeOperator","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"},{"name":"currentBlockNumber","type":"uint256"},{"name":"buy","type":"bool"},{"name":"qty","type":"uint256"}],"name":"getRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"xBuy","type":"int256[]"},{"name":"yBuy","type":"int256[]"},{"name":"xSell","type":"int256[]"},{"name":"ySell","type":"int256[]"}],"name":"setImbalanceStepFunction","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"minimalRecordResolution","type":"uint256"},{"name":"maxPerBlockImbalance","type":"uint256"},{"name":"maxTotalImbalance","type":"uint256"}],"name":"setTokenControlInfo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"buyAmount","type":"int256"},{"name":"rateUpdateBlock","type":"uint256"},{"name":"currentBlock","type":"uint256"}],"name":"recordImbalance","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"},{"name":"sendTo","type":"address"}],"name":"withdrawEther","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"},{"name":"buy","type":"bool"}],"name":"getBasicRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"}],"name":"addToken","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"}],"name":"getCompactData","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"bytes1"},{"name":"","type":"bytes1"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"}],"name":"getTokenControlInfo","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_admin","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"token","type":"address"},{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"sendTo","type":"address"}],"name":"TokenWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"sendTo","type":"address"}],"name":"EtherWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"pendingAdmin","type":"address"}],"name":"TransferAdminPending","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newAdmin","type":"address"},{"indexed":false,"name":"previousAdmin","type":"address"}],"name":"AdminClaimed","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newAlerter","type":"address"},{"indexed":false,"name":"isAdd","type":"bool"}],"name":"AlerterAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newOperator","type":"address"},{"indexed":false,"name":"isAdd","type":"bool"}],"name":"OperatorAdded","type":"event"}]
 
-
-var ConversionRatesContract = web3.eth.contract(ConversionRatesABI)
-var ConversionRatesContractInstance = ConversionRatesContract.at(CONVERSION_RATES_CONTRACT_ADDRESS)
-
+var ConversionRatesContract = new web3.eth.Contract(ConversionRatesABI,CONVERSION_RATES_CONTRACT_ADDRESS)
 /*
 Do some calculations, add some spread to obtain some desired buy / sell rates for your token(s)
 Example values below are from the table above
@@ -203,36 +257,97 @@ Example values below are from the table above
 BUY_RATE = [500000000000000000000] //Eg. [100000000000000000000, 200000000000000000000]
 SELL_RATE = [1820000000000000] //Eg. [1800000000000000, 1900000000000000]
 
-var txData = ConversionRatesContractInstance.setBaseRate(
-	[KNC_TOKEN_CONTRACT_ADDRESS], //ERC20[] tokens
-	BUY_RATE, //uint[] baseBuy
-	SELL_RATE, //uint[] baseSell
-	[0], //bytes14[] buy
-	[0], //bytes14[] sell
-	3487647, //most recent ropsten ETH block number as time of writing
-	[0] //uint[] indices
-	).encodeABI()
+async function main() {
+	const blockNumber = await web3.eth.getBlockNumber()
+	var txData = ConversionRatesContract.methods.setBaseRate(
+	    [KNC_TOKEN_CONTRACT_ADDRESS], //ERC20[] tokens
+	    BUY_RATE, //uint[] baseBuy
+	    SELL_RATE, //uint[] baseSell
+	    [0], //bytes14[] buy
+	    [0], //bytes14[] sell
+	    blockNumber, //most recent ropsten ETH block number as time of writing
+	    [0], //uint[] indices
+	    ).encodeABI()
+    var signedTx = await web3.eth.accounts.signTransaction(
+        {
+            from: SENDER_ACCOUNT.address,
+            to: CONVERSION_RATES_CONTRACT_ADDRESS,
+            value: 0,
+            data: txData,
+            gas: 300000, //gasLimit
+            gasPrice: new BN(10).times(10 ** 9), //10 Gwei
+            chainId: await web3.eth.net.getId()
+        },
+    SENDER_ACCOUNT.privateKey
+    )
+    txHash = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+    console.log(txHash)
+}
 
-var signedTx = web3.eth.accounts.signTransaction(
-    {
-        data: txData,
-        to: CONVERSION_RATES_CONTRACT_ADDRESS,
-        gas: '2000000', //gasLimit
-    },
-    '0x' + PRIVATE_KEY
-);
-
-web3.eth.sendSignedTransaction(signedTx).on('receipt', console.log);
+main()
 ```
 
-### Multiple tokens
-If you plan to support many tokens, calling the `setBaseRate` function becomes very expensive with respect to gas consumption. `setCompactData` is a cheaper way to update all of your token prices, assuming that the token base prices need not be changed. However, understanding how to use `setCompactData` requires deeper technical knowledge. Hence, this section will be covered in an advanced guide (coming soon!)
+#### Multiple tokens
+As mentioned, to save on gas costs, we recommend using the `setCompactData` function instead of `setBaseRates`. The inputs of  `setCompactData` are the last 4 inputs of `setBaseRates`, namely: `bytes14[] buy`, `bytes14[] sell`, `uint blockNumber` and `uint[] indices`.
 
-### Step functions
+##### `uint[] indices`
+![Multipletokensfig 1](/uploads/multipletokensfig-1.jpg "Multipletokensfig 1")
+Each index allows you to modify up to 14 tokens at once. The token index number is determined by the order which they were added. Intuitively, an earlier token would have a smaller index, ie. the earliest token would be token 0, the next would be token 1, etc.
+
+##### `bytes14[] buy / sell`
+For simplicity, assume that we want to modify the base buy rates. The logic for modifying base sell rates is the same. 
+* Suppose the reserve supports 3 tokens: DAI, BAT and DGX. 
+* We want to make the following modifications to their base buy rates:
+	1. +2.5% (+25 pts) to DAI_BASE_BUY_RATE
+	2. +1% (+10 pts) to BAT_BASE_BUY_RATE
+	3. -3% (-30 pts) to DGX_BASE_BUY_RATE
+
+**Note:**
+1. One pt here means a **0.1% change**, as compared to basis points used in step functions where 1 basis point = 0.01%.
+2. The range which compact data can handle is from -12.8% to 12.7%.
+
+This gives us the buy array `[25,10,-30]`. Encoding this to hex yields `[0x190ae2]`. The code for encoding the array is shown below:
+```js
+compactBuyArr = [25, 10, -30]
+let compactBuyHex = bytesToHex(compactBuyArr)
+
+function bytesToHex(byteArray) {
+    let strNum = toHexString(byteArray);
+    let num = '0x' + strNum;
+    return num;
+}
+
+function toHexString(byteArray) {
+  return Array.from(byteArray, function(byte) {
+    return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+  }).join('')
+}
+
+//should print [0x190ae2]
+console.log(compactBuyHex)
+```
+
+Thus, `bytes14[] buy = [0x190ae2]`.
+
+##### `uint blockNumber`
+This should be the block number which you want your modified rates to be valid from. In other words, the modified rates would be valid up till blockNumber + validRateDurationInBlocks.
+
+##### `Input Example`
+```js
+transactionData = ConversionRatesContract.methods.setCompactData(
+[0x190ae2], //bytes14 buy
+[0x190ae2], //bytes14 sell
+5984303, //uint blockNumber
+[0] //uint indices
+).encodeABI()
+```
+Note that we are applying the same price adjustments to base sell rates as buy rates in the above example. In practice, you probably will have separate modifications.
+
+#### Step functions
 
 Using flat rate might not be sufficient. A user that buys/sells a big number of tokens will have a different impact on your portfolio compared to another user that buys/sells a small number of tokens. The purpose of steps, therefore, is to have the contract alter the price depending on the buy / sell quantities of a user, and the net traded amount between price update operations.
 
-#### Different buy/sell quantities
+##### Different buy/sell quantities
 Operators can call `setQtyStepFunction()` of `ConversionRates.sol` to allow different conversion rates for different buy/sell quantities.
 
 ```js
@@ -269,7 +384,7 @@ Given the above example parameters, assume the base buy rate is 100 (1 ETH = 100
 | Sell 210 KNC  | 0.0094 `0.01*(1-0.6%)` | 210 is in the range of 200 to 300, which is the **third** sell step in the `xSell`, so the impact on the the base rate is -0.6% according to the **third** number in the `ySell`. |
 | Sell 1,000 KNC  | 0.0092 `0.01*(1-0.8%)` | 1,000 is in the range of 500 to above, which is the **last** sell step in the `xSell`, so the impact on the the base rate is -0.8% according to the **last** number in the `ySell`. |
 
-#### Net traded amount
+##### Net traded amount
 They can also call `setImbalanceStepFunction()` of `ConversionRates.sol` to allow different conversion rates based on the net traded token amount between price update operations. For example, if Alice buys 100 KNC, Bob sells 50 KNC and Carol buys 10 KNC, then the net traded amount is -60 KNC.
 
 ```js
@@ -305,25 +420,28 @@ Given the above example parameters, assume the base buy rate is 100 (1 ETH = 100
 | -210 KNC  | 0.0095 `0.01*(1-0.5%)` | -210 is in the range of -200 to -300, which is the **second** sell step in the `xSell`, so the impact on the the base rate is -0.5% according to the **second** number in the `ySell`. |
 | -1,000 KNC  | 0.0093 `0.01*(1-0.7%)` | -1,000 is in the range of -300 to below, which is the **first** sell step in the `xSell`, so the impact on the the base rate is -0.7% according to the **first** number in the `ySell`. |
 
-### Additional safeguards
+#### Additional safeguards
 In the case of unforeseen adverse circumstances (Eg. a hack in your automated system or operator accounts), whereby your conversion rate is compromised to be very unfavorable, you may set up additional safeguards in place to protect your reserve.
 
-#### Sanity Rates
+##### Sanity Rates
 Operators can set a sanity rate by calling `setSanityRates` and `setReasonableDiff` from `SanityRates.sol` to allow automatic swap disabling if rate inconsistencies exceed a certain percentage between two rate updates. Refer to [this section](MiscellaneousGuide#sanity-rates) and [API documentation](SanityRates) to learn more about sanity rates.
 
-#### Alerters
+##### Alerters
 As mentioned previously, the role of alerters is to look out for unexpected / malicious behaviour of the reserve and halt operations. They can do so by calling `disableTokenTrade()` in the `ConversionRates.sol`. Thereafter, only the admin account is able to resume operations by calling `enableTokenTrade()` in the same contract.
 
-## Step 4: Deposit tokens to and withdraw tokens from your reserve
+### Step 4: Deposit tokens to and withdraw tokens from your reserve
 
 A reserve can’t operate without tokens. A a reserve that supports ETH-KNC swap pair will need to hold both ETH and KNC so that users can sell and buy KNC from your reserve.
 
 Filling up your reserve is easy. You can transfer tokens to your reserve contract from any address.
 
-However, only authorized accounts have the right to withdraw tokens from the reserve. `admin` can call `withdrawEther` and `withdrawToken` of `KyberReserve.sol` to withdraw tokens to any address. `operator` can only withdraw tokens to whitelisted addresses by calling `withdraw`. `admin` can add withdraw/whitelisted address by calling `approveWithdrawAddress` of `KyberReserve.sol`.
+However, only authorized accounts have the right to withdraw tokens from the reserve. 
+* `admin` can call `withdrawEther` and `withdrawToken` of `KyberReserve.sol` to withdraw tokens to any address
+* `operator` can only withdraw tokens to whitelisted addresses by calling `withdraw`
+* `admin` can add withdraw/whitelisted address by calling `approveWithdrawAddress` of `KyberReserve.sol`.
 
 
-## Step 5: Get your reserve authorized and running
+### Step 5: Get your reserve authorized and running
 
 If you have completed above steps, you can let any network operator know so that they can approve your reserve and every specific pair you are allowed to list. Kyber Network is currently the only network operator.
 

@@ -3,7 +3,7 @@ id: ExpectedRate
 title: ExpectedRate
 ---
 # contract ExpectedRate
-is [Withdrawable](api-withdrawable.md), [ExpectedRateInterface](api-expectedrateinterface.md), [Utils](api-utils.md)\
+is [Withdrawable](api-withdrawable.md), [ExpectedRateInterface](api-expectedrateinterface.md), [Utils2](api-utils-2-.md)\
 imports [ERC20Interface](api-erc-20-interface.md), [KyberNetwork](api-volumeimbalancerecorder.md), [Withdrawable](api-withdrawable.md), [ExpectedRateInterface](api-expectedrateinterface.md)
 
 *Source*: [ExpectedRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ExpectedRates.sol)
@@ -52,6 +52,19 @@ function __ExpectedRate__(KyberNetwork \_kyberNetwork, address \_admin) public
 
 <br />
 
+### `expectedRateSmallQty`
+For small src quantities dest qty might be 0, then returned rate is zero.
+___
+function __getExpectedRate__(ERC20 src, ERC20 dest, uint srcQty) internal view returns (uint)
+| Parameter | Type  | Description                             |
+| --------- |:-----:|:---------------------------------------:|
+| `src`     | ERC20 | source ERC20Token contract address      |
+| `dest`    | ERC20 | destination ERC20Token contract address |
+| `srcQty`  | uint  | quantity of source ERC20 tokens in wei  |
+**Returns:**\
+Expected rate for small quantity.
+<br />
+
 ### `getExpectedRate`
 Gets the expected rate and slippage rate.
 ___
@@ -65,22 +78,22 @@ function __getExpectedRate__(ERC20 src, ERC20 dest, uint srcQty) public view ret
 The expected rate and slippage  rate\
 <br />
 
-### `setMinSlippageFactor`
-Gets the expected rate and slippage rate. Only operator can invoke.
-___
-function __setMinSlippageFactor__(uint bps) public onlyOperator
-| Parameter | Type  | Description                                    |
-| --------- |:-----:|:----------------------------------------------:|
-| `bps`     | uint  | base points of minimum slippage factor in wei  |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)\
-<br />
-
 ### `setQuantityFactor`
-Gets the expected rate and slippage rate. Only operator can invoke.
+Sets a new quantity factor. Only operator can invoke.
 ___
 function __setQuantityFactor__(uint newFactor) public onlyOperator
 | Parameter   | Type  | Description                |
 | ----------- |:-----:|:--------------------------:|
 | `newFactor` | uint  | new quantity factor in wei |
+Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)\
+<br />
+
+### `setWorstCaseRateFactor`
+Sets a new worst case rate factor in basis points. Only operator can invoke.
+___
+function __setWorstCaseRateFactor__(uint bps) public onlyOperator
+| Parameter   | Type  | Description                |
+| ----------- |:-----:|:--------------------------:|
+| `bps` | uint  | new worst case rate factor in bps |
 Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)\
 <br />

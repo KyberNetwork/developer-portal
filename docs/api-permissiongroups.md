@@ -25,13 +25,6 @@ event __AdminClaimed__(address newAdmin, address previousAdmin)
 | --------------- |:-------:|:------------------------------:|
 | `newAdmin`      | address | address of the new admin       |
 | `previousAdmin` | address | address of the previous admin  |
-___
-Web3 Example:
-```js
-const Web3 = require('web3');
-const url = "https://ropsten.infura.io";
-const web3 = new Web3(new Web3.providers.HttpProvider(url));
-```
 <br />
 
 ### `AlerterAdded`
@@ -42,13 +35,6 @@ event __AlerterAdded__(address newAlerter, bool isAdd)
 | ------------ |:-------:|:--------------------------------------------------------------------------:|
 | `newAlerter` | address | address of the new alerter                                                 |
 | `isAdd`      | bool    | if `true`, new alerter was added, otherwise `false` if alerter was removed |
-___
-Web3 Example:
-```js
-const Web3 = require('web3');
-const url = "https://ropsten.infura.io";
-const web3 = new Web3(new Web3.providers.HttpProvider(url));
-```
 <br />
 
 ### `OperatorAdded`
@@ -59,12 +45,6 @@ event __OperatorAdded__(address newOperator, bool isAdd)
 | ------------- |:-------:|:----------------------------------------------------------------------------:|
 | `newOperator` | address | address of the new operator                                                  |
 | `isAdd`       | bool    | if `true`, new operator was added, otherwise `false` if operator was removed |
-___
-Web3 Example:
-```js
-const Web3 = require('web3');
-const url = "https://ropsten.infura.io";
-const web3 = new Web3(new Web3.providers.HttpProvider(url));
 ```
 <br />
 
@@ -75,7 +55,6 @@ event __TransferAdminPending__(address pendingAdmin)
 | Parameter      | Type     | Description                  |
 | -------------- |:--------:|:----------------------------:|
 | `pendingAdmin` | address  | address of the pending admin |
-
 <br />
 
 ### Modifiers

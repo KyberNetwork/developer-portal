@@ -8,7 +8,7 @@ imports [WhiteListInterface](api-whitelistinterface.md), [ERC20Interface](api-er
 
 *Source*: [WhiteList.sol](https://github.com/KyberNetwork/smart-contracts/blob/v1.0.0/contracts/WhiteList.sol)
 
-The WhiteList contract's role is to set the trading cap of different user categories and for changing the category of a user.
+The WhiteList contract's role is to set the trading cap of different user categories and for changing the category of a user. Refer to [this section](MiscellaneousGuide#whitelist-categories-limits) for the different categories and trading caps.
 ___
 
 ## INDEX
@@ -79,7 +79,7 @@ User's trading cap in wei
 ### `getUserCategory`
 Get the user's category.
 ___
-function __getUserCategory__(address user) public view returns (uint) returns  view returns (uint)
+function __getUserCategory__(address user) public view returns (uint)
 | Parameter | Type    | Description    |
 | --------- |:-------:|:--------------:|
 | `user`    | address | user's address |
@@ -91,7 +91,7 @@ The user's category
 ### `setCategoryCap`
 Set the trading cap for the category.
 ___
-function __setCategoryCap__(uint category, uint sgdCap) public
+function __setCategoryCap__(uint category, uint sgdCap) public onlyOperator
 | Parameter  | Type  | Description  |
 | ---------- |:-----:|:------------:|
 | `category` | uint  | category ID |
@@ -103,7 +103,7 @@ Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
 ### `setSgdToEthRate`
 Set the exchange rate of SGD to ETH.
 ___
-function __setSgdToEthRate__(uint \_sgdToWeiRate) public
+function __setSgdToEthRate__(uint \_sgdToWeiRate) public onlyOperator
 | Parameter       | Type  | Description                          |
 | --------------- |:-----:|:------------------------------------:|
 | `_sgdToWeiRate` | uint  | conversion rate of SGD to ETH in wei |
@@ -114,7 +114,7 @@ Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
 ### `setUserCategory`
 Set the exchange rate of SGD to ETH.
 ___
-function __setUserCategory__(address user, uint category) public
+function __setUserCategory__(address user, uint category) public onlyOperator
 | Parameter   | Type    | Description    |
 | ----------- |:-------:|:--------------:|
 | `user`      | address | user's address |

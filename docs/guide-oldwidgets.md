@@ -1,6 +1,6 @@
 ---
-id: WidgetsGuide
-title: Website Widgets
+id: OldWidgetsGuide
+title: Old Website Widgets
 ---
 # Website Widgets
 ## Kyber Sign-in Widget

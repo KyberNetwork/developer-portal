@@ -11,15 +11,28 @@
       "VendorsUseCase",
       "WalletsUseCase"
     ],
+    "Environments": [
+      "MainnetEnvGuide",
+      "RopstenEnvGuide",
+      "KovanEnvGuide"
+    ],
     "Guides": [
       "ReservesGuide",
       "DappsGuide",
       "VendorsGuide",
       "WalletsGuide",
       "TrackerAPIGuide",
-      "WidgetsGuide",
+      "FeeSharingGuide",
       "MiscellaneousGuide",
       "GettingHelpGuide"
+    ],
+    "Widget": [
+      "WidgetOverview",
+      "WidgetGenerator",
+      "WidgetSwift"
+    ],
+    "Appendix": [
+      "CodesAppendix"
     ]
   },
   "api": {
@@ -28,6 +41,9 @@
     ],
     "Smart Contracts": [
       "KyberNetwork",
+      "KyberNetworkInterface",
+      "KyberNetworkProxy",
+      "KyberNetworkProxyInterface",
       "KyberReserve",
       "KyberReserveInterface",
       "ConversionRates",
@@ -40,17 +56,13 @@
       "PermissionGroups",
       "SanityRates",
       "SanityRatesInterface",
+      "SimpleNetworkInterface",
       "Utils",
+      "Utils2",
       "VolumeImbalanceRecorder",
       "WhiteList",
       "WhiteListInterface",
-      "Withdrawable",
-      "Wrapper"
-    ],
-    "Appendix": [
-      "NetworksAppendix",
-      "TokensAppendix",
-      "CodesAppendix"
+      "Withdrawable"
     ]
   }
 }

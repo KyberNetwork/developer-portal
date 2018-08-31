@@ -11,39 +11,40 @@ title: Contract Addresses
 
 Please note that contracts `KyberReserve`, `ConversionRates`, and `SanityRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these three contracts.
 
+### `KyberNetworkProxy`
+`Mainnet`: 0x818E6FECD516Ecc3849DAf6845e3EC868087B755\
+`Ropsten`: 0x818E6FECD516Ecc3849DAf6845e3EC868087B755\
+`Kovan`: 0x7e6b8b9510D71BF8EF0f893902EbB9C865eEF4Df
+
 ### `KyberNetwork`
-`Mainnet`: 0x964F35fAe36d75B1e72770e244F6595B68508CF5\
-`Ropsten`: 0x85ecDf8803c35a271a87ad918B5927E5cA6a56D2\
-`Kovan`:
+`Mainnet`: 0x91a502C678605fbCe581eae053319747482276b9\
+`Ropsten`: 0x91a502C678605fbCe581eae053319747482276b9\
+`Kovan`: 0xF27dbBeA1856f18142cDD3B575146199f7f3a7eA
 
 ### `KyberReserve`
 `Mainnet`: 0x63825c174ab367968EC60f061753D3bbD36A0D8F\
-`Ropsten`: 0x1df1c1E1ba17AcDD36419Fb2Be3b2387Df5E4f5E\
-`Kovan`:
+`Ropsten`: 0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a\
+`Kovan`: 0xcd2FC6Cf44aAC607771f7FBbE51E388CE1044408
 
 ### `ConversionRates`
 `Mainnet`: 0x798AbDA6Cc246D0EDbA912092A2a3dBd3d11191B\
-`Ropsten`: 0x232E24C2ba12Ba25849E0baAB2fA84e7a051a016\
-`Kovan`:
+`Ropsten`: 0xE16E257a25e287AF50C5651A4c2728b32D7e5ef7\
+`Kovan`: 0xEddEeC7f5da5df29722D3252FC542E77D115a378
 
 ### `ExpectedRate`
-`Mainnet`: 0x543f2592b1C478837B5EE2013eD26C7Fe04a8C7e\
-`Ropsten`: 0xcB4AEA0e6FF778f09BACbe433AebC807880A3D04\
-`Kovan`:
+`Mainnet`: 0x721260010D6E40960032ac541c2a68A3731A1462\
+`Ropsten`: 0xF40C50a36a709c55b76D4056964A11685676F2E4\
+`Kovan`: 0xB9bCC9dC47e772d4C57526b28D8537325b9128c5
 
 ### `FeeBurner`
-`Mainnet`: 0x07f6e905f2a1559cD9FD43CB92F8a1062A3CA706\
-`Ropsten`: 0xd5F40E95E882FAaa476b5E5e7D09d6Ccd2911fbe\
-`Kovan`:
+`Mainnet`: 0xed4f53268bfdFF39B36E8786247bA3A02Cf34B04\
+`Ropsten`: 0xed4f53268bfdFF39B36E8786247bA3A02Cf34B04\
+`Kovan`: 0x742D26b77b28B785E56751c3B201De03CE4836EE
 
 ### `SanityRates`
 `Mainnet`: 0xdfc85C08d5e5924aB49750E006CF8a826ffb7B13\
-`Ropsten`:
 
 ### `WhiteList`
 `Mainnet`: 0x6e106a75D369d09A9Ea1DCc16Da844792aA669a3\
 `Ropsten`: 0x0f69eA3FA0F1766f91cAca1962e2E85d6a7c20A6\
-`Kovan`:
-
-### `Wrapper`
-`Mainnet`: 0x6172afc8c00c46e0d07ce3af203828198194620a
+`Kovan`: 0x40B4C521d52E744E0fB6DaEF72BE37D4E99E2D2A
