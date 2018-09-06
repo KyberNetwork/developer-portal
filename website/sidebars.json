@@ -29,6 +29,7 @@
     "Widget": [
       "WidgetOverview",
       "WidgetGenerator",
+      "WidgetGeneratorGuide",
       "WidgetSwift"
     ],
     "Appendix": [
