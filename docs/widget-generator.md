@@ -10,8 +10,8 @@ title: Widget Generator
   height="1100">
 </iframe>
 
-<script>
-  window.onload = function () {
+<script>  
+  document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.onPageNav').style.display = "none";
-  };
+  });
 </script>
