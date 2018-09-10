@@ -13,5 +13,7 @@ title: Widget Generator
 <script>  
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.onPageNav').style.display = "none";
+    document.querySelector('article').style.padding = 0;
+    document.querySelector('article').style.background = "transparent";
   });
 </script>
