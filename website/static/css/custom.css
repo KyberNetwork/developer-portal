@@ -344,6 +344,10 @@ header h2 {
   color: #141927;
 }
 
+article h2 {
+  margin-top: 0.5em;
+}
+
 h3 code {
   background-color: transparent;
   color: #1E79C1;
@@ -917,7 +921,7 @@ input[type="text"] {
   background-color: #fff;
   border-radius: 3px;
   border: 1px solid #efeff0;
-  padding: 0 25px 20px;
+  padding: 25px;
 }
 
 .mainContainer .wrapper .post .postHeaderTitle {
