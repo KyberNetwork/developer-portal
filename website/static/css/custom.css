@@ -828,7 +828,6 @@ input[type="text"] {
 
 .navigationSlider .slidingNav ul li.siteNavItemActive a,
 .navigationSlider .slidingNav ul li.siteNavGroupActive a {
-  font-weight: 600;
   background: transparent;
   color: #31CB9E;
   position: relative;
@@ -977,6 +976,10 @@ input[type="text"] {
   }
 
   .fixedHeaderContainer {
+    overflow: initial;
+  }
+
+  .docsNavContainer {
     overflow: initial;
   }
 }
