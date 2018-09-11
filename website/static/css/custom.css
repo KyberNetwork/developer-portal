@@ -943,6 +943,10 @@ input[type="text"] {
   padding: 48px 0 0;
 }
 
+.docs-prev {
+  margin-bottom: 10px;
+}
+
 @media screen and (max-width: 1023px) {
   .fixedHeaderContainer header .headerTitleWithLogo::before,
   .navSearchWrapper:after {
@@ -956,19 +960,24 @@ input[type="text"] {
   }
 
   .navPusher {
-    padding-top: 116px;
+    padding-top: 115px;
   }
 
   .navigationSlider .slidingNav ul {
-    margin-top: 66px;
+    margin-top: 65px;
   }
 
-  .navigationSlider .slidingNav ul li.siteNavItemActive a {
+  .navigationSlider .slidingNav ul li.siteNavItemActive a,
+  .navigationSlider .slidingNav ul li.siteNavGroupActive a {
     display: initial;
   }
 
   .tocActive .onPageNav > .toc-headings {
     padding: 30px 0;
+  }
+
+  .fixedHeaderContainer {
+    overflow: initial;
   }
 }
 
