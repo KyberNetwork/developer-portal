@@ -983,6 +983,21 @@ input[type="text"] {
   .docsNavContainer {
     overflow: initial;
   }
+
+  .docsSliderActive .toc .navBreadcrumb {
+    top: 115px;
+  }
+
+  .docsSliderActive.docsNavContainer {
+    overflow: initial;
+  }
+
+  .docsSliderActive .toc section .navGroups {
+    overflow-y: auto;
+    height: calc(100vh - 163px);
+    padding: 20px 20px 130px;
+    margin-top: 50px;
+  }
 }
 
 @media screen and (max-width: 736px) {
