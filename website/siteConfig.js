@@ -63,7 +63,7 @@ const siteConfig = {
   },
 
   // Base details
-  title: 'KyberDeveloper · Powering Liquidity for the Ecosystem',
+  title: 'Powering Liquidity for the Ecosystem',
   tagline: 'Platforms and applications of all sizes can tap into Kyber\'s decentralized liquidity network to power their liquidity needs, ranging from inter-token payments to portfolio rebalancing.',
   url: 'https://developer.kyber.network',
   baseUrl: '/',
@@ -106,7 +106,7 @@ const siteConfig = {
   ],
 
   // Path to images for header/footer
-  headerIcon: 'img/headerIcon.svg',
+  headerIcon: 'img/kyber-logo-developer.svg',
   footerIcon: 'img/footerIcon.svg',
   favicon: 'img/favicon.png',
 

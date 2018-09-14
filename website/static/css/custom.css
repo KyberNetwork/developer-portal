@@ -344,6 +344,10 @@ header h2 {
   color: #141927;
 }
 
+article h2 {
+  margin-top: 0.5em;
+}
+
 h3 code {
   background-color: transparent;
   color: #1E79C1;
@@ -775,3 +779,255 @@ input[type="text"] {
   padding: 0.5rem;
 }
 
+.fixedHeaderContainer {
+  box-shadow: 0 1px 4px 0 rgba(34, 34, 34, 0.09);
+}
+
+.fixedHeaderContainer a,
+.navigationSlider {
+  height: initial;
+}
+
+.navigationSlider {
+  display: flex;
+  align-items: center;
+}
+
+.fixedHeaderContainer header .headerTitleWithLogo {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666666;
+  margin-left: 20px;
+  position: relative;
+  height: 100%;
+  align-items: center;
+  display: flex;
+}
+
+.fixedHeaderContainer header .headerTitleWithLogo::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 1px;
+  height: 50px;
+  top: 0;
+  left: -14px;
+  background-color: #ececec;
+}
+
+.logo {
+  min-height: 50px;
+}
+
+.navigationSlider .slidingNav ul {
+  align-items: center;
+}
+
+.navigationSlider .slidingNav .navSearchWrapper.reactNavSearchWrapper {
+  margin-left: 25px;
+  max-width: 300px;
+}
+
+.navigationSlider .slidingNav ul li a {
+  font-size: 14px;
+  color: #666666;
+  transition: all .3s;
+}
+
+.navigationSlider .slidingNav ul li.siteNavItemActive a,
+.navigationSlider .slidingNav ul li.siteNavGroupActive a {
+  font-weight: 600;
+  background: transparent;
+  color: #31CB9E;
+  position: relative;
+}
+
+.navigationSlider .slidingNav ul li.siteNavItemActive a::after,
+.navigationSlider .slidingNav ul li.siteNavGroupActive a::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  width: 12px;
+  height: 13px;
+  background-size: cover;
+  background-image: url("../img/vuvuzela.svg");
+}
+
+.navigationSlider .slidingNav ul li a:hover {
+  background: transparent;
+  color: #31CB9E;
+}
+
+.navSearchWrapper {
+  height: 50px;
+}
+
+.navSearchWrapper:before {
+  width: 17px;
+  height: 17px;
+  background-image: url("../img/icon-magnifier.svg");
+  border: none;
+  border-radius: initial;
+  left: 22px;
+  transform: translateY(-50%);
+  top: 25px;
+}
+
+.navSearchWrapper:after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 1px;
+  height: 50px;
+  top: 0;
+  left: -14px;
+  background-color: #ececec;
+  transform: none;
+}
+
+.reactNavSearchWrapper input#search_input_react {
+  background-color: transparent;
+  color: #666;
+  transition: all .3s;
+  border-radius: initial;
+  padding-left: 40px;
+}
+
+.reactNavSearchWrapper input#search_input_react::placeholder {
+  font-size: 14px;
+  color: #666666;
+  font-style: initial;
+}
+
+.reactNavSearchWrapper input#search_input_react:focus,
+.reactNavSearchWrapper input#search_input_react:active {
+  color: #666;
+  background-color: #f1f3f4;
+}
+
+.navGroups .navGroup ul {
+  margin-top: 15px;
+  margin-left: 15px;
+  border-left: 1px solid #31cb9e;
+  padding: 0 8px 0 0;
+}
+
+.navListItem.navListItemActive {
+  background: rgba(49, 203, 158, 0.08);
+  border-left: 3px solid #31cb9e;
+  font-size: 14px;
+  padding: 10px 0 10px 18px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.toc .toggleNav ul li a {
+  padding-left: 15px;
+}
+
+.navPusher {
+  background-color: #f7f7f7;
+}
+
+.navPusher article {
+  background-color: #fff;
+  border-radius: 3px;
+  border: 1px solid #efeff0;
+  padding: 25px;
+}
+
+.mainContainer .wrapper .post .postHeaderTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 30px;
+}
+
+.docMainWrapper.wrapper {
+  padding-bottom: 50px;
+}
+
+#footer {
+  border-top: 1px solid #eee;
+}
+
+.mainContainer {
+  padding: 48px 0 0;
+}
+
+.docs-prev {
+  margin-bottom: 10px;
+}
+
+.reactNavSearchWrapper .aa-dropdown-menu {
+  box-shadow: 0 2px 7px 0 #ccc;
+  z-index: 99999 !important;
+}
+
+@media screen and (max-width: 1023px) {
+  .navSearchWrapper {
+    height: initial;
+  }
+
+  .navSearchWrapper:before {
+    top: 20px;
+  }
+
+  .fixedHeaderContainer header .headerTitleWithLogo::before,
+  .navSearchWrapper:after {
+    content: none;
+  }
+
+  .reactNavSearchWrapper input#search_input_react {
+    color: #666;
+    background-color: #f1f3f4;
+    padding: 10px 10px 10px 40px;
+  }
+
+  .navPusher {
+    padding-top: 115px;
+  }
+
+  .navigationSlider .slidingNav ul {
+    margin-top: 65px;
+  }
+
+  .navigationSlider .slidingNav ul li.siteNavItemActive a,
+  .navigationSlider .slidingNav ul li.siteNavGroupActive a {
+    display: initial;
+  }
+
+  .tocActive .onPageNav > .toc-headings {
+    padding: 30px 0;
+  }
+
+  .fixedHeaderContainer {
+    overflow: initial;
+  }
+
+  .docsNavContainer {
+    overflow: initial;
+  }
+
+  .docsSliderActive .toc .navBreadcrumb {
+    top: 115px;
+  }
+
+  .docsSliderActive.docsNavContainer {
+    overflow: initial;
+  }
+
+  .docsSliderActive .toc section .navGroups {
+    overflow-y: auto;
+    height: calc(100vh - 163px);
+    padding: 20px 20px 130px;
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 736px) {
+  .fixedHeaderContainer header .headerTitleWithLogo {
+    display: none !important;
+  }
+}
