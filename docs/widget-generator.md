@@ -8,7 +8,7 @@ title: Widget Generator
   name="Generator"
   src=""
   width="100%"
-  height="1100">
+  height="1190">
 </iframe>
 
 <script>  
@@ -20,7 +20,9 @@ title: Widget Generator
     var iframe = document.getElementById("widget-generator-iframe");
     article.style.padding = 0;
     article.style.background = "transparent";
+    article.style.border = "none";
     document.querySelector('.onPageNav').style.display = "none";
+    document.querySelector('.postHeader').style.display = "none";
     if (domain === "developer.kyber.network") {
       iframe.src = defaultWidgetUrl;
     } else {
