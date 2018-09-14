@@ -43,3 +43,4 @@ Base URL: `https://widget.kyber.network/`
 | `network` | string | ETH network that widget will run in | `ropsten` | 1 of the following values:<br>`test`<br>`ropsten`<br>`production`<br>`mainnet`|
 | `paramForwarding` | boolean | If `true`, all params that were passed to the widget will be submitted via the `callback`. Can be used to prevent malicious behaviour by giving your customer a OTP secret token and validating it in the `callback` | - | - |
 |`commissionId` | address | Registered ETH address that is part of the [fee sharing program](FeeSharingGuide) | - | `0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
+|`pinnedTokens` | string | Tokens that are pinned at the top of your token selector. 3 tokens at most and are separated by an underscore (_). | - | `KNC_ETH_DAI` |
