@@ -780,7 +780,6 @@ input[type="text"] {
 }
 
 .fixedHeaderContainer {
-  overflow: hidden;
   box-shadow: 0 1px 4px 0 rgba(34, 34, 34, 0.09);
 }
 
@@ -789,12 +788,20 @@ input[type="text"] {
   height: initial;
 }
 
+.navigationSlider {
+  display: flex;
+  align-items: center;
+}
+
 .fixedHeaderContainer header .headerTitleWithLogo {
   font-size: 14px;
   font-weight: 600;
   color: #666666;
   margin-left: 20px;
   position: relative;
+  height: 100%;
+  align-items: center;
+  display: flex;
 }
 
 .fixedHeaderContainer header .headerTitleWithLogo::before {
@@ -802,8 +809,8 @@ input[type="text"] {
   position: absolute;
   display: block;
   width: 1px;
-  height: 100px;
-  top: -24px;
+  height: 50px;
+  top: 0;
   left: -14px;
   background-color: #ececec;
 }
@@ -818,6 +825,7 @@ input[type="text"] {
 
 .navigationSlider .slidingNav .navSearchWrapper.reactNavSearchWrapper {
   margin-left: 25px;
+  max-width: 300px;
 }
 
 .navigationSlider .slidingNav ul li a {
@@ -851,6 +859,10 @@ input[type="text"] {
   color: #31CB9E;
 }
 
+.navSearchWrapper {
+  height: 50px;
+}
+
 .navSearchWrapper:before {
   width: 17px;
   height: 17px;
@@ -859,6 +871,7 @@ input[type="text"] {
   border-radius: initial;
   left: 22px;
   transform: translateY(-50%);
+  top: 25px;
 }
 
 .navSearchWrapper:after {
@@ -866,8 +879,8 @@ input[type="text"] {
   position: absolute;
   display: block;
   width: 1px;
-  height: 100px;
-  top: -8px;
+  height: 50px;
+  top: 0;
   left: -14px;
   background-color: #ececec;
   transform: none;
@@ -947,7 +960,20 @@ input[type="text"] {
   margin-bottom: 10px;
 }
 
+.reactNavSearchWrapper .aa-dropdown-menu {
+  box-shadow: 0 2px 7px 0 #ccc;
+  z-index: 99999 !important;
+}
+
 @media screen and (max-width: 1023px) {
+  .navSearchWrapper {
+    height: initial;
+  }
+
+  .navSearchWrapper:before {
+    top: 20px;
+  }
+
   .fixedHeaderContainer header .headerTitleWithLogo::before,
   .navSearchWrapper:after {
     content: none;
