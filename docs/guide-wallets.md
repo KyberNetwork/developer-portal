@@ -3,16 +3,16 @@ id: WalletsGuide
 title: Wallets Integration Guide
 ---
 ## Introduction
-Suppose you would like to implement the token swap feature for your wallet. The functions you want to interact with are `getExpectedRate()` and the `trade()` function of [`KyberNetworkProxy.sol`](KyberNetworkProxy). In addition, you may want to:
+Suppose you would like to implement the token swap feature for your wallet. The functions you want to interact with are `getExpectedRate()` and the `trade()` function of [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md). In addition, you may want to:
 1. Query the user's maximum tradeable amount
 2. Check the maximum gas price allowed for trade transactions
 3. Query the network state
 4. Obtain the contract address of `KyberNetworkProxy.sol` from `kybernetwork.eth`
 
 ## Obtaining all listed token pair rates
-Call the [token pair API](TrackerAPIGuide#price-and-volume-information) to obtain information about all listed token pairs which you may want to display to your users, such as `baseVolume`, `quoteVolume`, `currentPrice` and `lastPrice`. 
+Call the [token pair API](guide-trackerapi.md#price-and-volume-information) to obtain information about all listed token pairs which you may want to display to your users, such as `baseVolume`, `quoteVolume`, `currentPrice` and `lastPrice`. 
 
-From the list of token pairs, if you'd like to have the latest conversion rates, consider calling the `getExpectedRate()` function of [`KyberNetworkProxy.sol`](KyberNetworkProxy)
+From the list of token pairs, if you'd like to have the latest conversion rates, consider calling the `getExpectedRate()` function of [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md)
 
 ### `getExpectedRate`
 Call this function to obtain the freshest conversion rate of a single token pair
@@ -56,7 +56,7 @@ These amounts should be in the source and destination token decimals respectivel
 This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
 
 #### `walletId`
-If you are part of our [fee sharing program](FeeSharingGuide),  this will be your registered wallet address. Set it as `0` if you are not a participant.
+If you are part of our [fee sharing program](guide-feesharing.md),  this will be your registered wallet address. Set it as `0` if you are not a participant.
 
 ### Converting from ERC20
 **This process involves 2-3 steps.**
@@ -125,7 +125,7 @@ txReceipt = await web3.eth.sendTransaction({
 })
 ```
 
-You may refer to [this code example](CodesAppendix#broadcasting-transactions) of how to sign and send a transaction to the Ethereum network.
+You may refer to [this code example](appendix-codes.md#broadcasting-transactions) of how to sign and send a transaction to the Ethereum network.
 
 ## Maximum Gas Price
 To prevent user front running, the contract limits the gas price transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.

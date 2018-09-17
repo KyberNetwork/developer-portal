@@ -28,9 +28,10 @@
     ],
     "Widget": [
       "WidgetOverview",
-      "WidgetGenerator",
       "WidgetGeneratorGuide",
-      "WidgetSwift"
+      "WidgetGenerator",
+      "WidgetSwift",
+      "WidgetAuthentication"
     ],
     "Appendix": [
       "CodesAppendix"

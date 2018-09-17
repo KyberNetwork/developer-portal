@@ -289,7 +289,7 @@ contract KyberExample {
 	
 		// Mitigate ERC20 Approve front-running attack, by initially setting
 		// allowance to 0
-		require(srcToken.approve(_kyberNetworkProxy, 0));
+		require(token.approve(_kyberNetworkProxy, 0));
 	
 		//approve tokens so network can take them during the swap
 		token.approve(address(_kyberNetworkProxy), tokenQty);
@@ -462,7 +462,7 @@ These amounts should be in the source and destination token decimals respectivel
 This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
 
 #### `walletId`
-If you are part of our [fee sharing program](FeeSharingGuide), this will be your registered wallet address. Set it as `0` if you are not a participant.
+If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set it as `0` if you are not a participant.
 
 
 ### Maximum Gas Price

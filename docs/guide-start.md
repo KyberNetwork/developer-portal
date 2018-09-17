@@ -6,7 +6,7 @@ title: Introduction to Kyber Developer Platform
 
 ## Overview
 
-Kyber is building the decentralized liquidity network that allows open contribution of liquidity from token holders. Our Developer Platform enables a whole new class of decentralized applications, including [payments in multiple tokens](VendorsUseCase), [transparent portfolio rebalancing](DappsUseCase), [in-wallet token swap](WalletsUseCase) and many more.
+Kyber is building the decentralized liquidity network that allows open contribution of liquidity from token holders. Our Developer Platform enables a whole new class of decentralized applications, including [payments in multiple tokens](usecases-vendors.md), [transparent portfolio rebalancing](usecases-dapps.md), [in-wallet token swap](usecases-wallets.md) and many more.
 
 ![How others can work with Kyber Network](/uploads/kyberusecases.png "Use Cases")
 

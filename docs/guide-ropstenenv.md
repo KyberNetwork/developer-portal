@@ -7,7 +7,7 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ### Supported Token Pairs
 https://tracker.kyber.network/api/tokens/supported?chain=ropsten <br><br>
-Read more [here](TrackerAPIGuide#obtaining-all-supported-tokens)
+Read more [here](guide-trackerapi.md#obtaining-all-supported-tokens)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`

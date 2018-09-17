@@ -9,7 +9,7 @@ The below diagram indicates how Kyber can provide better experience for your use
 
 Projects such as Gifto and Request Network will be taking advantages of Kyber’s technology to allow payments in a wide range of tokens and currencies.
 
-Vendors have the opportunity to join our Fee Sharing Program, which allows fee sharing on each payment that originates from your payment gateway. Learn more about the program [here](FeeSharingGuide)!
+Vendors have the opportunity to join our Fee Sharing Program, which allows fee sharing on each payment that originates from your payment gateway. Learn more about the program [here](guide-feesharing.md)!
 
 ## Integrate Your Platform
-To learn about how you can integrate with us as a vendor, please visit [here](VendorsGuide).
+To learn about how you can integrate with us as a vendor, please visit [here](guide-vendors.md).
