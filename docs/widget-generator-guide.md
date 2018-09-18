@@ -47,7 +47,7 @@ Base URL: `https://widget.kyber.network/`
 
 ## FAQ
 
-1. I specify popup/iframe mode, but when user clicks payment button, the browser open the widget in new tab?
+1. I specify popup/iframe mode, but when user clicks payment button, the browser opens the widget in new tab?
 
 **Answer:**
 
