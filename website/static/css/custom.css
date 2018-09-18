@@ -816,7 +816,7 @@ input[type="text"] {
 }
 
 .logo {
-  min-height: 50px;
+  max-height: 50px;
 }
 
 .navigationSlider .slidingNav ul {
