@@ -8,7 +8,7 @@ title: Widget Generator
   name="Generator"
   src=""
   width="100%"
-  height="1190">
+  height="1200">
 </iframe>
 
 <script>  
