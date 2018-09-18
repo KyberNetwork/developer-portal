@@ -3,6 +3,51 @@ id: WidgetGenerator
 title: Widget Generator
 ---
 
+<style>
+    .navPusher article {
+      padding: 0;
+      background: transparent;
+      border: none;
+    }
+    
+    .onPageNav {
+      display: none;
+    }
+    
+    .postHeader {
+      display: none;
+    }
+    
+    .docMainContainer {
+      flex-grow: 1;
+    }
+    
+    @media only screen and (min-width: 1200px) {
+      .docOnPageNav {
+        display: initial;
+        visibility: hidden
+      }
+    
+      .docMainContainer {
+        position: relative
+      }
+    
+      .docMainContainer .wrapper {
+        width: 910px;
+      }
+    }
+    
+    @media only screen and (max-width: 1200px) {
+      .separateOnPageNav .docsNavContainer {
+        flex: 0 0 240px;
+      }
+        
+      .docOnPageNav {
+        display: none;
+      }
+    }
+</style>
+
 <iframe
   id="widget-generator-iframe"
   name="Generator"
@@ -16,15 +61,7 @@ title: Widget Generator
     var defaultWidgetUrl = "https://widget.kyber.network/widget/config/?widget_url=https://widget.kyber.network";
     var fallbackWidgetUrl = "https://widget.knstats.com/widget/config/?widget_url=https://widget.knstats.com";
     var domain = window.location.hostname;
-    var article = document.querySelector("article");
     var iframe = document.getElementById("widget-generator-iframe");
-    article.style.padding = 0;
-    article.style.background = "transparent";
-    article.style.border = "none";
-    document.querySelector('.onPageNav').style.display = "none";
-    document.querySelector('.postHeader').style.display = "none";
-    document.querySelector('.docsNavContainer').style.flex = "0 0 260px";
-    document.querySelector('.docMainContainer').style.cssText = "flex-grow:1;padding-top:10px";
     if (domain === "developer.kyber.network") {
       iframe.src = defaultWidgetUrl;
     } else {
