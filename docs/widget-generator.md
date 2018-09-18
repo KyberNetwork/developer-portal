@@ -23,6 +23,8 @@ title: Widget Generator
     article.style.border = "none";
     document.querySelector('.onPageNav').style.display = "none";
     document.querySelector('.postHeader').style.display = "none";
+    document.querySelector('.docsNavContainer').style.flex = "0 0 260px";
+    document.querySelector('.docMainContainer').style.cssText = "flex-grow:1;padding-top:10px";
     if (domain === "developer.kyber.network") {
       iframe.src = defaultWidgetUrl;
     } else {
