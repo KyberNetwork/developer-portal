@@ -18,15 +18,11 @@ title: Widget Generator
       display: none;
     }
     
-    .docsNavContainer {
-      flex: 0 0 260px;
-    }
-    
     .docMainContainer {
       flex-grow: 1;
     }
     
-    @media only screen and (min-width: 1024px) {
+    @media only screen and (min-width: 1200px) {
       .docOnPageNav {
         display: initial;
         visibility: hidden
@@ -37,7 +33,17 @@ title: Widget Generator
       }
     
       .docMainContainer .wrapper {
-        width: 1073px;
+        width: 910px;
+      }
+    }
+    
+    @media only screen and (max-width: 1200px) {
+      .separateOnPageNav .docsNavContainer {
+        flex: 0 0 240px;
+      }
+        
+      .docOnPageNav {
+        display: none;
       }
     }
 </style>
