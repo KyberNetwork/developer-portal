@@ -60,29 +60,29 @@ Before proceeding with the authentication, you should check that the `CUSTOM_TOK
 
 You then use the `AUTH_CODE` provided to query our site for an `ACCESS_TOKEN`.
 
-    POST https://kyber.network/oauth/token
-        grant_type=authorization_code&
-        code=AUTH_CODE&
-        redirect_uri=REDIRECT_URI&
-        client_id=APP_ID&
-        client_secret=APP_SECRET
+	POST https://kyber.network/oauth/token
+	grant_type=authorization_code&
+	code=AUTH_CODE&
+	redirect_uri=REDIRECT_URI&
+	client_id=APP_ID&
+	client_secret=APP_SECRET
 				
 In order to keep `APP_SECRET` private, this code should be executed server-side. `REDIRECT_URL` must be one you previously used to get the `AUTH_CODE`.
 
 The server will reply with an access token and expiration time (in seconds):
 ```json
-    {
-        "token_type": "bearer", 
-        "access_token": "ACCESS_TOKEN",
-        "expires_in": 3600,
-        "refresh_token": "xxx"
-    }
+{
+	"token_type": "bearer", 
+	"access_token": "ACCESS_TOKEN",
+	"expires_in": 3600,
+	"refresh_token": "xxx"
+}
 ```
 or if there is an error:
 ```json
-    {
-        "error": "invalid_request"
-    }
+{
+	"error": "invalid_request"
+}
 ```
 
 ## Step 4: Call Kyber API
@@ -99,13 +99,16 @@ Endpoint: https://kyber.network/api/user_info
 
 It would return something like this:
 ```json
-    {
-        "uid": "12345",
-        "name": "User Display Name",
-        "contact_type": "email",
-        "contact_id": "demo@gmail.com",
-        "kyc_status": "pending"
-    }
+{
+	"name": "Satoshi Nakamoto",
+	"uid": 42,
+	"contact_type": "telegram",
+	"contact_id": "250735569",
+	"active_wallets":  "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f", "0x8fa07f46353a2b17e92645592a94a0fc1ceb7833"
+	],
+	"kyc_status": "approved",
+	"avatar_url": "https://t.me/i/userpic/320/satoshi.jpg"
+}
 ```
 
 * `contact_type` should be email or telegram. For Telegram users, `contact_id` is his/her telegram ID (number, not the @username).
@@ -116,17 +119,17 @@ If `ACCESS_TOKEN` is invalid, HTTP status code 401 is returned. In that case, it
 
 For other errors, it will return:
 ```json
-    {
-        "error": "some reason"
-    }
+{
+	"error": "some reason"
+}
 ```
 
 ### Application-access APIs
 Application-access APIs are APIs designed for applications, and are not bound to a specific user. To call application-access API, you need to first obtain an application token instead of user token.
 
-    POST https://kyber.network/oauth/token
-        grant_type=client_credentials&
-        client_id=APP_ID&
+	POST https://kyber.network/oauth/token
+	grant_type=client_credentials&
+	client_id=APP_ID&
 				
 Possible returned values are the same as when getting user token mentioned in the previous section. Use the returned application token to call application-access APIs.
 

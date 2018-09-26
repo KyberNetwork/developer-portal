@@ -39,7 +39,12 @@
   },
   "api": {
     "Overview": [
-      "APIs"
+      "APIs",
+      "SmartContractOverview",
+      "RESTOverview"
+    ],
+    "Web": [
+      "Trading"
     ],
     "Smart Contracts": [
       "KyberNetwork",
