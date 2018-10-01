@@ -21,7 +21,7 @@ The diagram below shows how components like the widget, Kyber Network smart cont
 With KyberNetwork, the payment is made on the blockchain. Thus, vendors don't have to trust or rely on any data that comes from KyberNetwork but from the Ethereum network. However, vendors have to implement and run their own monitoring logic to get the payment status from the Ethereum network. Alternatively, in the near future, they may use and run the libraries that KyberNetwork and the community will provide.
 
 ### Monitoring The Status
-Before broadcasting the transaction, the widget will send all information about the payment (depending on the [parameters](#query-string-parameters)), including the *transaction hash*, to the [`callback`](query-string-parameters) passed to the widget. At this point, the vendor's server is responsible to store that *transaction hash* and necessary payment information (e.g. userID, orderID, etc.) to monitor that transaction's status on the Ethereum network. The payment status will be determined based on that *transaction status* and the payment information.
+Before broadcasting the transaction, the widget will send all information about the payment (depending on the [parameters](#query-string-parameters)), including the *transaction hash*, to the [`callback`](#query-string-parameters) passed to the widget. At this point, the vendor's server is responsible to store that *transaction hash* and necessary payment information (e.g. userID, orderID, etc.) to monitor that transaction's status on the Ethereum network. The payment status will be determined based on that *transaction status* and the payment information.
 
 #### Pending Payment
 The payment is pending if the transaction is pending. 
@@ -78,4 +78,4 @@ function paymentStatus(txhash, expectedPayment) -> return status {
 ```
 
 ## Supported tokens
-See all supported tokens [here](https://tracker.kyber.network/#/tokens). Refer to [this section](TrackerAPIGuide#obtaining-all-supported-tokens) for a JSON format of the supported tokens.
+See all supported tokens [here](https://tracker.kyber.network/#/tokens). Refer to [this section](guide-trackerapi.md#obtaining-all-supported-tokens) for a JSON format of the supported tokens.

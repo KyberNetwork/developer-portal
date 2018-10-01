@@ -113,7 +113,7 @@ function swapTokenToTokenWithChange (
 )
 	public
 {
-	uint startSrcBalance = srcToken.balanceOf(this);
+	uint beforeTransferBalance = srcToken.balanceOf(this);
 	
 	//check that tokens has been transferred to this contract
 	require(srcToken.transferFrom(msg.sender, this, srcQty));
@@ -126,9 +126,8 @@ function swapTokenToTokenWithChange (
 	srcToken.approve(address(_kyberNetworkProxy), srcQty);
 
 	_kyberNetworkProxy.trade(srcToken, srcQty, destToken, destAddress, maxDestQty, minRate, 0);
-	uint change = srcToken.balanceOf(this) - startSrcBalance;
+	uint change = srcToken.balanceOf(this) - beforeTransferBalance;
 
-	SwapTokenChange(startSrcBalance, srcToken.balanceOf(this), change);
 	//return any remaining source tokens to user
 	srcToken.transfer(msg.sender, change);
 }
@@ -161,8 +160,6 @@ function swapEtherToTokenWithChange (
 	//change = current balance after trade - starting ETH contract balance (this.balance - (startEthBalance - msg.value))
 	uint change = this.balance - (startEthBalance - msg.value);
 	
-	SwapEtherChange(startEthBalance, this.balance, change);
-	
 	//return change to msg.sender
 	msg.sender.transfer(change);
 }
@@ -187,7 +184,7 @@ function swapTokenToEtherWithChange (
 )
 	public
 {
-	uint startTokenBalance = token.balanceOf(this);
+	uint beforeTransferBalance = srcToken.balanceOf(this);
 	
 	//check that tokens has been transferred to this contract
 	require(token.transferFrom(msg.sender, this, tokenQty));
@@ -200,9 +197,8 @@ function swapTokenToEtherWithChange (
 	token.approve(address(_kyberNetworkProxy), tokenQty);
 	
 	_kyberNetworkProxy.trade(token, tokenQty, ETH_TOKEN_ADDRESS, destAddress, maxDestQty, minRate, 0);
-	uint change = token.balanceOf(this) - startTokenBalance;
+	uint change = srcToken.balanceOf(this) - beforeTransferBalance;
 	
-	SwapTokenChange(startTokenBalance, token.balanceOf(this), change);
 	//return any remaining source tokens to user
 	token.transfer(msg.sender, change);
 }
@@ -289,7 +285,7 @@ contract KyberExample {
 	
 		// Mitigate ERC20 Approve front-running attack, by initially setting
 		// allowance to 0
-		require(srcToken.approve(_kyberNetworkProxy, 0));
+		require(token.approve(_kyberNetworkProxy, 0));
 	
 		//approve tokens so network can take them during the swap
 		token.approve(address(_kyberNetworkProxy), tokenQty);
@@ -318,24 +314,23 @@ contract KyberExample {
 	)
 		public
 	{
-		uint startSrcBalance = srcToken.balanceOf(this);
+	uint beforeTransferBalance = srcToken.balanceOf(this);
 	
-		//check that tokens has been transferred to this contract
-		require(srcToken.transferFrom(msg.sender, this, srcQty));
+	//check that tokens has been transferred to this contract
+	require(srcToken.transferFrom(msg.sender, this, srcQty));
 	
-		// Mitigate ERC20 Approve front-running attack, by initially setting
-		// allowance to 0
-		require(srcToken.approve(_kyberNetworkProxy, 0));
+	// Mitigate ERC20 Approve front-running attack, by initially setting
+	// allowance to 0
+	require(srcToken.approve(_kyberNetworkProxy, 0));
 	
-		//approve tokens so network can take them during the swap
-		srcToken.approve(address(_kyberNetworkProxy), srcQty);
+	//approve tokens so network can take them during the swap
+	srcToken.approve(address(_kyberNetworkProxy), srcQty);
 
-		_kyberNetworkProxy.trade(srcToken, srcQty, destToken, destAddress, maxDestQty, minRate, 0);
-		uint change = srcToken.balanceOf(this) - startSrcBalance;
+	_kyberNetworkProxy.trade(srcToken, srcQty, destToken, destAddress, maxDestQty, minRate, 0);
+	uint change = srcToken.balanceOf(this) - beforeTransferBalance;
 
-		SwapTokenChange(startSrcBalance, srcToken.balanceOf(this), change);
-		//return any remaining source tokens to user
-		srcToken.transfer(msg.sender, change);
+	//return any remaining source tokens to user
+	srcToken.transfer(msg.sender, change);
 	}
 	
 	
@@ -387,24 +382,23 @@ contract KyberExample {
 	)
 		public
 	{
-		uint startTokenBalance = token.balanceOf(this);
+	uint beforeTransferBalance = srcToken.balanceOf(this);
 	
-		//check that tokens has been transferred to this contract
-		require(token.transferFrom(msg.sender, this, tokenQty));
+	//check that tokens has been transferred to this contract
+	require(token.transferFrom(msg.sender, this, tokenQty));
 	
-		// Mitigate ERC20 Approve front-running attack, by initially setting
-		// allowance to 0
-		require(token.approve(_kyberNetworkProxy, 0));
+	// Mitigate ERC20 Approve front-running attack, by initially setting
+	// allowance to 0
+	require(token.approve(_kyberNetworkProxy, 0));
 	
-		//approve tokens so network can take them during the swap
-		token.approve(address(_kyberNetworkProxy), tokenQty);
+	//approve tokens so network can take them during the swap
+	token.approve(address(_kyberNetworkProxy), tokenQty);
 	
-		_kyberNetworkProxy.trade(token, tokenQty, ETH_TOKEN_ADDRESS, destAddress, maxDestQty, minRate, 0);
-		uint change = token.balanceOf(this) - startTokenBalance;
+	_kyberNetworkProxy.trade(token, tokenQty, ETH_TOKEN_ADDRESS, destAddress, maxDestQty, minRate, 0);
+	uint change = srcToken.balanceOf(this) - beforeTransferBalance;
 	
-		SwapTokenChange(startTokenBalance, token.balanceOf(this), change);
-		//return any remaining source tokens to user
-		token.transfer(msg.sender, change);
+	//return any remaining source tokens to user
+	token.transfer(msg.sender, change);
 	}
 }
 ```
@@ -462,7 +456,7 @@ These amounts should be in the source and destination token decimals respectivel
 This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
 
 #### `walletId`
-If you are part of our [fee sharing program](FeeSharingGuide), this will be your registered wallet address. Set it as `0` if you are not a participant.
+If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set it as `0` if you are not a participant.
 
 
 ### Maximum Gas Price

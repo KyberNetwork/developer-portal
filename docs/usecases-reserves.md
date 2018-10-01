@@ -8,7 +8,7 @@ A reserve consists of two main components: one on-chain component of your reserv
 
 ![Kyber Reserve Components](/uploads/kyberreservecomponents.jpg "Kyber Reserve Components")
 
-The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. The off-chain component hosts your [trading strategy](MiscellaneousGuide#trading-strategy) that calculate and feed conversion rates and rebalance your reserve of tokens.
+The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. The off-chain component hosts your [trading strategy](guide-miscellaneous.md#trading-strategy) that calculate and feed conversion rates and rebalance your reserve of tokens.
 
 ## Setup Your Reserve
-Visit [here](ReservesGuide) to see how you can setup your own reserve in a few steps.
+Visit [here](guide-reserves.md) to see how you can setup your own reserve in a few steps.

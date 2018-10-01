@@ -52,8 +52,8 @@ In another, run the script.
 ### Notes
 1. The script uses test tokens, which it generates according to the json file at `smart-contracts/deployment_input.json`.
 2. In the testing part of the script, under `"set eth to dgd rate"`, we initialise rates for 1 token. In order to change/add tokens, this part should be modified.
-3. For more information on how to change/add the set rates functionality, refer to [this section](ReservesGuide#step-2-deploying-contracts).
-4. The validity of rates is determined by calls to `setValidRateDurationInBlocks()`. It is set to a large value (1000000) at the start of the script and reduced to 256 at the end of it. Refer to [the API](ConversionRates#setvalidratedurationinblocks) for more information.
+3. For more information on how to change/add the set rates functionality, refer to [this section](guide-reserves.md#step-2-deploying-contracts).
+4. The validity of rates is determined by calls to `setValidRateDurationInBlocks()`. It is set to a large value (1000000) at the start of the script and reduced to 256 at the end of it. Refer to [the API](api-conversionrates.md#setvalidratedurationinblocks) for more information.
 5. If any problems with rates validity occur, the second call to `setValidRateDurationInBlocks()` can be removed manually.
 
 ## Public testnet deployment
@@ -424,7 +424,7 @@ Given the above example parameters, assume the base buy rate is 100 (1 ETH = 100
 In the case of unforeseen adverse circumstances (Eg. a hack in your automated system or operator accounts), whereby your conversion rate is compromised to be very unfavorable, you may set up additional safeguards in place to protect your reserve.
 
 ##### Sanity Rates
-Operators can set a sanity rate by calling `setSanityRates` and `setReasonableDiff` from `SanityRates.sol` to allow automatic swap disabling if rate inconsistencies exceed a certain percentage between two rate updates. Refer to [this section](MiscellaneousGuide#sanity-rates) and [API documentation](SanityRates) to learn more about sanity rates.
+Operators can set a sanity rate by calling `setSanityRates` and `setReasonableDiff` from `SanityRates.sol` to allow automatic swap disabling if rate inconsistencies exceed a certain percentage between two rate updates. Refer to [this section](guide-miscellaneous.md#sanity-rates) and [API documentation](api-sanityrates.md) to learn more about sanity rates.
 
 ##### Alerters
 As mentioned previously, the role of alerters is to look out for unexpected / malicious behaviour of the reserve and halt operations. They can do so by calling `disableTokenTrade()` in the `ConversionRates.sol`. Thereafter, only the admin account is able to resume operations by calling `enableTokenTrade()` in the same contract.

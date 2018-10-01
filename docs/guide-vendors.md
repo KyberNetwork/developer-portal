@@ -3,10 +3,10 @@ id: VendorsGuide
 title: Vendors Integration Guide
 ---
 ## Introduction
-`getExpectedRate()` and `trade()` of [`KyberNetworkProxy.sol`](KyberNetworkProxy) are the functions you would want to interact with using web3. In addition, you may refer to the [Track Price and Volume](TrackerAPIGuide) section to get the list of compatible token pairs and price information.
+`getExpectedRate()` and `trade()` of [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md) are the functions you would want to interact with using web3. In addition, you may refer to the [Track Price and Volume](guide-trackerapi.md) section to get the list of compatible token pairs and price information.
 
 ## Obtaining listed token pair(s) rates
-For a simple way to obtain the conversion rates of token pairs, call the [token pair API](TrackerAPIGuide#price-and-volume-information). You would want to use either the `currentPrice` or `lastPrice` to convert your product prices to the preferred token choice of your consumer.
+For a simple way to obtain the conversion rates of token pairs, call the [token pair API](guide-trackerapi.md#price-and-volume-information). You would want to use either the `currentPrice` or `lastPrice` to convert your product prices to the preferred token choice of your consumer.
 
 ### `getExpectedRate`
 Call this function to obtain the freshest conversion rate of a single token pair. 
@@ -49,7 +49,7 @@ These amounts should be in the source and destination token decimals respectivel
 This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
 
 #### `walletId`
-If you are part of our [fee sharing program](FeeSharingGuide),  this will be your registered wallet address. Set it as `0` if you are not a participant.
+If you are part of our [fee sharing program](guide-feesharing.md),  this will be your registered wallet address. Set it as `0` if you are not a participant.
 
 ### Maximum Gas Price
 To prevent user front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.

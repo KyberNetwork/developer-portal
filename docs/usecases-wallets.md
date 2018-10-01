@@ -10,7 +10,7 @@ The below diagram shows how Kyber Network can streamline the token conversion sw
 
 Popular wallets like MyEtherWallet, imToken and TrustWallet are already using Kyber Network to empower their users.
 
-Wallets have the opportunity to join our Fee Sharing Program, which allows fee sharing on each swap that originates from your wallet. Learn more about the program [here](FeeSharingGuide)!
+Wallets have the opportunity to join our Fee Sharing Program, which allows fee sharing on each swap that originates from your wallet. Learn more about the program [here](guide-feesharing.md)!
 
 ## Integrate Your Wallet
-To learn about how you can integrate with us as a wallet, please visit [here](WalletsGuide).
+To learn about how you can integrate with us as a wallet, please visit [here](guide-wallets.md).

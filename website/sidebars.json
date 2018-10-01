@@ -28,9 +28,10 @@
     ],
     "Widget": [
       "WidgetOverview",
-      "WidgetGenerator",
       "WidgetGeneratorGuide",
-      "WidgetSwift"
+      "WidgetGenerator",
+      "WidgetSwift",
+      "WidgetAuthentication"
     ],
     "Appendix": [
       "CodesAppendix"
@@ -38,7 +39,12 @@
   },
   "api": {
     "Overview": [
-      "APIs"
+      "APIs",
+      "SmartContractOverview",
+      "RESTOverview"
+    ],
+    "Web": [
+      "Trading"
     ],
     "Smart Contracts": [
       "KyberNetwork",

@@ -37,15 +37,21 @@ const createVariableInjectionPlugin = (variables) => {
 
 // List of global site variables
 const siteVariables = {
-  editBaseURL: 'http://localhost:1336',
+  // editBaseURL: 'http://developer.kyber.network:1336',
 };
 
 // List of projects/orgs using your project for the users page
 const users = [
   {
-    caption: 'User1',
-    image: 'img/kybernetwork.svg',
-    infoLink: 'https://www.facebook.com',
+    caption: 'imToken',
+    image: 'img/users/imToken.png',
+    infoLink: 'https://token.im',
+    pinned: true,
+  },
+  {
+    caption: 'Trust Wallet',
+    image: 'img/users/TrustWallet.png',
+    infoLink: 'https://trustwalletapp.com',
     pinned: true,
   },
 ];
@@ -63,12 +69,12 @@ const siteConfig = {
   },
 
   // Base details
-  title: 'Powering Liquidity for the Ecosystem',
+  title: 'KyberDeveloper · Powering Liquidity for the Ecosystem',
   tagline: 'Platforms and applications of all sizes can tap into Kyber\'s decentralized liquidity network to power their liquidity needs, ranging from inter-token payments to portfolio rebalancing.',
   url: 'https://developer.kyber.network',
   baseUrl: '/',
   projectName: 'kyberdeveloper',
-  organizationName: 'kybernetwork',
+  organizationName: 'Kyber Network',
   twitterUsername: 'kybernetwork',
 
   // Meta card images
@@ -106,7 +112,7 @@ const siteConfig = {
   ],
 
   // Path to images for header/footer
-  headerIcon: 'img/kyber-logo-developer.svg',
+  headerIcon: 'img/headerIcon.svg',
   footerIcon: 'img/footerIcon.svg',
   favicon: 'img/favicon.png',
 
@@ -147,7 +153,7 @@ const siteConfig = {
   onPageNav: 'separate',
 
   // Users set above
-  // users,
+  users,
 };
 
 module.exports = siteConfig;

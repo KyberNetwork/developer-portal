@@ -7,11 +7,11 @@ Please note that contracts `KyberReserve`, `ConversionRates`, and `SanityRates` 
 
 ### Supported Token Pairs
 https://tracker.kyber.network/api/tokens/supported <br><br>
-Read more [here](TrackerAPIGuide#obtaining-all-supported-tokens)
+Read more [here](guide-trackerapi.md#obtaining-all-supported-tokens)
 
 ### Price and Volume
 https://tracker.kyber.network/api/tokens/pairs <br><br>
-Read more [here](TrackerAPIGuide#price-and-volume-information)
+Read more [here](guide-trackerapi.md#price-and-volume-information)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
