@@ -349,7 +349,7 @@ Example:
       "current_bid": 0.001867351485999998,
       "current_ask": 0.0018868074209224932,
       "last_traded": 0.0018868074209224932,
-      "pair": "KNCETH"
+      "pair": "KNC_ETH"
     },
     {
       "timestamp": 1536806619251,
@@ -363,7 +363,7 @@ Example:
       "current_bid": 0.017379117142599983,
       "current_ask": 0.0175141743763495,
       "last_traded": 0.01777996566748282,
-      "pair": "OMGETH"
+      "pair": "OMG_ETH"
     }
   ]
 }
