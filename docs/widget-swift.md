@@ -36,6 +36,25 @@ Add these dependency frameworks below into your project via ([Cocoapods](https:/
   pod 'JavaScriptKit', '~> 1.0'
 ```
 
+NOTE: It is important to put the following codes into pod file as well:
+
+```swift
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if ['JSONRPCKit'].include? target.name
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_VERSION'] = '3.0'
+      end
+    end
+    if ['TrustKeystore'].include? target.name
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Owholemodule'
+      end
+    end
+  end
+end
+```
+
 ## Usage
 
 #### Import KyberWidget
@@ -64,6 +83,7 @@ do {
     receiveAddr: String,
     receiveToken: String,
     receiveAmount: Double?,
+    pinnedTokens: String = "ETH_KNC_DAI",
     network: KWEnvironment, // ETH network, default ropsten
     signer: String? = nil,
     commissionId: String? = nil,
@@ -80,6 +100,7 @@ To use the widget for _swap_ use case:
 do {
   self.coordinator = try KWSwapCoordinator(
     baseViewController: UIViewController,
+    pinnedTokens: String = "ETH_KNC_DAI",
     network: KWEnvironment, // ETH network, default ropsten
     signer: String? = nil,
     commissionId: String? = nil
@@ -95,6 +116,7 @@ do {
     baseViewController: UIViewController,
     receiveToken: String,
     receiveAmount: Double?,
+    pinnedTokens: String = "ETH_KNC_DAI",
     network: KWEnvironment, // ETH network, default ropsten
     signer: String?,
     commissionId: String?
@@ -111,6 +133,8 @@ do {
 - ***receiveToken*** (String) - **required** for _payment_, it is the token that you (vendor) want to receive, for _swap_ or _buy_, it is the token that you want to receive/buy. It can be one of supported tokens (such as ETH, DAI, KNC...).
 
 - ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
+
+-***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token.
 
 - ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible values: `mainnet, production, staging, ropsten, kovan`.
 
@@ -298,3 +322,12 @@ KyberWidget is available under MIT License, see [LICENSE](https://github.com/Kyb
 ## Bugs/Features report
 
 Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a Github issue. 
+
+## Swift 4.2, Xcode 10
+
+Please upgrade your pod by using commands:
+
+```swift
+pod repo update
+pod install
+```
