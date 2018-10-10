@@ -36,7 +36,7 @@ Base URL: `https://widget.kyber.network/`
 | Parameter  | Type | Description   | Default | Example |
 | ------------ | ----- | -------------- | -------- | --------- |
 | `type`                  | string     |  Widget type. Either `pay`, `swap`, or `buy` | `pay` | `pay` |
-| `mode`                  | string     | Behavior of how the widget will appear to the user. Either `tab`, `popup`, or `iframe` | `tab` | `popup` |
+| `mode`                  | string     | Behavior of how the widget will appear to the user. Either `tab`, `popup`, or `iframe` | `popup` | `popup` |
 | `receiveAddr`   | address | Destination wallet address which will receive the destination tokens. | N.A | `0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
 | `receiveToken` | string    | Token symbol of destination token. Has to be a token supported by Kyber. | N.A | ETH<br>DAI |
 | `receiveAmount` | float    | Amount of `receiveToken` | User gets to specify value | 1.2<br>25 |
