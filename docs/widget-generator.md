@@ -53,7 +53,7 @@ title: Widget Generator
   name="Generator"
   src=""
   width="100%"
-  height="1200">
+  height="1250">
 </iframe>
 
 <script>  
