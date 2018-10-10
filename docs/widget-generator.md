@@ -9,39 +9,39 @@ title: Widget Generator
       background: transparent;
       border: none;
     }
-    
+
     .onPageNav {
       display: none;
     }
-    
+
     .postHeader {
       display: none;
     }
-    
+
     .docMainContainer {
       flex-grow: 1;
     }
-    
+
     @media only screen and (min-width: 1200px) {
       .docOnPageNav {
         display: initial;
         visibility: hidden
       }
-    
+
       .docMainContainer {
         position: relative
       }
-    
+
       .docMainContainer .wrapper {
         width: 910px;
       }
     }
-    
+
     @media only screen and (max-width: 1200px) {
       .separateOnPageNav .docsNavContainer {
         flex: 0 0 240px;
       }
-        
+
       .docOnPageNav {
         display: none;
       }

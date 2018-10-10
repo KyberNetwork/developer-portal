@@ -17,7 +17,7 @@ The library comes with a standard, ready-to-use UI. It also lets developers cust
 ## How to add KyberWidget into your project.
 Currently, you have to manually add KyberWidget into your project. [Cocoapods](https://cocoapods.org/) will be available soon.
 
-Download the zip file [here](https://github.com/KyberNetwork/widget-swift/tree/master/KyberWidget/KyberWidget.framework.zip) (then unzip to get `KyberWidget.framework`) or clone this repo to get `KyberWidget.framework` from KyberWidget or example project and add it into your project. 
+Download the zip file [here](https://github.com/KyberNetwork/widget-swift/tree/master/KyberWidget/KyberWidget.framework.zip) (then unzip to get `KyberWidget.framework`) or clone this repo to get `KyberWidget.framework` from KyberWidget or example project and add it into your project.
 
 Go to your project `General settings`, add KyberWidget into `Embedded Binaries`.
 
@@ -34,6 +34,25 @@ Add these dependency frameworks below into your project via ([Cocoapods](https:/
   pod 'KeychainSwift'
   pod 'QRCodeReaderViewController', :git=>'https://github.com/yannickl/QRCodeReaderViewController.git', :branch=>'master'
   pod 'JavaScriptKit', '~> 1.0'
+```
+
+NOTE: It is important to put the following codes into pod file as well:
+
+```swift
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if ['JSONRPCKit'].include? target.name
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_VERSION'] = '3.0'
+      end
+    end
+    if ['TrustKeystore'].include? target.name
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Owholemodule'
+      end
+    end
+  end
+end
 ```
 
 ## Usage
@@ -60,16 +79,17 @@ To use the widget for _pay_ use case:
 ```swift
 do {
   self.coordinator = try KWPayCoordinator(
-    baseViewController: UIViewController,
-    receiveAddr: String,
-    receiveToken: String,
-    receiveAmount: Double?,
-    network: KWEnvironment, // ETH network, default ropsten
-    signer: String? = nil,
-    commissionId: String? = nil,
-    productName: String?,
-    productAvatar: String?,
-    productAvatarImage: UIImage?
+    baseViewController: self,
+    receiveAddr: "0x2262d4f6312805851e3b27c40db2c7282e6e4a49",
+    receiveToken: "ETH",
+    receiveAmount: 0.001604,
+    pinnedTokens: "ETH_KNC_DAI",
+    network: KWEnvironment.ropsten, // ETH network, default ropsten
+    signer: nil,
+    commissionId: nil,
+    productName: "",
+    productAvatar: "https://pbs.twimg.com/media/DVgWFLTVwAAUarj.png",
+    productAvatarImage: nil
   )
 } catch {}
 ```
@@ -79,10 +99,12 @@ To use the widget for _swap_ use case:
 ```swift
 do {
   self.coordinator = try KWSwapCoordinator(
-    baseViewController: UIViewController,
-    network: KWEnvironment, // ETH network, default ropsten
-    signer: String? = nil,
-    commissionId: String? = nil
+    baseViewController: self,
+    pinnedTokens: "ETH_KNC_DAI",
+    defaultPair: "ETH_KNC",
+    network: KWEnvironment.ropsten, // ETH network, default ropsten
+    signer: nil,
+    commissionId: nil
   )
 } catch {}
 ```
@@ -92,15 +114,18 @@ To use the widget for _buy_ use case:
 ```swift
 do {
   self.coordinator = try KWBuyCoordinator(
-    baseViewController: UIViewController,
-    receiveToken: String,
-    receiveAmount: Double?,
-    network: KWEnvironment, // ETH network, default ropsten
-    signer: String?,
-    commissionId: String?
+    baseViewController: self,
+    receiveToken: "ETH",
+    receiveAmount: 0.001604,
+    pinnedTokens: "ETH_KNC_DAI",
+    network: KWEnvironment.ropsten, // ETH network, default ropsten
+    signer: nil,
+    commissionId: nil
   )
 } catch {}
 ```
+
+NOTE: The values are for example only, check out the parameter details below.
 
 ***Parameter details:***
 
@@ -111,6 +136,10 @@ do {
 - ***receiveToken*** (String) - **required** for _payment_, it is the token that you (vendor) want to receive, for _swap_ or _buy_, it is the token that you want to receive/buy. It can be one of supported tokens (such as ETH, DAI, KNC...).
 
 - ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
+
+- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token.
+
+- ***defaultPair*** (string) - default: "ETH_KNC". This param only take effect for *Swap*, it indicates default token pair will show in swap layout.
 
 - ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible values: `mainnet, production, staging, ropsten, kovan`.
 
@@ -154,7 +183,7 @@ func coordinatorDidFailed(with error: KWError) {
   // TODO: handle errors
 }
 ```
-This function is called when something went wrong, some possible errors (please check our *Valid Use cases* below for more details) 
+This function is called when something went wrong, some possible errors (please check our *Valid Use cases* below for more details)
 - `unsupportedToken`: the token you set is not supported by Kyber, or you are performing _payment_ but not set the `receiveToken` value.
 - `invalidAddress(errorMessage: String)`: the receive address is not set as `self` or a valid ETH address, check `errorMessage` for more details.
 - `invalidAmount(errorMessage: String)`: the receive amount is not valid (negative, zero, ...), or if you are performing _swap_, the receive amount must be empty.
@@ -267,7 +296,7 @@ func estimateGasLimit(from: String, to: String?, gasPrice: BigInt, value: BigInt
 - **receiveToken** - **required**:  must be a supported token symbol by KyberNetwork
 - **receiveAmount**: optional value
 
-NOTE: 
+NOTE:
   - In any cases, **receiveAmount** will be ignored if **receiveToken** is empty.
   - `func coordinatorDidFailed(with error: KWError)` will be immediately called after you `start` the coordinator if any parameters are invalid.
 
@@ -297,4 +326,13 @@ KyberWidget is available under MIT License, see [LICENSE](https://github.com/Kyb
 
 ## Bugs/Features report
 
-Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a Github issue. 
+Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a Github issue.
+
+## Swift 4.2, Xcode 10
+
+Please upgrade your pod by using commands:
+
+```swift
+pod repo update
+pod install
+```

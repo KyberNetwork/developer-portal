@@ -5,6 +5,34 @@ title: Trading
 # Trading REST API
 
 *Source*: [https://github.com/KyberNetwork/apis](https://github.com/KyberNetwork/apis)
+
+## What is trading API?
+
+Purpose of this API is to give all of necessary information for a person to use it to sign with his key to make a trade transaction with kyber. Specifically BUY/SELL tokens. For example : Sell DAI to get ETH.
+With this abstraction, he doesn't need to understand kyber nor smart contract interaction. Only need some signing knowledge which can be done easily with the help of web3
+
+## When you should use it?
+You should use it if you don’t want to delve into smart contracts. And When you want to trade with kyber programmatically
+
+## What skills are needed?
+* Basic understanding of REST APIs
+* Understanding of JSON
+* Basic experience in any programming language (Javascript preferred)
+* Basic experience in ethereum tx signing (web3 supports it nicely)
+
+## A simple use case
+
+Suppose you want to build a simple swap application when users will just connect their wallet, swap tokens and leave. Imagine a user comes with DAI token and he wants to convert to KNC. Let’s see (in a normal scenario) what methods need to be called and in what sequence:
+
+Note: this api is meant to support people to sell/buy tokens, not to swap between 2 tokens so lets make it DAI to ETH.
+
+1. Call getInfo to see if DAI is enabled to sell => no and tx_required is 2
+2. Call enableCurrency for DAI and get the info, sign it, broadcast to the network
+3. Call enableCurrency for DAI again (because 2 txs were required), sign it, broadcast to the network
+4. Call getinfo again to check if DAI is enabled yet => yes/no: yes is expected, no is either bug or network delay
+5. If no, try several times to see if it turns yes
+6. Call get sell rate for DAI => get rate X
+7. Call trade with X to get info, sign it, broadcast to the network => at this point, if everything works properly, the trade is supposed to be done after the tx is mined.
 ___
 
 ## INDEX
@@ -24,7 +52,7 @@ ___
 
 ### `/trading/getList`
 
-(GET) Return a list of supported assets.
+(GET) Returns a list of all possible tokens available for trade.
 ___
 **Response:**
 | Parameter  | Type   | Description                                                                                  |
@@ -84,7 +112,7 @@ Example:
 
 ### `/trading/getInfo`
 
-(GET) Return information on supplied user address.
+(GET) Returns a list of token enabled statuses of an Ethereum wallet. It indicates if the wallet can sell a token or not. If not, how many transactions he has to do in order to enable it.
 
 **Arguments:**
 | Parameter      | Type    | Required | Description                                            |
@@ -131,7 +159,7 @@ Example response:
 
 ### ` /trading/enableCurrency`
 
-(GET) Enable asset for trading on Kyber Network.
+(GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to sell as mentioned in #trading-getinfo.
 
 **Arguments:**
 | Parameter        | Type     | Required | Description                                             |
@@ -168,7 +196,7 @@ Example:
 
 ### `/trading/get_ethrate_buy`
 
-(GET) Return the ETH buy rates of an asset.
+(GET) Returns the latest BUY conversion rate in ETH. For example, if you want to know how much ETH do you need to buy 1 DAI, you can use this function.
 
 **Arguments:**
 | Parameter | Type   | Required | Description                                      |
@@ -217,7 +245,8 @@ Example:
 
 ### `/trading/get_ethrate_sell`
 
-(GET) Return the ETH sell rates of an asset.
+(GET) Returns the latest SELL conversion rate in ETH. For example, if you want to know how much ETH you will get by SELLing 1 DAI, you can use this function.
+
 
 **Arguments:**
 | Parameter | Type   | Required | Description                                                |
@@ -272,7 +301,7 @@ Example:
 
 ### `/trading/trade`
 
-(GET) Trade an asset.
+(GET) Trade or convert an asset pair, from token A to token B.
 
 **Arguments:**
 | Parameter      | Type   | Required | Description                                                                                           |
@@ -313,7 +342,7 @@ Example:
 
 ### `/trading/price`
 
-(GET) Retrieve prices and other information for all assets.
+(GET) Retrieve in-depth information about price and other information about assets.
 ___
 **Response:**
 | Parameter          | Type   | Description                                               |

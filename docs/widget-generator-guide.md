@@ -5,7 +5,7 @@ title: Widget Generator Guide
 Go to https://developer.kyber.network/docs/WidgetGenerator. You will see the following interface:
 
 ![Widgetgenerator](/uploads/widgetgenerator.png "Widgetgenerator")
- 
+
 Test out the widget for yourself by clicking on the button!
 
 **Note:**
