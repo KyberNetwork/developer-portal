@@ -153,7 +153,7 @@ const siteConfig = {
   onPageNav: 'separate',
 
   // Users set above
-  users,
+  // users,
 };
 
 module.exports = siteConfig;

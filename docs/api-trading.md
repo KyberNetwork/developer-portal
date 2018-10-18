@@ -6,33 +6,7 @@ title: Trading
 
 *Source*: [https://github.com/KyberNetwork/apis](https://github.com/KyberNetwork/apis)
 
-## What is trading API?
-
-Purpose of this API is to give all of necessary information for a person to use it to sign with his key to make a trade transaction with kyber. Specifically BUY/SELL tokens. For example : Sell DAI to get ETH.
-With this abstraction, he doesn't need to understand kyber nor smart contract interaction. Only need some signing knowledge which can be done easily with the help of web3
-
-## When you should use it?
-You should use it if you don’t want to delve into smart contracts. And When you want to trade with kyber programmatically
-
-## What skills are needed?
-* Basic understanding of REST APIs
-* Understanding of JSON
-* Basic experience in any programming language (Javascript preferred)
-* Basic experience in ethereum tx signing (web3 supports it nicely)
-
-## A simple use case
-
-Suppose you want to build a simple swap application when users will just connect their wallet, swap tokens and leave. Imagine a user comes with DAI token and he wants to convert to KNC. Let’s see (in a normal scenario) what methods need to be called and in what sequence:
-
-Note: this api is meant to support people to sell/buy tokens, not to swap between 2 tokens so lets make it DAI to ETH.
-
-1. Call getInfo to see if DAI is enabled to sell => no and tx_required is 2
-2. Call enableCurrency for DAI and get the info, sign it, broadcast to the network
-3. Call enableCurrency for DAI again (because 2 txs were required), sign it, broadcast to the network
-4. Call getinfo again to check if DAI is enabled yet => yes/no: yes is expected, no is either bug or network delay
-5. If no, try several times to see if it turns yes
-6. Call get sell rate for DAI => get rate X
-7. Call trade with X to get info, sign it, broadcast to the network => at this point, if everything works properly, the trade is supposed to be done after the tx is mined.
+The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. The API currently only supports trades between the supported ERC20 token and ETH.
 ___
 
 ## INDEX
@@ -124,7 +98,7 @@ ___
 |:--------------:|:------:|:-----------------------------------------------------------------------:|
 | `id`           | string | A unique ID used by Kyber Network to identify between different symbols |
 | `enabled`      | bool   | Whether the user address has approved Kyber Network to spend the asset on their behalf. Applicable only to ERC20 tokens. See ‘allowance’ on the ERC20 standard. |
-| `txs_required` | int    | Number pf transactions required until the ID is enabled for trading. When `enabled` is True, `txs_required` is 0. When `enabled` is False, majority of the time `tx_required` is 1. |
+| `txs_required` | int    | Number of transactions required until the ID is enabled for trading. When `enabled` is True, `txs_required` is 0. When `enabled` is False, majority of the time `tx_required` is 1. |
 
 Example response:
 ```json
@@ -208,7 +182,7 @@ ___
 | Parameter | Type   | Description                                                                                    |
 |:---------:|:-------:|:---------------------------------------------------------------------------------------------:|
 | `src_id`  | string  | The `id` of the source asset. It should be ETH for this endpoint.                             |
-| `dst_id`  | string  | The `id` of the destination asset of the pair you want to get rates for. `id` should match one of the request input parameters specified in `id` |
+| `dst_id`  | string  | The `id` of the destination asset of the pair you want to get rates for. `id` should match one of the request input parameters specified in `id`. |
 | `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |
 | `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of the destination asset. They should match the request input parameter specified in `qty`. |
 
@@ -252,14 +226,14 @@ Example:
 | Parameter | Type   | Required | Description                                                |
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
 | `id`      | string | Yes      | The `id` of the assets you want to sell using ETH. |
-| `qty`     | float  | Yes      | A floating point numbers which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to sell. |
+| `qty`     | float  | Yes      | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to sell. |
 ___
 **Response:**
 | Parameter | Type   | Description                                    |
 |:---------:|:-------:|:----------------------:|
-| `src_id`  | string  | the `id` of the destination asset of the pair you want to get rates for. `id` should match the request input parameters specified in `id` |
-| `dst_id`  | string  | The `id` of the source asset. It should be ETH for this endpoint. |
-| `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of the destination asset. They should match the request input parameter specified in `qty`. |
+| `src_id`  | string  | The `id` of the source asset of the pair you want to get rates for. `id` should match the request input parameters specified in `id`. |
+| `dst_id`  | string  | The `id` of the destination asset. It should be ETH for this endpoint. |
+| `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of the source asset. They should match the request input parameter specified in `qty`. |
 | `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |
 
 Example:

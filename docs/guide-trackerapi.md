@@ -3,7 +3,7 @@ id: TrackerAPIGuide
 title: Track Price and Volume
 ---
 
-Our tracker allows you to track information from trading pairs available on Kyber Network, such as the current conversion rate of a token.
+Our tracker allows you to track information from all trading pairs available on Kyber Network, such as the current conversion rate of a token.
 
 ## Obtaining all supported tokens
 Mainnet: https://tracker.kyber.network/api/tokens/supported<br>
@@ -46,6 +46,7 @@ async function main() {
 
 main()
 ```
+</br>
 
 ## Price and Volume Information
 

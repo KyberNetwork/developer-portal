@@ -30,6 +30,9 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 ### `ETH (Ether)`
 `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
+### `KNC (Kyber Network)`
+`0xB2f3dD487708ca7794f633D9Df57Fdb9347a7afF`
+
 ### `OMG (OmiseGO)`
 `0x8870946B0018E2996a7175e8380eb0d43dD09EFE`
 
