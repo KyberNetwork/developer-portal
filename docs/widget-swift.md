@@ -17,7 +17,7 @@ The library comes with a standard, ready-to-use UI. It also lets developers cust
 ## How to add KyberWidget into your project.
 Currently, you have to manually add KyberWidget into your project. [Cocoapods](https://cocoapods.org/) will be available soon.
 
-Download the zip file [here](https://github.com/KyberNetwork/widget-swift/tree/master/KyberWidget/KyberWidget.framework.zip) (then unzip to get `KyberWidget.framework`) or clone this repo to get `KyberWidget.framework` from KyberWidget or example project and add it into your project. 
+Download the zip file [here](https://github.com/KyberNetwork/widget-swift/tree/master/KyberWidget/KyberWidget.framework.zip) (then unzip to get `KyberWidget.framework`) or clone this repo to get `KyberWidget.framework` from KyberWidget or example project and add it into your project.
 
 Go to your project `General settings`, add KyberWidget into `Embedded Binaries`.
 
@@ -183,7 +183,7 @@ func coordinatorDidFailed(with error: KWError) {
   // TODO: handle errors
 }
 ```
-This function is called when something went wrong, some possible errors (please check our *Valid Use cases* below for more details) 
+This function is called when something went wrong, some possible errors (please check our *Valid Use cases* below for more details)
 - `unsupportedToken`: the token you set is not supported by Kyber, or you are performing _payment_ but not set the `receiveToken` value.
 - `invalidAddress(errorMessage: String)`: the receive address is not set as `self` or a valid ETH address, check `errorMessage` for more details.
 - `invalidAmount(errorMessage: String)`: the receive amount is not valid (negative, zero, ...), or if you are performing _swap_, the receive amount must be empty.
@@ -296,7 +296,7 @@ func estimateGasLimit(from: String, to: String?, gasPrice: BigInt, value: BigInt
 - **receiveToken** - **required**:  must be a supported token symbol by KyberNetwork
 - **receiveAmount**: optional value
 
-NOTE: 
+NOTE:
   - In any cases, **receiveAmount** will be ignored if **receiveToken** is empty.
   - `func coordinatorDidFailed(with error: KWError)` will be immediately called after you `start` the coordinator if any parameters are invalid.
 
@@ -326,7 +326,7 @@ KyberWidget is available under MIT License, see [LICENSE](https://github.com/Kyb
 
 ## Bugs/Features report
 
-Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a Github issue. 
+Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a Github issue.
 
 ## Swift 4.2, Xcode 10
 

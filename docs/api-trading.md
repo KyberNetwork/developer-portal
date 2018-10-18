@@ -5,6 +5,8 @@ title: Trading
 # Trading REST API
 
 *Source*: [https://github.com/KyberNetwork/apis](https://github.com/KyberNetwork/apis)
+
+The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. The API currently only supports trades between the supported ERC20 token and ETH.
 ___
 
 ## INDEX
@@ -24,7 +26,7 @@ ___
 
 ### `/trading/getList`
 
-(GET) Return a list of supported assets.
+(GET) Returns a list of all possible tokens available for trade.
 ___
 **Response:**
 | Parameter  | Type   | Description                                                                                  |
@@ -84,7 +86,7 @@ Example:
 
 ### `/trading/getInfo`
 
-(GET) Return information on supplied user address.
+(GET) Returns a list of token enabled statuses of an Ethereum wallet. It indicates if the wallet can sell a token or not. If not, how many transactions he has to do in order to enable it.
 
 **Arguments:**
 | Parameter      | Type    | Required | Description                                            |
@@ -96,7 +98,7 @@ ___
 |:--------------:|:------:|:-----------------------------------------------------------------------:|
 | `id`           | string | A unique ID used by Kyber Network to identify between different symbols |
 | `enabled`      | bool   | Whether the user address has approved Kyber Network to spend the asset on their behalf. Applicable only to ERC20 tokens. See ‘allowance’ on the ERC20 standard. |
-| `txs_required` | int    | Number pf transactions required until the ID is enabled for trading. When `enabled` is True, `txs_required` is 0. When `enabled` is False, majority of the time `tx_required` is 1. |
+| `txs_required` | int    | Number of transactions required until the ID is enabled for trading. When `enabled` is True, `txs_required` is 0. When `enabled` is False, majority of the time `tx_required` is 1. |
 
 Example response:
 ```json
@@ -131,7 +133,7 @@ Example response:
 
 ### ` /trading/enableCurrency`
 
-(GET) Enable asset for trading on Kyber Network.
+(GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to sell as mentioned in #trading-getinfo.
 
 **Arguments:**
 | Parameter        | Type     | Required | Description                                             |
@@ -168,7 +170,7 @@ Example:
 
 ### `/trading/get_ethrate_buy`
 
-(GET) Return the ETH buy rates of an asset.
+(GET) Returns the latest BUY conversion rate in ETH. For example, if you want to know how much ETH do you need to buy 1 DAI, you can use this function.
 
 **Arguments:**
 | Parameter | Type   | Required | Description                                      |
@@ -180,7 +182,7 @@ ___
 | Parameter | Type   | Description                                                                                    |
 |:---------:|:-------:|:---------------------------------------------------------------------------------------------:|
 | `src_id`  | string  | The `id` of the source asset. It should be ETH for this endpoint.                             |
-| `dst_id`  | string  | The `id` of the destination asset of the pair you want to get rates for. `id` should match one of the request input parameters specified in `id` |
+| `dst_id`  | string  | The `id` of the destination asset of the pair you want to get rates for. `id` should match one of the request input parameters specified in `id`. |
 | `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |
 | `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of the destination asset. They should match the request input parameter specified in `qty`. |
 
@@ -217,20 +219,21 @@ Example:
 
 ### `/trading/get_ethrate_sell`
 
-(GET) Return the ETH sell rates of an asset.
+(GET) Returns the latest SELL conversion rate in ETH. For example, if you want to know how much ETH you will get by SELLing 1 DAI, you can use this function.
+
 
 **Arguments:**
 | Parameter | Type   | Required | Description                                                |
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
 | `id`      | string | Yes      | The `id` of the assets you want to sell using ETH. |
-| `qty`     | float  | Yes      | A floating point numbers which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to sell. |
+| `qty`     | float  | Yes      | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to sell. |
 ___
 **Response:**
 | Parameter | Type   | Description                                    |
 |:---------:|:-------:|:----------------------:|
-| `src_id`  | string  | the `id` of the destination asset of the pair you want to get rates for. `id` should match the request input parameters specified in `id` |
-| `dst_id`  | string  | The `id` of the source asset. It should be ETH for this endpoint. |
-| `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of the destination asset. They should match the request input parameter specified in `qty`. |
+| `src_id`  | string  | The `id` of the source asset of the pair you want to get rates for. `id` should match the request input parameters specified in `id`. |
+| `dst_id`  | string  | The `id` of the destination asset. It should be ETH for this endpoint. |
+| `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of the source asset. They should match the request input parameter specified in `qty`. |
 | `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |
 
 Example:
@@ -272,7 +275,7 @@ Example:
 
 ### `/trading/trade`
 
-(GET) Trade an asset.
+(GET) Trade or convert an asset pair, from token A to token B.
 
 **Arguments:**
 | Parameter      | Type   | Required | Description                                                                                           |
@@ -313,7 +316,7 @@ Example:
 
 ### `/trading/price`
 
-(GET) Retrieve prices and other information for all assets.
+(GET) Retrieve in-depth information about price and other information about assets.
 ___
 **Response:**
 | Parameter          | Type   | Description                                               |

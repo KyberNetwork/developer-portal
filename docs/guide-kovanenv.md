@@ -4,7 +4,7 @@ title: Kovan
 ---
 Please note that contracts `KyberReserve` and `ConversionRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these contracts.
 
-
+## Contract Addresses
 ### `KyberNetworkProxy`
 `0x7e6b8b9510D71BF8EF0f893902EbB9C865eEF4Df`
 
@@ -25,3 +25,22 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ### `WhiteList`
 `0x40B4C521d52E744E0fB6DaEF72BE37D4E99E2D2A`
+
+## Token Addresses
+### `ETH (Ether)`
+`0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+
+### `KNC (Kyber Network)`
+`0xB2f3dD487708ca7794f633D9Df57Fdb9347a7afF`
+
+### `OMG (OmiseGO)`
+`0x8870946B0018E2996a7175e8380eb0d43dD09EFE`
+
+### `SALT (Salt)`
+`0xCd43d7410295E54922a2C3CF6F2Dd1BD7D18AbD1`
+
+### `SNT (Status Network)`
+`0x0fA1727EE15Cc6afAB7305e03E06237de66B5EC4`
+
+### `WETH (Wrapped Ether)`
+`0xd0A1E359811322d97991E03f863a0C30C2cF029C`
