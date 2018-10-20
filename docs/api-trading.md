@@ -24,7 +24,7 @@ ___
 
 ### Endpoints
 
-### `/trading/getList`
+### `/currencies`
 
 (GET) Returns a list of all possible tokens available for trade.
 ___
@@ -40,7 +40,7 @@ ___
 Example:
 
 ```json
-> curl "https://dev-api.knstats.com/trading/getList"
+> curl "https://dev-api.knstats.com/currencies"
 {
   "error": false,
   "data": [
@@ -84,7 +84,7 @@ Example:
 ```
 <br />
 
-### `/trading/getInfo`
+### `/:user_address/currencies`
 
 (GET) Returns a list of token enabled statuses of an Ethereum wallet. It indicates if the wallet can sell a token or not. If not, how many transactions he has to do in order to enable it.
 
@@ -102,7 +102,7 @@ ___
 
 Example response:
 ```json
-> curl "https://dev-api.knstats.com/trading/getInfo?user_address=0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F"
+> curl "https://dev-api.knstats.com/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies"
 {
   "error":false,
   "data":[
@@ -131,7 +131,7 @@ Example response:
 ```
 <br />
 
-### ` /trading/enableCurrency`
+### `/:user_address/currencies/:currency_id/enable_data` 
 
 (GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to sell as mentioned in #trading-getinfo.
 
@@ -139,7 +139,7 @@ Example response:
 | Parameter        | Type     | Required | Description                                             |
 |:----------------:|:--------:|:--------:|:-------------------------------------------------------:|
 | `user_address`   | string   | Yes      | The ETH address of the user that will enable the asset. |
-| `id`             | string   | Yes      | The unique ID of the destination asset.                 |
+| `currency_id`    | string   | Yes      | The unique ID of the destination asset.                 |
 | `gas_price`      | string   | Yes      | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
 ___
 **Response:**
@@ -155,7 +155,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/trading/enableCurrency?user_address=0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F&id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&gas_price=medium"
+> curl "https://dev-api.knstats.com/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=medium"
 {
   "from": "0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
   "to": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
@@ -168,7 +168,7 @@ Example:
 ```
 <br />
 
-### `/trading/get_ethrate_buy`
+### `/buy_rate`
 
 (GET) Returns the latest BUY conversion rate in ETH. For example, if you want to know how much ETH do you need to buy 1 DAI, you can use this function.
 
@@ -188,7 +188,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/trading/get_ethrate_buy?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1"
+> curl "https://dev-api.knstats.com/buy_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1"
 {
   "error": false,
   "data": [
@@ -217,7 +217,7 @@ Example:
 ```
 <br />
 
-### `/trading/get_ethrate_sell`
+### `/sell_rate`
 
 (GET) Returns the latest SELL conversion rate in ETH. For example, if you want to know how much ETH you will get by SELLing 1 DAI, you can use this function.
 
@@ -238,7 +238,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/trading/get_ethrate_sell?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&qty=150&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1&qty=20.2&qty=30"
+> curl "https://dev-api.knstats.com/sell_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&qty=150&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1&qty=20.2&qty=30"
 {
   "error": false,
   "data": [
@@ -273,9 +273,9 @@ Example:
 ```
 <br />
 
-### `/trading/trade`
+### `/trade_data`
 
-(GET) Trade or convert an asset pair, from token A to token B.
+(GET) Returns all needed information for a user to sign and do a transaction, to trade or convert an asset pair, from token A to token B.
 
 **Arguments:**
 | Parameter      | Type   | Required | Description                                                                                           |
@@ -300,7 +300,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/trading/trade?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium"
+> curl "https://dev-api.knstats.com/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium"
 {
   "from": "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
   "to": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
@@ -314,7 +314,7 @@ Example:
 ```
 <br />
 
-### `/trading/price`
+### `/market`
 
 (GET) Retrieve in-depth information about price and other information about assets.
 ___
@@ -336,7 +336,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/trading/prices"
+> curl "https://dev-api.knstats.com/market"
 {
   "error": false,
   "data": [
