@@ -84,7 +84,7 @@ Example:
 ```
 <br />
 
-### `/:user_address/currencies`
+### `/users/:user_address/currencies`
 
 (GET) Returns a list of token enabled statuses of an Ethereum wallet. It indicates if the wallet can sell a token or not. If not, how many transactions he has to do in order to enable it.
 
@@ -102,7 +102,7 @@ ___
 
 Example response:
 ```json
-> curl "https://dev-api.knstats.com/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies"
+> curl "https://dev-api.knstats.com/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies"
 {
   "error":false,
   "data":[
@@ -131,7 +131,7 @@ Example response:
 ```
 <br />
 
-### `/:user_address/currencies/:currency_id/enable_data` 
+### `/users/:user_address/currencies/:currency_id/enable_data` 
 
 (GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to sell as mentioned in #trading-getinfo.
 
@@ -155,7 +155,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=medium"
+> curl "https://dev-api.knstats.com/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=medium"
 {
   "from": "0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
   "to": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
