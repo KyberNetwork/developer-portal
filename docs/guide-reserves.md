@@ -10,7 +10,7 @@ Before diving into the details, let’s understand the logic of some parameters 
 * Valid duration gives a time limit to the last price update, when the duration is over trades are stopped until the next price update. 
 * Max imbalance values limit inventory changes since the last price update. Once again, if the imbalance threshold is exceeded for a specific token, trades are blocked until the next price update. 
 * Step functions enable “automatic” price updates. When some token price has a clear trend, automatic price changes could act as a degenerated order book. This way, during periods the reserve manager doesn’t control the price (between updates) steps simulate actual liquidity in an order book market.  
-* Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if thist account is compromised).
+* Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
 
 ## Local testnet deployment
 Here, we will walk you through an example on running the deployment script on [Truffle's Ganache](https://truffleframework.com/ganache).
@@ -122,7 +122,7 @@ In essence, an example of the first part of `reserve_reserve_input.json` would b
 ```
 
 #### Defining withdrawal addresses
-Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the json file, we enable defining per token a few withdrawal addresses and one address per exchange. Note this is only a logical concep,t. This address might be any address you wish to withdraw funds to.  
+Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the json file, we enable defining per token a few withdrawal addresses and one address per exchange. Note this is only a logical concept. This address might be any address you wish to withdraw funds to.  
 
 Let's take a look at the `exchanges` dictionary in `ropsten_reserve_input.json`. Fill in your ETH and KNC withdraw addresses for the purposes of rebalancing your reserve. Note that the `binance` string is just a convention. Also note that **all tokens you wish to support must have withdraw addresses**.
 
