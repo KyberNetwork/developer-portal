@@ -12,11 +12,9 @@ Suppose you would like to implement the token swap feature for your wallet. The 
 ## Obtaining all listed token pair rates
 Call the [token pair API](guide-trackerapi.md#price-and-volume-information) to obtain information about all listed token pairs which you may want to display to your users, such as `baseVolume`, `quoteVolume`, `currentPrice` and `lastPrice`. 
 
-From the list of token pairs, if you'd like to have the latest conversion rates, consider calling the `getExpectedRate()` function of [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md)
-
 ### `getExpectedRate`
-Call this function to obtain the freshest conversion rate of a single token pair
-
+From the list of token pairs, if you'd like to have the latest conversion rates, consider calling the `getExpectedRate()` function of [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md#getexpectedrate).
+<!--Call this function to obtain the freshest conversion rate of a single token pair. 
 | Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address |
@@ -24,39 +22,42 @@ Call this function to obtain the freshest conversion rate of a single token pair
 | `srcQty`  | uint | wei amount of source ERC20 token |
 **Returns:**\
 The expected exchange rate and slippage rate. Note that these returned values are in **18 decimals** regardless of the destination token's decimals
-
 ```js
 let result = await kyberNetworkProxyContract.methods.getExpectedRate(
 	ETH_TOKEN_ADDRESS, //ERC20 src
 	KNC_TOKEN_ADDRESS,  //ERC20 dest
-	ETH_WEI_PRICE //uint srcQty
+	PRODUCT_ETH_WEI_PRICE //uint srcQty
 	).call()
-```
+```-->
 
 ## Making the `trade` transaction
 ### `trade`
-| Parameter           | Type    | Description                                   |
+More information regarding the input parameters of the `trade()` function of can be found in the `KyberNetworkProxy.sol` [reference](api-kybernetworkproxy.md#trade).
+<!--| Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
 | `src`               | ERC20   | source ERC20 token contract address                                  |
 | `srcAmount`         | uint    | wei amount of source ERC20 token                                     |
-| `dest`              | ERC20   | destination ERC20 token contract address                             |
+| `dest`              | ERC20   | destination ER#### Example
+```js
+let result = await kyberNetworkProxyContract.methods.getExpectedRate(
+	ETH_TOKEN_ADDRESS, //ERC20 src
+	KNC_TOKEN_ADDRESS,  //ERC20 dest
+	PRODUCT_ETH_WEI_PRICE //uint srcQty
+	).call()
+```C20 token contract address                             |
 | `destAddress`       | address | recipient address for destination ERC20 token                        |
 | `maxDestAmount`     | uint    | limit on the amount of destination tokens                            |
 | `minConversionRate` | uint    | minimum conversion rate;  trade is canceled if actual rate is lower |
 | `walletId`          | address | wallet address to send part of the fees to                           |
 **Returns:**\
 Amount of actual destination tokens
-
 #### `srcAmount` | `maxDestAmount`
 These amounts should be in the source and destination token decimals respectively. For example, if the user wants to swap from / to 10 POWR, which has 6 decimals, it would be `10 * (10 ** 6) = 10000000`
-
 **Note:**<br>`maxDestAmount` should **not** be `0`. Set it to an arbitarily large amount if you want all source tokens to be converted.
-
 #### `minConversionRate`
 This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
-
 #### `walletId`
-If you are part of our [fee sharing program](guide-feesharing.md),  this will be your registered wallet address. Set it as `0` if you are not a participant.
+If you are part of our [fee sharing program](guide-feesharing.md),  this will be your registered wallet address. Set it as `0` if you are not a participant.-->
 
 ### Converting from ERC20
 **This process involves 2-3 steps.**

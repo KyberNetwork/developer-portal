@@ -9,7 +9,8 @@ It’s an opportunity to be an integrated part of Kyber Network and receive comm
 Anyone can join the program by calling the `registerWallet` function of `KyberRegisterWallet` contract! You may do so using [MyEtherWallet](#myetherwallet), [MyCrypto](#mycrypto) or programmatically via [web3](#web3).
 
 ## How do I earn fees?
-Send your registered wallet address as part of the trade transaction data. The input parameters of the `trade` function are shown below.
+Send your registered wallet address as part of the trade transaction data. More information regarding the input parameters of the `trade` function can be found in [reference](api-kybernetworkproxy.md#trade).</br>
+<!--The input parameters of the `trade` function are shown below.
 | Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
 | `src`               | ERC20   | source ERC20 token contract address                                  |
@@ -19,8 +20,7 @@ Send your registered wallet address as part of the trade transaction data. The i
 | `maxDestAmount`     | uint    | limit on the amount of destination tokens                            |
 | `minConversionRate` | uint    | minimum conversion rate;  trade is canceled if actual rate is lower |
 | `walletId`          | address | wallet address to send part of the fees to                           |
-
-The `walletId` input parameter would be your registered wallet address.
+The `walletId` input parameter would be your registered wallet address.-->
 
 ## Fee Example
 Suppose a user has successfully made a trade transaction of 10 ETH in value. 0.25% of the transaction value is to be paid by reserves in KNC. 30% of this fee paid by the reserves will be given to the registered party.
@@ -34,13 +34,13 @@ Suppose a user has successfully made a trade transaction of 10 ETH in value. 0.2
 ## How do I claim fees?
 Call the `sendFeeToWallet` function of the [fee burner contract](https://etherscan.io/address/0xed4f53268bfdFF39B36E8786247bA3A02Cf34B04). This function **will have to be called for each reserve**. In other words, you would have to iterate through every reserve and call this function for your wallet address. At the moment, our server has a [script](https://github.com/KyberNetwork/smart-contracts/blob/master/scripts/feeHandler.js) to call this function for all wallets once every week.
 
-You may refer to this [code example](#claiming-fees-with-sendfeetowallet) on how you may go about calling the function. This script can be called once every few days, or whenever a reasonable amount has accumulated in your account.
+You may refer to this [code example](#claiming-fees-with-sendfeetowallet) on how you may go about calling the function. This script can be called once every few days, or whenever a reasonable amount has accumulated in your account. More information regarding the input parameters of the `sendFeeToWallet` function can be found in [reference](api-feeburner.md#sendfeetowallet).</br>
 
-###`sendFeeToWallet`
+<!--###`sendFeeToWallet`
 | Parameter     | Type   | Description                                 |
 | ------------- |:------:|:-------------------------------------------:|
 | `wallet`         | address | wallet address to send part of the fees to |
-| `reserve`        | address | reserve's contract address |
+| `reserve`        | address | reserve's contract address |-->
 
 ## Code Examples
 
