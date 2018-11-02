@@ -425,18 +425,16 @@ txReceipt = await web3.eth.sendTransaction({
 
 
 ### `getExpectedRate`
-More information regarding the input parameters of the `getExpectedRate` function can be found in [reference](api-kybernetworkproxy.md#getexpectedrate).
-<!--| Parameter           | Type    | Description                                   |
+| Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address |
 | `dest`    | ERC20 | destination ERC20 token contract address |
 | `srcQty`  | uint | wei amount of source ERC20 token |
 **Returns:**\
-The expected exchange rate and slippage rate. Note that these returned values are in **18 decimals** regardless of the destination token's decimals-->
+The expected exchange rate and slippage rate. Note that these returned values are in **18 decimals** regardless of the destination token's decimals
 
 ### `trade`
-More information regarding the input parameters of the `trade` function can be found in [reference](api-kybernetworkproxy.md#trade).
-<!--| Parameter           | Type    | Description                                   |
+| Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
 | `src`               | ERC20   | source ERC20 token contract address                                  |
 | `srcAmount`         | uint    | wei amount of source ERC20 token                                     |
@@ -447,13 +445,19 @@ More information regarding the input parameters of the `trade` function can be f
 | `walletId`          | address | wallet address to send part of the fees to                           |
 **Returns:**\
 Amount of actual destination tokens
+
 #### `srcAmount` | `maxDestAmount`
 These amounts should be in the source and destination token decimals respectively. For example, if the user wants to swap from / to 10 POWR, which has 6 decimals, it would be `10 * (10 ** 6) = 10000000`
+
 **Note:**<br>`maxDestAmount` should **not** be `0`. Set it to an arbitarily large amount if you want all source tokens to be converted.
+
+
 #### `minConversionRate`
 This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
+
 #### `walletId`
-If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set it as `0` if you are not a participant.-->
+If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set it as `0` if you are not a participant.
+
 
 ### Maximum Gas Price
 To prevent user front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.

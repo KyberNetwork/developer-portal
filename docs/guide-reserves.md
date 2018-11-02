@@ -10,7 +10,7 @@ Before diving into the details, let’s understand the logic of some parameters 
 * Valid duration gives a time limit to the last price update, when the duration is over trades are stopped until the next price update. 
 * Max imbalance values limit inventory changes since the last price update. Once again, if the imbalance threshold is exceeded for a specific token, trades are blocked until the next price update. 
 * Step functions enable “automatic” price updates. When some token price has a clear trend, automatic price changes could act as a degenerated order book. This way, during periods the reserve manager doesn’t control the price (between updates) steps simulate actual liquidity in an order book market.  
-* Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
+* Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if thist account is compromised).
 
 ## Local testnet deployment
 Here, we will walk you through an example on running the deployment script on [Truffle's Ganache](https://truffleframework.com/ganache).
@@ -122,7 +122,7 @@ In essence, an example of the first part of `reserve_reserve_input.json` would b
 ```
 
 #### Defining withdrawal addresses
-Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the json file, we enable defining per token a few withdrawal addresses and one address per exchange. Note this is only a logical concept. This address might be any address you wish to withdraw funds to.  
+Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the json file, we enable defining per token a few withdrawal addresses and one address per exchange. Note this is only a logical concep,t. This address might be any address you wish to withdraw funds to.  
 
 Let's take a look at the `exchanges` dictionary in `ropsten_reserve_input.json`. Fill in your ETH and KNC withdraw addresses for the purposes of rebalancing your reserve. Note that the `binance` string is just a convention. Also note that **all tokens you wish to support must have withdraw addresses**.
 
@@ -214,9 +214,10 @@ First let's understand how the rate in `ConversionRates.sol` is defined and modi
 2. Compact Data
 3. Step Functions
 
-Base rate sets the basic rate per token, and is set separately for buy and sell values. Compact data and step functions enable advanced functionality and serve as modifiers of the base rate. To avoid frequent expensive updates of base rates, compact data enables modification to a group of tokens in one on chain storage operation. Each compact data array is squeezed into one bytes32 parameter and holds modifiers for buy / sell prices of 14 tokens. If your reserve supports more than 1-2 tokens, we recommend updating token rates using the `setCompactData` function to save gas costs for your updates. Finally, step functions enable degenerated order book functionality, whereby rates are modified according to imbalance values. Refer to the [step function section](#step-functions) for details. More information regarding the input parameters of the `setBaseRate` function can be found in [reference](api-conversionrates.md#setbaserate).
+Base rate sets the basic rate per token, and is set separately for buy and sell values. Compact data and step functions enable advanced functionality and serve as modifiers of the base rate. To avoid frequent expensive updates of base rates, compact data enables modification to a group of tokens in one on chain storage operation. Each compact data array is squeezed into one bytes32 parameter and holds modifiers for buy / sell prices of 14 tokens. If your reserve supports more than 1-2 tokens, we recommend updating token rates using the `setCompactData` function to save gas costs for your updates. Finally, step functions enable degenerated order book functionality, whereby rates are modified according to imbalance values. Refer to the [step function section](#step-functions) for details.
 
-<!--Here are the input parameters of the `setBaseRate` function.
+Here are the input parameters of the `setBaseRate` function.
+
 | Input field | Explanation | Examples |
 | ------------- | ------------- | ------------- |
 | `ERC20[] tokens`  | Array of token contract addresses you will be supporting  | `["0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6"]` <br> `["0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6","0xa577731515303F0C0D00E236041855A5C4F114dC"]` |
@@ -225,7 +226,7 @@ Base rate sets the basic rate per token, and is set separately for buy and sell 
 | `bytes14[] buy` | Compact data representation of basis points (bps) with respect to `baseBuy` rates | `[0]`<br>`[0x19302f]` |
 | `bytes14[] sell` | Compact data representation of basis points (bps) with respect to `baseSell` rates | `[0]`<br>`[0xa1503d]` |
 | `uint blockNumber` | Most recent ETH block number (can be obtained on Etherscan) | `3480805` |
-| `uint[] indices` | Index of array to apply the compact data bps rates on | `[0]` |-->
+| `uint[] indices` | Index of array to apply the compact data bps rates on | `[0]` |
 
 #### Single token
 
@@ -358,18 +359,19 @@ function setQtyStepFunction(
 	int[] ySell
 	)
 ```
-More information regarding the input parameters of the `setQtyStepFunction` function can be found in [reference](api-conversionrates.md#setqtystepfunction).
-<!--| Input field | Explanation | Example |
+
+| Input field | Explanation | Example |
 | ------------- | ------------- | ------------- |
 | `ERC20 token`  |  Token contract address | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6` |
 | `int[] xBuy`  | Buy steps in token wei | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
 | `int[] yBuy`  | Buy impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%`  |  `[0,-30,-60,-80]`<br>**Values should be `<=0`** |
 | `int[] xSell`  | Buy steps in token wei | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
 | `int[] ySell`  | Sell impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%`  |  `[0,-30,-60,-80]`<br>**Values should be `<=0`** |
-* Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
-* When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory.-->
 
-Given the example parameters in the reference section, assume the base buy rate is 100 (1 ETH = 100 KNC) and sell rate is 0.01 (1 KNC = 0.01 ETH), different buy and sell quantities will result in different conversion rates as below:
+* Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
+* When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory. 
+
+Given the above example parameters, assume the base buy rate is 100 (1 ETH = 100 KNC) and sell rate is 0.01 (1 KNC = 0.01 ETH), different buy and sell quantities will result in different conversion rates as below:
 
 | Buy/Sell quantity | Actual conversion rate | Explanation |
 | ------------- | ------------- | ------------- |
@@ -394,19 +396,18 @@ function setImbalanceStepFunction(
 	int[] ySell
 	)
 ```
-More information regarding the input parameters of the `setImbalanceStepFunction` function can be found in [reference](api-conversionrates.md#setimbalancestepfunction).
-
-<!--| Input field | Explanation | Example |
+| Input field | Explanation | Example |
 | ------------- | ------------- | ------------- |
 | `ERC20 token`  |  Token contract address | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6` |
 | `int[] xBuy`  | Buy steps in token wei  | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]`|
 | `int[] yBuy`  | Impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` |  `[0,-30,-60,-80]`<br>**Values should be `<=0`** |
 | `int[] xSell`  | Sell steps in token wei | `[-300000000000000000000,-200000000000000000000,-100000000000000000000,0]`|
 | `int[] ySell`  | Impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` | `[-70,-50,-25,0]`<br>**Values should be `<=0`** |
-* Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
-* `yBuy` and `ySell` numbers should always be non-positive (`<=0`) because the smart contract **reduces** the output amount by the Y-value set in each step.-->
 
-Given the example parameters in the reference section, assume the base buy rate is 100 (1 ETH = 100 KNC) and sell rate is 0.01 (1 KNC = 0.01 ETH), different net traded amount will result in different conversion rates as below:
+* Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
+* `yBuy` and `ySell` numbers should always be non-positive (`<=0`) because the smart contract **reduces** the output amount by the Y-value set in each step.
+
+Given the above example parameters, assume the base buy rate is 100 (1 ETH = 100 KNC) and sell rate is 0.01 (1 KNC = 0.01 ETH), different net traded amount will result in different conversion rates as below:
 
 | Net traded amount | Actual conversion rate | Explanation |
 | ------------- | ------------- | ------------- |
@@ -430,7 +431,7 @@ As mentioned previously, the role of alerters is to look out for unexpected / ma
 
 ### Step 4: Deposit tokens to and withdraw tokens from your reserve
 
-A reserve can’t operate without tokens. A reserve that supports ETH-KNC swap pair will need to hold both ETH and KNC so that users can sell and buy KNC from your reserve.
+A reserve can’t operate without tokens. A a reserve that supports ETH-KNC swap pair will need to hold both ETH and KNC so that users can sell and buy KNC from your reserve.
 
 Filling up your reserve is easy. You can transfer tokens to your reserve contract from any address.
 
@@ -442,6 +443,6 @@ However, only authorized accounts have the right to withdraw tokens from the res
 
 ### Step 5: Get your reserve authorized and running
 
-Once you have completed the above steps, you can let any network operator know so that they can approve your reserve and every specific pair you are allowed to list. Kyber Network is currently the only network operator.
+If you have completed above steps, you can let any network operator know so that they can approve your reserve and every specific pair you are allowed to list. Kyber Network is currently the only network operator.
 
-Once approved, you can test your reserve on [KyberSwap](ropsten.kyber.network) Ropsten site! Please note that if there are other reserves listing same swap pair as you, your swap may not get matched with your reserve, because only the reserve that offer best rate will be matched. We can disable other reserves on the testnet to make sure you will swap with your reserve.
+Once you get approved, you can test your reserve on [KyberSwap](ropsten.kyber.network) Ropsten site! Please note that if there are other reserves listing same swap pair as you, your swap may not get matched with your reserve, because only the reserve that offer best rate will be matched. We can disable other reserves on the testnet to make sure you will swap with your reserve.
