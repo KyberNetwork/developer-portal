@@ -3,10 +3,10 @@ id: TradingAPIGuide
 title: Using the Trading API
 ---
 ## Overview
-Our trading API allows you to programmatically interact with the Kyber Network contract without in depth understanding of smart contracts. **The API currently only supports trades between the ETH and ERC20 tokens.**
-## Scenario 1: Alice wants to buy some KNC tokens with ETH. 
-### Step 1a - Check to see if KNC token is supported by getting a list of tokens supported on Kyber Network
-Querying ``https://api.kyber.network/trading/getList`` will return a JSON of tokens supported on Kyber Network.</br>
+Our trading API allows you to programmatically interact with the Kyber Network contract without in depth understanding of smart contracts. **The API currently only supports ETH <-> ERC20 token trades.**
+## Scenario 1: Perform ETH -> KNC (ERC20 token) conversion
+### Step 1a - Check if KNC token is supported
+Querying ``https://api.kyber.network/currencies`` will return a JSON of tokens supported on Kyber Network. Details about the `currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#currencies). </br>
 
 #### Response Description
 | # | Field Name | Description |
@@ -30,7 +30,7 @@ async function getSupportedTokens() {
 await getSupportedTokens()
 ```
 
-#### Output 
+#### Output
 ```json
 {
   "error": false,
@@ -53,8 +53,8 @@ await getSupportedTokens()
   ]
 }
 ```
-### Step 1b - Getting the latest buy conversion rates for KNC in ETH 
-Querying ``https://api.kyber.network/trading/get_ethrate_buy?id=<id>&qty=<qty>`` will return a JSON of the latest buy rate (in ETH) for the specified token.</br>
+### Step 1b - Get KNC/ETH buy rates
+Querying ``https://api.kyber.network/buy_rate?id=<id>&qty=<qty>`` will return a JSON of the latest buy rate (in ETH) for the specified token. Details about the `buy_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#buy-rate).</br>
 
 #### Argument Description
 | # | Field Name | Description |
@@ -96,13 +96,13 @@ await getBuyRates('0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300')
       ],
       "dst_qty": [
         300
-      ]
+      ]ETH -> KNC (ERC20 token)
     }
   ]
 }
 ```
 
-### Step 1c - Making the conversion between the supported ERC20 token and ETH 
+### Step 1c - Making the conversion between the supported ERC20 token and ETH
 Querying ``https://api.kyber.network/trading/trade?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>`` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion between the specified pair.</br>
 
 #### Argument Description
@@ -152,12 +152,88 @@ await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeee
 }
 ```
 
-## Scenario 2: Bob wants to sell some DAI tokens for ETH.
-### Step 2a - Checking to see if DAI token is supported by getting a list of tokens supported on Kyber Network
-Same as [step 1a](#step-1a-check-to-see-if-knc-token-is-supported-by-getting-a-list-of-tokens-supported-on-kyber-network). 
+### Full Code Example
+```js
+var Web3 = require('web3')
+var fetch = require('node-fetch')
+var Tx = require('ethereumjs-tx');
 
-### Step 2b - Getting enabled status information of ERC20 tokens in bob's Ethereum wallet.
-Querying ``https://api.kyber.network/trading/getInfo?user_address=<user_address>`` will return a JSON of enabled statuses of ERC20 tokens in the given address.</br>
+const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io"))
+
+var utils = web3.utils
+
+const ETH_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+const KNC_TOKEN_ADDRESS = "0xdd974d5c2e2928dea5f71b9825b8b646686bd200"
+const ETH_DECIMALS = 18
+const KNC_DECIMALS = 18
+const QTY = 300
+const GAS_PRICE = 'medium'
+const USER_ACCOUNT = '0x97A7eb546FAf2cDA82674821054880eCa92631EF'
+const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex')
+
+
+async function main() {
+
+	/*
+	#################################
+	### CHECK IF KNC IS SUPPORTED ###
+	#################################
+	*/
+
+	let tokensBasicInfoRequest = await fetch('https://api.kyber.network/currencies')
+	let tokensBasicInfo = await tokensBasicInfoRequest.json()
+	let supported = false
+	let i = 0
+
+	for(i; i < tokensBasicInfo.data.length; i++) {
+		if(tokensBasicInfo.data[i].symbol == "KNC") {
+			supported = true
+			break
+		}
+	}
+
+	if(!supported) {
+		console.log("Token is not supported");
+		return
+	}
+
+	/*
+	####################################
+	### GET ETH/KNC CONVERSION RATES ###
+	####################################
+	*/
+
+	let ratesRequest = await fetch('https://api.kyber.network/buy_rate?id=' + KNC_TOKEN_ADDRESS + '&qty=' + QTY)
+	let rates = await ratesRequest.json()
+	let srcQty = rates.data[0].src_qty
+
+	/*
+	#######################
+	### TRADE EXECUTION ###
+	#######################
+	*/
+
+	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + ETH_TOKEN_ADDRESS + '&dst_id=' + KNC_TOKEN_ADDRESS + '&src_qty=' + srcQty + '&min_dst_qty=' + QTY*0.97 + '&gas_price=' + GAS_PRICE)
+    let tradeDetails = await tradeDetailsRequest.json()
+    let rawTx = tradeDetails.data[0]
+    rawTx['chainId'] = 1
+    let tx = new Tx(rawTx)
+    tx.sign(PRIVATE_KEY)
+    let serializedTx = tx.serialize()
+
+    txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
+    console.log(txReceipt)
+}
+
+main()
+```
+
+## Scenario 2: Perform DAI (ERC20 token) -> ETH conversion
+### Step 2a - Check if DAI token is supported
+Same as [step 1a](#step-1a-check-if-knc-token-is-supported).
+
+### Step 2b - Get token enabled status of wallet.
+Querying ``https://api.kyber.network/users/<user_address>/currencies`` will return a JSON of enabled statuses of ERC20 tokens in the given address. Details about the `users/<user_address>/currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies).</br>
 
 #### Argument Description
 | # | Field Name | Description |
@@ -204,7 +280,7 @@ await getEnabledStatuses('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F')
 }
 ```
 
-### Step 2c - Enable a token to be transferred by the KyberNetwork contract 
+### Step 2c - Enable a token to be transferred by the KyberNetwork contract
 Querying ``https://api.kyber.network/trading/enableCurrency?user_address=<user_address>&id=<id>&gas_price=<gas_price>`` will return a JSON of transaction details needed for a user to create and sign a new transaction to approve the KyberNetwork contract to spend tokens on the user's behalf.</br>
 
 #### Argument Description
@@ -251,8 +327,8 @@ await getEnableTokenDetails('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F', '0x89d
 }
 ```
 
-### Step 2d - Getting the latest sell rates for a supported token in ETH 
-Querying ``https://api.kyber.network/trading/get_ethrate_sell?id=<id>&qty=<qty>`` will return a JSON of the latest sell rate for the specified token.</br>
+### Step 2d - Get DAI/ETH sell rates
+Querying ``https://api.kyber.network/sell_rate?id=<id>&qty=<qty>`` will return a JSON of the latest sell rate for the specified token. Details about the `sell_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#sell-rate).</br>
 
 #### Argument Description
 | # | Field Name | Description |
@@ -316,12 +392,123 @@ async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qt
 await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '100', '0.52', 'medium')
 ```
 
-## Scenario 3: Charlie wants to get more info about ZIL/ETH trading pair on Kyber Network.
-### Step 3a - Check to see if ZIL token is supported by getting a list of tokens supported on Kyber Network
-Same as [step 1a](#step-1a-check-to-see-if-knc-token-is-supported-by-getting-a-list-of-tokens-supported-on-kyber-network).
+### Full Code Example
+```js
+var Web3 = require('web3')
+var fetch = require('node-fetch')
+var Tx = require('ethereumjs-tx');
 
-### Step 3b - Retrieving in depth information about ZIL/ETH trading pair.
-Querying https://api.kyber.network/trading/prices will return a JSON of in depth information of all tokens supported on Kyber Network.</br>
+const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io"))
+
+var utils = web3.utils
+
+const ETH_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+const DAI_TOKEN_ADDRESS = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+const ETH_DECIMALS = 18
+const DAI_DECIMALS = 18
+const QTY = 100
+const GAS_PRICE = 'medium'
+const USER_ACCOUNT = '0x97A7eb546FAf2cDA82674821054880eCa92631EF'
+const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex')
+
+
+async function main() {
+
+	/*
+	#################################
+	### CHECK IF DAI IS SUPPORTED ###
+	#################################
+	*/
+
+	let tokensBasicInfoRequest = await fetch('https://api.kyber.network/currencies')
+	let tokensBasicInfo = await tokensBasicInfoRequest.json()
+	let supported = false
+	let i = 0
+
+	for(i; i < tokensBasicInfo.data.length; i++) {
+		if(tokensBasicInfo.data[i].symbol == "DAI") {
+			supported = true
+			break
+		}
+	}
+
+	if(!supported) {
+		console.log("Token is not supported");
+		return
+	}
+
+	/*
+	####################################
+	### GET ENABLED STATUS OF WALLET ###
+	####################################
+	*/
+
+	let enabledStatusesRequest = await fetch('https://api.kyber.network/users/' + USER_ACCOUNT + '/currencies')
+    let enabledStatuses = await enabledStatusesRequest.json()
+    let enabled = false
+    let j = 0
+    for(j; j < enabledStatuses.data.length; j++) {
+    	if(enabledStatuses.data[j].id == DAI_TOKEN_ADDRESS){
+    		enabled = enabledStatuses.data[j].enabled
+    		break
+    	}
+    }
+
+    /*
+	####################################
+	### ENABLE WALLET IF NOT ENABLED ###
+	####################################
+	*/
+
+	if(!enabled) {
+		let enableTokenDetailsRequest = await fetch('https://api.kyber.network/users/' + USER_ACCOUNT + '/currencies/' + DAI_TOKEN_ADDRESS + '/enable_data?gas_price=' + GAS_PRICE)
+    	let enableTokenDetails = await enableTokenDetailsRequest.json()
+    	let rawTx = enableTokenDetails.data
+    	rawTx['chainId'] = 1
+	    let tx = new Tx(rawTx)
+	    tx.sign(PRIVATE_KEY)
+	    let serializedTx = tx.serialize()
+	    txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
+	    console.log(txReceipt)
+	}
+
+	/*
+	####################################
+	### GET DAI/ETH CONVERSION RATES ###
+	####################################
+	*/
+
+	let ratesRequest = await fetch('https://api.kyber.network/sell_rate?id=' + DAI_TOKEN_ADDRESS + '&qty=' + QTY)
+	let rates = await ratesRequest.json()
+	let dstQty = rates.data[0].dst_qty
+
+	/*
+	#######################
+	### TRADE EXECUTION ###
+	#######################
+	*/
+
+	tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + DAI_TOKEN_ADDRESS + '&dst_id=' + ETH_TOKEN_ADDRESS + '&src_qty=' + QTY + '&min_dst_qty=' + dstQty*0.97 + '&gas_price=' + GAS_PRICE)
+    let tradeDetails = await tradeDetailsRequest.json()
+    rawTx = tradeDetails.data[0]
+    rawTx['chainId'] = 1
+    tx = new Tx(rawTx)
+    tx.sign(PRIVATE_KEY)
+    serializedTx = tx.serialize()
+
+    txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
+    console.log(txReceipt)
+}
+
+main()
+```
+
+## Scenario 3: Get ZIL/ETH trading pair info
+### Step 3a - Check if ZIL token is supported
+Same as [step 1a](#step-1a-check-if-knc-token-is-supported).
+
+### Step 3b - Retrieve information about ZIL/ETH pair.
+Querying ``https://api.kyber.network/market`` will return a JSON of in depth information of all tokens supported on Kyber Network.</br>
 
 #### Response Description
 | # | Field Name | Description |
@@ -389,3 +576,56 @@ await getAllPrices()
   ]
 }
 ```
+
+### Full Code Example
+```js
+var fetch = require('node-fetch')
+
+async function main() {
+
+	/*
+	#################################
+	### CHECK IF KNC IS SUPPORTED ###
+	#################################
+	*/
+
+	let tokensBasicInfoRequest = await fetch('https://api.kyber.network/currencies')
+	let tokensBasicInfo = await tokensBasicInfoRequest.json()
+	let supported = false
+	let i = 0
+
+	for(i; i < tokensBasicInfo.data.length; i++) {
+		if(tokensBasicInfo.data[i].symbol == "ZIL") {
+			supported = true
+			break
+		}
+	}
+
+	if(!supported) {
+		console.log("Token is not supported");
+		return
+	}
+
+	/*
+	#################################
+	### GET ZIL/ETH DETAILED INFO ###
+	#################################
+	*/
+
+	let tokensDetailedInfoRequest = await fetch('https://api.kyber.network/market')
+    let tokensDetailedInfo = await tokensDetailedInfoRequest.json()
+    let j = 0
+
+    for(j; j < tokensDetailedInfo.data.length; j++) {
+    	if(tokensDetailedInfo.data[j].quote_symbol == "ZIL") {
+    		console.log(tokensDetailedInfo.data[j])
+    		break
+    	}
+    }
+}
+
+main()
+```
+## Things to note
+### Signing web3 transactions
+This guide assumes that the user has basic understanding of Web3 and how to create and broadcast transactions. If you require more assistance on this, please visit the [Web3 documentation](https://web3js.readthedocs.io/en/1.0/getting-started.html).

@@ -6,7 +6,7 @@ title: Trading
 
 *Source*: [https://github.com/KyberNetwork/apis](https://github.com/KyberNetwork/apis)
 
-The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. The API currently only supports trades between the supported ERC20 token and ETH.
+The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. **The API currently only supports ETH <-> ERC20 trades.**
 ___
 
 ## INDEX
