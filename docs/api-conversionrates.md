@@ -508,8 +508,6 @@ function __setQtyStepFunction__(ERC20[] tokens, int[] xBuy, int[] yBuy, int[] xS
 | `xSell`         | int[]            | array of sell steps in wei amount           |
 | `ySell`         | int[]             | impact on sell rate in basis points (bps). `1 bps = 0.01%` Eg. `-30 = -0.3%`           |
 Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
-* Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
-* When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory. 
 ___
 Web3 Example:
 ```js
@@ -543,8 +541,6 @@ function __setImbalanceStepFunction__(ERC20 token, int[] xBuy, int[] yBuy, int[]
 | `xSell`         | int[]             | array of sell steps in wei amount           |
 | `ySell`         | int[]             | impact on sell rate in basis points (bps). `1 bps = 0.01%` Eg. `-30 = -0.3%`           |
 Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
-* Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
-* `yBuy` and `ySell` numbers should always be non-positive (`<=0`) because the smart contract **reduces** the output amount by the Y-value set in each step.
 ___
 Web3 Example:
 ```js
@@ -552,8 +548,8 @@ ConversionRates.methods.setImbalanceStepFunction(
 	"0xdd974D5C2e2928deA5F71b9825b8b646686BD200", //ERC20 token: KNC
 	[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000] //uint[] xBuy
 	[0,-30,-60,-80] //uint[] yBuy
-	[-300000000000000000000,-200000000000000000000,-100000000000000000000,0] //uint[] xSell
-	[-70,-50,-25,0] //uint[] ySell
+	[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000] //uint[] xSell
+	[0,-30,-60,-80] //uint[] ySell
 ).send(
   {
     from: fromAddress,
