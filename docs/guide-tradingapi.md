@@ -5,6 +5,7 @@ title: Using the Trading API
 ## Overview
 Our trading API allows you to programmatically interact with the Kyber Network contract without in depth understanding of smart contracts. **The API currently only supports trades between the ETH and ERC20 tokens.**
 ## Scenario 1: Alice wants to buy some KNC tokens with ETH. 
+
 ### Step 1a - Check if KNC token is supported
 Querying ``https://api.kyber.network/currencies`` will return a JSON of tokens supported on Kyber Network. Details about the `currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#currencies). </br>
 
@@ -38,7 +39,7 @@ await getSupportedTokens()
     {
       "name": "Ethereum",
       "decimals": 18,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",  
       "symbol": "ETH",
       "id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     },
@@ -53,6 +54,7 @@ await getSupportedTokens()
   ]
 }
 ```
+
 ### Step 1b - Get the latest KNC/ETH buy rates
 Querying ``https://api.kyber.network/buy_rate?id=<id>&qty=<qty>`` will return a JSON of the latest buy rate (in ETH) for the specified token. Details about the `buy_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#buy-rate).</br>
 
