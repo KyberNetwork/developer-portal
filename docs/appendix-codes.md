@@ -52,14 +52,17 @@ main()
 Since `getExpectedRate` returns a rate, not the amount, the following code snippets show how to convert to both source and destination token amounts, taking their decimals into account.
 
 ### `calcSrcQty`
-| Parameter           | Type    | Description                                   |
+More information regarding the input parameters of the `calcSrcQty` function can be found in [reference](api-utils.md#calcsrcqty).
+<!--| Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:------------------------------------:|
 | `dstQty`     | Number | ERC20 destination token amount in its decimals |
 | `srcDecimals`    | Number | ERC20 source token decimals |
 | `dstDecimals`  | Number | ERC20 destination token decimals |
 | `rate`  | Number | src->dst conversion rate, independent of token decimals |
 **Returns:**\
-ERC20 source token amount in its decimals.
+ERC20 source token amount in its decimals.-->
+
+#### Example
 
 ```js
 function calcSrcQty(dstQty, srcDecimals, dstDecimals, rate) {
@@ -77,14 +80,17 @@ function calcSrcQty(dstQty, srcDecimals, dstDecimals, rate) {
 ```
 
 ### `calcDstQty`
-| Parameter           | Type    | Description                                   |
+More information regarding the input parameters of the `calcDstQty` function can be found in [reference](api-utils.md#calcdstqty).
+<!--| Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:------------------------------------:|
 | `srcQty`     | Number | ERC20 source token amount in its decimals |
 | `srcDecimals`    | Number | ERC20 source token decimals |
 | `dstDecimals`  | Number | ERC20 destination token decimals |
 | `rate`  | Number | src->dst conversion rate, independent of token decimals |
 **Returns:**\
-ERC20 destination token amount in its decimals.
+ERC20 destination token amount in its decimals.-->
+
+#### Example
 
 ```js
 function calcDstQty(srcQty, srcDecimals, dstDecimals, rate) {
