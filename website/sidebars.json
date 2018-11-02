@@ -23,6 +23,7 @@
       "VendorsGuide",
       "WalletsGuide",
       "TrackerAPIGuide",
+      "TradingAPIGuide",
       "FeeSharingGuide",
       "MiscellaneousGuide",
       "GettingHelpGuide"
@@ -40,7 +41,12 @@
   },
   "api": {
     "Overview": [
-      "APIs"
+      "APIs",
+      "SmartContractOverview",
+      "RESTOverview"
+    ],
+    "Web": [
+      "Trading"
     ],
     "Smart Contracts": [
       "KyberNetwork",
