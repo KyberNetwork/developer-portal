@@ -8,29 +8,29 @@ Our trading API allows you to programmatically interact with the Kyber Network c
 ### Step 1a - Check if KNC token is supported
 Querying ``https://api.kyber.network/currencies`` will return a JSON of tokens supported on Kyber Network. Details about the `currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#currencies). </br>
 
-#### Response Description
+<!---Response Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | name | Name of the asset in its native chain. |
 | 2 | decimals | Decimals that will be used to round-off the srcQty or dstQty of the asset in other requests. |
 | 3 | address | The address of the asset in its native chain. |
 | 4 | symbol | The symbol of the asset in its native chain. |
-| 5 | id | A unique ID used by Kyber Network to identify between different symbols. |
+| 5 | id | A unique ID used by Kyber Network to identify between different symbols. |-->
 
 #### Code Example
 ```js
 const fetch = require('node-fetch')
 
 async function getSupportedTokens() {
-	let request = await fetch('https://api.kyber.network/trading/getList')
-	let tokensBasicInfo = await request.json()
+	let tokensBasicInfoRequest = await fetch('https://api.kyber.network/currencies')
+	let tokensBasicInfo = await tokensBasicInfoRequest.json()
 	return tokensBasicInfo
 }
 
 await getSupportedTokens()
 ```
 
-#### Output
+#### Output 
 ```json
 {
   "error": false,
@@ -56,28 +56,27 @@ await getSupportedTokens()
 ### Step 1b - Get KNC/ETH buy rates
 Querying ``https://api.kyber.network/buy_rate?id=<id>&qty=<qty>`` will return a JSON of the latest buy rate (in ETH) for the specified token. Details about the `buy_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#buy-rate).</br>
 
-#### Argument Description
+<!--#### Argument Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | id | The `id` of the asset you want to buy using ETH. |
 | 2 | qty | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to buy. |
-
 #### Response Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | src_id | The `id` of the source asset. It should be ETH for this endpoint. |
 | 2 | dst_id | The `id` of the destination asset of the pair you want to get rates for. `id` should match one of the request input parameters specified in `id`. |
 | 3 | src_qty | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |
-| 4 | dst_qty | Array of floating point numbers which will be rounded off to the decimals of the `id` of the destination asset. They should match the request input parameter specified in `qty`. |
+| 4 | dst_qty | Array of floating point numbers which will be rounded off to the decimals of the `id` of the destination asset. They should match the request input parameter specified in `qty`. |-->
 
 #### Code Example
 ```js
 const fetch = require('node-fetch')
 
 async function getBuyRates(id, qty) {
-	let request = await fetch('https://api.kyber.network/trading/get_ethrate_buy?id=' + id + '&qty=' + qty)
-	let buyRates = await request.json()
-	return buyRates
+	let ratesRequest = await fetch('https://api.kyber.network/buy_rate?id=' + id + '&qty=' + qty)
+	let rates = await ratesRequest.json()
+	return rates
 }
 
 await getBuyRates('0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300')
@@ -102,10 +101,10 @@ await getBuyRates('0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300')
 }
 ```
 
-### Step 1c - Making the conversion between the supported ERC20 token and ETH
-Querying ``https://api.kyber.network/trading/trade?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>`` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion between the specified pair.</br>
+### Step 1c - Convert ETH to KNC 
+Querying ``https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>`` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion between the specified pair. Details about the `trade_data` endpoint can be found in the `Trading` section of [reference](api-trading.md#trade-data). </br>
 
-#### Argument Description
+<!--#### Argument Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | user_address | The ETH address that will be executing the swap. |
@@ -114,7 +113,6 @@ Querying ``https://api.kyber.network/trading/trade?user_address=<user_address>&s
 | 4 | src_qty | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the source asset. |
 | 5 | min_dst_qty | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the destination asset. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
 | 6 | gas_price | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
-
 #### Response Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
@@ -124,19 +122,19 @@ Querying ``https://api.kyber.network/trading/trade?user_address=<user_address>&s
 | 4 | value | This will be equal to 0 in hex (0x0) if users trade from token to token or token to ETH (when `src_id` is the source asset of the token, not ETH). This will not be equal to 0 in hex (0x0) if users trade from ETH to token (when `src_id` is the source asset of ETH, not a token) |
 | 5 | gasPrice | Calculated ETHGasStation price according to the user's request. If you need to specify a price value, change this wei hex value. |
 | 6 | nonce | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
-| 7 | gasLimit | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |
+| 7 | gasLimit | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |-->
 
 #### Code Example
 ```js
 const fetch = require('node-fetch')
 
 async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price) {
-	let request = await fetch('https://api.kyber.network/trading/trade?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price)
-	let tradeDetails = await request.json()
+	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price)
+	let tradeDetails = await tradeDetailsRequest.json()
 	return tradeDetails
 }
 
-await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300', '0.6', 'medium')
+await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '0.6', '300', 'medium')
 ```
 
 #### Output
@@ -174,7 +172,7 @@ const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex')
 
 async function main() {
 
-	/*
+	/* 
 	#################################
 	### CHECK IF KNC IS SUPPORTED ###
 	#################################
@@ -197,7 +195,7 @@ async function main() {
 		return
 	}
 
-	/*
+	/* 
 	####################################
 	### GET ETH/KNC CONVERSION RATES ###
 	####################################
@@ -207,7 +205,7 @@ async function main() {
 	let rates = await ratesRequest.json()
 	let srcQty = rates.data[0].src_qty
 
-	/*
+	/* 
 	#######################
 	### TRADE EXECUTION ###
 	#######################
@@ -223,37 +221,36 @@ async function main() {
 
     txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
     console.log(txReceipt)
-}
+}	
 
 main()
 ```
 
 ## Scenario 2: Perform DAI (ERC20 token) -> ETH conversion
 ### Step 2a - Check if DAI token is supported
-Same as [step 1a](#step-1a-check-if-knc-token-is-supported).
+Same as [step 1a](#step-1a-check-if-knc-token-is-supported). 
 
 ### Step 2b - Get token enabled status of wallet.
 Querying ``https://api.kyber.network/users/<user_address>/currencies`` will return a JSON of enabled statuses of ERC20 tokens in the given address. Details about the `users/<user_address>/currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies).</br>
 
-#### Argument Description
+<!--#### Argument Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | user_address | The ETH address to get information from. |
-
 #### Response Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | id | A unique ID used by Kyber Network to identify between different symbols |
 | 2 | enabled | Whether the user address has approved Kyber Network to spend the asset on their behalf. Applicable only to ERC20 tokens. See ‘allowance’ on the ERC20 standard. |
-| 3 | txs_required | Number of transactions required until the ID is `enabled` for trading. When enabled is True, `txs_required` is 0. When `enabled` is False, majority of the time `tx_required` is 1 |
+| 3 | txs_required | Number of transactions required until the ID is `enabled` for trading. When enabled is True, `txs_required` is 0. When `enabled` is False, majority of the time `tx_required` is 1 |-->
 
 #### Code Example
 ```js
 const fetch = require('node-fetch')
 
 async function getEnabledStatuses(user_address) {
-	let request = await fetch('https://api.kyber.network/trading/getInfo?user_address=' + user_address)
-	let enabledStatuses = await request.json()
+	let enabledStatusesRequest = await fetch('https://api.kyber.network/users/' + user_address + '/currencies')
+	let enabledStatuses = await enabledStatusesRequest.json()
 	return enabledStatuses
 }
 
@@ -280,16 +277,15 @@ await getEnabledStatuses('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F')
 }
 ```
 
-### Step 2c - Enable a token to be transferred by the KyberNetwork contract
-Querying ``https://api.kyber.network/trading/enableCurrency?user_address=<user_address>&id=<id>&gas_price=<gas_price>`` will return a JSON of transaction details needed for a user to create and sign a new transaction to approve the KyberNetwork contract to spend tokens on the user's behalf.</br>
+### Step 2c - Enable DAI for transfer 
+Querying ``https://api.kyber.network/users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>`` will return a JSON of transaction details needed for a user to create and sign a new transaction to approve the KyberNetwork contract to spend tokens on the user's behalf. Details about the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies-currency-id-enable-data).</br>
 
-#### Argument Description
+<!--#### Argument Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | user_address | The ETH address to get information from. |
 | 2 | id | The unique ID of the destination asset. |
 | 3 | gas_price | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
-
 #### Response Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
@@ -299,15 +295,15 @@ Querying ``https://api.kyber.network/trading/enableCurrency?user_address=<user_a
 | 4 | value | Should always be equal to 0 for this operation. Always verify that the value is 0 for security reasons. |
 | 5 | gasPrice | Calculated ETHGasStation price according to the user's request. If you need to specify a price value, change this wei hex value. |
 | 6 | nonce | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
-| 7 | gasLimit | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |
+| 7 | gasLimit | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |-->
 
 #### Code Example
 ```js
 const fetch = require('node-fetch')
 
 async function getEnableTokenDetails(user_address, id, gas_price) {
-	let request = await fetch('https://api.kyber.network/trading/enableCurrency?user_address=' + user_address + '&id=' + id + '&gas_price' + gas_price)
-	let enableTokenDetails = await request.json()
+	let enableTokenDetailsRequest = await fetch('https://api.kyber.network/users/' + user_address + '/currencies/' + id + '/enable_data?gas_price=' + gas_price)
+	let enableTokenDetails = await enableTokenDetailsRequest.json()
 	return enabletokenDetails
 }
 
@@ -330,27 +326,26 @@ await getEnableTokenDetails('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F', '0x89d
 ### Step 2d - Get DAI/ETH sell rates
 Querying ``https://api.kyber.network/sell_rate?id=<id>&qty=<qty>`` will return a JSON of the latest sell rate for the specified token. Details about the `sell_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#sell-rate).</br>
 
-#### Argument Description
+<!--#### Argument Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | id | The `id` of the assets you want to sell using ETH. |
 | 2 | qty | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to sell. |
-
 #### Response Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | src_id | The `id` of the source asset of the pair you want to get rates for. `id` should match the request input parameters specified in `id`. |
 | 2 | dst_id | The `id` of the destination asset. It should be ETH for this endpoint. |
 | 3 | src_qty | Array of floating point numbers which will be rounded off to the decimals of the `id` of the source asset. They should match the request input parameter specified in `qty`. |
-| 4 | dst_qty | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |
+| 4 | dst_qty | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |-->
 
 #### Code Example
 ```js
 const fetch = require('node-fetch')
 
 async function getSellRates(id, qty) {
-	let request = await fetch('https://api.kyber.network/trading/get_ethrate_sell?id=' + id + '&qty=' + qty)
-	let sellRates = await request.json()
+	let ratesRequest = await fetch('https://api.kyber.network/sell_rate?id=' + id + '&qty=' + qty)
+	let sellRates = await ratesRequest.json()
 	return sellRates
 }
 
@@ -376,16 +371,16 @@ await getSellRates('0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '100')
 }
 ```
 
-### Step 2e - Making the conversion between the supported ERC20 token and ETH
-Similar to [step 1c](#step-1c-making-the-conversion-between-the-supported-erc20-token-and-eth).
+### Step 2e - Convert DAI to ETH 
+Similar to [step 1c](#step-1c-convert-eth-to-knc).
 
 #### Code Example
 ```js
 const fetch = require('node-fetch')
 
 async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price) {
-	let request = await fetch('https://api.kyber.network/trading/trade?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price)
-	let tradeDetails = await request.json()
+	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price)
+	let tradeDetails = await tradeDetailsRequest.json()
 	return tradeDetails
 }
 
@@ -414,7 +409,7 @@ const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex')
 
 async function main() {
 
-	/*
+	/* 
 	#################################
 	### CHECK IF DAI IS SUPPORTED ###
 	#################################
@@ -437,7 +432,7 @@ async function main() {
 		return
 	}
 
-	/*
+	/* 
 	####################################
 	### GET ENABLED STATUS OF WALLET ###
 	####################################
@@ -454,7 +449,7 @@ async function main() {
     	}
     }
 
-    /*
+    /* 
 	####################################
 	### ENABLE WALLET IF NOT ENABLED ###
 	####################################
@@ -472,7 +467,7 @@ async function main() {
 	    console.log(txReceipt)
 	}
 
-	/*
+	/* 
 	####################################
 	### GET DAI/ETH CONVERSION RATES ###
 	####################################
@@ -482,7 +477,7 @@ async function main() {
 	let rates = await ratesRequest.json()
 	let dstQty = rates.data[0].dst_qty
 
-	/*
+	/* 
 	#######################
 	### TRADE EXECUTION ###
 	#######################
@@ -498,7 +493,7 @@ async function main() {
 
     txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
     console.log(txReceipt)
-}
+}	
 
 main()
 ```
@@ -510,7 +505,7 @@ Same as [step 1a](#step-1a-check-if-knc-token-is-supported).
 ### Step 3b - Retrieve information about ZIL/ETH pair.
 Querying ``https://api.kyber.network/market`` will return a JSON of in depth information of all tokens supported on Kyber Network.</br>
 
-#### Response Description
+<!--#### Response Description
 | # | Field Name | Description |
 | ---------- | ---------- | ---------- |
 | 1 | timestamp | Server timestamp in UTC. |
@@ -524,15 +519,15 @@ Querying ``https://api.kyber.network/market`` will return a JSON of in depth inf
 | 9 | current_bid | Current (considering some X minute delay) BID price. |
 | 10 | current_ask | Current (considering some X minute delay) ASK price. |
 | 11 | last_traded | Pair name consisting of the quote and base asset symbols. |
-| 12 | pair | Pair name consisting of the quote and base asset symbols. |
+| 12 | pair | Pair name consisting of the quote and base asset symbols. |-->
 
 #### Code Example
 ```js
 const fetch = require('node-fetch')
 
 async function getAllPrices() {
-	let request = await fetch('https://api.kyber.network/trading/prices')
-	let tokensDetailedInfo = await request.json()
+	let tokensDetailedInfoRequest = await fetch('https://api.kyber.network/market')
+	let tokensDetailedInfo = await tokensDetailedInfoRequest.json()
 	return tokensDetailedInfo
 }
 
@@ -583,7 +578,7 @@ var fetch = require('node-fetch')
 
 async function main() {
 
-	/*
+	/* 
 	#################################
 	### CHECK IF KNC IS SUPPORTED ###
 	#################################
@@ -606,7 +601,7 @@ async function main() {
 		return
 	}
 
-	/*
+	/* 
 	#################################
 	### GET ZIL/ETH DETAILED INFO ###
 	#################################
@@ -622,7 +617,7 @@ async function main() {
     		break
     	}
     }
-}
+}	
 
 main()
 ```
