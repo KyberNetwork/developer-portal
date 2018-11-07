@@ -15,7 +15,8 @@
       "MainnetEnvGuide",
       "RopstenEnvGuide",
       "RinkebyEnvGuide",
-      "KovanEnvGuide"
+      "KovanEnvGuide",
+      "ABIEnvGuide"
     ],
     "Guides": [
       "ReservesGuide",

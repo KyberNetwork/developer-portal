@@ -358,7 +358,7 @@ const maxDestAmount = new web3.utils.BN(Math.pow(2, 255).toString);
 const minConversionRate = new web3.utils.BN('55555');
 const walletId = '0x0000000000000000000000000000000000000000';
 
-transactionData = KyberNetworkProxy.methods.swapTokenToToken(
+transactionData = KyberNetworkProxy.methods.trade(
 	src,
 	srcAmount,
 	dest,

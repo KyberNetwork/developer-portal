@@ -6,7 +6,7 @@ title: Trading
 
 *Source*: [https://github.com/KyberNetwork/apis](https://github.com/KyberNetwork/apis)
 
-The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. **The API currently only supports ETH <-> ERC20 trades.**
+The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of smart contracts. **The API currently only supports ETH <-> ERC20 trades.**
 ___
 
 ## INDEX
@@ -17,8 +17,8 @@ ___
 
 | Network    | URL                          |
 |:----------:|:----------------------------:|
-| Test       | https://dev-api.knstats.com  |
-| Production | https://api.kyber.network    |
+| Test (Ropsten)       | https://dev-api.knstats.com  |
+| Production (Mainnet)  | https://api.kyber.network    |
 
 ## REFERENCE
 
@@ -40,46 +40,40 @@ ___
 Example:
 
 ```json
-> curl "https://dev-api.knstats.com/currencies"
+> curl "https://api.kyber.network/currencies"
 {
-  "error": false,
-  "data": [
-    {
-      "name": "Ethereum",
-      "decimals": 18,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
-      "id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-    },
-    {
-      "name": "Kyber Network",
-      "decimals": 18,
-      "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-      "symbol": "KNC",
-      "id": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200"
-    },
-    {
-      "name": "OmiseGO",
-      "decimals": 18,
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "symbol": "OMG",
-      "id": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07"
-    },
-    {
-      "name": "Status Network",
-      "decimals": 18,
-      "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
-      "symbol": "SNT",
-      "id": "0x744d70fdbe2ba4cf95131626614a1763df805b9e"
-    },
-    {
-      "name": "AELF",
-      "decimals": 18,
-      "address": "0xbf2179859fc6d5bee9bf9158632dc51678a4100e",
-      "symbol": "ELF",
-      "id": "0xbf2179859fc6d5bee9bf9158632dc51678a4100e"
-    }
-  ]
+	"error": false,
+	"data": [
+		{
+			"name": "Ethereum",
+			"decimals": 18,
+			"address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+			"symbol": "ETH",
+			"id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+		},
+		{
+			"name": "Kyber Network",
+			"decimals": 18,
+			"address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+			"symbol": "KNC",
+			"id": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200"
+		},
+		{
+			"name": "OmiseGO",
+			"decimals": 18,
+			"address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+			"symbol": "OMG",
+			"id": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07"
+		},
+		{
+			"name": "Status Network",
+			"decimals": 18,
+			"address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+			"symbol": "SNT",
+			"id": "0x744d70fdbe2ba4cf95131626614a1763df805b9e"
+		},
+		...
+	]
 }
 ```
 <br />
@@ -102,31 +96,27 @@ ___
 
 Example response:
 ```json
-> curl "https://dev-api.knstats.com/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies"
+> curl "https://api.kyber.network/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies"
 {
-  "error":false,
-  "data":[
-    {
-      "id":"0xbf2179859fc6d5bee9bf9158632dc51678a4100e",
-      "enabled":true,
-      "txs_required":0
-    },
-    {  
-      "id":"0x595832f8fc6bf59c85c527fec3740a1b7a361269",
-      "enabled":false,
-      "txs_required":1
-    },
-    {  
-      "id":"0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "enabled":true,
-      "txs_required":0
-    },
-    {  
-      "id":"0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
-      "enabled":true,
-      "txs_required":0
-    }
-  ]
+	"error":false,
+	"data":[
+		{
+			"id":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+			"enabled":true,
+			"txs_required":0
+		},
+		{  
+			"id":"0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab",
+			"enabled":false,
+			"txs_required":1
+		},
+		{
+			"id":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+			"enabled":true,
+			"txs_required":0
+		},
+		...
+	]
 }
 ```
 <br />
@@ -155,15 +145,20 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=medium"
+> curl "https://api.kyber.network/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab/enable_data?gas_price=medium"
 {
-  "from": "0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
-  "to": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
-  "data": "0x095ea7b3000000000000000000000000818e6fecd516ecc3849daf6845e3ec868087b7558000000000000000000000000000000000000000000000000000000000000000",
-  "value": "0x0",
-  "gasPrice": "0x6",
-  "nonce": "0x3de",
-  "gasLimit": "0x186a0"
+	"error":false,
+	"data":[
+		{
+			"from": "0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
+			"to": "0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab",
+			"data": "0x095ea7b3000000000000000000000000818e6fecd516ecc3849daf6845e3ec868087b7558000000000000000000000000000000000000000000000000000000000000000",
+			"value": "0x0",
+			"gasPrice": "0x2540be400",
+			"nonce": "0x4ef",
+			"gasLimit": "0xd3d6"
+		}
+	]
 }
 ```
 <br />
@@ -188,31 +183,31 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/buy_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1"
+> curl "https://api.kyber.network/buy_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1"
 {
-  "error": false,
-  "data": [
-    {
-      "src_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "dst_id": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
-      "src_qty": [
-        0.5671077504725898
-      ],
-      "dst_qty": [
-        300
-      ]
-    },
-    {
-      "src_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "dst_id": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
-      "src_qty": [
-        0.18035714285714283
-      ],
-      "dst_qty": [
-        10.1
-      ]
-    }
-  ]
+	"error": false,
+	"data": [
+		{
+			"src_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+			"dst_id": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
+			"src_qty": [
+				0.5671077504725898
+			],
+			"dst_qty": [
+				300
+			]
+		},
+		{
+			"src_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+			"dst_id": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+			"src_qty": [
+				0.18035714285714283
+			],
+			"dst_qty": [
+				10.1
+			]
+		}
+	]
 }
 ```
 <br />
@@ -238,37 +233,37 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/sell_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&qty=150&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1&qty=20.2&qty=30"
+> curl "https://api.kyber.network/sell_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&qty=150&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1&qty=20.2&qty=30"
 {
-  "error": false,
-  "data": [
-    {
-      "src_id": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
-      "dst_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "src_qty": [
-        300,
-        150
-      ],
-      "dst_qty": [
-        0.55963380759,
-        0.279816903795
-      ]
-    },
-    {
-      "src_id": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
-      "dst_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "src_qty": [
-        10.1,
-        20.2,
-        30
-      ],
-      "dst_qty": [
-        0.17552908314026,
-        0.35105816628052,
-        0.521373514278
-      ]
-    }
-  ]
+	"error": false,
+	"data": [
+		{
+			"src_id": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
+			"dst_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+			"src_qty": [
+				300,
+				150
+			],
+			"dst_qty": [
+				0.55963380759,
+				0.279816903795
+			]
+		},
+		{
+			"src_id": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+			"dst_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+			"src_qty": [
+				10.1,
+				20.2,
+				30
+			],
+			"dst_qty": [
+				0.17552908314026,
+				0.35105816628052,
+				0.521373514278
+			]
+		}
+	]
 }
 ```
 <br />
@@ -300,15 +295,20 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium"
+> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium"
 {
-  "from": "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
-  "to": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
-  "data": "0xcb3c28c7000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000044364c5bb0000000000000000000000000000dd974d5c2e2928dea5f71b9825b8b646686bd2000000000000000000000000008fa07f46353a2b17e92645592a94a0fc1ceb783f800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001b1ae4d6e2ef5000000000000000000000000000000000000000000000000000000000000000000000",
-  "value": "0x44364c5bb0000",
-  "gasPrice": "0x39eda2b80",
-  "nonce": "0x3f1",
-  "gasLimit": "0x43d81"
+	"error": false,
+	"data": [
+		{
+			"from": "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
+			"to": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
+			"data": "0xcb3c28c7000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000044364c5bb0000000000000000000000000000dd974d5c2e2928dea5f71b9825b8b646686bd2000000000000000000000000008fa07f46353a2b17e92645592a94a0fc1ceb783f800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001b1ae4d6e2ef5000000000000000000000000000000000000000000000000000000000000000000000",
+			"value": "0x44364c5bb0000",
+			"gasPrice": "0x39eda2b80",
+			"nonce": "0x3f1",
+			"gasLimit": "0x43d81"
+		}
+	]
 }
 
 ```
@@ -336,38 +336,38 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/market"
+> curl "https://api.kyber.network/market"
 {
-  "error": false,
-  "data": [
-    {
-      "timestamp": 1536806619250,
-      "quote_symbol": "KNC",
-      "base_symbol": "ETH",
-      "past_24h_high": 0.001937984496124031,
-      "past_24h_low": 0.001857617770187944,
-      "usd_24h_volume": 5566.2079180166,
-      "eth_24h_volume": 31.8094685833,
-      "token_24h_volume": 16865.433010686364,
-      "current_bid": 0.001867351485999998,
-      "current_ask": 0.0018868074209224932,
-      "last_traded": 0.0018868074209224932,
-      "pair": "KNC_ETH"
-    },
-    {
-      "timestamp": 1536806619251,
-      "quote_symbol": "OMG",
-      "base_symbol": "ETH",
-      "past_24h_high": 0.018518518518518517,
-      "past_24h_low": 0.017266283397471997,
-      "usd_24h_volume": 13871.8906588085,
-      "eth_24h_volume": 78.4248866967,
-      "token_24h_volume": 4381.367829085394,
-      "current_bid": 0.017379117142599983,
-      "current_ask": 0.0175141743763495,
-      "last_traded": 0.01777996566748282,
-      "pair": "OMG_ETH"
-    }
-  ]
+	"error": false,
+	"data": [
+		{
+			"timestamp": 1536806619250,
+			"quote_symbol": "KNC",
+			"base_symbol": "ETH",
+			"past_24h_high": 0.001937984496124031,
+			"past_24h_low": 0.001857617770187944,
+			"usd_24h_volume": 5566.2079180166,
+			"eth_24h_volume": 31.8094685833,
+			"token_24h_volume": 16865.433010686364,
+			"current_bid": 0.001867351485999998,
+			"current_ask": 0.0018868074209224932,
+			"last_traded": 0.0018868074209224932,
+			"pair": "KNC_ETH"
+		},
+		{
+			"timestamp": 1536806619251,
+			"quote_symbol": "OMG",
+			"base_symbol": "ETH",
+			"past_24h_high": 0.018518518518518517,
+			"past_24h_low": 0.017266283397471997,
+			"usd_24h_volume": 13871.8906588085,
+			"eth_24h_volume": 78.4248866967,
+			"token_24h_volume": 4381.367829085394,
+			"current_bid": 0.017379117142599983,
+			"current_ask": 0.0175141743763495,
+			"last_traded": 0.01777996566748282,
+			"pair": "OMG_ETH"
+		}
+	]
 }
 ```

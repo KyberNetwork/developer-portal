@@ -154,7 +154,7 @@ await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeee
 ```js
 var Web3 = require('web3')
 var fetch = require('node-fetch')
-var Tx = require('ethereumjs-tx');
+var Tx = require('ethereumjs-tx')
 
 const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io"))
 
@@ -191,7 +191,7 @@ async function main() {
 	}
 
 	if(!supported) {
-		console.log("Token is not supported");
+		console.log("Token is not supported")
 		return
 	}
 
@@ -345,8 +345,8 @@ const fetch = require('node-fetch')
 
 async function getSellRates(id, qty) {
 	let ratesRequest = await fetch('https://api.kyber.network/sell_rate?id=' + id + '&qty=' + qty)
-	let sellRates = await ratesRequest.json()
-	return sellRates
+	let rates = await ratesRequest.json()
+	return rates
 }
 
 await getSellRates('0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '100')
@@ -391,7 +391,7 @@ await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0x89d24a6b4
 ```js
 var Web3 = require('web3')
 var fetch = require('node-fetch')
-var Tx = require('ethereumjs-tx');
+var Tx = require('ethereumjs-tx')
 
 const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io"))
 
@@ -428,7 +428,7 @@ async function main() {
 	}
 
 	if(!supported) {
-		console.log("Token is not supported");
+		console.log("Token is not supported")
 		return
 	}
 
@@ -597,7 +597,7 @@ async function main() {
 	}
 
 	if(!supported) {
-		console.log("Token is not supported");
+		console.log("Token is not supported")
 		return
 	}
 

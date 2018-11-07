@@ -2,7 +2,7 @@
 id: VendorsUseCase
 title: Vendors
 ---
-Kyber Network’s instant token-to-token swap allows businesses to empower their users with greater flexibility and variety. Our platform enables customers and businesses to pay and receive payments in their token of choice – all with just a single transaction. With Kyber, you can now expand your scope of business to token users of all kinds.
+The Kyber protocol empowers businesses and their users with greater flexibility and variety through our seamless token swaps. Our protocol enables customers and businesses to pay and receive payments in their token of choice – all within a single transaction, thus expanding the scope of your business to token users of all kind.
 
 The below diagram indicates how Kyber can provide better experience for your users.
 ![Kybervendors](/uploads/kybervendors.jpg "Kyber Vendors")
