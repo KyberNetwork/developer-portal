@@ -3,9 +3,8 @@ id: TradingAPIGuide
 title: Using the Trading API
 ---
 ## Overview
-Our trading API allows you to programmatically interact with the Kyber Network contract without in depth understanding of smart contracts. **The API currently only supports trades between the ETH and ERC20 tokens.**
-## Scenario 1: Alice wants to buy some KNC tokens with ETH. 
-
+Our trading API allows you to programmatically interact with the Kyber Network contract without in depth understanding of smart contracts. **The API currently only supports ETH <-> ERC20 token trades.**
+## Scenario 1: Perform ETH -> KNC (ERC20 token) conversion
 ### Step 1a - Check if KNC token is supported
 Querying ``https://api.kyber.network/currencies`` will return a JSON of tokens supported on Kyber Network. Details about the `currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#currencies). </br>
 
@@ -39,7 +38,7 @@ await getSupportedTokens()
     {
       "name": "Ethereum",
       "decimals": 18,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",  
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "symbol": "ETH",
       "id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     },
@@ -54,8 +53,7 @@ await getSupportedTokens()
   ]
 }
 ```
-
-### Step 1b - Get the latest KNC/ETH buy rates
+### Step 1b - Get KNC/ETH buy rates
 Querying ``https://api.kyber.network/buy_rate?id=<id>&qty=<qty>`` will return a JSON of the latest buy rate (in ETH) for the specified token. Details about the `buy_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#buy-rate).</br>
 
 <!--#### Argument Description
@@ -97,7 +95,7 @@ await getBuyRates('0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300')
       ],
       "dst_qty": [
         300
-      ]
+      ]ETH -> KNC (ERC20 token)
     }
   ]
 }
@@ -228,11 +226,11 @@ async function main() {
 main()
 ```
 
-## Scenario 2: Bob wants to sell some DAI tokens for ETH.
+## Scenario 2: Perform DAI (ERC20 token) -> ETH conversion
 ### Step 2a - Check if DAI token is supported
 Same as [step 1a](#step-1a-check-if-knc-token-is-supported). 
 
-### Step 2b - Get token enabled status of bob's Ethereum wallet.
+### Step 2b - Get token enabled status of wallet.
 Querying ``https://api.kyber.network/users/<user_address>/currencies`` will return a JSON of enabled statuses of ERC20 tokens in the given address. Details about the `users/<user_address>/currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies).</br>
 
 <!--#### Argument Description
@@ -325,7 +323,7 @@ await getEnableTokenDetails('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F', '0x89d
 }
 ```
 
-### Step 2d - Get the latest DAI/ETH sell rates
+### Step 2d - Get DAI/ETH sell rates
 Querying ``https://api.kyber.network/sell_rate?id=<id>&qty=<qty>`` will return a JSON of the latest sell rate for the specified token. Details about the `sell_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#sell-rate).</br>
 
 <!--#### Argument Description
@@ -500,11 +498,11 @@ async function main() {
 main()
 ```
 
-## Scenario 3: Charlie wants to get more info about ZIL/ETH trading pair on Kyber Network.
+## Scenario 3: Get ZIL/ETH trading pair info
 ### Step 3a - Check if ZIL token is supported
 Same as [step 1a](#step-1a-check-if-knc-token-is-supported).
 
-### Step 3b - Retrieve information about the ZIL/ETH pair.
+### Step 3b - Retrieve information about ZIL/ETH pair.
 Querying ``https://api.kyber.network/market`` will return a JSON of in depth information of all tokens supported on Kyber Network.</br>
 
 <!--#### Response Description
@@ -625,4 +623,4 @@ main()
 ```
 ## Things to note
 ### Signing web3 transactions
-This guide assumes that the user would have a basic understanding of web3 and how to create and broadcast transactions. If you require more assistance on these subject, please visit the [web3 documentation](https://web3js.readthedocs.io/en/1.0/getting-started.html).
+This guide assumes that the user has basic understanding of Web3 and how to create and broadcast transactions. If you require more assistance on this, please visit the [Web3 documentation](https://web3js.readthedocs.io/en/1.0/getting-started.html).
