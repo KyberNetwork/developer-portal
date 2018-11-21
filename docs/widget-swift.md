@@ -141,7 +141,7 @@ NOTE: The values are for example only, check out the parameter details below.
 
 - ***defaultPair*** (string) - default: "ETH_KNC". This param only take effect for *Swap*, it indicates default token pair will show in swap layout.
 
-- ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible values: `mainnet, production, staging, ropsten, kovan`.
+- ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible value: `mainnet, production, test, ropsten, rinkeby`. `test` and `ropsten` will run on Ropsten network, `rinkeby` will run on Rinkeby network, `production`, `mainnet` will run on Mainnet ethereum. Be carefull for this param!
 
 - ***signer*** (String) - concatenation of a list of Ethereum address by underscore `_`, eg. 0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20 - If you pass this param, the user will be forced to pay from one of those addresses. If you ignore or pass `nil` value, all addresses are accepted.
 
