@@ -15,8 +15,9 @@ ___
 
 | Network    | URL                          |
 |:----------:|:----------------------------:|
-| Test       | https://dev-api.knstats.com  |
-| Production | https://api.kyber.network    |
+| Mainnet    | https://api.kyber.network    |
+| Ropsten    | https://ropsten-api.kyber.network |
+| Rinkeby    | https://rinkeby-api.kyber.network |
 
 ## REFERENCE
 
@@ -38,7 +39,7 @@ ___
 Example:
 
 ```json
-> curl "https://dev-api.knstats.com/currencies"
+> curl "https://api.kyber.network/currencies"
 {
   "error": false,
   "data": [
@@ -100,7 +101,7 @@ ___
 
 Example response:
 ```json
-> curl "https://dev-api.knstats.com/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies"
+> curl "https://api.kyber.network/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies"
 {
   "error":false,
   "data":[
@@ -153,7 +154,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=medium"
+> curl "https://api.kyber.network/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=medium"
 {
   "from": "0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
   "to": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
@@ -186,7 +187,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/buy_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1"
+> curl "https://api.kyber.network/buy_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1"
 {
   "error": false,
   "data": [
@@ -236,7 +237,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/sell_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&qty=150&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1&qty=20.2&qty=30"
+> curl "https://api.kyber.network/sell_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&qty=150&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1&qty=20.2&qty=30"
 {
   "error": false,
   "data": [
@@ -298,7 +299,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium"
+> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium"
 {
   "from": "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
   "to": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
@@ -334,7 +335,7 @@ ___
 
 Example:
 ```json
-> curl "https://dev-api.knstats.com/market"
+> curl "https://api.kyber.network/market"
 {
   "error": false,
   "data": [
