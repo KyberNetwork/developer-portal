@@ -6,14 +6,13 @@ title: REST API Overview
 
 The RESTful API can be used to trade on the Kyber Network platform.
 
-### Test Endpoint
+### NETWORK URL
 
-https://dev-api.knstats.com
-
-### Production Endpoint
-
-https://api.kyber.network
-
+| Network    | URL                          |
+|:----------:|:----------------------------:|
+| Mainnet    | https://api.kyber.network    |
+| Ropsten    | https://ropsten-api.kyber.network |
+| Rinkeby    | https://rinkeby-api.kyber.network |
 
 ## Things to note
 
