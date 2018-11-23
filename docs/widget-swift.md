@@ -55,6 +55,10 @@ post_install do |installer|
 end
 ```
 
+NOTE:
+- Please select version Swift 4 for APIKit framework.
+- Please enable iCloud in your Capabilities as the framework is using document picker (for importing JSON file).
+
 ## Usage
 
 #### Import KyberWidget
@@ -137,7 +141,7 @@ NOTE: The values are for example only, check out the parameter details below.
 
 - ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
 
-- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token.
+- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token (at most 3 pinned tokens).
 
 - ***defaultPair*** (string) - default: "ETH_KNC". This param only take effect for *Swap*, it indicates default token pair will show in swap layout.
 
@@ -152,6 +156,8 @@ NOTE: The values are for example only, check out the parameter details below.
 - ***productAvatar*** - (String?) - url string to your product avatar (only for _pay_ widget).
 
 - ***productAvatarImage*** - (UIImage?) - image for your product avatar (only for _pay_ widget). You should either provide `productAvatar` or `productAvatarImage` (prefer `productAvatarImage` for faster displaying). If you provide both, `productAvatar` will be ignored.
+
+An error will be throw via delegation if parameters are invalid.
 
 Check our **_Valid use cases_** for more details.
 
@@ -186,7 +192,13 @@ func coordinatorDidFailed(with error: KWError) {
 This function is called when something went wrong, some possible errors (please check our *Valid Use cases* below for more details)
 - `unsupportedToken`: the token you set is not supported by Kyber, or you are performing _payment_ but not set the `receiveToken` value.
 - `invalidAddress(errorMessage: String)`: the receive address is not set as `self` or a valid ETH address, check `errorMessage` for more details.
+- `invalidToken(errorMessage: String)`: the receive token symbol is not set for *Pay* or *Buy*.
+- `invalidPinnedToken(errorMessage: String)`: One of pinned token symbol is invalid (not supported by Kyber Network).
 - `invalidAmount(errorMessage: String)`: the receive amount is not valid (negative, zero, ...), or if you are performing _swap_, the receive amount must be empty.
+- `invalidDefaultPair(errorMessage: String)`: defaultPair param for *Swap* is not set correctly. It should contain exactly 2 supported token symbols by Kyber Network with format A_B in uppercased. E.g: ETH_KNC
+- `invalidSignerAddress(errorMessage: String)`: Invalid signer address.
+- `invalidCommisionAddress(errrorMessage: String)`: Invalid commission ID address.
+- `invalidProductAvatarURL(errorMessage: String)`: Invalid product avatar (for *Pay* use case).
 - `failedToLoadSupportedToken(errorMessage: String)`: something went wrong and we could not load supported tokens by Kyber.
 - `failedToSendTransaction(errorMessage: String)`: Could not send the transaction request.
 
