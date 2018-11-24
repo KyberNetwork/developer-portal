@@ -6,8 +6,8 @@ title: Ropsten
 Please note that contracts `KyberReserve` and `ConversionRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these contracts.
 
 ### Supported Token Pairs
-https://tracker.kyber.network/api/tokens/supported?chain=ropsten <br><br>
-Read more [here](guide-trackerapi.md#obtaining-all-supported-tokens)
+https://ropsten-api.kyber.network/currencies <br><br>
+Read more [here](api-trading.md#currencies)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`

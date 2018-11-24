@@ -15,7 +15,8 @@
       "MainnetEnvGuide",
       "RopstenEnvGuide",
       "RinkebyEnvGuide",
-      "KovanEnvGuide"
+      "KovanEnvGuide",
+      "ABIEnvGuide"
     ],
     "Guides": [
       "ReservesGuide",
@@ -62,6 +63,8 @@
       "ExpectedRateInterface",
       "FeeBurner",
       "FeeBurnerInterface",
+      "LiquidityConversionRates",
+      "LiquidityFormula",
       "PermissionGroups",
       "SanityRates",
       "SanityRatesInterface",

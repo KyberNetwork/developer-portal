@@ -15,7 +15,7 @@ A simple demo is available at https://widget.knstats.com/shop/. If you specify h
 
 ## How It Works
 The diagram below shows how components like the widget, Kyber Network smart contract, vendor wallet, vendor servers interact with each other.
-![How the widget works](/uploads/widgetflow.jpg "Widgetflow")
+![How the widget works](/uploads/widgetflow.png "Widgetflow")
 
 ## Payment Status
 With KyberNetwork, the payment is made on the blockchain. Thus, vendors don't have to trust or rely on any data that comes from KyberNetwork but from the Ethereum network. However, vendors have to implement and run their own monitoring logic to get the payment status from the Ethereum network. Alternatively, in the near future, they may use and run the libraries that KyberNetwork and the community will provide.
