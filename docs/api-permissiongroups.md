@@ -45,7 +45,6 @@ event __OperatorAdded__(address newOperator, bool isAdd)
 | ------------- |:-------:|:----------------------------------------------------------------------------:|
 | `newOperator` | address | address of the new operator                                                  |
 | `isAdd`       | bool    | if `true`, new operator was added, otherwise `false` if operator was removed |
-```
 <br />
 
 ### `TransferAdminPending`

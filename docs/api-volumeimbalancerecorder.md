@@ -154,7 +154,7 @@ function __getTokenControlInfo__(ERC20 token) public view returns (uint, uint, u
 | Parameter         | Type  | Description                  |
 | ----------------- |:-----:|:----------------------------:|
 | `token`           | ERC20 | ERC20 token contract address |
-**Returns:**\
+**Returns:**
 1. minimalRecordResolution
 2. maxPerBlockImbalance
 3. maxTotalImbalance

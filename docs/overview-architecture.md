@@ -4,7 +4,7 @@ title: Smart Contract Architecture
 ---
 ## Introduction
 
-The two main components in the Kyber Protocol are `KyberNetwork.sol` and `KyberReserve.sol`, which together implements Kyber Network and the reserve(s). However, additional auxiliary contracts are required to create upgradeable components that might be frequently updated, and also because solidity contract size is limited to 25Kb.
+The two main components in the Kyber protocol are `KyberNetwork.sol` and `KyberReserve.sol`, which together implements Kyber Network and the reserve(s). However, additional auxiliary contracts are required to create upgradeable components that might be frequently updated, and also because solidity contract size is limited to 25Kb.
 
 ## High-level Overview
 
@@ -14,7 +14,7 @@ Kyber Network’s smart contracts allow users to send one type of token (e.g. GN
 
 The conversion is possible thanks to reserve contracts that hold inventories of tokens and provide conversion rates to Kyber Network. The inventory of every reserve, along with its price feed, is managed by a reserve manager, namely, a person or an off-chain automated system that queries market prices and buys/sells inventory from the open market.
 
-The users do not need to pay any additional fees other than the standard Ethereum transaction gas fees. The platform fees are paid for by the reserve that executes the exchange and these fees are subsequently burnt. Note that some fees might be paid to the project that directed the user to the Kyber Protocol as part of our [fee sharing program](guide-feesharing.md).
+The users do not need to pay any additional fees other than the standard Ethereum transaction gas fees. The platform fees are paid for by the reserve that executes the exchange and these fees are subsequently burnt. Note that some fees might be paid to the project that directed the user to the Kyber protocol as part of our [fee sharing program](guide-feesharing.md).
 
 ## Detailed Exchange Flow
 
@@ -40,7 +40,7 @@ Starting from the client and ending in the Ethereum blockchain, we can visualize
 
 ## Permissions
 
-Every contract in the Kyber Protocol has three permission groups:
+Every contract in the Kyber protocol has three permission groups:
 
 ### 1. Admin
 The admin account is unique (usually cold wallet) and handles infrequent, manual operations like listing new tokens in the exchange. All sensitive operations (e.g. fund related) are limited to the Admin address.

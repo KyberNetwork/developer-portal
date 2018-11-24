@@ -5,6 +5,10 @@ title: Rinkeby
 
 Please note that contracts `KyberReserve` and `ConversionRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these three contracts.
 
+### Supported Token Pairs
+https://rinkeby-api.kyber.network/currencies <br><br>
+Read more [here](api-trading.md#currencies)
+
 ## Contract Addresses
 ### `KyberNetworkProxy`
 `0x39CC6802cF1625C30548B57D885932CB381EB4a4`
@@ -44,4 +48,4 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 `0x6b1224743CC0E5994d1B35f2b90A1A12a51044aC`
 
 ### `ZIL (Zilliqa)`
-`0xa8787F4faB0467B80d2F57722b1Bc8DDE707630E
+`0xa8787F4faB0467B80d2F57722b1Bc8DDE707630E`
