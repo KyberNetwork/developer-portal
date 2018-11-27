@@ -4,9 +4,7 @@ title: Trading
 ---
 # Trading REST API
 
-*Source*: [https://github.com/KyberNetwork/apis](https://github.com/KyberNetwork/apis)
-
-The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of smart contracts. **The API currently only supports ETH <-> ERC20 trades.**
+The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. **The API currently only supports ETH <-> ERC20 trades.**
 ___
 
 ## INDEX
@@ -17,8 +15,9 @@ ___
 
 | Network    | URL                          |
 |:----------:|:----------------------------:|
-| Test (Ropsten)       | https://dev-api.knstats.com  |
-| Production (Mainnet)  | https://api.kyber.network    |
+| Mainnet    | https://api.kyber.network    |
+| Ropsten    | https://ropsten-api.kyber.network |
+| Rinkeby    | https://rinkeby-api.kyber.network |
 
 ## REFERENCE
 
@@ -121,7 +120,7 @@ Example response:
 ```
 <br />
 
-### `/users/:user_address/currencies/:currency_id/enable_data` 
+### `/users/:user_address/currencies/:currency_id/enable_data`
 
 (GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to sell as mentioned in #trading-getinfo.
 
@@ -145,7 +144,7 @@ ___
 
 Example:
 ```json
-> curl "https://api.kyber.network/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab/enable_data?gas_price=medium"
+> curl "https://api.kyber.network/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=medium"
 {
 	"error":false,
 	"data":[

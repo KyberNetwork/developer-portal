@@ -6,7 +6,7 @@ Reserves represent decentralized liquidity powered by the community. It comprise
 
 A reserve consists of two main components: an on-chain component of your reserve smart contracts and an off-chain component (normally, an automated system) that manages your on-chain component. The two components are depicted in the diagram below.
 
-![Kyber Reserve Components](/uploads/kyberreservecomponents.jpg "Kyber Reserve Components")
+![Kyber Reserve Components](/uploads/kyberreservecomponents.png "Kyber Reserve Components")
 
 The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. The off-chain component hosts your [trading strategy](guide-miscellaneous.md#trading-strategy) that calculate and feed conversion rates and rebalance your reserve of tokens.
 

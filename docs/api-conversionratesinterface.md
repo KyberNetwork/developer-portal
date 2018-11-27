@@ -37,6 +37,6 @@ function __recordImbalance__(ERC20 token, int buyAmount, uint rateUpdateBlock, u
 | ----------------- |:-----:|:------------------------------------:|
 | `token`           | ERC20 | ERC20 token contract address         |
 | `buyAmount`       | int   | buy amount of ERC20 tokens in wei    |
-| `rateUpdateBlock` | uint  | **NOT SURE**                         |
+| `rateUpdateBlock` | uint  | block number when rate was updated   |
 | `currentBlock`    | uint  | current block height or block number |
 <br />

@@ -55,6 +55,10 @@ post_install do |installer|
 end
 ```
 
+NOTE:
+- Please select version Swift 4 for APIKit framework.
+- Please enable iCloud in your Capabilities as the framework is using document picker (for importing JSON file).
+
 ## Usage
 
 #### Import KyberWidget
@@ -135,13 +139,13 @@ NOTE: The values are for example only, check out the parameter details below.
 
 - ***receiveToken*** (String) - **required** for _payment_, it is the token that you (vendor) want to receive, for _swap_ or _buy_, it is the token that you want to receive/buy. It can be one of supported tokens (such as ETH, DAI, KNC...).
 
-- ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
+- ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`. To make a transaction, amount must *NOT* be less than (equivalent) 0.001ETH.
 
-- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token.
+- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select tokens.
 
 - ***defaultPair*** (string) - default: "ETH_KNC". This param only take effect for *Swap*, it indicates default token pair will show in swap layout.
 
-- ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible values: `mainnet, production, staging, ropsten, kovan`.
+- ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible value: `mainnet, production, test, ropsten, rinkeby`. `test` and `ropsten` will run on Ropsten network, `rinkeby` will run on Rinkeby network, `production`, `mainnet` will run on Mainnet ethereum. Be carefull for this param!
 
 - ***signer*** (String) - concatenation of a list of Ethereum address by underscore `_`, eg. 0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20 - If you pass this param, the user will be forced to pay from one of those addresses. If you ignore or pass `nil` value, all addresses are accepted.
 
@@ -152,6 +156,8 @@ NOTE: The values are for example only, check out the parameter details below.
 - ***productAvatar*** - (String?) - url string to your product avatar (only for _pay_ widget).
 
 - ***productAvatarImage*** - (UIImage?) - image for your product avatar (only for _pay_ widget). You should either provide `productAvatar` or `productAvatarImage` (prefer `productAvatarImage` for faster displaying). If you provide both, `productAvatar` will be ignored.
+
+An error will be throw via delegation if parameters are invalid.
 
 Check our **_Valid use cases_** for more details.
 
@@ -186,9 +192,15 @@ func coordinatorDidFailed(with error: KWError) {
 This function is called when something went wrong, some possible errors (please check our *Valid Use cases* below for more details)
 - `unsupportedToken`: the token you set is not supported by Kyber, or you are performing _payment_ but not set the `receiveToken` value.
 - `invalidAddress(errorMessage: String)`: the receive address is not set as `self` or a valid ETH address, check `errorMessage` for more details.
+- `invalidToken(errorMessage: String)`: the receive token symbol is not set for *Pay* or *Buy*. Or receive token is not supported by Kyber. Check `errorMessage` for more information.
+- `invalidPinnedToken(errorMessage: String)`: One of pinned token symbol is invalid (not supported by Kyber Network), or `pinnedTokens` is not in a correct format TOKEN_TOKEN_TOKEN. Check `errorMessage` for more information.
 - `invalidAmount(errorMessage: String)`: the receive amount is not valid (negative, zero, ...), or if you are performing _swap_, the receive amount must be empty.
+- `invalidDefaultPair(errorMessage: String)`: `defaultPair` param for *Swap* is not set correctly. It should contain exactly 2 supported token symbols by Kyber Network with format A_B in uppercased. E.g: ETH_KNC. Check `errorMessage` for more information.
+- `invalidSignerAddress(errorMessage: String)`: Invalid signer address. Either it is not in a correct format address_address.. or address is not a valid ETH address. Check `errorMessage` for more information.
+- `invalidCommisionAddress(errrorMessage: String)`: Invalid commission ID address: Not a correct ETH address.
+- `invalidProductAvatarURL(errorMessage: String)`: Invalid product avatar (for *Pay* use case). It is not a correct URL format.
 - `failedToLoadSupportedToken(errorMessage: String)`: something went wrong and we could not load supported tokens by Kyber.
-- `failedToSendTransaction(errorMessage: String)`: Could not send the transaction request.
+- `failedToSendTransaction(errorMessage: String)`: Could not send the transaction request. Check `errorMessage` for more information.
 
 In most cases, we provide a meaningful error message for you to either display it to user directly, or use the message to test/debug.
 
@@ -203,7 +215,7 @@ This function is called when the transaction was broadcasted to Ethereum network
 ### Customize color theme and string
 #### Theme
 
-Get current `KWThemeConfig` intance.
+Get current `KWThemeConfig` instance.
 ```swift
 let config = KWThemeConfig.current
 ```
@@ -273,13 +285,17 @@ func getTokenBalance(for contract: Address, address: Address, completion: @escap
 func getTransactionCount(for address: String, completion: @escaping (Result<Int, AnyError>) -> Void)
 func transfer(transaction: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void)
 func exchange(exchange: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void)
-func getAllowance(token: KWTokenObject, address: Address, completion: @escaping (Result<Bool, AnyError>) -> Void)
-func sendApproveERC20Token(exchangeTransaction: KWTransaction, completion: @escaping (Result<Bool, AnyError>)
+func pay(transaction: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void)
+func getAllowance(token: KWTokenObject, address: Address, isPay: Bool, completion: @escaping (Result<BigInt, AnyError>) -> Void)
+func func sendApproveERC20Token(exchangeTransaction: KWTransaction, isPay: Bool, completion: @escaping (Result<Bool, AnyError>) -> Void)
 func getExpectedRate(from: KWTokenObject, to: KWTokenObject, amount: BigInt, completion: @escaping (Result<(BigInt, BigInt), AnyError>) -> Void)
 func getTransferEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 func getSwapEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void)
+func getPayEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 func estimateGasLimit(from: String, to: String?, gasPrice: BigInt, value: BigInt, data: Data, defaultGasLimit: BigInt, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 ```
+
+Please check `KWExternalProvider` and `KWGeneralProvider` for more details.
 
 ## Valid use cases
 
@@ -287,14 +303,14 @@ func estimateGasLimit(from: String, to: String?, gasPrice: BigInt, value: BigInt
 
 - **receiveAddr** - **required**: must be a valid ETH address with 0x prefix
 - **receiveToken** - **required**: must be a supported token symbol by KyberNetwork
-- **receiveAmount**: an optional value
 
 ##### Swap Widget
 - **receiveAddr**, **receiveToken** and **receiveAmount** are all ignored
 
 ##### Buy Widget
 - **receiveToken** - **required**:  must be a supported token symbol by KyberNetwork
-- **receiveAmount**: optional value
+
+Other parameters are optional.
 
 NOTE:
   - In any cases, **receiveAmount** will be ignored if **receiveToken** is empty.

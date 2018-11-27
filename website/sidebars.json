@@ -63,6 +63,8 @@
       "ExpectedRateInterface",
       "FeeBurner",
       "FeeBurnerInterface",
+      "LiquidityConversionRates",
+      "LiquidityFormula",
       "PermissionGroups",
       "SanityRates",
       "SanityRatesInterface",

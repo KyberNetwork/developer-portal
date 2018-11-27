@@ -6,8 +6,8 @@ title: Ropsten
 Please note that contracts `KyberReserve` and `ConversionRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these contracts.
 
 ### Supported Token Pairs
-https://tracker.kyber.network/api/tokens/supported?chain=ropsten <br><br>
-Read more [here](guide-trackerapi.md#obtaining-all-supported-tokens)
+https://ropsten-api.kyber.network/currencies <br><br>
+Read more [here](api-trading.md#currencies)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
@@ -81,7 +81,7 @@ Read more [here](guide-trackerapi.md#obtaining-all-supported-tokens)
 `0xb4f7332ed719Eb4839f091EDDB2A3bA309739521`
 
 ### `MANA (Decentraland)`
-`0xf5E314c435B3B2EE7c14eA96fCB3307C3a3Ef608`
+`0x72fd6C7C1397040A66F33C2ecC83A0F71Ee46D5c`
 
 ### `MOC (Moss Land)`
 `0x1742c81075031b8f173d2327e3479d1fc3feaa76`
