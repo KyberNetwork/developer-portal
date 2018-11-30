@@ -58,22 +58,13 @@
       "KyberReserveInterface",
       "ConversionRates",
       "ConversionRatesInterface",
-      "ERC20Interface",
-      "ExpectedRate",
-      "ExpectedRateInterface",
       "FeeBurner",
       "FeeBurnerInterface",
       "LiquidityConversionRates",
-      "LiquidityFormula",
       "PermissionGroups",
       "SanityRates",
       "SanityRatesInterface",
       "SimpleNetworkInterface",
-      "Utils",
-      "Utils2",
-      "VolumeImbalanceRecorder",
-      "WhiteList",
-      "WhiteListInterface",
       "Withdrawable"
     ]
   }

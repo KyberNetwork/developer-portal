@@ -3,8 +3,8 @@ id: SanityRates
 title: SanityRates
 ---
 # contract SanityRates
-is [SanityRatesInterface](api-sanityratesinterface.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md)\
-imports [ERC20Interface](api-erc20interface.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md), [SanityRatesInterface](api-sanityratesinterface.md)
+is [SanityRatesInterface](api-sanityratesinterface.md), [Withdrawable](api-withdrawable.md), Utils\
+imports ERC20Interface, [Withdrawable](api-withdrawable.md), Utils, [SanityRatesInterface](api-sanityratesinterface.md)
 
 *Source*: [SanityRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SanityRates.sol)
 

@@ -3,7 +3,7 @@ id: KyberNetworkInterface
 title: KyberNetworkInterface
 ---
 # interface KyberNetworkInterface
-imports [ERC20Interface](api-erc-20-interface.md)
+imports ERC20Interface
 
 *Source*: [KyberNetworkInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkInterface.sol)
 ___
@@ -17,7 +17,7 @@ ___
 ### Functions
 
 ### `enabled`
-Get the status of the network. 
+Get the status of the network.
 ___
 function __enabled__ public view returns (bool)
 **Returns:**\

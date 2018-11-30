@@ -3,7 +3,7 @@ id: KyberReserveInterface
 title: KyberReserveInterface
 ---
 # interface KyberReserveInterface
-imports [ERC20Interface](api-erc-20-interface.md)
+imports ERC20Interface
 
 *Source*: [KyberReserveInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberReserveInterface.sol)
 ___

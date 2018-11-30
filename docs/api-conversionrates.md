@@ -3,8 +3,8 @@ id: ConversionRates
 title: ConversionRates
 ---
 # contract ConversionRates
-is [ConversionRatesInterface](api-conversionratesinterface.md), [VolumeImbalanceRecorder](api-volumeimbalancerecorder.md), [Utils](api-utils.md)\
-imports [ERC20Interface](api-erc-20-interface.md), [VolumeImbalanceRecorder](api-volumeimbalancerecorder.md), [ConversionRatesInterface](api-conversionratesinterface.md), [Utils](api-utils.md)
+is [ConversionRatesInterface](api-conversionratesinterface.md), VolumeImbalanceRecorder, Utils\
+imports ERC20Interface, VolumeImbalanceRecorder, [ConversionRatesInterface](api-conversionratesinterface.md), Utils
 
 *Source*: [ConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ConversionRates.sol)
 
@@ -78,31 +78,6 @@ broadcastTx(deploy)
 Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
 <br />
 
-### `abs`
-Obtain the absolute value or modulus of a number.
-___
-function __abs__(int x) internal pure returns (uint)
-| Parameter | Type  | Description |
-| ----------|:-----:|:-----------:|
-| `x`       | int   | an integer  |
-
-**Returns:**\
-Absolute value of a number
-<br />
-
-### `addBps`
-Add basis points (bps) to the rate.
-___
-function __addBps__(uint rate, int bps) internal pure returns (uint)
-| Parameter | Type | Description                              |
-| ----------|:----:|:----------------------------------------:|
-| `rate`    | uint | token conversion rate                    |
-| `bps`     | int  | amount calculated from the step function |
-
-**Returns:**\
-Adjusted rate
-<br />
-
 ### `addToken`
 Adding an ERC20 token which the reserve will support. Only admin can invoke.
 ___
@@ -119,7 +94,7 @@ transactionData = ConversionRates.methods.addToken(token).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
 	from: ADMIN_ADDRESS,
-	to: CONVERSION_RATES_ADDRESS, 
+	to: CONVERSION_RATES_ADDRESS,
 	data: transactionData
 })
 ```
@@ -141,7 +116,7 @@ transactionData = ConversionRates.methods.disableTokenTrade(token).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
 	from: ALERTER_ADDRESS,
-	to: CONVERSION_RATES_ADDRESS, 
+	to: CONVERSION_RATES_ADDRESS,
 	data: transactionData
 })
 ```
@@ -163,23 +138,10 @@ transactionData = ConversionRates.methods.enableTokenTrade(token).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
 	from: ADMIN_ADDRESS,
-	to: CONVERSION_RATES_ADDRESS, 
+	to: CONVERSION_RATES_ADDRESS,
 	data: transactionData
 })
 ```
-<br />
-
-### `executeStepFunction`
-Obtain the basis points (bps) depending on the reserve token imbalance or buy / sell order quantity.
-___
-function __executeStepFunction__(StepFunction f, int x) internal pure returns (int)
-| Parameter  | Type         | Description                                          |
-| -----------|:------------:|:----------------------------------------------------:|
-| `f`        | StepFunction | buy / sell quantity or token imbalance step function |
-| `x`        | int          | token quantity or imbalance amount                   |
-
-**Returns:**\
-Basis points
 <br />
 
 ### `getBasicRate`
@@ -230,17 +192,6 @@ let sellRateBPS = result[3];
 
 <br />
 
-### `getLast4Bytes`
-Obtain the last 4 bytes from a 32 byte string
-___
-function __getLast4Bytes__(bytes32 b) internal pure returns (uint)
-| Parameter | Type    | Description    |
-| ----------|:-------:|:--------------:|
-| `b`       | bytes32 | 32 byte string |
-**Returns:**\
-Last 4 bytes of the 32 byte string
-<br />
-
 ### `getListedTokens`
 Obtain a list of supported reserve tokens.
 ___
@@ -278,20 +229,6 @@ result = await ConversionRates.methods.getRate(
   qty
 ).call();
 ```
-<br />
-
-### `getRateByteFromCompactData`
-Obtain the token conversion rate from the compact data representation.
-___
-function __getRateByteFromCompactData__(bytes32 data, ERC20 token, bool buy) internal pure returns (int8)
-| Parameter | Type    | Description                                                          |
-| ----------|:-------:|:--------------------------------------------------------------------:|
-| `data`    | bytes32 | compact data representation of the conversion rates                  |
-| `token`   | ERC20   | ERC20 token contract address                                         |
-| `buy`     | bool    | `true` to get the buy rate, otherwise `false` to get the sell rate   |
-
-**Returns:**\
-Token conversion rate byte
 <br />
 
 ### `getRateUpdateBlock`
@@ -385,17 +322,6 @@ let tokenEnabled = result[1]
 ```
 <br />
 
-### `getTokenQty`
-Compute the token quantity in wei amount based on the conversion rate
-___
-function __getTokenQty__(ERC20 token, uint ethQty, uint rate) internal view returns (uint)
-| Parameter        | Type                     | Description                      |
-| -----------------|:------------------------:|:--------------------------------:|
-| `token`         | ERC20                  | Token contract address      |
-| `ethQty`         | uint                | Ether quantity     |
-| `rate`         | uint                  | Conversion rate   |
-<br />
-
 ### `recordImbalance`
 To record the imbalance of a reserve token after a trade was executed. The reserve contract usually invokes this.
 ___
@@ -455,7 +381,7 @@ transactionData = ConversionRates.methods.setBaseRate(
 
 txReceipt = await web3.eth.sendTransaction({
 	from: OPERATOR_ADDRESS,
-	to: CONVERSION_RATES_ADDRESS, 
+	to: CONVERSION_RATES_ADDRESS,
 	data: transactionData
 })
 ```
@@ -490,7 +416,7 @@ transactionData = ConversionRates.methods.setCompactData(
 
 txReceipt = await web3.eth.sendTransaction({
 	from: OPERATOR_ADDRESS,
-	to: CONVERSION_RATES_ADDRESS, 
+	to: CONVERSION_RATES_ADDRESS,
 	data: transactionData
 })
 ```
@@ -509,7 +435,7 @@ function __setQtyStepFunction__(ERC20[] tokens, int[] xBuy, int[] yBuy, int[] xS
 | `ySell`         | int[]             | impact on sell rate in basis points (bps). `1 bps = 0.01%` Eg. `-30 = -0.3%`           |
 Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
 * Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
-* When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory. 
+* When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory.
 ___
 Web3 Example:
 ```js
