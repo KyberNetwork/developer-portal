@@ -6,8 +6,9 @@ title: Mainnet
 Please note that contracts `KyberReserve`, `ConversionRates`, and `SanityRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these contracts.
 
 ### Supported Token Pairs
-https://tracker.kyber.network/api/tokens/supported <br><br>
-Read more [here](guide-trackerapi.md#obtaining-all-supported-tokens)
+https://api.kyber.network/currencies
+<br><br>
+Read more [here](api-trading.md#currencies)
 
 ### Price and Volume
 https://tracker.kyber.network/api/tokens/pairs <br><br>

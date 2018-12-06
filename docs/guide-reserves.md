@@ -2,26 +2,40 @@
 id: ReservesGuide
 title: How to setup a reserve
 ---
-# Introduction
-As a reserve manager, your primary purpose is to keep your funds safe. To do this, you should maintain conversion rates (prices) of your token inventory such that they reflect changes in market conditions. This is a difficult task since your inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay updates of rates in your contracts. With this in mind, the reserve was designed with various parameters to help secure your funds. 
+## Introduction
 
-# Overview
-Before diving into the details, let’s understand the logic of some parameters that are protecting your reserve funds. 
-* Valid duration gives a time limit to the last price update, when the duration is over trades are stopped until the next price update. 
-* Max imbalance values limit inventory changes since the last price update. Once again, if the imbalance threshold is exceeded for a specific token, trades are blocked until the next price update. 
+In this guide, we will be learning about the role of the reserve in the Kyber Network ecosystem and the different components that interacts with one. Subsequently, we will configure and deploy a reserve locally / to the Ropsten testnet.
+
+## Overview
+
+Reserves represent decentralized liquidity powered by the community. It comprises of dedicated liquidity providers that are connected to diverse stakeholders in the ecosystem. Entities with large, idle digital assets such as large token holders, fund managers and token teams can easily become reserves, rebalance their portfolio and provide liquidity and value for the entire ecosystem.
+
+A reserve consists of two main components: an on-chain component of your reserve smart contracts and an off-chain component (normally, an automated system) that manages your on-chain component. The two components are depicted in the diagram below.
+
+![Kyber Reserve Components](/uploads/kyberreservecomponents.png "Kyber Reserve Components")
+
+The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users.
+
+The off-chain component (i.e., automated system) hosts your [trading strategy](guide-miscellaneous.md#trading-strategy) that calculates and feeds conversion rates and rebalances your reserve of tokens. This automated system is managed by a reserve manager. As a reserve manager, your primary purpose is to keep your funds safe but this is a difficult task since your inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay updates of rates in your contracts.
+
+With this in mind, the reserve was designed with various parameters to help secure your funds.
+* Valid duration gives a time limit to the last price update, when the duration is over trades are stopped until the next price update.
+* Max imbalance values limit inventory changes since the last price update. Once again, if the imbalance threshold is exceeded for a specific token, trades are blocked until the next price update.
 * Step functions enable “automatic” price updates. When some token price has a clear trend, automatic price changes could act as a degenerated order book. This way, during periods the reserve manager doesn’t control the price (between updates) steps simulate actual liquidity in an order book market.  
 * Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
 
-## Local testnet deployment
+## How to set up your own reserve
+
+### Local testnet deployment
 Here, we will walk you through an example on running the deployment script on [Truffle's Ganache](https://truffleframework.com/ganache).
 
-### Before you begin
+#### Before you begin
 Check that you have the following:
 1. [node.js](https://nodejs.org/en/download/)
 2. [web3 v1.0.0](https://www.npmjs.com/package/web3)
 3. [Ganache CLI (previously TestRPC)](https://github.com/trufflesuite/ganache-cli)
 
-### Setting up
+#### Setting up
 Create a  local directory and clone the `master` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
 ```
 git clone https://github.com/KyberNetwork/smart-contracts.git
@@ -32,7 +46,7 @@ Run the command below in your terminal to install all required dependencies.
 npm install
 ```
 
-### Running the script
+#### Running the script
 In one terminal, run the following command.
 ```
 ganache-cli
@@ -44,36 +58,36 @@ or, if you're using an older version of testRPC,
 testrpc
 ```
 
-In another, run the script.
+In another terminal, run the script.
 ```
 ./node_modules/.bin/truffle test scripts/deployment.js
 ```
 
-### Notes
-1. The script uses test tokens, which it generates according to the json file at `smart-contracts/deployment_input.json`.
-2. In the testing part of the script, under `"set eth to dgd rate"`, we initialise rates for 1 token. In order to change/add tokens, this part should be modified.
+#### Notes
+1. The script uses test tokens, which is configured in the JSON file at `smart-contracts/deployment_input.json`.
+2. In the testing part of the script, under `"set eth to dgd rate"`, we initialize rates for 1 token. In order to change/add tokens, this part should be modified.
 3. For more information on how to change/add the set rates functionality, refer to [this section](guide-reserves.md#step-2-deploying-contracts).
 4. The validity of rates is determined by calls to `setValidRateDurationInBlocks()`. It is set to a large value (1000000) at the start of the script and reduced to 256 at the end of it. Refer to [the API](api-conversionrates.md#setvalidratedurationinblocks) for more information.
 5. If any problems with rates validity occur, the second call to `setValidRateDurationInBlocks()` can be removed manually.
 
-## Public testnet deployment
+### Public testnet deployment
 Here, we will walk you through an example to set up a reserve on the Ropsten testnet.
 
-### Before you begin
+#### Before you begin
 Check that you have the following:
 1. [node.js](https://nodejs.org/en/download/)
 2. [web3 v1.0.0](https://www.npmjs.com/package/web3)
 3. An ETH account. You can easily create one on [MEW](https://www.myetherwallet.com/), [MyCrypto](https://mycrypto.com/), or [MetaMask](https://metamask.io/).
 4. Ropsten ETH. You may get some from the [MetaMask faucet](https://faucet.metamask.io/) or [Ropsten faucet](http://faucet.ropsten.be:3001/).
 
-### Step 1: Set reserve 
+#### Step 1: Set reserve
 Create a  local directory and clone the `deployment-tutorial` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
 
 ```
 git clone -b deployment_tutorial https://github.com/KyberNetwork/smart-contracts.git
 ```
 
-#### Adding Tokens
+##### Adding Tokens
 After you have a local copy, go to `web3deployment` directory and open `ropsten.json`, where you will find a list of currently supported tokens on Kyber Network.
 
 ```json
@@ -100,7 +114,7 @@ As we are creating a reserve of KNC tokens, we will copy the `symbol`, `decimals
 
 | Input field | Explanation | Example |
 | ------------- | ------------- | ------------- |
-| `minimalRecordResolution`  | Per trade imbalance values are recorded and stored in the contract. Since this storage of data is an expensive operation, the data is squeezed into one bytes32 object. To prevent overflow while squeezing data, a resolution unit exists. Recommended value is the token wei equivalent of $0.0001. | Assume 1 OMG = $1.<br>$0.0001 = 0.0001 OMG<br>Now OMG has 18 decimals, so `0.0001*(10**18) = 1000000000000`
+| `minimalRecordResolution`  | Per trade imbalance values are recorded and stored in the contract. Since this storage of data is an expensive operation, the data is squeezed into one bytes32 object. To prevent overflow while squeezing data, a resolution unit exists. Recommended value is the token wei equivalent of $0.0001. | Assume 1 OMG = $1.<br>$0.0001 = 0.0001 OMG<br>Now OMG has 18 decimals, so `0.0001*(10**18) = 1000000000000` |
 | `maxPerBlockImbalance`  | The maximum wei amount of net absolute (+/-) change for a token in an ethereum block. We recommend this value to be larger than the maximum allowed tradeable token amount for a whitelisted user. Suppose we want the maximum change in 1 block to be 439.79 OMG, then we use `439.79 * (10 ** 18) = 439790000000000000000` | Suppose we have 2 users Alice and Bob. Alice tries to buy 200 OMG and Bob tries to buy 300 OMG. Assuming both transactions are included in the same block and Alice's transaction gets processed first, Bob's transaction will **fail** because the resulting net change of -500 OMG would exceed the limit of 439.79 OMG. However, if Bob decides to sell instead of buy, then the net change becomes +100 OMG, which means an additional 539.79 OMG can be bought, or 339.79 OMG sold. |
 | `maxTotalImbalance`  | Has to be `>= maxPerBlockImbalance`. Represents the amount in wei for the net token change that happens between 2 price updates. This number is reset everytime `setBaseRate()` is called in `ConversionRates.sol`.  This acts as a safeguard measure to prevent reserve depletion from unexpected events between price updates. | If we want the maximum total imbalance to be 922.36 OMG, we will use: `922.36 * (10 ** 18) = 922360000000000000000` |
 
@@ -121,10 +135,10 @@ In essence, an example of the first part of `ropsten_reserve_input.json` would b
 }
 ```
 
-#### Defining withdrawal addresses
-Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the json file, we enable defining per token a few withdrawal addresses and one address per exchange. Note this is only a logical concept. This address might be any address you wish to withdraw funds to.  
+##### Defining withdrawal addresses
+Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the JSON file, a few withdrawal addresses can be defined per token and at least one address per exchange.
 
-Let's take a look at the `exchanges` dictionary in `ropsten_reserve_input.json`. Fill in your ETH and KNC withdraw addresses for the purposes of rebalancing your reserve. Note that the `binance` string is just a convention. Also note that **all tokens you wish to support must have withdraw addresses**.
+Let's take a look at the `exchanges` dictionary in `ropsten_reserve_input.json`. Fill in your ETH and KNC withdraw addresses for the purposes of rebalancing your reserve. Note that the `binance` string is just an example. Also note that **all tokens you wish to support must have withdraw addresses**.
 
 ```json
   "exchanges": {
@@ -135,7 +149,7 @@ Let's take a look at the `exchanges` dictionary in `ropsten_reserve_input.json`.
   },
 ```
 
-#### Setting permissions
+##### Setting permissions
 In the `permission` dictionary, you will fill in the addresses for admin, operator, and alerter. We recommend that you use different addresses for each of the 3 roles. It is highly recomended that for sensitive conracts like the reserve, a cold wallet is used as the admin wallet. Notice: It is possible to have multiple operators and alerters, but there can only be 1 admin.
 
 ```json
@@ -157,14 +171,14 @@ In the `permission` dictionary, you will fill in the addresses for admin, operat
 * `operator`: The operator account is used for frequent updates like setting reserve rates and withdrawing funds from the reserve to certain destinations (e.g. when selling excess tokens in the open market).
 * `alerter`: The alerter account is used to halt the operation of the reserve on alerting conditions (e.g., strange conversion rates). In such cases, the reserve operation can be resumed only by the admin account.
 
-#### Valid price duration
+##### Valid price duration
 The `valid duration block` parameter is the time in blocks (Ethereum processes ~4 blocks per minute) that your conversation rate will expire since the last price update. If the value remains at 60, your price updates should happen at least approximately every 14 minutes.
 
 ```json
   "valid duration block" : 60,
 ```
 
-### Step 2: Deploying contracts
+#### Step 2: Deploying contracts
 
 Run the command below in your terminal to install all required dependencies. Ensure that you are in the `/web3deployment` directory.
 
@@ -197,7 +211,7 @@ The generated ETH account is waiting for some ETH to be deposited so that it can
 Congratulations, you have successfully deployed contracts on the Ropsten testnet!
 
 
-### Step 3: Setting token conversion rates (prices)
+#### Step 3: Setting token conversion rates (prices)
 
 Now, as your reserve contracts are deployed on the Ropsten testnet, you should be able to find them on [Etherscan](https://ropsten.etherscan.io/). As a reserve manager, you will need to interact with `KyberReserve.sol` and `ConversionRates.sol`, both of which have been deployed previous step. In other words, you have to call the functions of these 2 contracts. For example, to update the conversion rate of your tokens, you have to call the `setBaseRate` function of `ConversionRates.sol`. There is another **optional** but recommended contract `SanityRates.sol` that you can deploy and interact with.
 
@@ -207,7 +221,7 @@ Now, as your reserve contracts are deployed on the Ropsten testnet, you should b
 
 One key responsibility of your automated system is to continually set your tokens rate based on your strategy, ie. there should be frequent automated calls made to the `setBaseRate` and / or `setCompactData` function of your `ConversionRates.sol` contract using your operator account.
 
-#### How to programmatically call `setBaseRate` / `setCompactData`
+##### How to programmatically call `setBaseRate` / `setCompactData`
 
 First let's understand how the rate in `ConversionRates.sol` is defined and modified. The rate presented by the contract is calculated from 3 different components:
 1. Base Rate
@@ -227,7 +241,7 @@ Base rate sets the basic rate per token, and is set separately for buy and sell 
 | `uint blockNumber` | Most recent ETH block number (can be obtained on Etherscan) | `3480805` |
 | `uint[] indices` | Index of array to apply the compact data bps rates on | `[0]` |-->
 
-#### Single token
+##### Single token
 
 If you plan to support just 1 token, set `buy`, `sell` and `indices` to `[0]`. The code below is an example of how to call the `setBaseRate` function. If you plan to use it, kindly take note of the following:
 1. Replace the `CONVERSION_RATES_CONTRACT_ADDRESS` with your own contract address.
@@ -286,7 +300,7 @@ async function main() {
 main()
 ```
 
-#### Multiple tokens
+##### Multiple tokens
 As mentioned, to save on gas costs, we recommend using the `setCompactData` function instead of `setBaseRates`. The inputs of  `setCompactData` are the last 4 inputs of `setBaseRates`, namely: `bytes14[] buy`, `bytes14[] sell`, `uint blockNumber` and `uint[] indices`.
 
 ##### `uint[] indices`
@@ -294,8 +308,8 @@ As mentioned, to save on gas costs, we recommend using the `setCompactData` func
 Each index allows you to modify up to 14 tokens at once. The token index number is determined by the order which they were added. Intuitively, an earlier token would have a smaller index, ie. the earliest token would be token 0, the next would be token 1, etc.
 
 ##### `bytes14[] buy / sell`
-For simplicity, assume that we want to modify the base buy rates. The logic for modifying base sell rates is the same. 
-* Suppose the reserve supports 3 tokens: DAI, BAT and DGX. 
+For simplicity, assume that we want to modify the base buy rates. The logic for modifying base sell rates is the same.
+* Suppose the reserve supports 3 tokens: DAI, BAT and DGX.
 * We want to make the following modifications to their base buy rates:
 	1. +2.5% (+25 pts) to DAI_BASE_BUY_RATE
 	2. +1% (+10 pts) to BAT_BASE_BUY_RATE
@@ -342,7 +356,7 @@ transactionData = ConversionRatesContract.methods.setCompactData(
 ```
 Note that we are applying the same price adjustments to base sell rates as buy rates in the above example. In practice, you probably will have separate modifications.
 
-#### Step functions
+##### Step functions
 
 Using flat rate might not be sufficient. A user that buys/sells a big number of tokens will have a different impact on your portfolio compared to another user that buys/sells a small number of tokens. The purpose of steps, therefore, is to have the contract alter the price depending on the buy / sell quantities of a user, and the net traded amount between price update operations.
 
@@ -419,7 +433,7 @@ Given the example parameters in the reference section, assume the base buy rate 
 | -210 KNC  | 0.0095 `0.01*(1-0.5%)` | -210 is in the range of -200 to -300, which is the **second** sell step in the `xSell`, so the impact on the the base rate is -0.5% according to the **second** number in the `ySell`. |
 | -1,000 KNC  | 0.0093 `0.01*(1-0.7%)` | -1,000 is in the range of -300 to below, which is the **first** sell step in the `xSell`, so the impact on the the base rate is -0.7% according to the **first** number in the `ySell`. |
 
-#### Additional safeguards
+##### Additional safeguards
 In the case of unforeseen adverse circumstances (Eg. a hack in your automated system or operator accounts), whereby your conversion rate is compromised to be very unfavorable, you may set up additional safeguards in place to protect your reserve.
 
 ##### Sanity Rates
@@ -428,19 +442,19 @@ Operators can set a sanity rate by calling `setSanityRates` and `setReasonableDi
 ##### Alerters
 As mentioned previously, the role of alerters is to look out for unexpected / malicious behaviour of the reserve and halt operations. They can do so by calling `disableTokenTrade()` in the `ConversionRates.sol`. Thereafter, only the admin account is able to resume operations by calling `enableTokenTrade()` in the same contract.
 
-### Step 4: Deposit tokens to and withdraw tokens from your reserve
+#### Step 4: Deposit tokens to and withdraw tokens from your reserve
 
 A reserve can’t operate without tokens. A reserve that supports ETH-KNC swap pair will need to hold both ETH and KNC so that users can sell and buy KNC from your reserve.
 
 Filling up your reserve is easy. You can transfer tokens to your reserve contract from any address.
 
-However, only authorized accounts have the right to withdraw tokens from the reserve. 
+However, only authorized accounts have the right to withdraw tokens from the reserve.
 * `admin` can call `withdrawEther` and `withdrawToken` of `KyberReserve.sol` to withdraw tokens to any address
 * `operator` can only withdraw tokens to whitelisted addresses by calling `withdraw`
 * `admin` can add withdraw/whitelisted address by calling `approveWithdrawAddress` of `KyberReserve.sol`.
 
 
-### Step 5: Get your reserve authorized and running
+#### Step 5: Get your reserve authorized and running
 
 Once you have completed the above steps, you can let any network operator know so that they can approve your reserve and every specific pair you are allowed to list. Kyber Network is currently the only network operator.
 
