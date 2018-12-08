@@ -10,7 +10,7 @@ For a simple way to obtain the conversion rates of token pairs, call the [token 
 
 ### `getExpectedRate`
 From the list of token pairs, if you'd like to have the latest conversion rates, consider calling the `getExpectedRate()` function of [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md#getexpectedrate).
-<!--Call this function to obtain the freshest conversion rate of a single token pair. 
+<!--Call this function to obtain the freshest conversion rate of a single token pair.
 | Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address |
@@ -78,7 +78,7 @@ if (srcTokenWeiAmount <= allowanceAmount) {
 ```js
 srcTokenContract = new web3.eth.Contract(ERC20ABI, SRC_TOKEN_ADDRESS)
 transactionData = srcTokenContract.methods.approve(KYBER_NETWORK_PROXY_ADDRESS,srcTokenWeiPrice).encodeABI()
-	
+
 txReceipt = await web3.eth.sendTransaction({
 	from: USER_ACCOUNT, //obtained from website interface Eg. Metamask, Ledger etc.
 	to: srcTokenContract,
@@ -97,10 +97,10 @@ transactionData = KyberNetworkProxyContract.methods.trade(
 		minConversionWeiRate, //uint minConversionRate
 		0 //uint walletId
 		).encodeABI()
-		
+
 txReceipt = await web3.eth.sendTransaction({
 	from: USER_ACCOUNT, //obtained from website interface Eg. Metamask, Ledger etc.
-	to: KYBER_NETWORK_PROXY_ADDRESS, 
+	to: KYBER_NETWORK_PROXY_ADDRESS,
 	data: transactionData
  })
 ```
@@ -118,10 +118,10 @@ transactionData = KyberNetworkProxyContract.methods.trade(
 	minConversionWeiRate, //uint minConversionRate
 	0 //uint walletId
 	).encodeABI()
-		
+
 txReceipt = await web3.eth.sendTransaction({
 	from: USER_ACCOUNT, //obtained from website interface Eg. Metamask, Ledger etc.
-	to: KYBER_NETWORK_PROXY_ADDRESS, 
+	to: KYBER_NETWORK_PROXY_ADDRESS,
 	data: transactionData,
 	value: ethTokenWeiAmount, //ADDITIONAL FIELD HERE
 })
@@ -156,17 +156,17 @@ async function main() {
 	KYBER_NETWORK_PROXY_ADDRESS = await getKyberNetworkProxyAddress()
 	kyberNetworkProxyContract = new web3.eth.Contract(kyberNetworkProxyABI, KYBER_NETWORK_PROXY_ADDRESS)
 
-	/* 
+	/*
 	######################################################
 	### OBTAINING & DISPLAYING SINGLE TOKEN PAIR RATE ####
 	######################################################
 	*/
 	let result = await kyberNetworkProxyContract.methods.getExpectedRate(
-		ETH_TOKEN_ADDRESS, 
-		KNC_TOKEN_ADDRESS, 
+		ETH_TOKEN_ADDRESS,
+		KNC_TOKEN_ADDRESS,
 		PRODUCT_ETH_WEI_PRICE
 		).call()
-	
+
 	let expectedRate = result.expectedRate
 	let slippageRate = result.slippageRate
 	console.log("Expected Rate: " + expectedRate)
@@ -177,12 +177,12 @@ async function main() {
 	userTokenPrice = convertToTokenPrice(userTokenWeiPrice,KNC_DECIMALS)
 	console.log("Product price: " + userTokenPrice + " KNC")
 
-	/* 
+	/*
 	########################
 	### TRADE EXECUTION ####
 	########################
 	*/
-	
+
 	//User can pay in KNC (src), but we receive payment in ETH (dest)
 	//First, user must approve KyberNetwork contract to trade src tokens
 	srcTokenContract = new web3.eth.Contract(ERC20ABI, KNC_TOKEN_ADDRESS)
@@ -198,17 +198,17 @@ async function main() {
 		userTokenWeiPrice, //uint srcAmount
 		ETH_TOKEN_ADDRESS, //ERC20 destToken
 		VENDOR_WALLET_ADDRESS, //address destAddress
-		0, //uint maxDestAmount
+		57896044618658097711785492504343953926634992332820282019728792003956564819968, //uint maxDestAmount
 		slippageRate, //uint minConversionRate
 		0 //uint walletId
 		).encodeABI()
 
 	txReceipt = await web3.eth.sendTransaction({
         from: USER_ACCOUNT, //obtained from website interface Eg. Metamask, Ledger etc.
-        to: KYBER_NETWORK_PROXY_ADDRESS, 
-        data: transactionData, 
+        to: KYBER_NETWORK_PROXY_ADDRESS,
+        data: transactionData,
         }).catch(error => console.log(error))
-}	
+}
 
 async function getKyberNetworkProxyAddress() {
 	var providers = ethers.providers
