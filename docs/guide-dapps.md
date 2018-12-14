@@ -7,12 +7,15 @@ We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-
 
 `getExpectedRate()`, `swapTokenToToken()`, `swapEtherToToken()` and `swapTokenToEther()` and `trade()` of `KyberNetworkProxy.sol` are the functions you would want to incorporate into your DApp's smart contract(s).
 
-Consider 2 scenarios:
+## Scenario
+Consider 2 scenarios where you want to allow your users to convert between any ERC20 tokens that are supported by the Kyber Protocol
 1. Loose token conversion: Convert from token A to token B without concern for the amount of tokens you will receive
 2. Exact token conversion: Convert to an exact amount of token B, and return all excess change in token A
 
-## Scenario 1: Loose Token Conversion
-### `swapTokenToToken`
+We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/developV2/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts. You would want to incorporate the `getExpectedRate()`, `swapTokenToToken()`, `swapEtherToToken()`, `swapTokenToEther()` and `trade()` functions of `KyberNetworkProxy.sol` into your DApp's smart contract(s).
+
+### Scenario 1: Loose Token Conversion
+#### `swapTokenToToken`
 [**A note about swapping from ERC20 tokens**](#conversion-from-erc20-tokens)
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
@@ -44,7 +47,7 @@ function swapTokenToToken (KyberNetworkProxyInterface _kyberNetworkProxy, ERC20 
 	}
 ```
 
-### `swapEtherToToken`
+#### `swapEtherToToken`
 ```
 //@dev assumed to be receiving ether wei
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
@@ -63,7 +66,7 @@ function swapEtherToToken (KyberNetworkProxyInterface _kyberNetworkProxy, ERC20 
 	}
 ```
 
-### `swapTokenToEther`
+#### `swapTokenToEther`
 [**A note about swapping from ERC20 tokens**](#conversion-from-erc20-tokens)
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
@@ -91,8 +94,8 @@ function swapTokenToEther (KyberNetworkProxyInterface _kyberNetworkProxy, ERC20 
 	}
 ```
 
-## Scenario 2: Precise Token Conversion
-### `swapTokenToTokenWithChange`
+### Scenario 2: Precise Token Conversion
+#### `swapTokenToTokenWithChange`
 [**A note about swapping from ERC20 tokens**](#conversion-from-erc20-tokens)
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
@@ -133,7 +136,7 @@ function swapTokenToTokenWithChange (
 }
 ```
 
-### `swapEtherToTokenWithChange`
+#### `swapEtherToTokenWithChange`
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
 //@param token destination token contract address
@@ -165,7 +168,7 @@ function swapEtherToTokenWithChange (
 }
 ```
 
-### `swapTokenToEtherWithChange`
+#### `swapTokenToEtherWithChange`
 [**A note about swapping from ERC20 tokens**](#conversion-from-erc20-tokens)
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
@@ -204,8 +207,8 @@ function swapTokenToEtherWithChange (
 }
 ```
 
-## Contract Example
-Note that the smart contract below is just an example. How the smart contract functions are modified and incorporated into your DApp is dependent on you to decide.
+### Contract Example
+Note that this is just an example smart contract. How the smart contract functions are modified and incorporated into your DApp is dependent on your requirements.
 ```
 pragma solidity 0.4.18;
 
@@ -461,3 +464,6 @@ To prevent user front running, the contract limits the gas price trade transacti
 ```js
 let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 ```
+
+### Fee Sharing Program
+DApps have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your app. Learn more about the program [here](guide-feesharing.md)!

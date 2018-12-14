@@ -3,8 +3,8 @@ id: KyberNetworkProxy
 title: KyberNetworkProxy
 ---
 # contract KyberNetworkProxy
-is [KyberNetworkProxyInterface](api-kybernetworkproxyinterface.md), [SimpleNetworkInterface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol), [Withdrawable](api-withdrawable.md), [Utils2](api-utils-2-.md)\
-imports [ERC20Interface](api-erc-20-interface.md), [Withdrawable](api-withdrawable.md), [Utils2](api-utils-2-.md), [KyberNetworkInterface](api-kybernetworkinterface.md), [KyberNetworkProxyInterface](api-kybernetworkproxyinterface.md), [SimpleNetworkInterface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol)
+is [KyberNetworkProxyInterface](api-kybernetworkproxyinterface.md), [SimpleNetworkInterface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol), [Withdrawable](api-withdrawable.md), Utils2\
+imports ERC20Interface, [Withdrawable](api-withdrawable.md), Utils2, [KyberNetworkInterface](api-kybernetworkinterface.md), [KyberNetworkProxyInterface](api-kybernetworkproxyinterface.md), [SimpleNetworkInterface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol)
 
 *Source*: [KyberNetworkProxy.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol)
 
@@ -94,24 +94,6 @@ const deploy = KyberNetworkProxy.deploy({
 broadcastTx(deploy)
 ```
 Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
-<br />
-
-### `calculateTradeOutcome`
-___
-function __calculateTradeOutcome__(uint srcBalanceBefore, uint destBalanceBefore, ERC20 src, ERC20 dest, address destAddress) internal returns (TradeOutcome outcome)
-| Parameter           | Type    | Description                                   |
-| ------------------- |:-------:|:--------------------------------------------------------------------:|
-| `srcBalanceBefore`               | uint   | source token balance of user before trade                                  |
-| `destBalanceBefore`             | uint   | destination token balance of user before trade                                     |
-| `src`              | ERC20   | source ERC20 token contract address                             |
-| `dest`              | ERC20   | destination ERC20 token contract address                             |
-| `destAddress`       | address | recipient address for destination ERC20 token                        |
-**Returns:**
-| Parameter           | Type    | Description                                   |
-| ------------------- |:-------:|:--------------------------------------------------------------------:|
-| `userDeltaSrcAmount`               | uint   | difference in source token balance                               |
-| `userDeltaDestAmount`             | uint   | difference in destination token balance                                     |
-| `actualRate`              | uint   | token exchange rate                             |
 <br />
 
 ### `enabled`
@@ -233,7 +215,7 @@ let transactionData = KyberNetworkProxy.methods.setKyberNetworkContract(KYBER_NE
 
 txReceipt = await web3.eth.sendTransaction({
 	from: ADMIN_ADDRESS,
-	to: KYBER_NETWORK_PROXY_ADDRESS, 
+	to: KYBER_NETWORK_PROXY_ADDRESS,
 	data: transactionData
 })
 ```
@@ -256,10 +238,10 @@ const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
 const minConversionRate = new web3.utils.BN('55555');
 const ethWeiAmt = web3.utils.toWei(0.3)
 let transactionData = KyberNetworkProxy.methods.swapEtherToToken(token,minConversionRate).encodeABI()
-        
+
 txReceipt = await web3.eth.sendTransaction({
 	from: USER_WALLET_ADDRESS, //obtained from web3 interface
-	to: KYBER_NETWORK_PROXY_ADDRESS, 
+	to: KYBER_NETWORK_PROXY_ADDRESS,
 	data: transactionData
 	value: ethWeiAmt
  })
@@ -284,10 +266,10 @@ const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
 const minConversionRate = new web3.utils.BN('55555');
 const srcAmount = web3.utils.toWei(0.3)
 transactionData = KyberNetworkProxy.methods.swapTokenToEther(token,srcAmount,minConversionRate).encodeABI()
-        
+
 txReceipt = await web3.eth.sendTransaction({
 	from: USER_WALLET_ADDRESS, //obtained from web3 interface
-	to: KYBER_NETWORK_PROXY_ADDRESS, 
+	to: KYBER_NETWORK_PROXY_ADDRESS,
 	data: transactionData
  })
 ```
@@ -316,7 +298,7 @@ transactionData = KyberNetworkProxy.methods.swapTokenToToken(src,srcAmount,dest,
 
 txReceipt = await web3.eth.sendTransaction({
 	from: USER_WALLET_ADDRESS, //obtained from web3 interface
-	to: KYBER_NETWORK_PROXY_ADDRESS, 
+	to: KYBER_NETWORK_PROXY_ADDRESS,
 	data: transactionData
  })
 ```
@@ -370,7 +352,7 @@ transactionData = KyberNetworkProxy.methods.trade(
 
 txReceipt = await web3.eth.sendTransaction({
 	from: USER_WALLET_ADDRESS, //obtained from web3 interface
-	to: KYBER_NETWORK_PROXY_ADDRESS, 
+	to: KYBER_NETWORK_PROXY_ADDRESS,
 	data: transactionData
  })
 ```

@@ -6,7 +6,7 @@ title: Fee Sharing Program
 It’s an opportunity to be an integrated part of Kyber Network and receive commision for each conversion that originates from your DApp, wallet or payment gateway.
 
 ## How do I join the program?
-Anyone can join the program by calling the `registerWallet` function of `KyberRegisterWallet` contract! You may do so using [MyEtherWallet](#myetherwallet), [MyCrypto](#mycrypto) or programmatically via [web3](#web3).
+Anyone can join the program by calling the [`registerWallet`](https://etherscan.io/address/0xECa04bB23612857650D727B8ed008f80952654ee#writeContract) function of [`KyberRegisterWallet`](https://etherscan.io/address/0xECa04bB23612857650D727B8ed008f80952654ee) contract! You may do so using [MyEtherWallet](#myetherwallet), [MyCrypto](#mycrypto) or programmatically via [web3](#web3).
 
 ## How do I earn fees?
 Send your registered wallet address as part of the trade transaction data. More information regarding the input parameters of the `trade` function can be found in [reference](api-kybernetworkproxy.md#trade).</br>
@@ -130,7 +130,7 @@ async function main() {
 	KyberRegisterWalletContract = new web3.eth.Contract(KyberRegisterWalletABI, KyberRegisterWalletContractAddress)
 	txData = KyberRegisterWalletContract.methods.registerWallet(WALLET_ADDRESS)
 	txResult = await broadcastTx(txData)
-}	
+}
 
 async function broadcastTx(txObject) {
   const gasLimit = await txObject.estimateGas();
@@ -170,14 +170,14 @@ transactionData = KyberNetworkProxyContract.methods.trade(
         minConversionWeiRate, //uint minConversionRate
         YOUR_WALLET_ADDRESS_HERE //uint walletId <-- your wallet address goes here, Eg. 0x91a502C678605fbCe581eae053319747482276b9
         ).encodeABI()
-        
+
 txReceipt = await web3.eth.sendTransaction({
     from: USER_ACCOUNT, //obtained from website interface Eg. Metamask, Ledger etc.
-    to: KYBER_NETWORK_PROXY_ADDRESS, 
+    to: KYBER_NETWORK_PROXY_ADDRESS,
     data: transactionData
  })
  ```
- 
+
  ### Claiming Fees With `sendFeeToWallet`
 1. Change the `WALLET_ADDRESS` to the registered wallet address of the fee sharing program.
 2. Change `SENDER_ADDRESS_PRIVATE_KEY` to the private key of an ETH address to send the transaction. Kindly ensure that this address **has sufficient funds** to send the transaction.
@@ -211,7 +211,7 @@ async function main() {
         console.log("-------------------------------------")
         await broadcastTx(feeBurnerContract.methods.sendFeeToWallet(WALLET_ADDRESS, reserveAddress))
     }
-}	
+}
 
 async function broadcastTx(txObject) {
 	const gasLimit = await txObject.estimateGas()
@@ -241,7 +241,7 @@ async function broadcastTx(txObject) {
 
 main()
  ```
- 
+
  ## Web3 Injection
 ### Adding web3
 You may add `web3` to your project using 1 of the following methods:
@@ -270,7 +270,7 @@ window.addEventListener('load', () => {
     else {
         // Use injected provider, start dapp
         web3 = new Web3(web3.currentProvider);
-    } 
+    }
 });
 ```
 

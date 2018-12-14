@@ -3,8 +3,8 @@ id: KyberReserve
 title: KyberReserve
 ---
 # contract KyberReserve
-is [KyberReserveInterface](api-kyberreserveinterface.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md)\
-imports [ERC20Interface](api-erc-20-interface.md), [Utils](api-utils.md), [Withdrawable](api-withdrawable.md),  [ConversionRatesInterface](api-conversionratesinterface.md), [SanityRatesInterface](api-sanityratesinterface.md), [KyberReserveInterface](api-kyberreserveinterface.md)
+is [KyberReserveInterface](api-kyberreserveinterface.md), [Withdrawable](api-withdrawable.md), Utils\
+imports ERC20Interface, Utils, [Withdrawable](api-withdrawable.md),  [ConversionRatesInterface](api-conversionratesinterface.md), [SanityRatesInterface](api-sanityratesinterface.md), [KyberReserveInterface](api-kyberreserveinterface.md)
 
 *Source*: [KyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberReserve.sol)
 
@@ -170,7 +170,7 @@ transactionData = KyberReserve.methods.approveWithdrawAddress(
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS, 
+    to: KYBER_RESERVE_ADDRESS,
     data: transactionData
 })
 ```
@@ -190,27 +190,11 @@ transactionData = KyberReserve.methods.disableTrade().encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
     from: ALERTER_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS, 
+    to: KYBER_RESERVE_ADDRESS,
     data: transactionData
 })
 ```
 
-<br />
-
-### `doTrade`
-Makes a trade between src and dest token and send dest tokens to destAddress.
-___
-function __doTrade__(ERC20 srcToken, uint srcAmount, ERC20 destToken, address destAddress, uint conversionRate, bool validate) internal returns (bool)
-| Parameter        | Type    | Description                                      |
-| ---------------- |:-------:|:------------------------------------------------:|
-| `srcToken`       | ERC20   | source ERC20 token contract address              |
-| `srcAmount`      | uint    | wei amount of source ERC20 token                 |
-| `destToken`      | ERC20   | destination ERC20 token contract address         |
-| `destAddress`    | address | recipient address for destination ERC20 token    |
-| `conversionRate` | uint    | the conversion rate between src and dest         |
-| `validate`       | bool    | if `true`, additional validations are applicable |
-**Returns:**\
-`true` if the executed trade was successful, otherwise `false`
 <br />
 
 ### `enableTrade`
@@ -227,7 +211,7 @@ transactionData = KyberReserve.methods.enableTrade().encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS, 
+    to: KYBER_RESERVE_ADDRESS,
     data: transactionData
 })
 ```
@@ -362,7 +346,7 @@ transactionData = KyberReserve.methods.setContracts(
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS, 
+    to: KYBER_RESERVE_ADDRESS,
     data: transactionData
 })
 ```
@@ -387,26 +371,10 @@ transactionData = KyberReserve.methods.setTokenWallet(token,wallet).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS, 
+    to: KYBER_RESERVE_ADDRESS,
     data: transactionData
 })
 ```
-<br />
-
-### `trade`
-Executes a trade. **Only accepts transactions from `KyberNetwork.sol`**
-___
-function __trade__(ERC20 srcToken, uint srcAmount, ERC20 destToken, address destAddress, uint conversionRate, bool validate) public payable returns (bool)
-| Parameter        | Type    | Description                                    |
-| ---------------- |:-------:|:----------------------------------------------:|
-| `srcToken`       | ERC20   | source ERC20 token contract address            |
-| `srcAmount`      | uint    | wei amount of source ERC20 token               |
-| `destToken`      | ERC20   | destination ERC20 token contract address       |
-| `destAddress`    | address | recipient address for destination ERC20 tokens |
-| `conversionRate` | uint    | conversion rate between srcToken and destToken |
-| `walletId`       | address | wallet address to send part of the fees to     |
-**Returns:**\
-`true` if the trade was successful, otherwise `false` if unsuccessful
 <br />
 
 ### `withdraw`
@@ -436,7 +404,7 @@ transactionData = KyberReserve.methods.withdraw(
 
 txReceipt = await web3.eth.sendTransaction({
     from: OPERATOR_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS, 
+    to: KYBER_RESERVE_ADDRESS,
     data: transactionData
 })
 ```

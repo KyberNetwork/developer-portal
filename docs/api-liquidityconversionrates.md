@@ -3,8 +3,8 @@ id: LiquidityConversionRates
 title: LiquidityConversionRates
 ---
 # contract LiquidityConversionRates
-is [ConversionRatesInterface](api-conversionratesinterface.md), [LiquidityFormula](api-liquidityformula.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md)\
-imports [ConversionRatesInterface](api-conversionratesinterface.md), [LiquidityFormula](api-liquidityformula.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md)
+is [ConversionRatesInterface](api-conversionratesinterface.md), LiquidityFormula, [Withdrawable](api-withdrawable.md), Utils\
+imports [ConversionRatesInterface](api-conversionratesinterface.md), LiquidityFormula, [Withdrawable](api-withdrawable.md), Utils
 
 *Source*: [LiquidityConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/LiquidityConversionRates.sol)
 
@@ -27,9 +27,9 @@ event __LiquidityParamsSet__(uint rInFp, uint pMinInFp, uint numFpBits, uint max
 | --------- |:----------------------:|:---------------------------:|
 | `uint`    | rInFp                  | price move per 1 ETH inventory change in formula precision |
 | `uint`    | pMinInFp               | pMin boundary in formula precision                         |
-| `uint`    | numFpBits              | formula precision is 2^40, therefore numFpBits is 40       |
-| `uint`    | maxCapBuyInFp          | allowed token quantity for a single buy trade              |
-| `uint`    | maxEthCapSellInFp      | allowed ETH quantity for a single sell trade               |
+| `uint`    | numFpBits              | formula precision (currently 40 is recommended)            |
+| `uint`    | maxCapBuyInFp          | allowed ETH quantity for a single buy trade in ETH         |
+| `uint`    | maxEthCapSellInFp      | allowed ETH quantity for a single sell trade in ETH        |
 | `uint`    | feeInBps               | fees in base points                                        |
 | `uint`    | formulaPrecision       | formula precision                                          |
 | `uint`    | maxQtyInFp             | max quantity in formula precision                          |
@@ -52,9 +52,9 @@ event __ReserveAddressSet__(address reserve)
 Event for logging of the resetting of the fees collected.
 ___
 event __CollectedFeesReset__(address reserve)
-| Parameter | Type             | Description                |
-| --------- |:----------------:|:--------------------------:|
-| `uint`    | resetFeesInTwei  | resetted fees in tera wei  |
+| Parameter | Type             | Description                 |
+| --------- |:----------------:|:---------------------------:|
+| `uint`    | resetFeesInTwei  | resetted fees in token wei  |
 <br />
 
 ### Functions
@@ -98,79 +98,6 @@ Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
 
 <br />
 
-### `abs`
-Return the absolute value of an integer.
-___
-function __abs__(int val) public pure returns(uint)
-| Parameter | Type | Description                        |
-| --------- |:----:|:----------------------------------:|
-| `int`      | val | integer to get absolute value from |
-**Returns:**\
-Absolute value of the integer
-
-<br />
-
-### `buyRate`
-Returns the buy rate.
-___
-function __buyRate__(uint eInFp, uint deltaEInFp) public view returns(uint)
-| Parameter | Type       | Description                  |
-| --------- |:----------:|:----------------------------:|
-| `uint`    | eInFp      | E in formula precision       |
-| `uint`    | deltaEInFp | delta E in formula precision |
-**Returns:**\
-Buy rate
-
-<br />
-
-### `buyRateZeroQuantity`
-Returns the buy rate with zero quantity.
-___
-function __buyRateZeroQuantity__(uint eInFp) public view returns(uint)
-| Parameter | Type       | Description            |
-| --------- |:----------:|:----------------------:|
-| `uint`    | eInFp      | E in formula precision |
-**Returns:**\
-Buy rate
-
-<br />
-
-### `calcCollectedFee`
-Calculate the collected fee from the trade.
-___
-function __calcCollectedFee__(uint val) public view returns(uint)
-| Parameter | Type  | Description                                  |
-| --------- |:-----:|:--------------------------------------------:|
-| `uint`    | val   | traded value denominted in the reserve token |
-**Returns:**\
-Calculated collected fee
-
-<br />
-
-### `fromTweiToFp`
-Convert tera wei to formula precision.
-___
-function __fromTweiToFp__(uint qtyInTwei) public view returns(uint)
-| Parameter | Type      | Description          |
-| --------- |:---------:|:--------------------:|
-| `uint`    | qtyInTwei | quantity in tera wei |
-**Returns:**\
-Converted value in formula precision
-
-<br />
-
-### `fromWeiToFp`
-Convert tera wei to formula precision.
-___
-function __fromWeiToFp__(uint qtyInwei) public view returns(uint)
-| Parameter | Type     | Description     |
-| --------- |:--------:|:---------------:|
-| `uint`    | qtyInwei | quantity in wei |
-**Returns:**\
-Converted value in formula precision
-
-<br />
-
 ### `getRate`
 Gets the conversion rate of the token to swap.
 ___
@@ -186,113 +113,37 @@ Conversion rate of the source token and reserve token
 
 <br />
 
-### `getRateWithE`
-Gets the conversion rate of the token to swap with E.
-___
-function __getRateWithE__(ERC20 conversionToken, bool buy, uint qtyInSrcWei, uint eInFp) public view returns(uint)
-| Parameter | Type            | Description                                                        |
-| --------- |:---------------:|:------------------------------------------------------------------:|
-| `ERC20`   | conversionToken | source ERC20 token contract address                                |
-| `bool`    | buy             | `true` to get the buy rate, otherwise `false` to get the sell rate |
-| `uint`    | qtyInSrcWei     | quantity in wei for the source token                               |
-| `uint`    | eInFp           | E in formula precision                                             |
-**Returns:**\
-Conversion rate of the source token and reserve token with E
-
-<br />
-
-### `rateAfterValidation`
-Gets the conversion rate after validation.
-___
-function __rateAfterValidation__(uint rateInPrecision, bool buy) public view returns(uint)
-| Parameter | Type            | Description                                                        |
-| --------- |:---------------:|:------------------------------------------------------------------:|
-| `uint`   | rateInPrecision  | rate in formula precision                                          |
-| `bool`   | buy              | `true` to get the buy rate, otherwise `false` to get the sell rate |
-**Returns:**\
-Conversion rate after validation
-
-<br />
-
-### `recordImbalance`
-Records the wei amount of net absolute (+/-) change for the conversion token in a block
-___
-function __recordImbalance__(ERC20 conversionToken, int buyAmountInTwei, uint rateUpdateBlock, uint currentBlock) public
-| Parameter | Type            | Description                         |
-| --------- |:---------------:|:-----------------------------------:|
-| `ERC20`   | conversionToken | source ERC20 token contract address |
-| `int`     | buyAmountInTwei | buy amount in tera wei              |
-| `uint`    | rateUpdateBlock | block number when rate was updated  |
-| `uint`    | currentBlock    | current block number                |
-
-<br />
-
 ### `resetCollectedFees`
-Reset the amount of collected fees.
+Reset the amount of collected fees. Collected fees can be read through the state variable `collectedFeesInTwei`. Only admin can invoke.
 ___
 function __resetCollectedFees__() public onlyAdmin
-
-<br />
-
-### `sellRate`
-Returns the sell rate.
-___
-function __sellRate__(uint eInFp, uint sellInputTokenQtyInFp, uint deltaTInFp) public view returns(uint rateInPrecision, uint deltaEInFp)
-| Parameter | Type                  | Description                                       |
-| --------- |:---------------------:|:-------------------------------------------------:|
-| `uint`    | eInFp                 | E in formula precision                            |
-| `uint`    | sellInputTokenQtyInFp | sell quantity of input token in formula precision |
-| `uint`    | deltaTInFp            | delta T in formula precision                      |
-**Returns:**\
-Sell rate
-
-<br />
-
-### `sellRateZeroQuantity`
-Returns the sell rate with zero quantity.
-___
-function __sellRateZeroQuantity__(uint eInFp) public view returns(uint)
-| Parameter | Type                  | Description                                       |
-| --------- |:---------------------:|:-------------------------------------------------:|
-| `uint`    | eInFp                 | E in formula precision                            |
-**Returns:**\
-Sell rate with zero quantity
+Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
 
 <br />
 
 ### `setLiquidityParams`
-Sets the liquidity parameters of the automated reserve.
+Sets the liquidity parameters of the automated reserve. Only admin can invoke.
 ___
 function __setLiquidityParams__(uint \_rInFp, uint \_pMinInFp, uint \_numFpBits, uint \_maxCapBuyInWei, uint \_maxCapSellInWei, uint \_feeInBps, uint \_maxTokenToEthRateInPrecision, uint \_minTokenToEthRateInPrecision) public onlyAdmin
 | Parameter | Type                          | Description                 |
 | --------- |:-----------------------------:|:---------------------------:|
 | `uint`    | _rInFp                        | price move per 1 ETH inventory change in formula precision  |
 | `uint`    | _pMinInFp                     | pMin boundary in formula precision                          |
-| `uint`    | _numFpBits                    | formula precision is 2^40, therefore numFpBits is 40        |
+| `uint`    | _numFpBits                    | formula precision (currently 40 is recommended)             |
 | `uint`    | _maxCapBuyInWei               | maximum token quantity in wei for a single buy trade        |
 | `uint`    | _maxCapSellInWei              | maximum token quantity in wei for a single sell trade       |
 | `uint`    | _feeInBps                     | fees in base points                                         |
 | `uint`    | _maxTokenToEthRateInPrecision | maximum allowed token to ETH rate in formula precision      |
 | `uint`    | _minTokenToEthRateInPrecision | minimum allowed token to ETH rate in formula precision      |
+Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
 
 <br />
 
 ### `setReserveAddress`
-Sets the reserve contract address.
+Sets the reserve contract address. Only admin can invoke.
 ___
 function __setReserveAddress__(address reserve) public onlyAdmin
 | Parameter | Type    | Description                 |
 | --------- |:-------:|:---------------------------:|
 | `address` | reserve | reserve's contract address  |
-
-<br />
-
-### `valueAfterReducingFee`
-Get the buy or sell rate value after reducing its fees.
-___
-function __valueAfterReducingFee__(uint val) public view returns(uint)
-| Parameter | Type  | Description                                       |
-| --------- |:-----:|:-------------------------------------------------:|
-| `uint`    | val   | E in formula precision                            |
-**Returns:**\
-Value after reducing fees
+Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)

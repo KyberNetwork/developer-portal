@@ -3,8 +3,8 @@ id: FeeBurner
 title: FeeBurner
 ---
 # contract FeeBurner
-is [FeeBurnerInterface](api-feeburnerinterface.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md)\
-imports [FeeBurnerInterface](api-feeburnerinterface.md), [Withdrawable](api-withdrawable.md), [Utils](api-utils.md)
+is [FeeBurnerInterface](api-feeburnerinterface.md), [Withdrawable](api-withdrawable.md), Utils\
+imports [FeeBurnerInterface](api-feeburnerinterface.md), [Withdrawable](api-withdrawable.md), Utils
 
 *Source*: [FeeBurner.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/FeeBurner.sol)
 
@@ -174,7 +174,7 @@ ___
 ### `setKNCRate`
 Sets the rate of the KNC token.
 ___
-function setKNCRate(uint rate) public onlyAdmin 
+function setKNCRate(uint rate) public onlyAdmin
 | Parameter | Type  | Description       |
 | --------- |:-----:|:-----------------:|
 | `rate`    | uint  | rate of KNC token |
@@ -198,7 +198,7 @@ ___
 ### `setTaxInBps`
 Sets taxable amount in bps
 ___
-function __setTaxInBps__(uint \_taxFeeBps) public onlyAdmin 
+function __setTaxInBps__(uint \_taxFeeBps) public onlyAdmin
 | Parameter   | Type    | Description                |
 | ----------- |:-------:|:--------------------------:|
 | `taxFeeBps` | uint    | fees in basis points (`1 bps = 0.01%`)             |
@@ -209,7 +209,7 @@ ___
 ### `setTaxWallet`
 Sets the tax wallet address
 ___
-function __setTaxWallet__(address \_taxWallet) public onlyAdmin 
+function __setTaxWallet__(address \_taxWallet) public onlyAdmin
 | Parameter    | Type    | Description                |
 | ------------ |:-------:|:--------------------------:|
 | `_taxWallet` | address | tax wallet address             |

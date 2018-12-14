@@ -3,8 +3,8 @@ id: KyberNetwork
 title: KyberNetwork
 ---
 # contract KyberNetwork
-is [Withdrawable](api-withdrawable.md), [Utils2](api-utils-2-.md), [KyberNetworkInterface](api-kybernetworkinterface.md)\
-imports [ERC20Interface](api-erc-20-interface.md), [KyberReserveInterface](api-kyberreserveinterface.md), [KyberNetworkInterface](api-kybernetworkinterface.md), [Withdrawable](api-withdrawable.md), [Utils2](api-utils-2-.md), [WhiteListInterface](api-whitelistinterface.md), [ExpectedRateInterface](api-expectedrateinterface.md), [FeeBurnerInterface](api-feeburnerinterface.md)
+is [Withdrawable](api-withdrawable.md), Utils2, [KyberNetworkInterface](api-kybernetworkinterface.md)\
+imports ERC20Interface, [KyberReserveInterface](api-kyberreserveinterface.md), [KyberNetworkInterface](api-kybernetworkinterface.md), [Withdrawable](api-withdrawable.md), Utils, WhiteListInterface, ExpectedRateInterface, [FeeBurnerInterface](api-feeburnerinterface.md)
 
 *Source*: [KyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetwork.sol)
 
@@ -163,45 +163,11 @@ let transactionData = KyberNetwork.methods.addReserve(
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_NETWORK_ADDRESS, 
+    to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
 ```
 
-<br />
-
-### `calcActualAmounts`
-Calculates the wei amount of ERC20 token to be taken from the source address, and the wei amount of ERC20 token to be given to the destination address.
-___
-function __calcActualAmounts__(ERC20 src, ERC20 dest, uint srcAmount, uint maxDestAmount, BestRateResult rateResult) internal view
-returns (uint actualSrcAmount, uint weiAmount, uint actualDestAmount)
-| Parameter    | Type  | Description                              |
-| ------------ |:-----:|:----------------------------------------:|
-| `src`        | ERC20 | source ERC20 token contract address      |
-| `dest`       | ERC20 | destination ERC20 token contract address |
-| `srcAmount` | uint  | wei amount of source ERC20 tokens   |
-| `maxDestAmount` | uint  | maximum wei amount of destination ERC20 tokens to convert to  |
-| `rateResult`       | [BestRateResult](#bestrateresult)  | Best Rate Result Object     |
-**Returns:**\
-Actual source token amount, ETH wei amount and actual desination token amount
-<br />
-
-### `doReserveTrade`
-Function that executes the actual trade.
-___
-function __doReserveTrade__(ERC20 src, uint amount, ERC20 dest, address destAddress, uint expectedDestAmount, KyberReserveInterface reserve, uint conversionRate, bool validate) internal returns (bool)
-| Parameter            | Type                  | Description                                                   |
-| -------------------- |:---------------------:|:-------------------------------------------------------------:|
-| `src`                | ERC20                 | source ERC20 token contract address                           |
-| `amount`             | uint                  | wei amount of source ERC20 token                              |
-| `dest`               | ERC20                 | destination ERC20 token contract address                      |
-| `destAddress`        | address               | recipient address for destination ERC20 token                 |
-| `expectedDestAmount` | uint                  | expected wei amount of destination ERC20 token to be received |
-| `reserve`            | KyberReserveInterface | address of chosen reserve                                     |
-| `conversionRate`     | uint                  | the conversion rate between src and dest                      |
-| `validate`           | bool                  | if `true`, additional validations are applicable              |
-**Returns:**\
-`true` if trade is successful, otherwise `false` if unsuccessful
 <br />
 
 ### `enabled`
@@ -242,19 +208,6 @@ result = await KyberNetwork.methods.findBestRate(
 
 rate = result[1]
 ```
-<br />
-
-### `findBestRateTokenToToken`
-Obtain the best exchange rate for ERC20 <-> ERC20.
-___
-function __findBestRateTokenToToken__(ERC20 src, ERC20 dest, uint srcAmount) internal view returns (BestRateResult result)
-| Parameter | Type    | Description                         |
-| --------- |:-------:|:-----------------------------------:|
-| `src`   | ERC20 | source token contract address           |
-| `dest`   | ERC20 | destination token contract address           |
-| `srcAmount` | uint | wei amount of source ERC20 token |
-**Returns:**\
-[BestRateResult object](#bestrateresult)
 <br />
 
 ### `getExpectedRate`
@@ -364,18 +317,6 @@ let value =  await KyberNetwork.methods.info(`field`).call()
 ```
 <br />
 
-### `listPairs`
-Listing of (token -> ETH) and / or (ETH -> token) pair.
-___
-function __listPairs__(address reserve, ERC20 token, bool isTokenToEth, bool add) internal 
-| Parameter | Type                  | Description                                                 |
-| ----------|:---------------------:|:-----------------------------------------------------------:|
-| `reserve` | KyberReserveInterface | reserve's contract address |
-| `token` | ERC20 | Token contract address |
-| `isTokenToEth`     | bool | `true` if listing token -> ETH, `false` if ETH -> token                    |
-| `add`     | uint                  | `true` if trade enabled, otherwise disable trade if `false` |
-___
-
 ### `listPairForReserve`
 Allow or prevent a specific reserve to trade a pair of tokens. Only admin can invoke.
 ___
@@ -407,7 +348,7 @@ let transactionData = KyberNetwork.methods.listPairForReserve(
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_NETWORK_ADDRESS, 
+    to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
 ```
@@ -467,7 +408,7 @@ let transactionData = KyberNetwork.methods.setEnable(_enable).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_NETWORK_ADDRESS, 
+    to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
 ```
@@ -489,7 +430,7 @@ let transactionData = KyberNetwork.methods.setExpectedRate(expectedRate).encodeA
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_NETWORK_ADDRESS, 
+    to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
 ```
@@ -511,7 +452,7 @@ let transactionData = KyberNetwork.methods.setFeeBurner(feeBurner).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_NETWORK_ADDRESS, 
+    to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
 ```
@@ -535,7 +476,7 @@ let transactionData = KyberNetwork.methods.setInfo(field,value).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
     from: OPERATOR_ADDRESS,
-    to: KYBER_NETWORK_ADDRESS, 
+    to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
 ```
@@ -557,7 +498,7 @@ let transactionData = KyberNetwork.methods.setKyberProxy(networkProxy).encodeABI
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_NETWORK_ADDRESS, 
+    to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
 ```
@@ -582,7 +523,7 @@ let transactionData = KyberNetwork.methods.setParams(_maxGasPrice, _negligibleRa
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_NETWORK_ADDRESS, 
+    to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
 ```
@@ -604,33 +545,7 @@ let transactionData = KyberNetwork.methods.setWhiteList(whiteList).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
     from: ADMIN_ADDRESS,
-    to: KYBER_NETWORK_ADDRESS, 
+    to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
 ```
-<br />
-
-### `trade`
-Trade API for kyber network.
-___
-function __trade__(TradeInput tradeInput) internal returns (uint)
-| Parameter           | Type    | Description                                   |
-| ------------------- |:-------:|:--------------------------------------------------------------------:|
-| `tradeInput`               | [TradeInput](#tradeinput)   | Trade Input Object                                  |
-**Returns:**\
-Amount of actual destination tokens
-<br />
-
-### `validateTradeInput`
-Checks that user sent ETH or ERC20 tokens to contract before trade.
-___
-function __validateTradeInput__(ERC20 src, uint srcAmount, ERC20 dest, address destAddress) internal view returns (bool)
-| Parameter     | Type    | Description                                   |
-| ------------- |:-------:|:---------------------------------------------:|
-| `src`         | ERC20   | source ERC20 token contract address           |
-| `srcAmount`   | uint    | wei amount of source ERC20 token              |
-| `dest`         | ERC20   | destination ERC20 token contract address           |
-| `destAddress` | address | recipient address for destination ERC20 token |
-**Returns:**\
-`true` if input is validated, otherwise `false` if invalidated
-<br />
