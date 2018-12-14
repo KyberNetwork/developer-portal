@@ -2,6 +2,9 @@
 id: ReservesUseCase
 title: Reserves
 ---
+## Overview
+![Kyber Reserve Overview](/uploads/kyberreserveoverview.png "Kyber Reserve Overview")
+
 Reserves represent decentralized liquidity powered by the community. It comprises of dedicated liquidity providers that are connected to diverse stakeholders in the ecosystem. Entities with large, idle digital assets such as large token holders, fund managers and token teams can easily become reserves, rebalance their portfolio and provide liquidity and value for the entire ecosystem.
 
 A reserve consists of two main components: an on-chain component of your reserve smart contracts and an off-chain component (normally, an automated system) that manages your on-chain component. The two components are depicted in the diagram below.
