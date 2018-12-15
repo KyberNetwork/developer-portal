@@ -198,7 +198,7 @@ async function main() {
 		userTokenWeiPrice, //uint srcAmount
 		ETH_TOKEN_ADDRESS, //ERC20 destToken
 		VENDOR_WALLET_ADDRESS, //address destAddress
-		0, //uint maxDestAmount
+		57896044618658097711785492504343953926634992332820282019728792003956564819968, //uint maxDestAmount
 		slippageRate, //uint minConversionRate
 		0 //uint walletId
 		).encodeABI()
