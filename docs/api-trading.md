@@ -285,6 +285,7 @@ Example:
 | `src_qty`      | float  | Yes      | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the source asset. |
 | `min_dst_qty`  | float  | Yes      | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the destination asset. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
 | `gas_price`    | float  | Yes      | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
+| `wallet_id`    | string | Optional | The wallet address that is registered for the [fee sharing program](guide-feesharing.md).
 ___
 **Response:**
 | Parameter  | Type   | Description                                                                                               |
@@ -299,11 +300,11 @@ ___
 
 Example:
 ```json
-> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium"
+> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1"
 {
   "from": "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
   "to": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
-  "data": "0xcb3c28c7000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000044364c5bb0000000000000000000000000000dd974d5c2e2928dea5f71b9825b8b646686bd2000000000000000000000000008fa07f46353a2b17e92645592a94a0fc1ceb783f800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001b1ae4d6e2ef5000000000000000000000000000000000000000000000000000000000000000000000",
+  "data": "0xcb3c28c7000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000044364c5bb0000000000000000000000000000dd974d5c2e2928dea5f71b9825b8b646686bd2000000000000000000000000008fa07f46353a2b17e92645592a94a0fc1ceb783f800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001b1ae4d6e2ef5000000000000000000000000000000859a7958e254234fdc1d200b941ffdfcab02fc1",
   "value": "0x44364c5bb0000",
   "gasPrice": "0x39eda2b80",
   "nonce": "0x3f1",
