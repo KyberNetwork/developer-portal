@@ -30,7 +30,7 @@ async function getSupportedTokens() {
 await getSupportedTokens()
 ```
 
-#### Output 
+#### Output
 ```json
 {
   "error": false,
@@ -101,8 +101,8 @@ await getBuyRates('0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300')
 }
 ```
 
-### Step 1c - Convert ETH to KNC 
-Querying ``https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>`` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion between the specified pair. Details about the `trade_data` endpoint can be found in the `Trading` section of [reference](api-trading.md#trade-data). </br>
+### Step 1c - Convert ETH to KNC
+Querying ``https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>`` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion between the specified pair. Details about the `trade_data` endpoint can be found in the `Trading` section of [reference](api-trading.md#trade-data). </br>
 
 <!--#### Argument Description
 | # | Field Name | Description |
@@ -128,13 +128,13 @@ Querying ``https://api.kyber.network/trade_data?user_address=<user_address>&src_
 ```js
 const fetch = require('node-fetch')
 
-async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price) {
-	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price)
+async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price, wallet_id) {
+	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price + '&wallet_id=' + wallet_id)
 	let tradeDetails = await tradeDetailsRequest.json()
 	return tradeDetails
 }
 
-await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '0.6', '300', 'medium')
+await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '0.6', '300', 'medium', '0x0859A7958E254234FdC1d200b941fFdfCAb02fC1')
 ```
 
 #### Output
@@ -176,10 +176,12 @@ const GAS_PRICE = 'medium';
 const USER_ACCOUNT = 'ENTER_USER_ADDRESS_HERE';
 // Your private key
 const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex');
+// Your fee sharing address
+const WALLET_ID = 'ENTER_FEE_SHARING_ADDRESS_HERE';
 
 async function main() {
 
-	/* 
+	/*
 	#################################
 	### CHECK IF KNC IS SUPPORTED ###
 	#################################
@@ -191,13 +193,13 @@ async function main() {
 	let tokens = await tokenInfoRequest.json();
 	// Checking to see if KNC is supported
 	let supported = tokens.data.some(token => {return 'KNC' == token.symbol});
-	// If not supported, return. 
+	// If not supported, return.
 	if(!supported) {
 		console.log('Token is not supported');
 		return
 	}
 
-	/* 
+	/*
 	####################################
 	### GET ETH/KNC CONVERSION RATES ###
 	####################################
@@ -210,14 +212,14 @@ async function main() {
 	// Getting the source quantity
 	let srcQty = rates.data[0].src_qty;
 
-	/* 
+	/*
 	#######################
 	### TRADE EXECUTION ###
 	#######################
 	*/
 
 	// Querying the API /trade_data endpoint
-	let tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + ETH_TOKEN_ADDRESS + '&dst_id=' + KNC_TOKEN_ADDRESS + '&src_qty=' + srcQty + '&min_dst_qty=' + QTY*0.97 + '&gas_price=' + GAS_PRICE);
+	let tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + ETH_TOKEN_ADDRESS + '&dst_id=' + KNC_TOKEN_ADDRESS + '&src_qty=' + srcQty + '&min_dst_qty=' + QTY*0.97 + '&gas_price=' + GAS_PRICE + '&wallet_id=' + WALLET_ID);
 	// Parsing the output
 	let tradeDetails = await tradeDetailsRequest.json();
 	// Extract the raw transaction details
@@ -239,7 +241,7 @@ main()
 
 ## Scenario 2: Perform DAI (ERC20 token) -> ETH conversion
 ### Step 2a - Check if DAI token is supported
-Same as [step 1a](#step-1a-check-if-knc-token-is-supported). 
+Same as [step 1a](#step-1a-check-if-knc-token-is-supported).
 
 ### Step 2b - Get token enabled status of wallet.
 Querying ``https://api.kyber.network/users/<user_address>/currencies`` will return a JSON of enabled statuses of ERC20 tokens in the given address. Details about the `users/<user_address>/currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies).</br>
@@ -288,7 +290,7 @@ await getEnabledStatuses('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F')
 }
 ```
 
-### Step 2c - Enable DAI for transfer 
+### Step 2c - Enable DAI for transfer
 Querying ``https://api.kyber.network/users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>`` will return a JSON of transaction details needed for a user to create and sign a new transaction to approve the KyberNetwork contract to spend tokens on the user's behalf. Details about the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies-currency-id-enable-data).</br>
 
 <!--#### Argument Description
@@ -382,20 +384,20 @@ await getSellRates('0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '100')
 }
 ```
 
-### Step 2e - Convert DAI to ETH 
+### Step 2e - Convert DAI to ETH
 Similar to [step 1c](#step-1c-convert-eth-to-knc).
 
 #### Code Example
 ```js
 const fetch = require('node-fetch')
 
-async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price) {
-	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price)
+async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price, wallet_id) {
+	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price + '&wallet_id=' + wallet_id)
 	let tradeDetails = await tradeDetailsRequest.json()
 	return tradeDetails
 }
 
-await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '100', '0.52', 'medium')
+await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '100', '0.52', 'medium', '0x0859A7958E254234FdC1d200b941fFdfCAb02fC1')
 ```
 
 ### Full Code Example
@@ -424,10 +426,12 @@ const GAS_PRICE = 'medium';
 const USER_ACCOUNT = 'ENTER_USER_ADDRESS_HERE';
 // Your private key
 const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex');
+// Your fee sharing address
+const WALLET_ID = 'ENTER_FEE_SHARING_ADDRESS_HERE';
 
 async function main() {
 
-	/* 
+	/*
 	#################################
 	### CHECK IF DAI IS SUPPORTED ###
 	#################################
@@ -439,13 +443,13 @@ async function main() {
 	let tokens = await tokenInfoRequest.json();
 	// Checking to see if DAI is supported
 	let supported = tokens.data.some(token => {return 'DAI' == token.symbol});
-	// If not supported, return. 
+	// If not supported, return.
 	if(!supported) {
 		console.log('Token is not supported');
 		return
 	}
 
-	/* 
+	/*
 	####################################
 	### GET ENABLED STATUS OF WALLET ###
 	####################################
@@ -458,7 +462,7 @@ async function main() {
     // Checking to see if DAI is enabled
     let enabled = enabledStatuses.data.some(token => {if(token.id == 'DAI_TOKEN_ADDRESS') {return token.enabled}})
 
-    /* 
+    /*
 	####################################
 	### ENABLE WALLET IF NOT ENABLED ###
 	####################################
@@ -482,7 +486,7 @@ async function main() {
 	    // Log the transaction receipt
 	    console.log(txReceipt)
 	}
-	/* 
+	/*
 	####################################
 	### GET DAI/ETH CONVERSION RATES ###
 	####################################
@@ -495,14 +499,14 @@ async function main() {
 	// Getting the source quantity
 	let dstQty = rates.data[0].dst_qty
 
-	/* 
+	/*
 	#######################
 	### TRADE EXECUTION ###
 	#######################
 	*/
 
 	// Querying the API /trade_data endpoint
-	tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + DAI_TOKEN_ADDRESS + '&dst_id=' + ETH_TOKEN_ADDRESS + '&src_qty=' + QTY + '&min_dst_qty=' + dstQty*0.97 + '&gas_price=' + GAS_PRICE)
+	tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + DAI_TOKEN_ADDRESS + '&dst_id=' + ETH_TOKEN_ADDRESS + '&src_qty=' + QTY + '&min_dst_qty=' + dstQty*0.97 + '&gas_price=' + GAS_PRICE + '&wallet_id=' + WALLET_ID)
     // Parsing the output
     let tradeDetails = await tradeDetailsRequest.json()
     // Extract the raw transaction details
@@ -603,7 +607,7 @@ var fetch = require('node-fetch')
 
 async function main() {
 
-	/* 
+	/*
 	#################################
 	### CHECK IF KNC IS SUPPORTED ###
 	#################################
@@ -615,13 +619,13 @@ async function main() {
 	let tokens = await tokenInfoRequest.json();
 	// Checking to see if KNC is supported
 	let supported = tokens.data.some(token => {return 'KNC' == token.symbol});
-	// If not supported, return. 
+	// If not supported, return.
 	if(!supported) {
 		console.log('Token is not supported');
 		return
 	}
 
-	/* 
+	/*
 	#################################
 	### GET ZIL/ETH DETAILED INFO ###
 	#################################
@@ -633,7 +637,7 @@ async function main() {
     let tokensDetailedInfo = await tokensDetailedInfoRequest.json()
     // Getting detailed info about the ZIL/ETH trading pair
     tokensDetailedInfo.data.some(token => {if(token.quote_symbol == "ZIL"){console.log(token)}})
-}	
+}
 
 main()
 ```
