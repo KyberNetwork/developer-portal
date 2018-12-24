@@ -102,7 +102,7 @@ await getBuyRates('0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300')
 ```
 
 ### Step 1c - Convert ETH to KNC
-Querying ``https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>`` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion between the specified pair. Details about the `trade_data` endpoint can be found in the `Trading` section of [reference](api-trading.md#trade-data). </br>
+Querying ``https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>`` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion between the specified pair. Details about the `trade_data` endpoint can be found in the `Trading` section of [reference](api-trading.md#trade-data). </br>
 
 <!--#### Argument Description
 | # | Field Name | Description |
@@ -128,13 +128,13 @@ Querying ``https://api.kyber.network/trade_data?user_address=<user_address>&src_
 ```js
 const fetch = require('node-fetch')
 
-async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price) {
-	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price)
+async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price, wallet_id) {
+	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price + '&wallet_id=' + wallet_id)
 	let tradeDetails = await tradeDetailsRequest.json()
 	return tradeDetails
 }
 
-await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '0.6', '300', 'medium')
+await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '0.6', '300', 'medium', '0x0859A7958E254234FdC1d200b941fFdfCAb02fC1')
 ```
 
 #### Output
@@ -176,6 +176,8 @@ const GAS_PRICE = 'medium';
 const USER_ACCOUNT = 'ENTER_USER_ADDRESS_HERE';
 // Your private key
 const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex');
+// Commission Address
+const WALLET_ID = 'ENTER_COMMISSION_ADDRESS_HERE';
 
 async function main() {
 
@@ -217,7 +219,7 @@ async function main() {
 	*/
 
 	// Querying the API /trade_data endpoint
-	let tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + ETH_TOKEN_ADDRESS + '&dst_id=' + KNC_TOKEN_ADDRESS + '&src_qty=' + srcQty + '&min_dst_qty=' + QTY*0.97 + '&gas_price=' + GAS_PRICE);
+	let tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + ETH_TOKEN_ADDRESS + '&dst_id=' + KNC_TOKEN_ADDRESS + '&src_qty=' + srcQty + '&min_dst_qty=' + QTY*0.97 + '&gas_price=' + GAS_PRICE + '&wallet_id=' + WALLET_ID);
 	// Parsing the output
 	let tradeDetails = await tradeDetailsRequest.json();
 	// Extract the raw transaction details
@@ -389,13 +391,13 @@ Similar to [step 1c](#step-1c-convert-eth-to-knc).
 ```js
 const fetch = require('node-fetch')
 
-async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price) {
-	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price)
+async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price, wallet_id) {
+	let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price + '&wallet_id=' + wallet_id)
 	let tradeDetails = await tradeDetailsRequest.json()
 	return tradeDetails
 }
 
-await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '100', '0.52', 'medium')
+await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '100', '0.52', 'medium', '0x0859A7958E254234FdC1d200b941fFdfCAb02fC1')
 ```
 
 ### Full Code Example
@@ -424,6 +426,8 @@ const GAS_PRICE = 'medium';
 const USER_ACCOUNT = 'ENTER_USER_ADDRESS_HERE';
 // Your private key
 const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex');
+// Commission Address
+const WALLET_ID = 'ENTER_COMMISSION_ADDRESS_HERE';
 
 async function main() {
 
@@ -502,7 +506,7 @@ async function main() {
 	*/
 
 	// Querying the API /trade_data endpoint
-	tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + DAI_TOKEN_ADDRESS + '&dst_id=' + ETH_TOKEN_ADDRESS + '&src_qty=' + QTY + '&min_dst_qty=' + dstQty*0.97 + '&gas_price=' + GAS_PRICE)
+	tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + DAI_TOKEN_ADDRESS + '&dst_id=' + ETH_TOKEN_ADDRESS + '&src_qty=' + QTY + '&min_dst_qty=' + dstQty*0.97 + '&gas_price=' + GAS_PRICE + '&wallet_id=' + WALLET_ID)
     // Parsing the output
     let tradeDetails = await tradeDetailsRequest.json()
     // Extract the raw transaction details
