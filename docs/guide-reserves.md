@@ -4,19 +4,7 @@ title: How to setup a reserve
 ---
 ## Introduction
 
-In this guide, we will be learning about the role of the reserve in the Kyber Network ecosystem and the different components that interacts with one. Subsequently, we will configure and deploy a reserve locally / to the Ropsten testnet.
-
-## Overview
-
-Reserves represent decentralized liquidity powered by the community. It comprises of dedicated liquidity providers that are connected to diverse stakeholders in the ecosystem. Entities with large, idle digital assets such as large token holders, fund managers and token teams can easily become reserves, rebalance their portfolio and provide liquidity and value for the entire ecosystem.
-
-A reserve consists of two main components: an on-chain component of your reserve smart contracts and an off-chain component (normally, an automated system) that manages your on-chain component. The two components are depicted in the diagram below.
-
-![Kyber Reserve Components](/uploads/kyberreservecomponents.png "Kyber Reserve Components")
-
-The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users.
-
-The off-chain component (i.e., automated system) hosts your [trading strategy](guide-miscellaneous.md#trading-strategy) that calculates and feeds conversion rates and rebalances your reserve of tokens. This automated system is managed by a reserve manager. As a reserve manager, your primary purpose is to keep your funds safe but this is a difficult task since your inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay updates of rates in your contracts.
+In this guide, we will configure and deploy a reserve locally / to the Ropsten testnet. As a reserve manager, your primary purpose is to keep your funds safe but this is a difficult task since your inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay updates of rates in your contracts.
 
 With this in mind, the reserve was designed with various parameters to help secure your funds.
 * Valid duration gives a time limit to the last price update, when the duration is over trades are stopped until the next price update.
