@@ -113,6 +113,58 @@ The order's status follows the [Managing Orders](https://docs.woocommerce.com/do
 `Order created` -> `Pending payment` -> `On-Hold` (payment broadcasted & mornitored) -> `Processing` (successful payment) OR `Failed` (failed payment)
 
 
+## Transaction Monitoring
+
+In order to check if the payment is success, we use [widget-monitor-php](https://github.com/KyberNetwork/widget-monitor-php) to monitor transaction.
+
+### TX Monitoring
+
+That plugin will retrieve the transaction receipt from blockchain and return status as well as validate the payment. It provides 2 modes for monitoring the tx status: `useIntervalLoop` or none. If using `useIntervalLoop`, the plugin will continue to query a node to get the tx receipt until it reaches the block confirmation number. This approach will consume a lot of server resources if there are many orders on-hold and large block confirmation numbers.
+
+We recommended to use a cronjob to check the order tx status periodically. We are already using wp_cron to monitor every 30 seconds. You can install and use WP Crontrol to view and edit that job.
+
+![Woocommerce Cron](/uploads/woocommerce-8.png "Woocommerce Cron")
+
+### Advance Options
+
+The cron jobs above will run every page load. This approach has 2 main problems: 1) with any heavy job, it will slow down the page for users; 2) it depends on user request to run the cronjob. Therefore, it is recommended to disable the WordPress default cronjob and setup a Linux (server) cronjob using crontab.
+
+Here is a guide on how to do this:
+
+1. Install crontab (if your server does not have it as default). You may need to search for instruction for your distro (Centos, RHEL, etc).
+
+2. Setup crontab.
+
+```sh
+crontab -e
+```
+
+3. Add the following line in order to run every minute to check the tx status.
+
+```sh
+* * * * * curl http://example.com/wp-cron.php?doing_wp_cron > /dev/null 2>&1
+```
+
+Please make sure you use correct path to wp-cron.php.
+
+Alternatively, you can use WP-cli
+
+```sh
+* * * * * cd /var/www/example.com/htdocs; wp cron event run --due-now > /dev/null 2>&1
+```
+
+4. You will need to disable WordPress default wp-cron. Add following to wp-config.php.
+
+```php
+define('DISABLE_WP_CRON', true);
+```
+
+5. Finally, restart crontab service so the new job can run.
+
+```sh
+sudo service cron restart
+```
+
 ## Contribution Guidelines
 
 If you are a developer and want to contribute, please check out the following guidelines for contributing to the Woocommerce Kyber Widget repository.
