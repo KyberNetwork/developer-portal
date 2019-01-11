@@ -149,7 +149,7 @@ ___
 | `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. After the transaction has been mined, you can check the status with `/info/getAccount`. |
 | `value` | string | Should always be equal to 0 for this operation. Always verify that the value is 0 for security reasons.      |
 | `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you need to specify a price value, change this wei hex value. |
-| `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same no| `noncence as the API will return the nonce of the account's last mined transaction. |
+| `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
 | `gasLimit` | string | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |
 
 Example:
