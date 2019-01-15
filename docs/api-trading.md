@@ -279,13 +279,14 @@ Example:
 **Arguments:**
 | Parameter      | Type   | Required | Description                                                                                           |
 |:--------------:|:------:|:--------:|:-----------------------------------------------------------------------------------------------------:|
-| `user_address` | string | Yes      | The ETH address that will be executing the swap.                                                      |
-| `src_id`       | string | Yes      | The `id` of the source asset of the pair you want to trade.                                           |
-| `dst_id`       | string | Yes      | The `id` of the destination asset of the pair you want to trade.                                      |
+| `user_address` | string | Yes      | The ETH address that will be executing the swap. |
+| `src_id`       | string | Yes      | The `id` of the source asset of the pair you want to trade. |
+| `dst_id`       | string | Yes      | The `id` of the destination asset of the pair you want to trade. |
 | `src_qty`      | float  | Yes      | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the source asset. |
 | `min_dst_qty`  | float  | Yes      | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the destination asset. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
-| `gas_price`    | float  | Yes      | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
-| `wallet_id`    | string | Optional | The wallet address that is registered for the [fee sharing program](guide-feesharing.md).
+| `gas_price`    | string  | Yes      | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
+| `wallet_id`    | string | Optional | The wallet address that is registered for the [fee sharing program](guide-feesharing.md). |
+| `nonce`    | integer | Optional | Users can specify a nonce to override the default account nonce. |
 ___
 **Response:**
 | Parameter  | Type   | Description                                                                                               |
@@ -293,21 +294,21 @@ ___
 | `from`     | string | The ETH address that executed the swap. Must match the `user_address` request input parameter. |
 | `to`       | string | The contract address of the KyberNetwork smart contract. Verify that it should always be the address resolved from `kybernetwork.eth` ENS. |
 | `data`     | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. After the transaction has been mined, you can check the status with `/info/getAccount`. |
-| `value`    | string | This will be equal to 0 in hex (0x0) if users trade from token to token or token to ETH (when `src_id` is the source asset of the token, not ETH). This will not be equal to 0 in hex (0x0) if users trade from ETH to token (when `src_id` is the source asset of ETH, not a token) |
-| `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you need to specify a price value, chance this wei hex value. |
+| `value`    | string | This will be equal to 0 in hex (0x0) if the user tries to trade from token to ETH (assuming `src_id` is the source token address). |
+| `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you need to specify a price value, change this wei hex value. |
 | `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
 | `gasLimit` | string | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |
 
 Example:
 ```json
-> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1"
+> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1&nonce=200"
 {
   "from": "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
   "to": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
   "data": "0xcb3c28c7000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000044364c5bb0000000000000000000000000000dd974d5c2e2928dea5f71b9825b8b646686bd2000000000000000000000000008fa07f46353a2b17e92645592a94a0fc1ceb783f800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001b1ae4d6e2ef5000000000000000000000000000000859a7958e254234fdc1d200b941ffdfcab02fc1",
   "value": "0x44364c5bb0000",
   "gasPrice": "0x39eda2b80",
-  "nonce": "0x3f1",
+  "nonce": "0xc8",
   "gasLimit": "0x43d81"
 }
 
