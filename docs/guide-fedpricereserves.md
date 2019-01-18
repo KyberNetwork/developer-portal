@@ -1,6 +1,6 @@
 ---
-id: ReservesGuide
-title: How to setup a reserve
+id: FedPriceReservesGuide
+title: Fed Price Reserve Setup
 ---
 ## Introduction
 
