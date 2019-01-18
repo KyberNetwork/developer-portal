@@ -39,7 +39,7 @@ The actions above can be performed without the need for any action from Kyber (s
 Before setting up an Orderbook Reserve for any token, check if such a reserve has already been deployed and listed.
 
 #### Step 0: Finding a deployed reserve
-Call the [`getOrderbookListingStage()`](PermissionlessOrderbookReserveLister#getorderbooklistingstage) function of the PermissionlessOrderbookReserveLister contract. If a reserve has been successfully deployed, the function should return:
+Call the [`getOrderbookListingStage()`](api-permissionlessorderbookreservelister.md#getorderbooklistingstage) function of the PermissionlessOrderbookReserveLister contract. If a reserve has been successfully deployed, the function should return:
 1. A non-null address
 2. A listing stage of 3.
 
@@ -49,13 +49,13 @@ A smaller listing stage number indicates that the listing process failed, or was
 #### Step 1: Setting up an orderbook reserve
 To setup a reserve for a token that is not listed yet, the user should call the following functions of the deployed PermissionlessOrderbookReserveLister contract **in the specified order below**. The process is split into 3 steps due to gas limits.
 
-1. [`addOrderbookContract(tokenAddress)`](PermissionlessOrderbookReserveLister#addorderbookcontract)
+1. [`addOrderbookContract(tokenAddress)`](api-permissionlessorderbookreservelister.md#addorderbookcontract)
 This function deploys a new Orderbook Reserve contract.
 
-2. [`initOrderbookContract(tokenAddress)`](PermissionlessOrderbookReserveLister#initorderbookcontract)
+2. [`initOrderbookContract(tokenAddress)`](api-permissionlessorderbookreservelister.md#initorderbookcontract)
 This function initializes the orderbook contract deployed in step 1.
 
-3. [`listOrderbookContract(tokenAddress)`](PermissionlessOrderbookReserveLister#listorderbookcontract)
+3. [`listOrderbookContract(tokenAddress)`](api-permissionlessorderbookreservelister.md#listorderbookcontract)
 This function lists the reserve created in step 1 in the network and fee burner contracts.
 
 After calling the 3 functions above for a specific token, the new orderbook reserve is ready to use. Its address can be found by calling the `getOrderbookListingStage()`function.
@@ -71,30 +71,30 @@ The limit value can be seen in `limits` public variable of the orderbook contrac
 
 ##### Order KNC stake
 Sufficient KNC should be deposited. The stake amount required is dependent on the Ether value of the order.
-To calculate this amount, one can call the [`calcKncStake(weiAmount)`](OrderbookReserve#calckncstake) function, where `weiAmount` is the Ether value of the order.
+To calculate this amount, one can call the [`calcKncStake(weiAmount)`](api-orderbookreserve.md#calckncstake) function, where `weiAmount` is the Ether value of the order.
 
-To check how much KNC is available for staking, one can call the [`makerUnlockedKnc(makerAddress)`](OrderbookReserve#makerunlockedknc) function, where `maker` should the maker's address.
+To check how much KNC is available for staking, one can call the [`makerUnlockedKnc(makerAddress)`](api-orderbookreserve.md#makerunlockedknc) function, where `maker` should the maker's address.
 
 #### Step 2a: Creating a Token to Ether Order
-1) [`depositKncForFee(makerAddress, weiAmount)` ](OrderbookReserve#depositkncforfee)
+1) [`depositKncForFee(makerAddress, weiAmount)` ](api-orderbookreserve.md#depositkncforfee)
 <br />**Note:** A KNC token allowance should be approved to this reserve before calling this function.
 
-2) [`depositToken(makerAddress, amount)`](OrderbookReserve#deposittoken)
+2) [`depositToken(makerAddress, amount)`](api-orderbookreserve.md#deposittoken)
 <br />**Note:** An allowance should be approved to this reserve before calling this function.
 
-3) [`submitTokenToEthOrder(srcAmount, dstAmount)`](OrderbookReserve#submittokentoethorder)
+3) [`submitTokenToEthOrder(srcAmount, dstAmount)`](api-orderbookreserve.md#submittokentoethorder)
 <br/>**Note:** The sending address (`msg.sender`) must be the maker address specified for depositing funds.
 
 Steps 1 and 2 can be done in any order, but step 3 requires the completion of the previous steps.
 
 #### Step 2b: Creating an Ether to Token Order
-1) [`depositKncForFee(makerAddress, weiAmount)` ](OrderbookReserve#depositkncforfee)
+1) [`depositKncForFee(makerAddress, weiAmount)` ](api-orderbookreserve.md#depositkncforfee)
 <br />**Note:** A KNC token allowance should be approved to this reserve before calling this function.
 
-2) [`depositEther(makerAddress)`](OrderbookReserve#depositether)
+2) [`depositEther(makerAddress)`](api-orderbookreserve.md#depositether)
 <br />**Note:** Ether should be sent when calling this function.
 
-3) [`submitEthToTokenOrder(srcAmount, dstAmount)`](OrderbookReserve#submitethtotokenorder)
+3) [`submitEthToTokenOrder(srcAmount, dstAmount)`](api-orderbookreserve.md#submitethtotokenorder)
 <br/>**Note:** The sending address (`msg.sender`) must be the maker address specified for depositing funds.
 
 Steps 1 and 2 can be done in any order, but step 3 requires the completion of the previous steps.
@@ -103,38 +103,38 @@ Steps 1 and 2 can be done in any order, but step 3 requires the completion of th
 #### Viewing Ether To Token Orders
 
 ##### Obtaining all active Ether to Token order IDs for a specific maker
-[`getEthToTokenMakerOrderIds(makerAddress)`](OrderbookReserve#getethtotokenmakerorderids)
+[`getEthToTokenMakerOrderIds(makerAddress)`](api-orderbookreserve.md#getethtotokenmakerorderids)
 
 ##### Obtaining all active Ether to Token order IDs in the orderbook
-[`getEthToTokenOrderList()`](OrderbookReserve#getethtotokenorderlist)
+[`getEthToTokenOrderList()`](api-orderbookreserve.md#getethtotokenorderlist)
 
 ##### View the details of an Ether to Token Order
-[`getEthToTokenOrder(orderId)`](OrderbookReserve#getethtotokenorder)
+[`getEthToTokenOrder(orderId)`](api-orderbookreserve.md#getethtotokenorder)
 
 #### Viewing Token to Ether Orders
 
 ##### Obtaining all active Token to Ether order IDs for a specific maker
-[`getTokenToEthMakerOrderIds(makerAddress)`](OrderbookReserve#gettokentoethmakerorderids)
+[`getTokenToEthMakerOrderIds(makerAddress)`](api-orderbookreserve.md#gettokentoethmakerorderids)
 
 ##### Obtaining all active Token to Ether order IDs in the orderbook
-[`getTokenToEthOrderList()`](OrderbookReserve#gettokentoethorderlist)
+[`getTokenToEthOrderList()`](api-orderbookreserve.md#gettokentoethorderlist)
 
 ##### View the details of a Token to Ether Order
-[`getTokenToEthOrder(orderId)`](OrderbookReserve#gettokentoethorder)
+[`getTokenToEthOrder(orderId)`](api-orderbookreserve.md#gettokentoethorder)
 
 ### Updating Orders
 #### Updating an Ether to Token Order
-[`updateEthToTokenOrder(orderId, newSrcAmount, newDstAmount)`](OrderbookReserve#updateethtotokenorder)
+[`updateEthToTokenOrder(orderId, newSrcAmount, newDstAmount)`](api-orderbookreserve.md#updateethtotokenorder)
 
 #### Updating a Token to Ether Order
-[`updateTokenToEthOrder(orderId, newSrcAmount, newDstAmount)`](OrderbookReserve#updatetokentoethorder)
+[`updateTokenToEthOrder(orderId, newSrcAmount, newDstAmount)`](api-orderbookreserve.md#updatetokentoethorder)
 
 ### Cancelling Orders
 #### Cancelling an Ether to Token Order
-[`cancelEthToTokenOrder(orderId)`](OrderbookReserve#cancelethtotokenorder)
+[`cancelEthToTokenOrder(orderId)`](api-orderbookreserve.md#cancelethtotokenorder)
 
 #### Cancelling a Token To Ether Order
-[`cancelTokenToEthOrder(orderId)`](OrderbookReserve#canceltokentoethorder)
+[`cancelTokenToEthOrder(orderId)`](api-orderbookreserve.md#canceltokentoethorder)
 
 ### Viewing Unused Fund Amounts
 The function below is used to view available funds for withdrawal or for creating new orders.
@@ -149,10 +149,10 @@ The function below is used to view available funds for withdrawal or for creatin
 Note that funds used for active orders cannot be withdrawn. One should first cancel an order so that he can withdraw the amount offered inside the order. The same applies for KNC deposits.
 
 #### Withdrawing Ether
-[`withdrawEther(amount)`](OrderbookReserve#withdrawether)
+[`withdrawEther(amount)`](api-orderbookreserve.md#withdrawether)
 
 #### Withdrawing KNC Tokens
-[`withdrawKncFee(amount)`](OrderbookReserve#withdrawkncfee)
+[`withdrawKncFee(amount)`](api-orderbookreserve.md#withdrawkncfee)
 
 #### Withdrawing ERC20 Tokens
-[`withdrawToken(amount)`](OrderbookReserve#withdrawtoken)
+[`withdrawToken(amount)`](api-orderbookreserve.md#withdrawtoken)
