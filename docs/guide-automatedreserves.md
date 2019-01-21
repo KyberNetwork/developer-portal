@@ -8,17 +8,18 @@ In this guide, we will learn how to configure and deploy an Automated Price Rese
 
 ## Introduction
 
-The automated reserve was created with ease of maintenance as a top consideration. For the automated price reserve model, you rely on the smart contract and its predefined algorithm to automatically provide rates for the token being served liquidity for. In this model, you don't have gas, server, or development costs, but there is a learning curve and inability to control the rates in creative ways. This automated model only supports one token for one reserve. If you need to list another token using this model, then another automated reserve must be deployed.
+The automated reserve was created with ease of maintenance as a top consideration. For the automated price reserve model, you rely on the smart contract and its predefined algorithm to automatically provide rates for the token being served liquidity for. In this model, you don't have gas, server, or development costs, but there is a learning curve and inability to control the rates in creative ways. This automated model only supports one token for one reserve. If you need to list another token using this model, another automated reserve must be deployed.
 
 Moreover, the automated reserve was also designed to help discover the price of a newly created token that is previously not available in any centralized or decentralized exchange. Through the interaction of buyers and sellers, an estimated market price is discovered based on the market's sentiment at a point in time.
 
 The automated reserve consists of only one component: an on-chain component of your reserve smart contracts that manages prices based on inventory.
-The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. Since the smart contracts uses a pre-defined trading strategy based on initial parameters, the automated reserve automatically calculates conversion rate. As a reserve manager, your primary purpose is to make sure that your automated reserve's ETH and token inventory is replenished when depleted. In the event of reserve depletion, you will need to deposit more ETH or tokens, and to set the parameters once again.
+
+The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. Since the smart contracts uses a pre-defined trading strategy based on initial parameters, the automated reserve automatically calculates the conversion rate. As a reserve manager, your primary purpose is to make sure that your automated reserve's ETH and token inventory is replenished when depleted. In the event of reserve depletion, you will need to deposit more ETH or tokens, and to set the parameters once again.
 
 With this in mind, the automated reserve was designed with various parameters to help secure your funds.
 * Prices are automatically updated based on a pre-defined algorithm as trades occur.
 * A single buy or sell trade in ETH quantity does not go beyond the allowed max quantity cap parameter.
-* Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
+* Limited list of destination withdrawal addresses to prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
 
 ## How to set up your own reserve
 
@@ -98,7 +99,8 @@ Let's take a look at the `exchanges` dictionary in `ropsten.json`. Fill in your 
 
 #### Setting permissions
 
-In the `permission` dictionary, you will fill in the addresses for admin, operator, and alerter. We recommend that you use different addresses for each of the 3 roles. It is highly recommended that for sensitive contracts like the reserve, a cold wallet is used as the admin wallet. Notice: It is possible to have multiple operators and alerters, but there can only be 1 admin.
+In the `permission` dictionary, you will fill in the addresses for admin, operator, and alerter. We recommend that you use different addresses for each of the 3 roles. It is highly recommended that for sensitive contracts like the reserve, a cold wallet is used as the admin wallet. <br>
+**Note:** It is possible to have multiple operators and alerters, but there can only be 1 admin.
 
 ```json
 "permission" : {
@@ -171,35 +173,7 @@ However, only authorized accounts have the right to withdraw tokens from the res
 
 ### `Step 4: Depositing the inventory and setting the liquidity parameters`
 
-Setting the liquidity parameters requires you to invoke `setLiquidityParameters()` functin from the LiquidityConversionRates contract. Below is an explanation of the different parameters:
-
-| Property    | Explanation |
-| :---------: | :---------: |
-| `_rInFp`    | r in formula precision, calculated as r * InFp. |
-| `_pMinInFp` | Minimum supported price factor in formula precision, calculated as min price factor * initial price of your token * InFp. |
-| `_numFpBits` | The formula precision in bits, therefore for formula precision of 2^40, _numFpBits is 40. |
-| `_maxCapBuyInWei` | The allowed quantity for one BUY trade in ETH. |
-| `_maxCapSellInWei` | The allowed quantity for one SELL trade in ETH. |
-| `_feeInBps` | The fee amount in basis points (1 bp = 0.01%) that should be calculated in the price. |
-| `_maxTokenToEthRateInPrecision` | The maximum allowed price taking into consideration the maximum supported price factor and must be in 10^18. |
-| `_minTokenToEthRateInPrecision` | The minimum allowed price taking into consideration the minimum supported price factor and must be in 10^18. |
-<br />
-
-The function that will be invoked to set liquidity parameters is:
-
-function __setLiquidityParams__(uint \_rInFp, uint \_pMinInFp, uint \_numFpBits, uint \_maxCapBuyInWei, uint \_maxCapSellInWei, uint \_feeInBps, uint \_maxTokenToEthRateInPrecision, uint \_minTokenToEthRateInPrecision) public onlyAdmin
-| Type      | Parameter                     |
-| :-------: | :---------------------------: |
-| `uint`    | _rInFp                        |
-| `uint`    | _pMinInFp                     |
-| `uint`    | _numFpBits                    |
-| `uint`    | _maxCapBuyInWei               |
-| `uint`    | _maxCapSellInWei              |
-| `uint`    | _feeInBps                     |
-| `uint`    | _maxTokenToEthRateInPrecision |
-| `uint`    | _minTokenToEthRateInPrecision |
-
-The reserve manager needs to only decide on the initial liquidity parameters of the automated reserve. Specifically, the following information need to be considered and to calculate the parameters above:
+The reserve manager needs to only decide on the initial liquidity parameters of the automated reserve. Specifically, the following information need to be considered:
 
 1. Liquidity Rate
 2. Initial Token Price
@@ -213,9 +187,22 @@ There are several things to take note of in the list of parameters.
 
 First, notice that some parameters will have the **InFp** suffix. InFp refers to formula precision. While this is configurable, 2^40 is the recommended value.
 
-Second, **r** is liquidity the rate in basis points or units of 100 which the price should move each time the ETH/token inventory changes in 1 ETH worth of quantity. For an r of 0.01, the price will move 1%. r is calculated taking into account the amount of initial ETH and tokens deposited into the contract, and the desired minimum/maximum price factor ratio. A smaller r also means more ETH and token inventory is needed to facilitate the liquidity.
+Second, **r** is liquidity the rate in basis points or units of 100 which the price should move each time the ETH/token inventory changes in 1 ETH worth of quantity. For an *r* of 0.01, the price will move 1%. *r* is calculated taking into account the amount of initial ETH and tokens deposited into the contract, and the desired minimum/maximum price factor ratio. A smaller *r* also means more ETH and token inventory is needed to facilitate the liquidity.
 
 For the **minimum/maximum supported price factor ratio**, it is recommended to start with a ratio of 0.5:2.0. This indicates that the inventory will suffice for up to 100% increase or 50% decrease in token price with respect to ETH.
+
+Setting the liquidity parameters is done by executing the [`setLiquidityParameters()`](api-liquidityconversionrates.md#setliquidityparams) function from the LiquidityConversionRates contract. We explain the different parameters below:
+
+| Type      | Parameter                     | Explanation |
+| :-------: | :---------------------------: | :---------: |
+| `uint`    | `_rInFp`    | r in formula precision, calculated as r * InFp. |
+| `uint`    | `_pMinInFp` | Minimum supported price factor in formula precision, calculated as min price factor * initial price of your token * InFp. |
+| `uint`    | `_numFpBits` | The formula precision in bits, therefore for formula precision of 2^40, _numFpBits is 40. |
+| `uint`    | `_maxCapBuyInWei` | The allowed quantity for one BUY trade in ETH. |
+| `uint`    | `_maxCapSellInWei` | The allowed quantity for one SELL trade in ETH. |
+| `uint`    | `_feeInBps` | The fee amount in basis points (1 bp = 0.01%) that should be calculated in the price. |
+| `uint`    | `_maxTokenToEthRateInPrecision` | The maximum allowed price taking into consideration the maximum supported price factor and must be in 10^18. |
+| `uint`    | `_minTokenToEthRateInPrecision` | The minimum allowed price taking into consideration the minimum supported price factor and must be in 10^18. |
 
 
 #### Example
