@@ -29,6 +29,7 @@
     ],
     "Reserve Guides": [
       "FedPriceReservesGuide",
+      "AutomatedReservesGuide",
       "OrderbookReservesGuide",
       "MiscellaneousGuide"
     ],

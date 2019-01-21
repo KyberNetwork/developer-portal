@@ -11,4 +11,5 @@ There are many reserve types that one can deploy. This developer portal covers 3
 
 ## Setup Your Reserve
 - To learn more about the Fed Price Reserve, [click here](guide-fedpricereserves.md).
+- To learn more about the Automated Price Reserve, [click here](guide-automatedreserves.md).
 - To learn more about the Orderbook Reserve, [click here](guide-orderbookreserves.md).
