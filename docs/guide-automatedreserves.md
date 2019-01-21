@@ -16,10 +16,13 @@ The automated reserve consists of only one component: an on-chain component of y
 
 The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. Since the smart contracts uses a pre-defined trading strategy based on initial parameters, the automated reserve automatically calculates the conversion rate. As a reserve manager, your primary purpose is to make sure that your automated reserve's ETH and token inventory is replenished when depleted. In the event of reserve depletion, you will need to deposit more ETH or tokens, and to set the parameters once again.
 
+#### Points to Note
+
 With this in mind, the automated reserve was designed with various parameters to help secure your funds.
 * Prices are automatically updated based on a pre-defined algorithm as trades occur.
 * A single buy or sell trade in ETH quantity does not go beyond the allowed max quantity cap parameter.
 * Limited list of destination withdrawal addresses to prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
+* **An automated price reserve can only support one token.** If another token needs to be supported, another automated price reserve needs to be deployed.
 
 ## How to set up your own reserve
 
@@ -314,15 +317,14 @@ Truffle v5.0 is needed in order to take advantage of new features, such as using
 #### Notes
 1. The sequence of migrating to Ganache can be seen in the migration scripts under `workshop/migrations`.
 2. The migration scripts or Ganache snapshot uses test tokens. New test tokens can be configured in `workshop/contracts/mockTokens`.
-3. For more information on how to change/add the set rates functionality, refer to [this section](guide-automatedreserves.md#step-2-deploying-contracts).
 
 
 ### `Step 1: Cloning the repository`
 
-Create a local directory and clone the `automated_reserve` branch from our [workshop repo](https://github.com/KyberNetwork/workshop) on GitHub.
+Create a local directory and clone the `master` branch from our [workshop repo](https://github.com/KyberNetwork/workshop) on GitHub.
 
 ```sh
-git clone -b automated_reserve https://github.com/KyberNetwork/workshop.git
+git clone https://github.com/KyberNetwork/workshop.git
 ```
 
 Install the the NPM packages
