@@ -314,7 +314,6 @@ Truffle v5.0 is needed in order to take advantage of new features, such as using
 #### Notes
 1. The sequence of migrating to Ganache can be seen in the migration scripts under `workshop/migrations`.
 2. The migration scripts or Ganache snapshot uses test tokens. New test tokens can be configured in `workshop/contracts/mockTokens`.
-3. For more information on how to change/add the set rates functionality, refer to [this section](guide-automatedreserves.md#step-2-deploying-contracts).
 
 
 ### `Step 1: Cloning the repository`
