@@ -89,26 +89,52 @@ const siteConfig = {
 
   // URL links on header
   headerLinks: [
+
     {
-      href: 'https://developer.kyber.network/',
+      doc: 'Start',
       label: 'Home',
     },
     {
-      doc: 'Start',
-      label: 'Guides',
+      doc: 'Integrations-Intro',
+      label: 'Integrations',
     },
     {
-      doc: 'APIs',
-      label: 'Reference',
+      doc: 'Reserves-Intro',
+      label: 'Reserves',
     },
     {
-      href: 'https://blog.kyber.network/',
-      label: 'Blog',
+      doc: 'Environments-Intro',
+      label: 'Environments',
+    },
+    {
+      doc: 'References-Intro',
+      label: 'References',
     },
     {
       href: 'https://github.com/kybernetwork',
       label: 'GitHub',
-    },
+    }
+
+    // {
+    //   href: 'https://developer.kyber.network/',
+    //   label: 'Home',
+    // },
+    // {
+    //   doc: 'Start',
+    //   label: 'Guides',
+    // },
+    // {
+    //   doc: 'APIs',
+    //   label: 'Reference',
+    // },
+    // {
+    //   href: 'https://blog.kyber.network/',
+    //   label: 'Blog',
+    // },
+    // {
+    //   href: 'https://github.com/kybernetwork',
+    //   label: 'GitHub',
+    // }
   ],
 
   // Path to images for header/footer
@@ -125,7 +151,7 @@ const siteConfig = {
   // Remove html extension
   cleanUrl: true,
 
-  // editUrl: 'http://localhost:1336/edit/',
+  editUrl: 'http://ec2-54-254-161-180.ap-southeast-1.compute.amazonaws.com:1336/edit/',
 
   // Google Analytics tracking ID
   gaTrackingId: 'UA-99578428-4',
@@ -141,7 +167,12 @@ const siteConfig = {
   // Add custom scripts here that would be placed in <script> tags
   scripts: [
     'https://buttons.github.io/buttons.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
+    '/js/code-block-buttons.js',
   ],
+
+  // Add custom stylesheets here
+  stylesheets: ['/css/code-block-buttons.css'],
 
   // Enable scroll to top
   scrollToTop: true,
@@ -153,7 +184,7 @@ const siteConfig = {
   onPageNav: 'separate',
 
   // Users set above
-  // users,
+  users,
 };
 
 module.exports = siteConfig;
