@@ -2,7 +2,7 @@
 id: Trading
 title: Trading
 ---
-# Trading REST API
+## INTRODUCTION
 
 The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. **The API currently only supports ETH <-> ERC20 trades.**
 ___
@@ -130,7 +130,7 @@ Example response:
 ```
 <br />
 
-### `/users/:user_address/currencies/:currency_id/enable_data` 
+### `/users/:user_address/currencies/:currency_id/enable_data`
 
 (GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to sell as mentioned in #trading-getinfo.
 
