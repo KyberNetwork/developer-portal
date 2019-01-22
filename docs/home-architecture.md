@@ -40,7 +40,7 @@ The permissionless orderbook reserve (POR) is our newest type of reserve. The 2 
 The POR is defined by the `OrderbookReserve.sol` contract. As token rates are determined by the available limit orders, supplementary contracts `Orderlist.Sol` and `OrderIdManager.sol` are required to keep track of the orders. 
 
 ## Maintainer Overview
-![Maintainer Overview](/uploads/reserveregistration.png "Reserve Registration")
+![Maintainer Overview](/uploads/maintaineroverview.png "Maintainer Overview")
 
 Maintainers are entities within the ecosystem that have access to the functions for adding and removing reserves and token pairs. In our current implementation of the protocol, the 2 groups of maintainers are the Kyber's admin wallet and the `PermissionlessOrderbookReserveLister.sol` contract. These maintainers are in charge of the
 
@@ -59,8 +59,6 @@ When a taker (e.g. user, smart contract, trading bots) initiates the trade funct
 
 
 
-![ETH to BAT](/uploads/basictokenswap.png "ETH to BAT")
-
 The conversion is possible thanks to reserve contracts that hold inventories of tokens and provide conversion rates to `KyberNetwork.sol`. The token inventory and price feeds of permissioned reserves are managed by a reserve manager while that of the permissionless reserves are run by the community.  
 
 The takers do not need to pay any additional fees other than the standard Ethereum transaction gas fees. The platform fees are paid for by the reserve / maker that executes the exchange and these fees are subsequently burnt. Note that some fees might be paid to the project that directed the user to the Kyber protocol as part of our [fee sharing program](guide-feesharing.md).
@@ -71,10 +69,6 @@ When a trade is executed, the `KyberNetwork.sol` contract queries rates from all
 
 The `KyberNetwork.sol` contract transfers user's funds to the reserve with the best rate, receives the destination token from the reserve and sends it to the destination address. After the exchange, the contract burns the platform fees and transfers some of the fees to the affiliated wallet. The exchange flow is depicted in the diagram below:
 ![BAT to DAI](/uploads/tokentotokenswap.png "BAT to DAI")
-
-## Reserve Registration 
-
-![Reserve Registration](/uploads/reserveregistration.png "Reserve Registration")
 
 ## Stack
 
