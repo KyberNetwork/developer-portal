@@ -2,7 +2,7 @@
 id: Trading
 title: Trading
 ---
-# Trading REST API
+## INTRODUCTION
 
 The Trading API's role is to allow a user to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. **The API currently only supports ETH <-> ERC20 trades.**
 ___
@@ -26,6 +26,12 @@ ___
 ### `/currencies`
 
 (GET) Returns a list of all possible tokens available for trade.
+
+**Arguments:**
+| Parameter      | Type    | Required | Description                                            |
+|:--------------:|:-------:|:--------:|:------------------------------------------------------:|
+| `only_official_reserve` | bool  | optional      | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `page` | int  | optional      | The page index of the response data, starts from `0`. If no value is specified, it will default to 0. Each page includes maximum 1000 records. |
 ___
 **Response:**
 | Parameter  | Type   | Description                                                                                  |
@@ -35,8 +41,10 @@ ___
 | `address`  | string | The address of the asset in its native chain.                                                |
 | `symbol`   | string | The symbol of the asset in its native chain.                                                 |
 | `id`       | string | A unique ID used by Kyber Network to identify between different symbols.                     |
+| `reserves_src` | string[] | Reserve contract addresses supporting Token to Ether trades |
+| `reserves_dest` | string[] | Reserve contract addresses supporting Ether to Token trades |
 
-Example:
+**Note:** Ether and tokens that have been deployed permissionlessly do not have the `reserves_src` and `reserves_dest` fields.
 
 ```json
 > curl "https://api.kyber.network/currencies"
@@ -44,39 +52,29 @@ Example:
   "error": false,
   "data": [
     {
-      "name": "Ethereum",
-      "decimals": 18,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
-      "id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    "name": "Ethereum",
+    "decimals": 18,
+    "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "ETH",
+    "id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     },
     {
-      "name": "Kyber Network",
-      "decimals": 18,
-      "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-      "symbol": "KNC",
-      "id": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200"
+    "name": "Kyber Network",
+    "decimals": 18,
+    "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+    "symbol": "KNC",
+    "id": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+    "reserves_src": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"],
+    "reserves_dest": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"]
     },
     {
-      "name": "OmiseGO",
-      "decimals": 18,
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "symbol": "OMG",
-      "id": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07"
-    },
-    {
-      "name": "Status Network",
-      "decimals": 18,
-      "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
-      "symbol": "SNT",
-      "id": "0x744d70fdbe2ba4cf95131626614a1763df805b9e"
-    },
-    {
-      "name": "AELF",
-      "decimals": 18,
-      "address": "0xbf2179859fc6d5bee9bf9158632dc51678a4100e",
-      "symbol": "ELF",
-      "id": "0xbf2179859fc6d5bee9bf9158632dc51678a4100e"
+    "name": "OmiseGO",
+    "decimals": 18,
+    "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+    "symbol": "OMG",
+    "id": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+    "reserves_src": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"],
+    "reserves_dest": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"]
     }
   ]
 }
@@ -91,6 +89,8 @@ Example:
 | Parameter      | Type    | Required | Description                                            |
 |:--------------:|:-------:|:--------:|:------------------------------------------------------:|
 | `user_address` | string  | Yes      | The ETH address to get information from. |
+| `only_official_reserve` | bool  | optional      | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `page` | int  | optional      | The page index of the response data, starts from `0`. If no value is specified, it will default to 0. Each page includes maximum 1000 records. |
 ___
 **Response:**
 | Parameter      | Type   | Description                                                             |
@@ -130,7 +130,7 @@ Example response:
 ```
 <br />
 
-### `/users/:user_address/currencies/:currency_id/enable_data` 
+### `/users/:user_address/currencies/:currency_id/enable_data`
 
 (GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to sell as mentioned in #trading-getinfo.
 
@@ -140,6 +140,8 @@ Example response:
 | `user_address`   | string   | Yes      | The ETH address of the user that will enable the asset. |
 | `currency_id`    | string   | Yes      | The unique ID of the destination asset.                 |
 | `gas_price`      | string   | Yes      | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
+| `nonce` | int  | Optional      | You can manually specify a nonce to override the default account nonce. |
+| `only_official_reserve` | bool  | optional      | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
 ___
 **Response:**
 | Parameter      | Type   | Description                                                                                           |
@@ -176,6 +178,7 @@ Example:
 |:---------:|:------:|:--------:|:------------------------------------------------:|
 | `id`      | string | Yes      | The `id` of the asset you want to buy using ETH. |
 | `qty`     | float  | Yes      | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to buy. |
+| `only_official_reserve` | bool  | optional      | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
 ___
 **Response:**
 | Parameter | Type   | Description                                                                                    |
@@ -226,6 +229,7 @@ Example:
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
 | `id`      | string | Yes      | The `id` of the assets you want to sell using ETH. |
 | `qty`     | float  | Yes      | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to sell. |
+| `only_official_reserve` | bool  | optional      | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
 ___
 **Response:**
 | Parameter | Type   | Description                                    |
@@ -287,6 +291,7 @@ Example:
 | `gas_price`    | string  | Yes      | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
 | `wallet_id`    | string | Optional | The wallet address that is registered for the [fee sharing program](guide-feesharing.md). |
 | `nonce`    | integer | Optional | Users can specify a nonce to override the default account nonce. |
+| `only_official_reserve` | bool  | optional      | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
 ___
 **Response:**
 | Parameter  | Type   | Description                                                                                               |
