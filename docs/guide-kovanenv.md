@@ -33,6 +33,9 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 ### `KNC (Kyber Network)`
 `0xB2f3dD487708ca7794f633D9Df57Fdb9347a7afF`
 
+### `DAI (Dai)`
+`0xC4375B7De8af5a38a93548eb8453a498222C4fF2`
+
 ### `OMG (OmiseGO)`
 `0x8870946B0018E2996a7175e8380eb0d43dD09EFE`
 

@@ -21,6 +21,9 @@ Read more [here](guide-trackerapi.md#price-and-volume-information)
 ### `KyberNetwork`
 `0x9ae49C0d7F8F9EF4B864e004FE86Ac8294E20950`
 
+### `PermissionlessOrderbookReserveLister`
+`0x84afa106fbf9b45e369724024cae14e8c7529c26`
+
 ### `KyberReserve`
 `0x63825c174ab367968EC60f061753D3bbD36A0D8F`
 
