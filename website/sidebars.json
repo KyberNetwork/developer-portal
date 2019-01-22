@@ -18,16 +18,20 @@
       "KovanEnvGuide",
       "ABIEnvGuide"
     ],
-    "Guides": [
-      "ReservesGuide",
+    "Integration Guides": [
       "DappsGuide",
       "VendorsGuide",
       "WalletsGuide",
       "TrackerAPIGuide",
       "TradingAPIGuide",
       "FeeSharingGuide",
-      "MiscellaneousGuide",
       "GettingHelpGuide"
+    ],
+    "Reserve Guides": [
+      "FedPriceReservesGuide",
+      "AutomatedReservesGuide",
+      "OrderbookReservesGuide",
+      "MiscellaneousGuide"
     ],
     "Widget": [
       "WidgetOverview",
@@ -62,6 +66,9 @@
       "FeeBurner",
       "FeeBurnerInterface",
       "LiquidityConversionRates",
+      "OrderbookReserve",
+      "OrderbookReserveInterface",
+      "PermissionlessOrderbookReserveLister",
       "PermissionGroups",
       "SanityRates",
       "SanityRatesInterface",

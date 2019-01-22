@@ -57,9 +57,9 @@ When the market price has been decided, the operator determines the buy/sell spr
 ## Sanity Rates
 ![Sanityrates](/uploads/sanityrates.png "Sanityrates")
 
-The sanity module protects reserves from (1) bugs in the conversion rate logic or from (2) hacks into the conversion rate system. If there are large inconsistencies between the sanity rates and the actual rates, then trades involving your reserve will be disabled. The functions below are from [`SanityRates.sol`](api-sanityrates.md). 
+The sanity module protects reserves from (1) bugs in the conversion rate logic or from (2) hacks into the conversion rate system. If there are large inconsistencies between the sanity rates and the actual rates, then trades involving your reserve will be disabled. The functions below are from [`SanityRates.sol`](api-sanityrates.md).
 
-* An admin sets `reasonableDiff` by calling `setReasonableDiff()` 
+* An admin sets `reasonableDiff` by calling `setReasonableDiff()`
 * An operator sets the `sanityRate` of a token by calling `setSanityRates()`
 
 To take the advantage of sanity rates, you will need to have a simple logic to decide on what rate is considered unreasonable at a given point of time. You should also run this logic on a server that is different from the one that sets your reserve's base conversion rate because you don't want them to get compromised at the same time if a hack happens.
@@ -124,3 +124,42 @@ The numbers on the figure correspond to the examples below.
 | 4 | KYC | 10,000 |
 | 7 | Partner | 500,000 |
 | 9 | Testers | 5000 |
+
+## Web3 Injection
+### Adding web3
+You may add `web3` to your project using 1 of the following methods:
+* npm: `npm install web3`
+* bower: `bower install web3`
+* meteor: `meteor add ethereum:web3`
+* vanilla: link the `dist./web3.min.js`
+
+### Requesting for web3 instance
+Metamask and other dapp browsers will no longer automatically inject an Ethereum provider or a Web3 instance at a website's page load time.  As a result, one has to asynchronously request a provider. Find out more [in this article](https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8). The code below shows how you may go about doing so:
+```
+window.addEventListener('load', () => {
+    // If web3 is not injected (modern browsers)...
+    if (typeof web3 === 'undefined') {
+        // Listen for provider injection
+        window.addEventListener('message', ({ data }) => {
+            if (data && data.type && data.type === 'ETHEREUM_PROVIDER_SUCCESS') {
+                // Use injected provider, start dapp...
+                web3 = new Web3(ethereum);
+            }
+        });
+        // Request provider
+        window.postMessage({ type: 'ETHEREUM_PROVIDER_REQUEST' }, '*');
+    }
+    // If web3 is injected (legacy browsers)...
+    else {
+        // Use injected provider, start dapp
+        web3 = new Web3(web3.currentProvider);
+    }
+});
+```
+
+For convenience, a Web3 instance *can* be injected by passing a web3 flag when requesting a provider:
+```
+//Request web3 provider
+window.postMessage({ type: 'ETHEREUM_PROVIDER_REQUEST', web3: true }, '*');
+```
+There is no guarantee about what version of web3 will be injected in response to this request, so it should only be used for convenience in development and debugging.

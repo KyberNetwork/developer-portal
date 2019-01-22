@@ -14,10 +14,13 @@ Read more [here](api-trading.md#currencies)
 `0x818E6FECD516Ecc3849DAf6845e3EC868087B755`
 
 ### `KyberNetwork`
-`0x91a502C678605fbCe581eae053319747482276b9`
+`0x3f9a8e219ab1ad42f96b22c294e564b2b48fe636`
 
 ### `KyberReserve`
 `0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a`
+
+### `PermissionlessOrderbookReserveLister`
+`0x405a5fae110c86eb2e5a76809a17fc5bee2d3ccd`
 
 ### `ConversionRates`
 `0xE16E257a25e287AF50C5651A4c2728b32D7e5ef7`

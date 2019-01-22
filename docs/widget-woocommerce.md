@@ -10,7 +10,7 @@ KyberWidget WooCommerce plugin allows developers to easily add a cryptocurrency 
 
 ## Pre-requisites
 
-* PHP version 5.6+
+* PHP version 7.2+
 * WordPress 3.8+
 * WooCommerce 3.0+
 

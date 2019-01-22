@@ -336,7 +336,7 @@ function __recordImbalance__(ERC20 token, int buyAmount, uint rateUpdateBlock, u
 
 ### `setBaseRate`
 Set tokens' base buy and sell rates, and optional adjustments to these rates. Only operator can invoke.
-Refer to [this guide](ReservesGuide#how-to-programmatically-call-setbaserate-setcompactdata) on how to use this function.
+Refer to [this guide](api-fedpricereservesguide.md#how-to-programmatically-call-setbaserate-setcompactdata) on how to use this function.
 ___
 function __setBaseRate__(ERC20[] tokens, uint[] baseBuy, uint[] baseSell, bytes14[] buy, bytes14[] sell, uint blockNumber, uint[] indices) public onlyOperator
 | Parameter     | Type      | Description                                                 |
@@ -389,7 +389,7 @@ txReceipt = await web3.eth.sendTransaction({
 
 ### `setCompactData`
 Setting minor adjustments in basis points (bps) to tokens' buy and sell rates. `1bps = 0.01%`. Only operator can invoke.
-Refer to [this guide](ReservesGuide#multiple-tokens) on how to use this function.
+Refer to [this guide](api-fedpricereservesguide.md#multiple-tokens) on how to use this function.
 ___
 function __setCompactData__(bytes14[] buy, bytes14[] sell, uint blockNumber, uint[] indices) public onlyOperator
 | Parameter     | Type      | Description                                                    |
