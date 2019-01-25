@@ -139,7 +139,7 @@ npm install
 Then run the command
 
 ```
-node liquidityReserveDeployer.js --config-path ropsten.json --gas-price-gwei 30 ----rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x91a502C678605fbCe581eae053319747482276b9"
+node liquidityReserveDeployer.js --config-path ropsten.json --gas-price-gwei 30 --rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x3f9a8e219ab1ad42f96b22c294e564b2b48fe636"
 
 ```
 * `--gas-price-gwei`: The gas price in gwei
