@@ -23,7 +23,7 @@ On creation and listing:
 * **There can only be 1 orderbook reserve per token.** Hence, all makers that wish to add liquidity for a specific token will add their orders on the same reserve.
 
 On making orders:
-* There is a **minimum order amount** defined in dollars (Eg. USD $1000) to prevent dust orders.
+* There is a [**minimum order amount**](#minimum-order-size) defined in dollars (Eg. USD $1000) to prevent dust orders.
 * Each order requires some KNC tokens to be deposited, as payment for using the network.
 * Market makers have to deposit funds and KNC tokens first before making orders.
 * Funds locked up in active orders cannot be withdrawn until these active orders are canceled.
@@ -38,8 +38,8 @@ On taking orders:
 
 ## How to set up your own reserve
 
-### Public testnet deployment
-Before setting up an Orderbook Reserve for any token, check if such a reserve has already been deployed and listed.
+### Public testnet or mainnet deployment
+Before setting up an Orderbook Reserve for any token, check if such a reserve has already been deployed and listed. Note that the guide below is applicable for both testnet and mainnet.
 
 ### `Step 0: Finding a deployed reserve`
 
@@ -89,7 +89,7 @@ To check how much KNC is available for staking, one can call the [`makerUnlocked
 <br />**Note:** An allowance should be approved to this reserve before calling this function.
 
 3) [`submitTokenToEthOrder(srcAmount, dstAmount)`](api-orderbookreserve.md#submittokentoethorder)
-<br/>**Note:** The sending address (`msg.sender`) must be the maker address specified for depositing funds.
+<br/>**Note:** The sending address (`msg.sender`) must be the maker address specified when depositing funds.
 
 (1) and (2) can be done in any order, but (3) requires the completion of the previous steps.
 
@@ -102,7 +102,7 @@ To check how much KNC is available for staking, one can call the [`makerUnlocked
 <br />**Note:** Ether should be sent when calling this function.
 
 3) [`submitEthToTokenOrder(srcAmount, dstAmount)`](api-orderbookreserve.md#submitethtotokenorder)
-<br/>**Note:** The sending address (`msg.sender`) must be the maker address specified for depositing funds.
+<br/>**Note:** The sending address (`msg.sender`) must be the maker address specified when depositing funds.
 
 (1) and (2) can be done in any order, but (3) requires the completion of the previous steps.
 
@@ -153,7 +153,7 @@ To check how much KNC is available for staking, one can call the [`makerUnlocked
 3) Cancel the order by calling [`cancelTokenToEthOrder(orderId)`](api-orderbookreserve.md#canceltokentoethorder).
 
 #### VIEWING UNUSED FUND AMOUNTS
-The public variables below is used to view available funds for withdrawal or for creating new orders.
+The public variables below are used to view available funds for withdrawal or for creating new orders.
 
 **Viewing Unused Ether**<br />
 `makerFunds(makerAddress, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)`
@@ -180,7 +180,7 @@ Here, we will walk you through an example on running the deployment script on [T
 #### Before you begin
 Check that you have the following:
 1. [node.js](https://nodejs.org/en/download/)
-2. [web3 1.0.0-beta.34](https://www.npmjs.com/package/web3)
+2. [web3 1.X.X](https://www.npmjs.com/package/web3)
 3. [Ganache CLI)](https://github.com/trufflesuite/ganache-cli)
 
 #### Prerequisites
@@ -210,15 +210,14 @@ Truffle v5.0 is needed in order to take advantage of new features, such as using
 #### Notes
 1. The sequence of migrating to Ganache can be seen in the migration scripts under `workshop/migrations`.
 2. The migration scripts or Ganache snapshot uses test tokens. New test tokens can be configured in `workshop/contracts/mockTokens`.
-3. For more information on how to change/add the set rates functionality, refer to [this section](guide-automatedreserves.md#step-2-deploying-contracts).
 
 
 ### `Step 1: Cloning the repository`
 
-Create a local directory and clone the `automated_reserve` branch from our [workshop repo](https://github.com/KyberNetwork/workshop) on GitHub.
+Create a local directory and clone the `master` branch from our [workshop repo](https://github.com/KyberNetwork/workshop) on GitHub.
 
 ```sh
-git clone -b automated_reserve https://github.com/KyberNetwork/workshop.git
+git clone https://github.com/KyberNetwork/workshop.git
 ```
 
 Install the the NPM packages
