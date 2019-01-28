@@ -3,7 +3,7 @@ id: Integrations-FeeSharing
 title: Fee Sharing Program
 ---
 ## What is the Fee Sharing Program?
-It’s an opportunity to be an integrated part of Kyber Network and receive commision for each conversion that originates from your DApp, wallet or payment gateway.
+It’s an opportunity to be an integrated part of Kyber Network and receive commission for each conversion that originates from your DApp, wallet or payment gateway.
 
 ## How do I join the program?
 Anyone can join the program by calling the [`registerWallet`](https://etherscan.io/address/0xECa04bB23612857650D727B8ed008f80952654ee#writeContract) function of [`KyberRegisterWallet`](https://etherscan.io/address/0xECa04bB23612857650D727B8ed008f80952654ee) contract! You may do so using [MyEtherWallet](#myetherwallet), [MyCrypto](#mycrypto) or programmatically via [web3](#web3).
@@ -242,41 +242,34 @@ async function broadcastTx(txObject) {
 main()
  ```
 
- ## Web3 Injection
-### Adding web3
-You may add `web3` to your project using 1 of the following methods:
-* npm: `npm install web3`
-* bower: `bower install web3`
-* meteor: `meteor add ethereum:web3`
-* vanilla: link the `dist./web3.min.js`
+## Trading on KyberSwap on a built-in web3 browser
 
-### Requesting for web3 instance
-Metamask and other dapp browsers will no longer automatically inject an Ethereum provider or a Web3 instance at a website's page load time.  As a result, one has to asynchronously request a provider. Find out more [in this article](https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8). The code below shows how you may go about doing so:
-```
-window.addEventListener('load', () => {
-    // If web3 is not injected (modern browsers)...
-    if (typeof web3 === 'undefined') {
-        // Listen for provider injection
-        window.addEventListener('message', ({ data }) => {
-            if (data && data.type && data.type === 'ETHEREUM_PROVIDER_SUCCESS') {
-                // Use injected provider, start dapp...
-                web3 = new Web3(ethereum);
-            }
-        });
-        // Request provider
-        window.postMessage({ type: 'ETHEREUM_PROVIDER_REQUEST' }, '*');
-    }
-    // If web3 is injected (legacy browsers)...
-    else {
-        // Use injected provider, start dapp
-        web3 = new Web3(web3.currentProvider);
-    }
-});
+For applications or wallets that have a built-in web3 browser feature, which can open DApps such as [KyberSwap](https://kyber.network/swap/), there are a couple of methods the app or wallet can still earn from the fee sharing program by facilitating a trade on KyberSwap. The prerequisite is that your wallet needs to be registered to the fee sharing program. Click [here](guide-feesharing.md#how-do-i-join-the-program) to learn how you can register to the program.
+
+After any of the 2 methods below is completed, notify any developer from Kyber Network at the [KybeDeveloper](https://telegram.me/kyberdeveloper/) telegram group of your wallet address so we know who the wallet belongs to.
+
+### Method 1: The `ref` param
+
+You can participate in the fee sharing by passing in a `ref` parameter in the KyberSwap URL.
+
+```html
+https://kyber.network/swap?ref=<address>
 ```
 
-For convenience, a Web3 instance *can* be injected by passing a web3 flag when requesting a provider:
+where: `address` is your fee sharing program registered ETH wallet address.
+
+In summary, when KyberSwap is opened on a web3 browser, the wallet address passed to the `ref` param will receive a percentage of the trade transaction value when a trade occurs.
+
+### Method 2: Global JavaScript Variable
+
+You can participate in the fee sharing by setting a JS global variable with your registered wallet address. Specifically, you need to set:
+
+```js
+window.web3.kyberID=<address>
 ```
-//Request web3 provider
-window.postMessage({ type: 'ETHEREUM_PROVIDER_REQUEST', web3: true }, '*');
-```
-There is no guarantee about what version of web3 will be injected in response to this request, so it should only be used for convenience in development and debugging.
+
+where: `address` is your fee sharing program registered ETH wallet address.
+
+**Note:** that if Method 1 is also used, Method 2's global variable will override the ref param.
+
+In summary, when KyberSwap is opened on a web3 browser, the wallet address set in the `window.web3.kyberID` global variable will receive a percentage of the trade transaction value when a trade occurs.
