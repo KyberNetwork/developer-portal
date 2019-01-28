@@ -1,79 +1,108 @@
 {
-  "guides": {
-    "Overview": [
+  "Home": {
+    "Getting Started": [
       "Start",
-      "TrustModelOverview",
-      "ArchitectureOverview"
-    ],
-    "Use Cases": [
-      "ReservesUseCase",
-      "DappsUseCase",
-      "VendorsUseCase",
-      "WalletsUseCase"
-    ],
-    "Environments": [
-      "MainnetEnvGuide",
-      "RopstenEnvGuide",
-      "RinkebyEnvGuide",
-      "KovanEnvGuide",
-      "ABIEnvGuide"
-    ],
-    "Integration Guides": [
-      "DappsGuide",
-      "VendorsGuide",
-      "WalletsGuide",
-      "TrackerAPIGuide",
-      "TradingAPIGuide",
-      "FeeSharingGuide",
-      "GettingHelpGuide"
-    ],
-    "Reserve Guides": [
-      "FedPriceReservesGuide",
-      "AutomatedReservesGuide",
-      "OrderbookReservesGuide",
-      "MiscellaneousGuide"
-    ],
-    "Widget": [
-      "WidgetOverview",
-      "WidgetGeneratorGuide",
-      "WidgetGenerator",
-      "WidgetWooCommerce",
-      "WidgetSwift",
-      "WidgetAuthentication"
-    ],
-    "Appendix": [
-      "CodesAppendix"
+      "Home-DesignPrinciples",
+      "Home-ProtocolOverview",
+      "Home-Architecture",
+      "Home-TrustModel"
     ]
   },
-  "api": {
-    "Overview": [
-      "APIs",
-      "SmartContractOverview",
-      "RESTOverview"
+  "Integrations": {
+    "Getting Started": [
+      "Integrations-Intro"
     ],
-    "Web": [
-      "Trading"
+    "Use Cases": [
+      "Integrations-DappsUseCase",
+      "Integrations-VendorsUseCase",
+      "Integrations-WalletsUseCase",
+      "Integrations-RESTAPIUseCase",
+      "Integrations-WidgetsUseCase",
+      "Integrations-PluginsUseCase"
+    ],
+    "Guides": [
+      "Integrations-DappsGuide",
+      "Integrations-VendorsGuide",
+      "Integrations-WalletsGuide",
+      "Integrations-TrackerAPIGuide",
+      "Integrations-TradingAPIGuide",
+      "Integrations-WidgetGuide",
+      "Integrations-WidgetSwift",
+      "Integrations-WidgetOAuth",
+      "Integrations-WooCommerce"
+    ],
+    "Miscellaneous": [
+      "Integrations-WidgetGenerator",
+      "Integrations-FeeSharing",
+      "Integrations-GettingHelp"
+    ]
+  },
+  "Reserves": {
+    "Getting Started": [
+      "Reserves-Intro",
+      "Reserves-UseCase",
+      "Reserves-Types"
+    ],
+    "Setup Tutorials": [
+      "Reserves-FedPriceReserve",
+      "Reserves-AutomatedPriceReserve",
+      "Reserves-OrderbookReserve",
+      "Reserves-Ganache"
+    ],
+    "Miscellaneous": [
+      "Reserves-TradingStrategy",
+      "Reserves-SanityRates",
+      "Reserves-Web3"
+    ]
+  },
+  "Environments": {
+    "Getting Started": [
+      "Environments-Intro"
+    ],
+    "Environments": [
+      "Environments-Mainnet",
+      "Environments-Ropsten",
+      "Environments-Rinkeby",
+      "Environments-Kovan"
+    ],
+    "Contract ABIs": [
+      "Environments-ABI"
+    ]
+  },
+  "References": {
+    "Getting Started": [
+      "References-Intro"
     ],
     "Smart Contracts": [
-      "KyberNetwork",
-      "KyberNetworkInterface",
-      "KyberNetworkProxy",
-      "KyberNetworkProxyInterface",
-      "KyberReserve",
-      "KyberReserveInterface",
-      "ConversionRates",
-      "ConversionRatesInterface",
-      "FeeBurner",
-      "FeeBurnerInterface",
-      "LiquidityConversionRates",
-      "OrderbookReserve",
-      "OrderbookReserveInterface",
-      "PermissionlessOrderbookReserveLister",
-      "PermissionGroups",
-      "SanityRates",
-      "SanityRatesInterface",
-      "SimpleNetworkInterface",
-      "Withdrawable"
+      "References-SmartContractOverview",
+      "References-KyberNetwork",
+      "References-KyberNetworkInterface",
+      "References-KyberNetworkProxy",
+      "References-KyberNetworkProxyInterface",
+      "References-KyberReserve",
+      "References-KyberReserveInterface",
+      "References-ConversionRates",
+      "References-ConversionRatesInterface",
+      "References-FeeBurner",
+      "References-FeeBurnerInterface",
+      "References-LiquidityConversionRates",
+      "References-OrderbookReserve",
+      "References-OrderbookReserveInterface",
+      "References-PermissionlessOrderbookReserveLister",
+      "References-PermissionGroups",
+      "References-SanityRates",
+      "References-SanityRatesInterface",
+      "References-SimpleNetworkInterface",
+      "References-Withdrawable"
+    ],
+    "REST API": [
+      "References-RestOverview",
+      "References-TradingAPI"
+    ],
+    "Code Snippets": [
+      "References-Web3",
+      "References-DecimalConversion"
     ]
   }
 }
+
