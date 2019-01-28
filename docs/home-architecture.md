@@ -53,7 +53,7 @@ When a taker (e.g. end user wallets, smart contracts, trading bots) initiates th
 
 An array of reserves that is stored on the `KyberNetwork.sol` contract will then be interated through to find the reserves that provide the best KNC to ETH and ETH to DAI rates. The actual trade amounts will be calculated and the change refunded to the taker. Subsequently, 2 trades will be performed to convert KNC to ETH and from ETH to DAI and the DAI is transferred to the taker.
 
-The takers do not need to pay any additional fees other than the standard Ethereum transaction gas fees. The platform fees are paid for by the reserve / maker that executes the exchange and these fees are subsequently burnt. Note that some fees might be paid to the project that directed the user to the Kyber protocol as part of our [fee sharing program](guide-feesharing.md).
+The takers do not need to pay any additional fees other than the standard Ethereum transaction gas fees. The platform fees are paid for by the reserve / maker that executes the exchange and these fees are subsequently burnt. Note that some fees might be paid to the project that directed the user to the Kyber protocol as part of our [fee sharing program](integrations-feesharing.md).
 
 ## Stack
 
