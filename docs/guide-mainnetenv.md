@@ -3,7 +3,7 @@ id: MainnetEnvGuide
 title: Mainnet
 ---
 
-Please note that contracts `KyberReserve`, `ConversionRates`, and `SanityRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these contracts.
+Please note that `KyberReserve`, `ConversionRates`, `SanityRates`, `OrderbookReserve` and `LiquidityConversionRates` contracts below are example reserve addresses. Your reserve will have different addresses for these contracts.
 
 ### Supported Token Pairs
 https://api.kyber.network/currencies
