@@ -26,8 +26,8 @@ With this in mind, the automated reserve was designed with various parameters to
 
 ## How to set up your own reserve
 
-### Public testnet deployment
-Here, we will walk you through an example to set up an automated reserve on the Ropsten testnet.
+### Public testnet or mainnet deployment
+Here, we will walk you through an example to set up an automated reserve on the Ropsten testnet. The guide is applicable for mainnet as well.
 
 #### Before you begin
 Check that you have the following:
@@ -139,7 +139,7 @@ npm install
 Then run the command
 
 ```
-node liquidityReserveDeployer.js --config-path ropsten.json --gas-price-gwei 30 ----rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x91a502C678605fbCe581eae053319747482276b9"
+node liquidityReserveDeployer.js --config-path ropsten.json --gas-price-gwei 30 --rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x3f9a8e219ab1ad42f96b22c294e564b2b48fe636"
 
 ```
 * `--gas-price-gwei`: The gas price in gwei
@@ -277,9 +277,9 @@ To finalize this step, deposit exact amount of Ether and tokens (in our example 
 
 ### `Step 5: Get your reserve authorized and running`
 
-Once you have completed the above steps, you can let any network operator know so that they can approve your reserve and every specific pair you are allowed to list. Kyber Network is currently the only network operator.
+Once you have completed the above steps, you can let any network operator know so that they can approve your reserve and list your token to the network. Kyber Network is currently the only network operator.
 
-Once approved, you can test your reserve on [KyberSwap](https://ropsten.kyber.network) Ropsten site! Please note that if there are other reserves listing same swap pair as you, your swap may not get matched with your reserve, because only the reserve that offer best rate will be matched. We can disable other reserves on the testnet to make sure you will swap with your reserve.
+Once approved, you can test your reserve on [KyberSwap](https://ropsten.kyber.network) Ropsten site! Please note that if there are other reserves listing same swap pair as you, your swap may not get matched with your reserve, because only the reserve that offers best rate will be matched. We can disable other reserves on the testnet to make sure you will swap with your reserve.
 
 ### Local testnet deployment
 Here, we will walk you through an example on running the deployment script on [Truffle's Ganache](https://truffleframework.com/ganache).
@@ -287,7 +287,7 @@ Here, we will walk you through an example on running the deployment script on [T
 #### Before you begin
 Check that you have the following:
 1. [node.js](https://nodejs.org/en/download/)
-2. [web3 1.0.0-beta.34](https://www.npmjs.com/package/web3)
+2. [web3 1.X.X](https://www.npmjs.com/package/web3)
 3. [Ganache CLI)](https://github.com/trufflesuite/ganache-cli)
 
 #### Prerequisites

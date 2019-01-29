@@ -52,29 +52,29 @@ ___
   "error": false,
   "data": [
     {
-    "name": "Ethereum",
-    "decimals": 18,
-    "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "ETH",
-    "id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+		"name": "Ethereum",
+		"decimals": 18,
+		"address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+		"symbol": "ETH",
+		"id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     },
     {
-    "name": "Kyber Network",
-    "decimals": 18,
-    "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-    "symbol": "KNC",
-    "id": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-    "reserves_src": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"],
-    "reserves_dest": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"]
+		"name": "Kyber Network",
+		"decimals": 18,
+		"address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+		"symbol": "KNC",
+		"id": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+		"reserves_src": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"],
+		"reserves_dest": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"]
     },
     {
-    "name": "OmiseGO",
-    "decimals": 18,
-    "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "symbol": "OMG",
-    "id": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "reserves_src": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"],
-    "reserves_dest": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"]
+		"name": "OmiseGO",
+		"decimals": 18,
+		"address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+		"symbol": "OMG",
+		"id": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+		"reserves_src": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"],
+		"reserves_dest": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"]
     }
   ]
 }
