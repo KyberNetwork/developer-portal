@@ -2,9 +2,6 @@
 id: References-Web3
 title: Web3
 ---
-## Web3
-Refer to the [Web3 documentation](https://web3js.readthedocs.io/en/1.0/web3-eth.html) for more information.
-
 ## Web3 Injection
 ### Adding web3
 You may add `web3` to your project using 1 of the following methods:
@@ -44,7 +41,7 @@ window.postMessage({ type: 'ETHEREUM_PROVIDER_REQUEST', web3: true }, '*');
 ```
 There is no guarantee about what version of web3 will be injected in response to this request, so it should only be used for convenience in development and debugging.
 
-### `Broadcasting Transactions`
+### Broadcasting Transactions
 ```js
 const Web3 = require('web3');
 const BN = require('bignumber.js');
@@ -83,6 +80,8 @@ async function broadcastTx(txObject) {
   const signedTx = await web3.eth.accounts.signTransaction(tx, txKey);
   web3.eth.sendSignedTransaction(signedTx.rawTransaction);
 }
-
 main()
 ```
+
+### Additional help
+Refer to the [Web3 documentation](https://web3js.readthedocs.io/en/1.0/web3-eth.html) for more information.
