@@ -161,7 +161,10 @@ The public variables below are used to view available funds for withdrawal or fo
 **Viewing Unused Ether**<br />
 `makerFunds(makerAddress, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)`
 
-**Viewing Unused ERC20 Tokens (including KNC tokens)**<br />
+**Viewing Unused KNC Tokens**<br />
+`makerUnlockedKnc(makerAddress)`
+
+**Viewing Unused ERC20 Tokens (excluding KNC)**<br />
 `makerFunds(makerAddress, tokenContractAddress)`
 
 ## Withdrawing Funds

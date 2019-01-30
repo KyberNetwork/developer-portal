@@ -3,7 +3,7 @@ id: Environments-Mainnet
 title: Mainnet
 ---
 
-Please note that contracts `KyberReserve`, `ConversionRates`, and `SanityRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these contracts.
+Please note that `KyberReserve`, `ConversionRates`, `SanityRates`, `OrderbookReserve` and `LiquidityConversionRates` contracts below are example reserve addresses. Your reserve will have different addresses for these contracts.
 
 ### Supported Token Pairs
 https://api.kyber.network/currencies
@@ -27,8 +27,14 @@ Read more [here](guide-trackerapi.md#price-and-volume-information)
 ### `KyberReserve`
 `0x63825c174ab367968EC60f061753D3bbD36A0D8F`
 
+### `OrderbookReserve`
+`0x9D27a2D71Ac44E075f764d5612581E9Afc1964fd`
+
 ### `ConversionRates`
 `0x798AbDA6Cc246D0EDbA912092A2a3dBd3d11191B`
+
+### `LiquidityConversionRates`
+`0x97D7126b6FF7C4D95601912f4Cdf790a3Cd1edaB`
 
 ### `ExpectedRate`
 `0x96B610046D63638d970E6243151311d8827D69a5`
