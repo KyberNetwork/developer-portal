@@ -205,6 +205,9 @@ Read more [here](guide-trackerapi.md#price-and-volume-information)
 ### `WAX (Wax)`
 `0x39bb259f66e1c59d5abef88375979b4d20d98022`
 
+### `WBTC (Wrapped Bitcoin)`
+`0x2260fac5e5542a773aa44fbcfedf7c193bc2c599`
+
 ### `WETH (Wrapped Ether)`
 `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2`
 
