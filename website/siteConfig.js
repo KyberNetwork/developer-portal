@@ -114,27 +114,6 @@ const siteConfig = {
       href: 'https://github.com/kybernetwork',
       label: 'GitHub',
     }
-
-    // {
-    //   href: 'https://developer.kyber.network/',
-    //   label: 'Home',
-    // },
-    // {
-    //   doc: 'Start',
-    //   label: 'Guides',
-    // },
-    // {
-    //   doc: 'APIs',
-    //   label: 'Reference',
-    // },
-    // {
-    //   href: 'https://blog.kyber.network/',
-    //   label: 'Blog',
-    // },
-    // {
-    //   href: 'https://github.com/kybernetwork',
-    //   label: 'GitHub',
-    // }
   ],
 
   // Path to images for header/footer
