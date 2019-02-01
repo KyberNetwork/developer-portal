@@ -2,7 +2,20 @@
 id: Integrations-PluginsUseCase
 title: Plugins
 ---
-For e-commerce websites that are built on platforms like WordPress, we extended
+E-commerce sites that utilise plugins like WooCommerce can now extend their payment gateway to also accept tokens by using our extension of these popular plugins. Customers and vendors can pay and receive in their token of choice respectively.
+
+
+
+
+ of these platforms can pay in any token of their choice while the owner can receive
+
+ Users of these e-commerce platforms can now pay in any token of their choice while the vendor is able to receive in a token of their choice.
+
+Developers of these e-commerce sites can easily integrate with these extended plugins.
+
+The diagram below shows how you can easily integrate your e-commerce sites with our plugins.
+
+
 
  we've created plugins  to help your platform accept
 

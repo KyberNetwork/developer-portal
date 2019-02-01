@@ -4,7 +4,7 @@ title: Widgets
 ---
 Users that do not wish to create their own UI but still want to interact with our protocol implementation can take advantage of our widgets. Applications can easily integrate with these widgets to improve their functionalities.
 
-The diagram below shows how you can easily integrate your application with our widgets.
+The diagram below shows how you can easily integrate your application with our widget without having to create
 
 ![Widgets](/uploads/widgets.png "Widgets")
 
