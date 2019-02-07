@@ -3,7 +3,7 @@ id: TradingAPIGuide
 title: Using the Trading API
 ---
 ## Overview
-Our trading API allows you to programmatically interact with the Kyber Network contract without in depth understanding of smart contracts. **The API currently only supports ETH <-> ERC20 token trades.**
+Our trading API allows you to programmatically interact with the Kyber Network contract without in depth understanding of smart contracts. **The /buy_rate and /sell_rate APIs are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to run both APIs; the first to sell token A to ETH and the second to buy token B with ETH.**
 ## Scenario 1: Perform ETH -> KNC (ERC20 token) conversion
 ### Step 1a - Check if KNC token is supported
 Querying ``https://api.kyber.network/currencies`` will return a JSON of tokens supported on Kyber Network. Details about the `currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#currencies). </br>
@@ -95,7 +95,7 @@ await getBuyRates('0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300')
       ],
       "dst_qty": [
         300
-      ]ETH -> KNC (ERC20 token)
+      ]
     }
   ]
 }
@@ -219,7 +219,8 @@ async function main() {
   */
 
   // Querying the API /trade_data endpoint
-  let tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + ETH_TOKEN_ADDRESS + '&dst_id=' + KNC_TOKEN_ADDRESS + '&src_qty=' + srcQty + '&min_dst_qty=' + QTY*0.97 + '&gas_price=' + GAS_PRICE + '&wallet_id=' + WALLET_ID);
+  // Note that a factor of 0.97 is used to account for slippage but you can use any value you want.
+  let tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + ETH_TOKEN_ADDRESS + '&dst_id=' + KNC_TOKEN_ADDRESS + '&src_qty=' + srcQty/0.97 + '&min_dst_qty=' + QTY + '&gas_price=' + GAS_PRICE + '&wallet_id=' + WALLET_ID);
   // Parsing the output
   let tradeDetails = await tradeDetailsRequest.json();
   // Extract the raw transaction details
@@ -457,10 +458,10 @@ async function main() {
 
   // Querying the API /users/<user_address>/currencies endpoint
   let enabledStatusesRequest = await fetch('https://ropsten-api.kyber.network/users/' + USER_ACCOUNT + '/currencies')
-    // Parsing the output
-    let enabledStatuses = await enabledStatusesRequest.json()
-    // Checking to see if DAI is enabled
-    let enabled = enabledStatuses.data.some(token => {if(token.id == 'DAI_TOKEN_ADDRESS') {return token.enabled}})
+  // Parsing the output
+  let enabledStatuses = await enabledStatusesRequest.json()
+  // Checking to see if DAI is enabled
+  let enabled = enabledStatuses.data.some(token => {if(token.id == DAI_TOKEN_ADDRESS) {return token.enabled}})
 
     /*
   ####################################
@@ -471,20 +472,20 @@ async function main() {
   if(!enabled) {
     // Querying the API /users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price> endpoint
     let enableTokenDetailsRequest = await fetch('https://ropsten-api.kyber.network/users/' + USER_ACCOUNT + '/currencies/' + DAI_TOKEN_ADDRESS + '/enable_data?gas_price=' + GAS_PRICE)
-      // Parsing the output
-      let enableTokenDetails = await enableTokenDetailsRequest.json()
-      // Extract the raw transaction details
-      let rawTx = enableTokenDetails.data
-      // Create a new transaction
-      let tx = new Tx(rawTx)
-      // Signing the transaction
-      tx.sign(PRIVATE_KEY)
-      // Serialise the transaction (RLP encoding)
-      let serializedTx = tx.serialize()
-      // Broadcasting the transaction
-      txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
-      // Log the transaction receipt
-      console.log(txReceipt)
+    // Parsing the output
+    let enableTokenDetails = await enableTokenDetailsRequest.json()
+    // Extract the raw transaction details
+    let rawTx = enableTokenDetails.data
+    // Create a new transaction
+    let tx = new Tx(rawTx)
+    // Signing the transaction
+    tx.sign(PRIVATE_KEY)
+    // Serialise the transaction (RLP encoding)
+    let serializedTx = tx.serialize()
+    // Broadcasting the transaction
+    txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
+    // Log the transaction receipt
+    console.log(txReceipt)
   }
   /*
   ####################################
@@ -506,21 +507,22 @@ async function main() {
   */
 
   // Querying the API /trade_data endpoint
+  // Note that a factor of 0.97 is used to account for slippage but you can use any value you want.
   tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + DAI_TOKEN_ADDRESS + '&dst_id=' + ETH_TOKEN_ADDRESS + '&src_qty=' + QTY + '&min_dst_qty=' + dstQty*0.97 + '&gas_price=' + GAS_PRICE + '&wallet_id=' + WALLET_ID)
-    // Parsing the output
-    let tradeDetails = await tradeDetailsRequest.json()
-    // Extract the raw transaction details
-    rawTx = tradeDetails.data[0]
-    // Create a new transaction
-    tx = new Tx(rawTx)
-    // Signing the transaction
-    tx.sign(PRIVATE_KEY)
-    // Serialise the transaction (RLP encoding)
-    serializedTx = tx.serialize()
-    // Broadcasting the transaction
-    txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
-    // Log the transaction receipt
-    console.log(txReceipt)
+  // Parsing the output
+  let tradeDetails = await tradeDetailsRequest.json()
+  // Extract the raw transaction details
+  rawTx = tradeDetails.data[0]
+  // Create a new transaction
+  tx = new Tx(rawTx)
+  // Signing the transaction
+  tx.sign(PRIVATE_KEY)
+  // Serialise the transaction (RLP encoding)
+  serializedTx = tx.serialize()
+  // Broadcasting the transaction
+  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
+  // Log the transaction receipt
+  console.log(txReceipt)
 }
 
 main()
@@ -634,9 +636,9 @@ async function main() {
   // Querying the API /market endpoint
   let tokensDetailedInfoRequest = await fetch('https://api.kyber.network/market')
   // Parsing the output
-    let tokensDetailedInfo = await tokensDetailedInfoRequest.json()
-    // Getting detailed info about the ZIL/ETH trading pair
-    tokensDetailedInfo.data.some(token => {if(token.quote_symbol == "ZIL"){console.log(token)}})
+  let tokensDetailedInfo = await tokensDetailedInfoRequest.json()
+  // Getting detailed info about the ZIL/ETH trading pair
+  tokensDetailedInfo.data.some(token => {if(token.quote_symbol == "ZIL"){console.log(token)}})
 }
 
 main()
