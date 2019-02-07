@@ -461,7 +461,7 @@ async function main() {
   // Parsing the output
   let enabledStatuses = await enabledStatusesRequest.json()
   // Checking to see if DAI is enabled
-  let enabled = enabledStatuses.data.some(token => {if(token.id == DAI_TOKEN_ADDRESS) {return token.enabled}})
+  let enabled = enabledStatuses.data.some(token => {if(token.id == DAI_TOKEN_ADDRESS.toLowerCase()) {return token.enabled}})
 
     /*
   ####################################
@@ -487,6 +487,7 @@ async function main() {
     // Log the transaction receipt
     console.log(txReceipt)
   }
+  
   /*
   ####################################
   ### GET DAI/ETH CONVERSION RATES ###
