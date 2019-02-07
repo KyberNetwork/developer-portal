@@ -432,51 +432,51 @@ const WALLET_ID = 'ENTER_FEE_SHARING_ADDRESS_HERE';
 
 async function main() {
 
-	/*
-	#################################
-	### CHECK IF DAI IS SUPPORTED ###
-	#################################
-	*/
+  /*
+  #################################
+  ### CHECK IF DAI IS SUPPORTED ###
+  #################################
+  */
 
-	// Querying the API /currencies endpoint
-	let tokenInfoRequest = await fetch('https://ropsten-api.kyber.network/currencies');
-	// Parsing the output
-	let tokens = await tokenInfoRequest.json();
-	// Checking to see if DAI is supported
-	let supported = tokens.data.some(token => {return 'DAI' == token.symbol});
-	// If not supported, return.
-	if(!supported) {
-		console.log('Token is not supported');
-		return
-	}
+  // Querying the API /currencies endpoint
+  let tokenInfoRequest = await fetch('https://ropsten-api.kyber.network/currencies');
+  // Parsing the output
+  let tokens = await tokenInfoRequest.json();
+  // Checking to see if DAI is supported
+  let supported = tokens.data.some(token => {return 'DAI' == token.symbol});
+  // If not supported, return.
+  if(!supported) {
+    console.log('Token is not supported');
+    return
+  }
 
-	/*
-	####################################
-	### GET ENABLED STATUS OF WALLET ###
-	####################################
-	*/
+  /*
+  ####################################
+  ### GET ENABLED STATUS OF WALLET ###
+  ####################################
+  */
 
-	// Querying the API /users/<user_address>/currencies endpoint
-	let enabledStatusesRequest = await fetch('https://ropsten-api.kyber.network/users/' + USER_ACCOUNT + '/currencies')
+  // Querying the API /users/<user_address>/currencies endpoint
+  let enabledStatusesRequest = await fetch('https://ropsten-api.kyber.network/users/' + USER_ACCOUNT + '/currencies')
   // Parsing the output
   let enabledStatuses = await enabledStatusesRequest.json()
   // Checking to see if DAI is enabled
   let enabled = enabledStatuses.data.some(token => {if(token.id == DAI_TOKEN_ADDRESS.toLowerCase()) {return token.enabled}})
 
     /*
-	####################################
-	### ENABLE WALLET IF NOT ENABLED ###
-	####################################
-	*/
+  ####################################
+  ### ENABLE WALLET IF NOT ENABLED ###
+  ####################################
+  */
 
-	if(!enabled) {
-		// Querying the API /users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price> endpoint
-		let enableTokenDetailsRequest = await fetch('https://ropsten-api.kyber.network/users/' + USER_ACCOUNT + '/currencies/' + DAI_TOKEN_ADDRESS + '/enable_data?gas_price=' + GAS_PRICE)
-  	// Parsing the output
-  	let enableTokenDetails = await enableTokenDetailsRequest.json()
-  	// Extract the raw transaction details
-  	let rawTx = enableTokenDetails.data
-  	// Create a new transaction
+  if(!enabled) {
+    // Querying the API /users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price> endpoint
+    let enableTokenDetailsRequest = await fetch('https://ropsten-api.kyber.network/users/' + USER_ACCOUNT + '/currencies/' + DAI_TOKEN_ADDRESS + '/enable_data?gas_price=' + GAS_PRICE)
+    // Parsing the output
+    let enableTokenDetails = await enableTokenDetailsRequest.json()
+    // Extract the raw transaction details
+    let rawTx = enableTokenDetails.data
+    // Create a new transaction
     let tx = new Tx(rawTx)
     // Signing the transaction
     tx.sign(PRIVATE_KEY)
@@ -486,20 +486,20 @@ async function main() {
     txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
     // Log the transaction receipt
     console.log(txReceipt)
-	}
+  }
 
-	/*
-	####################################
-	### GET DAI/ETH CONVERSION RATES ###
-	####################################
-	*/
+  /*
+  ####################################
+  ### GET DAI/ETH CONVERSION RATES ###
+  ####################################
+  */
 
-	// Querying the API /sell_rate endpoint
-	let ratesRequest = await fetch('https://ropsten-api.kyber.network/sell_rate?id=' + DAI_TOKEN_ADDRESS + '&qty=' + QTY)
-	// Parsing the output
-	let rates = await ratesRequest.json()
-	// Getting the source quantity
-	let dstQty = rates.data[0].dst_qty
+  // Querying the API /sell_rate endpoint
+  let ratesRequest = await fetch('https://ropsten-api.kyber.network/sell_rate?id=' + DAI_TOKEN_ADDRESS + '&qty=' + QTY)
+  // Parsing the output
+  let rates = await ratesRequest.json()
+  // Getting the source quantity
+  let dstQty = rates.data[0].dst_qty
 
   /*
   #######################
