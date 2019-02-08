@@ -2,9 +2,9 @@
 id: Integrations-DappsUseCase
 title: DApps
 ---
-Interacting with our protocol implementation will grant your users to our fast, convenient and trustless token conversion and transfer service. The increased interchangeability of tokens not only improves your platform’s functionality, but also enhances your users' experiences. 
+Interacting with our protocol implementation grants your users to our fast, convenient and trustless token conversion and transfer services. The increased interchangeability of tokens not only improves your platform’s functionality, but also enhances your users' experiences.
 
-The diagram below explains how DApps can take advantage of our protocol implementation to improve their functionality and user experience. 
+The diagram below explains how DApps can leverage on our protocol implementation to improve their functionality and user experience.
 
 ![Dapps](/uploads/dapps.png "DApps")
 

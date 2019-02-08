@@ -4,7 +4,7 @@ title: REST APIs
 ---
 REST APIs have been designed to help users without much smart contract experience interact with our protocol implementation. Applications written in a variety of programming languages can now integrate in a much simpler way than before.
 
-The diagram below shows how developers can integrate their applications with only [basic understanding of web3](references-web3.md).
+The diagram below shows how developers can integrate their applications just some programming experience and [basic knowledge of web3](references-web3.md).
 
 ![REST APIs](/uploads/restapis.png "REST APIs")
 
