@@ -1,5 +1,5 @@
 ---
-id: Integrations-WidgetSwift
+id: Integrations-KyberWidgetSwiftGuide
 title: KyberWidget (iOS)
 ---
 The KyberWidget iOS library allows developers to easily add crytocurrency payment and swapping features to iOS apps.
@@ -55,7 +55,7 @@ post_install do |installer|
 end
 ```
 
-NOTE: 
+NOTE:
 - Please select version Swift 4 for APIKit framework.
 - Please enable iCloud in your Capabilities as the framework is using document picker (for importing JSON file).
 

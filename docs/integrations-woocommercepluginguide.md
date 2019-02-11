@@ -1,5 +1,5 @@
 ---
-id: Integrations-WooCommerce
+id: Integrations-WooCommercePluginGuide
 title: WooCommerce Plugin
 ---
 

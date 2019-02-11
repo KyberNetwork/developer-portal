@@ -26,10 +26,10 @@
       "Integrations-WalletsGuide",
       "Integrations-TrackerAPIGuide",
       "Integrations-TradingAPIGuide",
-      "Integrations-WidgetGuide",
-      "Integrations-WidgetSwift",
-      "Integrations-WidgetOAuth",
-      "Integrations-WooCommerce"
+      "Integrations-KyberWidgetGuide",
+      "Integrations-KyberWidgetSwiftGuide",
+      "Integrations-SignInWidgetGuide",
+      "Integrations-WooCommercePluginGuide"
     ],
     "Miscellaneous": [
       "Integrations-WidgetGenerator",
@@ -105,4 +105,3 @@
     ]
   }
 }
-
