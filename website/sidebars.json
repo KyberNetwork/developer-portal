@@ -49,8 +49,7 @@
     ],
     "Miscellaneous": [
       "Reserves-TradingStrategy",
-      "Reserves-SanityRates",
-      "Reserves-Web3"
+      "Reserves-SanityRates"
     ]
   },
   "Environments": {

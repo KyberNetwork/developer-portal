@@ -36,24 +36,24 @@ class Footer extends React.Component {
             </div>
             <div className="kyber-link-container">
               <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="https://kyber.network/swap">KyberSwap</a>
+                <span className="kyber-link__text semi-b">Essentials</span>
+                <a className="kyber-link__text" href="Start">Getting Started</a>
+                <a className="kyber-link__text" href="Home-DesignPrinciples">Design Principles</a>
+                <a className="kyber-link__text" href="Home-ProtocolOverview">Protocol Overview</a>
+                <a className="kyber-link__text" href="Home-Architecture">Smart Contract Architecture</a>
               </div>
               <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="http://developer.kyber.network">
-                  <span className="translation_missing" title="translation missing: en.components.footer-application.kyber_developer">Kyber Developer</span>
-                </a>
+                <span className="kyber-link__text semi-b">Integrations</span>
+                <a className="kyber-link__text" href="Integrations-DappsGuide">DApps</a>
+                <a className="kyber-link__text" href="Integrations-WalletsGuide">Wallets</a>
+                <a className="kyber-link__text" href="Integrations-VendorsGuide">Vendors</a>
+                <a className="kyber-link__text" href="Integrations-FeeSharing">Fee Sharing</a>
               </div>
               <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="#">About</a>
-                <a className="kyber-link__text" href="https://kyber.network/about/company">Kyber Network</a>
-                <a className="kyber-link__text" href="https://kyber.network/about/knc">KNC</a>
-                <a className="kyber-link__text" href="https://blog.kyber.network">Blog</a>
-                <a className="kyber-link__text" href="https://tracker.kyber.network/">Tracker</a>
-              </div>
-              <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="https://kyber.network/careers">Careers</a>
-                <a className="kyber-link__text semi-b" href="https://kybernetwork.zendesk.com/hc/en-us/sections/360000119052-FAQ">FAQ</a>
-                <a className="kyber-link__text semi-b" href="mailto:support@kyber.network">Contact Us</a>
+                <span className="kyber-link__text semi-b">Reserves</span>
+                <a className="kyber-link__text" href="Reserves-FedPriceReserve">Fed Price</a>
+                <a className="kyber-link__text" href="Reserves-AutomatedPriceReserve">Automated Price</a>
+                <a className="kyber-link__text" href="Reserves-OrderbookReserve">Orderbook</a>
               </div>
             </div>
           </div>

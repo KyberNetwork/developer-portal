@@ -13,13 +13,14 @@ You can learn more about the Kyber protocol specifications, our implementation o
 ## Navigation
 | Link | Description|
 |:----:|:----------:|
-| `[design principles](home-designprinciples.md)` | sada |
-| `[integrations section](integrations-intro.md)` | sadada |
-| `[reserve overview](reserves-intro.md)` | sadada |
-| `[environments section](environments-intro.md)` | asdsadadsa |
-| `[references section](references-intro.md)` | asdada |
+| [Design Principles](home-designprinciples.md) | Key Features of the Protocol |
+| [Integrations Section](integrations-intro.md) | Common integration use cases and guides |
+| [Reserve Overview](reserves-intro.md) | Reserve overview,
 
 
+types, use-cases and guides |
+| [Environments Section](environments-intro.md) | Contract ABIs and addresses |
+| [References Section](references-intro.md) | Detailed documentation on smart contracts and APIs |
 
 - Get started by reading the [design principles](home-designprinciples.md) of the Kyber protocol.
 - To learn about the common integration use cases and how you can integrate your application, head over to the [integrations section](integrations-intro.md).
