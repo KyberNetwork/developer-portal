@@ -164,7 +164,7 @@ The public variables below are used to view available funds for withdrawal or fo
 **Viewing Unused KNC Tokens**<br />
 `makerUnlockedKnc(makerAddress)`
 
-**Viewing Unused ERC20 Tokens (excluding KNC)**<br />
+**Viewing Unused ERC20 Tokens (excluding KNC tokens)**<br />
 `makerFunds(makerAddress, tokenContractAddress)`
 
 ## Withdrawing Funds
@@ -222,9 +222,9 @@ const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 var hint = await OrderbookReserve.methods.getEthToTokenAddOrderHint(srcAmount, dstAmount).call()
 
 transactionData = OrderbookReserve.methods.submitEthToTokenOrderWHint(
-  srcAmount,
-  dstAmount,
-    hint
+	srcAmount,
+	dstAmount,
+	hint
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -238,7 +238,7 @@ txReceipt = await web3.eth.sendTransaction({
 Batch orders allow for the creation and update of both buy and sell orders in a single transaction, thus reducing gas costs.
 
 **Note:**
-While the hint model is applicable for batch orders, it should only be used for at most 1 buy order and 1 sell order, which have to offer the most favourable rate to the taker. This is because subsequent hints provided are ignored. To understand this, let's look at an example.
+The hint model is applicable for batch orders, unless the previous order is an order that is added as part of this batch call (where `prevOrderId` is not known beforehand). In the scenario where new orders in the batch will be added one after the other, it is recommended to arrange them such that better orders are placed first, so that subsequent orders will have the flag: `isAfterPrevOrder` set to `true`.
 
 #### Example
 Suppose the ETH to BAT buy order list contains the following orders:
@@ -256,27 +256,28 @@ The BAT to ETH sell order list contains the following orders:
 We would like to add the following orders:
 1. Order A: Buy order with srcAmount `10`, dstAmount `102`
 2. Order B: Buy order with srcAmount `10`, dstAmount `104`
-3. Order C: Sell order with srcAmount `100`, dstAmount `18`
+3. Order C: Buy order with srcAmount `10`, dstAmount `107`
+4. Order D: Sell order with srcAmount `100`, dstAmount `18`
 
-In this scenario, the best buy and sell orders for the taker are orders A and C respectively. Calling the respective getHint functions yield order IDs 5 and 38.
+In this scenario, the best buy and sell orders for the taker are orders A and D respectively. Calling the respective getHint functions yield order IDs 5 and 38.
 
-We call the [`addOrderBatch`](api-orderbookreserve.md#addorderbatch) function to add orders A, B and C in this order, with the input parameters below.
+We call the [`addOrderBatch`](api-orderbookreserve.md#addorderbatch) function to add orders A, B, C and D in this order, with the input parameters below.
 | **Parameter** | **Example Input** | **Explanation** |
 | --------- |:----------:|:-----------:|
-|      `isEthToToken`       |    `[true,true,false]`    | Orders A and B are buy orders, Order C is a sell order |
-|      `srcAmount`       |    `[(10*10^18),(10*10^18),(100*10^18)]`    | Respective order source amounts |
-|      `dstAmount`       |    `[(102*10^18),(104*10^18),(18*10^18)]`    | Respective order destination amounts |
-|      `hintPrevOrder`       |    `[5,0,38]`    | Hints of previous order IDs. If unsure, use `0` |
-|      `isAfterPrevOrder` |   `[false,true,false]`  | Since order B is to be in the position after order A, and order A will only have its ID assigned after its addition to the list, we cannot possibly know the previous ID for order B. Hence, we need to set its value to `true` in this array. If unsure, use `false` |
+|      `isEthToToken`       |    `[true,true,true,false]`    | Orders A, B, C are buy orders, Order D is a sell order |
+|      `srcAmount`       |    `[(10*10^18),(10*10^18),(10*10^18),(100*10^18)]`    | Respective order source amounts |
+|      `dstAmount`       |    `[(102*10^18),(104*10^18),(107*10^18),(18*10^18)]`    | Respective order destination amounts |
+|      `hintPrevOrder`       |    `[5,0,9,38]`    | Hints of previous order IDs. If unsure, use `0` |
+|      `isAfterPrevOrder` |   `[false,true,false,false]`  | Since order B is to be in the position after order A, and order A will only have its ID assigned after its addition to the list, we cannot possibly know the previous ID for order B. Hence, we need to set its value to `true` in this array. If unsure, use `false` |
 
 We give a short code snippet below.
 ```
 transactionData = OrderbookReserve.methods.addOrderBatch(
-	[true,true,false],
-	[(10*10^18),(10*10^18),(100*10^18)],
-	[(102*10^18),(104*10^18),(18*10^18)],
-	[5,0,38],
-	[false,true,false]
+	[true,true,true,false], //isEthToToken
+	[10000000000000000000,10000000000000000000,10000000000000000000,100000000000000000000], //srcAmount
+	[102000000000000000000,104000000000000000000,107000000000000000000,18000000000000000000], //dstAmount
+	[5,0,9,38], //hintPrevOrder
+	[false,true,false,false] //isAfterPrevOrder
 ).encodeABI()
 ```
 
@@ -365,4 +366,52 @@ ganache-cli --accounts 10 --defaultBalanceEther 500 --mnemonic 'gesture rather o
 In a new terminal session, connect to the Ganache, and run the truffle migration scripts
 ```
 truffle migrate --network development --reset
+```
+
+## Etherscan Orderbook Reserve Code Verification
+1. Copy the source code from a verified orderbook reserve contract, such as [this DAI orderbook reserve](https://etherscan.io/address/0x9d27a2d71ac44e075f764d5612581e9afc1964fd#code)
+2. Contract name is `OrderbookReserve`
+3. Use compiler version `v0.4.18+commit.9cf6e910`
+4. Optimization: `On`
+5. Add the ABI-encoded constructor arguments which are as follows:
+```
+ERC20 knc //KNC token contract address
+ERC20 reserveToken, //Token contract address orderbook reserve supports
+address burner //feeBurner contract address
+address network, //KyberNetwork contract address
+MedianizerInterface medianizer, //Medianizer contract address
+OrderListFactoryInterface factory, //Factory contract address
+uint minNewOrderUsd, //Minimum order size in USD
+uint maxOrdersPerTrade, // maximum orders to traverse
+uint burnFeeBps //fee burn in BPS
+```
+
+### Points To Note
+- All constructor arguments except `reserveToken` can be read from the PermissionlessOrderbookReserveLister contract
+- The constructor arguments should be changed accordingly, depending on the network environment
+
+### Mainnet Example
+```
+000000000000000000000000dd974d5c2e2928dea5f71b9825b8b646686bd200
+00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a23260359
+00000000000000000000000052166528FCC12681aF996e409Ee3a421a4e128A3
+0000000000000000000000009ae49C0d7F8F9EF4B864e004FE86Ac8294E20950
+000000000000000000000000729d19f657bd0614b4985cf1d82531c67569197b
+000000000000000000000000e7d2c6c4e9a423412225e50464dcde99c803e42b
+00000000000000000000000000000000000000000000000000000000000003e8
+0000000000000000000000000000000000000000000000000000000000000005
+0000000000000000000000000000000000000000000000000000000000000019
+```
+
+### Ropsten Example
+```
+0000000000000000000000004e470dc7321e84ca96fcaedd0c8abcebbaeb68c6
+0000000000000000000000004e470dc7321e84ca96fcaedd0c8abcebbaeb68c6
+00000000000000000000000081ae4de9a3aec67a35c05c889052260e39bc42a4
+0000000000000000000000003f9a8e219ab1ad42f96b22c294e564b2b48fe636
+000000000000000000000000ca582805ebb662974862bce7411b1ae939d366aa
+000000000000000000000000e5d890fc1fb24b6cbc69281171540cc65d117bfc
+00000000000000000000000000000000000000000000000000000000000003e8
+0000000000000000000000000000000000000000000000000000000000000005
+0000000000000000000000000000000000000000000000000000000000000019
 ```

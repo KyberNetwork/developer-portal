@@ -1,5 +1,5 @@
 ---
-id: Integrations-WidgetGuide
+id: Integrations-KyberWidgetGuide
 title: KyberWidget (HTML/JS)
 ---
 Go to https://developer.kyber.network/docs/WidgetGenerator. You will see the following interface:

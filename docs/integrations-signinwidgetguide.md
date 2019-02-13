@@ -1,5 +1,5 @@
 ---
-id: Integrations-WidgetOAuth
+id: Integrations-SignInWidgetGuide
 title: Sign-in Widget
 ---
 

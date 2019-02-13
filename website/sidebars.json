@@ -15,21 +15,19 @@
     "Use Cases": [
       "Integrations-DappsUseCase",
       "Integrations-VendorsUseCase",
-      "Integrations-WalletsUseCase",
-      "Integrations-RESTAPIUseCase",
-      "Integrations-WidgetsUseCase",
-      "Integrations-PluginsUseCase"
+      "Integrations-WalletsUseCase"
     ],
     "Guides": [
+      "Integrations-Overview",
       "Integrations-DappsGuide",
       "Integrations-VendorsGuide",
       "Integrations-WalletsGuide",
       "Integrations-TrackerAPIGuide",
       "Integrations-TradingAPIGuide",
-      "Integrations-WidgetGuide",
-      "Integrations-WidgetSwift",
-      "Integrations-WidgetOAuth",
-      "Integrations-WooCommerce"
+      "Integrations-KyberWidgetGuide",
+      "Integrations-KyberWidgetSwiftGuide",
+      "Integrations-SignInWidgetGuide",
+      "Integrations-WooCommercePluginGuide"
     ],
     "Miscellaneous": [
       "Integrations-WidgetGenerator",
@@ -51,8 +49,7 @@
     ],
     "Miscellaneous": [
       "Reserves-TradingStrategy",
-      "Reserves-SanityRates",
-      "Reserves-Web3"
+      "Reserves-SanityRates"
     ]
   },
   "Environments": {
@@ -105,4 +102,3 @@
     ]
   }
 }
-
