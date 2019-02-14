@@ -181,6 +181,9 @@ Read more [here](guide-trackerapi.md#price-and-volume-information)
 ### `REQ (Request)`
 `0x8f8221afbb33998d8584a2b05749ba73c37a938a`
 
+### `REN (Ren)`
+`0x408e41876cCCDC0F92210600ef50372656052a38`
+
 ### `SALT (Salt)`
 `0x4156d3342d5c385a87d264f90653733592000581`
 
