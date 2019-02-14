@@ -14,19 +14,10 @@ You can learn more about the Kyber protocol specifications, our implementation o
 | Link | Description|
 |:----:|:----------:|
 | [Design Principles](home-designprinciples.md) | Key Features of the Protocol |
-| [Integrations Section](integrations-intro.md) | Common integration use cases and guides |
-| [Reserve Overview](reserves-intro.md) | Reserve overview,
-
-
-types, use-cases and guides |
-| [Environments Section](environments-intro.md) | Contract ABIs and addresses |
-| [References Section](references-intro.md) | Detailed documentation on smart contracts and APIs |
-
-- Get started by reading the [design principles](home-designprinciples.md) of the Kyber protocol.
-- To learn about the common integration use cases and how you can integrate your application, head over to the [integrations section](integrations-intro.md).
-- Read our [reserve overview](reserves-intro.md) to understand how reserves provide liquidity to the entire network and how you can join as one.
-- If you're looking for our contract addresses or ABIs, the [environments section](environments-intro.md) is where you want to be.
-- The [references section](references-intro.md) contains detailed documentation of our smart contracts, APIs, and more!
+| [Integrations](integrations-intro.md) | Common integration use-cases and guides |
+| [Reserves](reserves-intro.md) | Reserve overview, types, use-cases and guides |
+| [Environments](environments-intro.md) | Contract ABIs and addresses |
+| [References](references-intro.md) | Detailed documentation on smart contracts and APIs |
 
 ## Support and Community
 Should you have any question, feel free to join our telegram group at https://t.me/KyberDeveloper or shoot us an email at [hello@kyber.network](mailto:hello@kyber.network).

@@ -178,6 +178,9 @@ Read more [here](guide-trackerapi.md#price-and-volume-information)
 ### `RDN (Raiden Network)`
 `0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6`
 
+### `REN (Ren)`
+`0x408e41876cccdc0f92210600ef50372656052a38`
+
 ### `REQ (Request)`
 `0x8f8221afbb33998d8584a2b05749ba73c37a938a`
 
