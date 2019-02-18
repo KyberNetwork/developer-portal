@@ -7,17 +7,17 @@ The Kyber Sign-in Widget conforms with the Auth 2.0 specs, so you'll be able to 
 
 **Note:** This widget is under development, and is provided to partners for early testing.
 
-Before you start, make sure you are already registered in https://kyber.network. You can register using https://kyber.network/users/sign_up?normal=true. Next, contact our KyberDeveloper group at https://t.me/KyberDeveloper to get a developer account.
+Before you start, make sure you are already registered in https://kyber.network. You can register using https://kyberswap.com/users/sign_up?normal=true. Next, contact our KyberDeveloper group at https://t.me/KyberDeveloper to get a developer account.
 
 
 ## Step 1: Register your app
 
-Sign-in to `https://kyber.network/oauth/applications/` with your developer account and create an app.
+Sign-in to `https://kyberswap.com/oauth/applications/` with your developer account and create an app.
 
 Enter these inputs:
 * Name: name of your app
-* Icon: PNG or JPGjpg square icon
-* Callback URIs: You can possibly provide multiple URIs, but they must be HTTPS (could use ngrok or localtunel to create https urls for testing)
+* Icon: PNG or JPG square icon
+* Callback URIs: You can possibly provide multiple URIs, but they must be HTTPS (You can use ngrok or localtunel to create https urls for testing)
 * Scope: Leave this field empty for now
 
 After registration, save your `app ID` and `app secret` for later use.

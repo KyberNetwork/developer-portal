@@ -183,7 +183,7 @@ Note that funds used for active orders cannot be withdrawn. One should first can
 To reduce gas costs, the functions for creating and updating orders have their counterparts that include an additional hint input parameter. Additionally, there are functions for creating and updating batch orders in a single transaction.
 
 ### Hint Model
-As the name suggests, this additional input parameter hints to the contract which position in the order list to insert it in, by taking in the order ID of the order that is just ahead of it. 
+As the name suggests, this additional input parameter hints to the contract which position in the order list to insert it in, by taking in the order ID of the order that is just ahead of it.
 
 #### Obtaining the Hint
 The following functions are called to obtain the hint for creating orders:
@@ -237,7 +237,7 @@ txReceipt = await web3.eth.sendTransaction({
 ### Batch Orders
 Batch orders allow for the creation and update of both buy and sell orders in a single transaction, thus reducing gas costs.
 
-**Note:** 
+**Note:**
 The hint model is applicable for batch orders, unless the previous order is an order that is added as part of this batch call (where `prevOrderId` is not known beforehand). In the scenario where new orders in the batch will be added one after the other, it is recommended to arrange them such that better orders are placed first, so that subsequent orders will have the flag: `isAfterPrevOrder` set to `true`.
 
 #### Example
@@ -268,7 +268,7 @@ We call the [`addOrderBatch`](api-orderbookreserve.md#addorderbatch) function to
 |      `srcAmount`       |    `[(10*10^18),(10*10^18),(10*10^18),(100*10^18)]`    | Respective order source amounts |
 |      `dstAmount`       |    `[(102*10^18),(104*10^18),(107*10^18),(18*10^18)]`    | Respective order destination amounts |
 |      `hintPrevOrder`       |    `[5,0,9,38]`    | Hints of previous order IDs. If unsure, use `0` |
-|      `isAfterPrevOrder` |   `[false,true,false,false]`  | Since order B is to be in the position after order A, and order A will only have its ID assigned after its addition to the list, we cannot possibly know the previous ID for order B. Hence, we need to set its value to `true` in this array. If unsure, use `false` | 
+|      `isAfterPrevOrder` |   `[false,true,false,false]`  | Since order B is to be in the position after order A, and order A will only have its ID assigned after its addition to the list, we cannot possibly know the previous ID for order B. Hence, we need to set its value to `true` in this array. If unsure, use `false` |
 
 We give a short code snippet below.
 ```

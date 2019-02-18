@@ -27,3 +27,13 @@ function __handleFees__(uint tradeWeiAmount, address reserve, address wallet) pu
 **Returns:**\
 `true` if the handling of fees was successful, otherwise `false` if unsuccessful
 <br />
+
+### `setReserveData`
+Sets a reserve's fee information.
+___
+function __setReserveData__(address reserve, uint feesInBps, address kncWallet) public returns (bool)
+| Parameter     | Type   | Description                                 |
+| ------------- |:------:|:-------------------------------------------:|
+| `reserve`        | address | reserve's contract address              |
+| `feesInBps`        | uint | fees in basis points              |
+| `wallet`         | address | wallet address to collect fees from |

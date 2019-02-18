@@ -8,7 +8,7 @@ imports ERC20Interface, [KyberReserveInterface](api-kyberreserveinterface.md), [
 
 *Source*: [KyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetwork.sol)
 
-The KyberNetwork contract's role is to facilitate two main functionalities, which is to return the expect exchange rate, and to execute a trade.
+The KyberNetwork contract's role is to facilitate two main functionalities, which is to return the expected exchange rate, and to execute a trade.
 ___
 
 ## INDEX
@@ -48,13 +48,14 @@ ___
 ### Events
 
 ### `AddReserveToNetwork`
-Event for logging reserve additions or removals from the network.
+Event for logging reserve additions to the network.
 ___
-event __AddReserveToNetwork__(KyberReserveInterface reserve, bool add)
+event __AddReserveToNetwork__(KyberReserveInterface indexed reserve, bool add, bool isPermissionless)
 | Parameter | Type                  | Description                                                 |
 | --------- |:---------------------:|:-----------------------------------------------------------:|
 | `reserve` | KyberReserveInterface | reserve's contract address                                  |
-| `add`     | bool                  | `true` if reserve was successfully added, otherwise `false` |
+| `add`     | bool                  | `true` if reserve was successfully added, `false` otherwise |
+| `isPermissionless`     | bool                  | `true` if reserve was permissionlessly added, `false`otherwise |
 <br />
 
 ### `EtherReceival`
@@ -67,8 +68,47 @@ event __EtherReceival__(address indexed sender, uint amount)
 | `amount`  | uint            | ETH amount sent  |
 <br />
 
+### `ExpectedRateContractSet`
+Event for logging of updates to the ExpectedRate contract address.
+___
+event __ExpectedRateContractSet__(ExpectedRateInterface newContract, ExpectedRateInterface currentContract)
+| Parameter | Type                  | Description                                                 |
+| --------- |:---------------------:|:-----------------------------------------------------------:|
+| `newContract` | ExpectedRateInterface | New ExpectedRate contract address |
+| `currentContract` | ExpectedRateInterface | Current (old) ExpectedRate contract address |
+<br />
+
+### `FeeBurnerContractSet`
+Event for logging of updates to the FeeBurner contract address.
+___
+event __FeeBurnerContractSet__(FeeBurnerInterface newContract, FeeBurnerInterface currentContract)
+| Parameter | Type                  | Description                                                 |
+| --------- |:---------------------:|:-----------------------------------------------------------:|
+| `newContract` | FeeBurnerInterface | New FeeBurner contract address |
+| `currentContract` | FeeBurnerInterface | Current (old) FeeBurner contract address |
+<br />
+
+### `KyberNetworkParamsSet`
+Event for logging of updates to the `maxGasPrice` and `negligibleRateDiff` parameters
+___
+event __KyberNetworkParamsSet__(uint maxGasPrice, uint negligibleRateDiff)
+| Parameter | Type                  | Description                                                 |
+| --------- |:---------------------:|:-----------------------------------------------------------:|
+| `maxGasPrice` | uint | Maximum gas price limit to prevent frontrunning |
+| `negligibleRateDiff` | uint | Neligible rate difference |
+<br />
+
+### `KyberNetworkSetEnable`
+Event for logging of enabling or disabling of the network
+___
+event __KyberNetworkSetEnable__(bool isEnabled)
+| Parameter | Type                  | Description                                                 |
+| --------- |:---------------------:|:-----------------------------------------------------------:|
+| `isEnabled` | bool | `true` if network is enabled, `false` if it is disabled |
+<br />
+
 ### `KyberProxySet`
-Event for logging change in [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md) address
+Event for logging of updates to the [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md) contract address
 ___
 event __KyberProxySet__(address proxy, address sender)
 | Parameter          | Type            | Description                              |
@@ -80,15 +120,19 @@ event __KyberProxySet__(address proxy, address sender)
 ### `KyberTrade`
 Event for logging execution of trades.
 ___
-event __KyberTrade__(address srcAddress, ERC20 srcToken, uint srcAmount, address destAddress, ERC20 destToken, uint destAmount)
+event __KyberTrade__(address indexed trader, ERC20 src, ERC20 dest, uint srcAmount, uint dstAmount, address destAddress, uint ethWeiValue, address reserve1, address reserve2, bytes hint)
 | Parameter          | Type            | Description                              |
 | ------------------ |:---------------:|:----------------------------------------:|
-| `srcAddress`           | address | trader's address                         |
-| `srcToken`              | ERC20           | source ERC20 token contract address      |
-| `srcAmount`  | uint            | source ERC20 token amount in wei         |
-| `destAddress`             | ERC20           | recipient address for destination ERC20 token |
-| `destToken`              | ERC20           | destination ERC20 token contract address      |
-| `destAmount` | uint            | destination ERC20 token amount in wei    |
+| `trader`           | address | trader's address                         |
+| `src`              | ERC20           | source ERC20 token contract address      |
+| `dest`              | ERC20           | destination ERC20 token contract address      |
+| `srcAmount`  | uint            | source ERC20 token amount |
+| `dstAmount`  | uint            | destination ERC20 token amount |
+| `destAddress` | ERC20           | recipient address for destination ERC20 token |
+|`ethWeiValue` | uint            | Ether wei value of the trade |
+| `reserve1`     | address | address of reserve selected for source token to Ether trade  |
+| `reserve2`     | address | address of reserve selected for source token to Ether trade  |
+| `hint`             | bytes      | Used to determine if permissionless reserves are to be used |
 <br />
 
 ### `ListReservePairs`
@@ -101,6 +145,25 @@ event __ListReservePairs__(address reserve, ERC20 src, ERC20 dest, bool add)
 | `src`     | ERC20   | source ERC20 token contract address                            |
 | `dest`    | ERC20   | destination ERC20 token contract address                       |
 | `add`     | bool    | `true` if trades are allowed, otherwise `false` for disallowed |
+<br />
+
+### `RemoveReserveFromNetwork`
+Event for logging reserve removals from the network.
+___
+event __RemoveReserveFromNetwork__(KyberReserveInterface reserve)
+| Parameter | Type                  | Description                                                 |
+| --------- |:---------------------:|:-----------------------------------------------------------:|
+| `reserve` | KyberReserveInterface | reserve's contract address                                  |
+<br />
+
+### `WhiteListContractSet`
+Event for logging of updates to the WhiteList contract address.
+___
+event __WhiteListContractSet__(WhiteListInterface newContract, WhiteListInterface currentContract)
+| Parameter | Type                  | Description                                                 |
+| --------- |:---------------------:|:-----------------------------------------------------------:|
+| `newContract` | WhiteListInterface | New whitelist contract address |
+| `currentContract` | WhiteListInterface | Current (old) whitelist contract address |
 <br />
 
 ### Functions
@@ -142,27 +205,27 @@ Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
 <br />
 
 ### `addReserve`
-Adds or deletes a reserve to or from the network. Only admin can invoke.
+Adds a reserve to the network. Only an operator can invoke.
 ___
-function __addReserve__(KyberReserveInterface reserve, bool add) public onlyAdmin
+function __addReserve__(KyberReserveInterface reserve, bool isPermissionless) public onlyOperator
 | Parameter | Type                  | Description                                      |
 | --------- |:---------------------:|:------------------------------------------------:|
 | `reserve` | KyberReserveInterface | reserve's contract address                       |
-| `add`     | bool                  | `true` to add reserve, `false` to remove reserve |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+| `isPermissionless`     | bool                  | `true` if added permissionlessly, `false` otherwise |
+Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
 ___
 Web3 Example:
 ```js
 const reserve = '0x63825c174ab367968EC60f061753D3bbD36A0D8F';
-const add = true;
+const isPermissionless = false;
 
 let transactionData = KyberNetwork.methods.addReserve(
   reserve,
-  add
+  isPermissionless
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
-    from: ADMIN_ADDRESS,
+    from: OPERATOR_ADDRESS,
     to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
@@ -210,6 +273,33 @@ rate = result[1]
 ```
 <br />
 
+### `findBestRateOnlyPermission`
+Finds the best conversion rate, using only permissioned reserves, for a pair of tokens. If several reserves have small rate differences, pick one at random.
+___
+function __findBestRateOnlyPermission__(ERC20 src, ERC20 dest, uint srcAmount) public view returns (uint obsolete, uint rate)
+| Parameter | Type  | Description                              |
+| --------- |:-----:|:----------------------------------------:|
+| `src`     | ERC20 | source ERC20 token contract address      |
+| `dest`    | ERC20 | destination ERC20 token contract address |
+| `srcAmount`  | uint  | wei amount of source ERC20 token         |
+**Returns:**\
+Index of the best reserve (depreciated) and the best exchange rate for the pair
+___
+Web3 Example:
+```js
+const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; // ETH
+const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+const srcQty = new web3.utils.BN('3000000000000000000000');
+result = await KyberNetwork.methods.findBestRateOnlyPermission(
+  src,
+  dest,
+  srcQty
+).call()
+
+rate = result[1]
+```
+<br />
+
 ### `getExpectedRate`
 Get the expected exchange rate.
 ___
@@ -229,6 +319,35 @@ const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
 const srcQty = new web3.utils.BN('3000000000000000000000')
 
 let result = await KyberNetwork.methods.getExpectedRate(
+  src,
+  dest,
+	srcQty
+).call()
+
+let expectedRate = result[0]
+let slippageRate = result[1]
+```
+<br />
+
+### `getExpectedRateOnlyPermission`
+Get the expected exchange rate from only permissioned reserves (ie. excluding permissionless reserves).
+___
+function __getExpectedRateOnlyPermission__(ERC20 src, ERC20 dest, uint srcQty) public view returns (uint expectedRate, uint slippageRate)
+| Parameter | Type  | Description                              |
+| --------- |:-----:|:----------------------------------------:|
+| `src`     | ERC20 | source ERC20 token contract address      |
+| `dest`    | ERC20 | destination ERC20 token contract address |
+| `srcQty`  | uint  | wei amount of source ERC20 token         |
+**Returns:**\
+The expected exchange rate and slippage rate
+___
+Web3 Example:
+```js
+const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' // ETH
+const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+const srcQty = new web3.utils.BN('3000000000000000000000')
+
+let result = await KyberNetwork.methods.getExpectedRateOnlyPermission(
   src,
   dest,
 	srcQty
@@ -266,7 +385,7 @@ let reserves = await KyberNetwork.methods.getReserves().call();
 <br />
 
 ### `getUserCapInWei`
-Get the user's exchange limit in ETH based on whether user has been KYC'd or not.
+Get the user's exchange limit in ETH based on whether user has been KYC'd or not. Currently not enforced.
 ___
 function __getUserCapInWei__(address user) public view returns (uint)
 | Parameter | Type    | Description    |
@@ -283,7 +402,7 @@ let userCapInWei = await KyberNetwork.methods.getUserCapInWei(user).call()
 <br />
 
 ### `getUserCapInTokenWei`
-Get the user's exchange limit in the specified ERC20 token based on whether user has been KYC'd or not.
+Get the user's exchange limit in the specified ERC20 token based on whether user has been KYC'd or not. Currently not enforced.
 ___
 function __getUserCapInTokenWei__(address user, ERC20 token) public view returns (uint)
 | Parameter | Type    | Description    |
@@ -318,9 +437,9 @@ let value =  await KyberNetwork.methods.info(`field`).call()
 <br />
 
 ### `listPairForReserve`
-Allow or prevent a specific reserve to trade a pair of tokens. Only admin can invoke.
+Allow or prevent a specific reserve to trade a pair of tokens. Only operator can invoke.
 ___
-function __listPairForReserve__(address reserve, ERC20 token, bool ethToToken, bool tokenToEth, bool add) public onlyAdmin
+function __listPairForReserve__(address reserve, ERC20 token, bool ethToToken, bool tokenToEth, bool add) public onlyOperator
 | Parameter | Type                  | Description                                                 |
 | ----------|:---------------------:|:-----------------------------------------------------------:|
 | `reserve` | KyberReserveInterface | reserve's contract address                                  |
@@ -328,7 +447,7 @@ function __listPairForReserve__(address reserve, ERC20 token, bool ethToToken, b
 | `ethToToken`     | bool                 | `true` if ETH -> token trade supported, `false` otherwise      |
 | `tokenToEth`     | bool                 | `true` if token -> ETH trade supported, `false` otherwise                    |
 | `add`     | uint                  | `true` if trade enabled, otherwise disable trade if `false` |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyOperator](api-permissiongroups.md#onlyOperator)
 ___
 Web3 Example:
 ```js
@@ -364,6 +483,35 @@ ___
 Web3 Example:
 ```js
 let maxGasPrice = await KyberNetwork.methods.maxGasPrice().call();
+```
+<br />
+
+### `removeReserve`
+Removes a reserve from the network. Only an operator can invoke.
+___
+function __removeReserve__(KyberReserveInterface reserve, uint index) public onlyOperator
+| Parameter | Type                  | Description                                      |
+| --------- |:---------------------:|:------------------------------------------------:|
+| `reserve` | KyberReserveInterface | reserve's contract address                       |
+| `index`     | uint                  | Reserve index in the reserve array |
+Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
+___
+Web3 Example:
+```js
+const reserve = '0x63825c174ab367968EC60f061753D3bbD36A0D8F';
+var allReserves = await KyberNetworkContract.methods.getReserves().call();
+const reserveIndex = allReserves.indexOf(reserve);
+
+let transactionData = KyberNetwork.methods.removeReserve(
+  reserve,
+  reserveIndex
+).encodeABI()
+
+txReceipt = await web3.eth.sendTransaction({
+    from: OPERATOR_ADDRESS,
+    to: KYBER_NETWORK_ADDRESS,
+    data: transactionData
+})
 ```
 <br />
 

@@ -20,7 +20,7 @@ ___
 ### Events
 
 ### `AssignBurnFees`
-Set the burn fees of a reserve
+For logging of fees assigned for burning for a reserve
 ___
 event __AssignBurnFees__(address reserve, uint burnFee)
 | Parameter | Type    | Description                        |
@@ -31,7 +31,7 @@ ___
 <br />
 
 ### `AssignFeeToWallet`
-Set the wallet address and wallet fees of a reserve
+For logging of wallet fees assigned to an entity as part of the fee sharing program
 ___
 event __AssignFeeToWallet__(address reserve, address wallet, uint walletFee)
 | Parameter   | Type    | Description                                     |
@@ -51,6 +51,19 @@ event __BurnAssignedFees__(address indexed reserve, address sender, uint quantit
 | `reserve`  | address | reserve's contract address           |
 | `sender `  | address | sender's address                     |
 | `quantity` | uint    | amount of assigned fees to be burned |
+___
+<br />
+
+### `KNCRateSet`
+Set the KNC/ETH rate (obtained via the getExpectedRate function)
+___
+event __KNCRateSet__(uint ethToKncRatePrecision, uint kyberEthKnc, uint kyberKncEth, address updater)
+| Parameter  | Type    | Description                          |
+| ---------- |:-------:|:------------------------------------:|
+| `ethToKncRatePrecision`  | uint | rate of KNC wei amount for 1 ETH |
+| `kyberEthKnc `                   | uint | ETH -> KNC rate obtained from the network |
+| `kyberKncEth`                    | uint | KNC -> ETH rate obtained from the network |
+| `updater`                     | address | Address of entity who called the function (`msg.sender`) |
 ___
 <br />
 
@@ -127,12 +140,13 @@ ___
 ### `FeeBurner`
 Contract constructor. Note that constructor methods are called exactly once during contract instantiation and cannot be called again.
 ___
-function __FeeBurner__(address \_admin, BurnableToken kncToken, address \_kyberNetwork) public
+function __FeeBurner__(address \_admin, BurnableToken kncToken, address \_kyberNetwork, uint \_initialKncToEthRatePrecision) public
 | Parameter       | Type          | Description                   |
 | --------------- |:-------------:|:-----------------------------:|
 | `_admin`        | address       | admin's wallet address        |
 | `kncToken`      | BurnableToken | ER20 token address of KNC     |
 | `_kyberNetwork` | address       | KyberNetwork contract address |
+| `_initialKncToEthRatePrecision` | uint | Initial rate of KNC wei amount for 1 ETH |
 ___
 <br />
 
@@ -174,24 +188,20 @@ ___
 ### `setKNCRate`
 Sets the rate of the KNC token.
 ___
-function setKNCRate(uint rate) public onlyAdmin
-| Parameter | Type  | Description       |
-| --------- |:-----:|:-----------------:|
-| `rate`    | uint  | rate of KNC token |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+function setKNCRate() public
 ___
 <br />
 
 ### `setReserveData`
 Set reserve data
 ___
-function __setReserveData__(address reserve, uint feesInBps, address kncWallet) public onlyAdmin
+function __setReserveData__(address reserve, uint feesInBps, address kncWallet) public onlyOperator
 | Parameter   | Type    | Description                |
 | ----------- |:-------:|:--------------------------:|
 | `reserve`   | address | reserve's contract address |
 | `feesInBps` | uint    | fees in basis points (`1 bps = 0.01%`) |
 | `kncWallet` | address | reserve wallet address to store KNC tokens in |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](api-permissiongroups.md#onlyoperator)
 ___
 <br />
 
