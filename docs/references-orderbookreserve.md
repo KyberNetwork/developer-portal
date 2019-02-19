@@ -148,7 +148,7 @@ Submit multiple orders in a single transaction. All arrays for the input paramet
 ___
 function __addOrderBatch__(bool[] isEthToToken, uint128[] srcAmount, uint128[] dstAmount,
         uint32[] hintPrevOrder, bool[] isAfterPrevOrder) public returns (bool)
-        
+
 | Parameter     | Type   | Description                              |
 | ------------- |:------:|:----------------------------------------:|
 | `isEthToToken`         | bool[]  | Index X is true if order X is an Ether to Token order |
@@ -169,11 +169,11 @@ const sellOrderSrcAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const sellOrderDstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 
 transactionData = OrderbookReserve.methods.addOrderBatch(
-  [true,true,false],
-  [buyOrderOneSrcAmount,buyOrderTwoSrcAmount,sellOrderSrcAmount],
-  [buyOrderOneDstAmount,buyOrderTwoDstAmount,sellOrderDstAmount],
-  [0,0,0],
-  [false,true,false]
+	[true,true,false],
+	[buyOrderOneSrcAmount,buyOrderTwoSrcAmount,sellOrderSrcAmount],
+	[buyOrderOneDstAmount,buyOrderTwoDstAmount,sellOrderDstAmount],
+	[0,0,0],
+	[false,true,false]
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -303,10 +303,10 @@ transactionData = OrderbookReserve.methods.depositEther(
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
-    from: WALLET_ADDRESS,
-    to: ORDERBOOK_RESERVE_ADDRESS,
-    data: transactionData,
-    value: etherWeiAmount //include Ether with the transaction
+		from: WALLET_ADDRESS,
+		to: ORDERBOOK_RESERVE_ADDRESS,
+		data: transactionData,
+		value: etherWeiAmount //include Ether with the transaction
 })
 ```
 <br />
@@ -325,8 +325,8 @@ Web3 Example:
 //Assume that KNCToken.approve(ORDERBOOK_RESERVE_ADDRESS, allowance) transaction has been executed
 
 transactionData = OrderbookReserve.methods.depositKncForFee(
-  WALLET_ADDRESS, //maker
-  depositAmount //depositAmount <= allowance
+	WALLET_ADDRESS, //maker
+	depositAmount //depositAmount <= allowance
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -351,14 +351,14 @@ Web3 Example:
 //Assume that token.approve(ORDERBOOK_RESERVE_ADDRESS, allowance) transaction has been executed
 
 transactionData = OrderbookReserve.methods.depositToken(
-  WALLET_ADDRESS, //maker
-  depositAmount //depositAmount <= allowance
+	WALLET_ADDRESS, //maker
+	depositAmount //depositAmount <= allowance
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
-    from: WALLET_ADDRESS,
-    to: ORDERBOOK_RESERVE_ADDRESS,
-    data: transactionData
+	from: WALLET_ADDRESS,
+	to: ORDERBOOK_RESERVE_ADDRESS,
+	data: transactionData
 })
 ```
 <br />
@@ -433,13 +433,13 @@ result = await OrderbookReserve.methods.getEthToTokenMakerOrderIds(makerAddress)
 Obtain details of a specific Ether to Token order.
 ___
 function __getEthToTokenOrder__(uint32 orderId) public view returns (
-  address _maker,
-  uint128 _srcAmount,
-  uint128 _dstAmount,
-  uint32 _prevId,
-  uint32 _nextId
-  )
-  
+	address _maker,
+	uint128 _srcAmount,
+	uint128 _dstAmount,
+	uint32 _prevId,
+	uint32 _nextId
+	)
+
 | Parameter     | Type   | Description                              |
 | ------------- |:------:|:----------------------------------------:|
 | `orderId`      | uint32    | orderID of the order to obtain details from |
@@ -448,7 +448,7 @@ function __getEthToTokenOrder__(uint32 orderId) public view returns (
 | Parameter     | Type   | Description                              |
 | ------------- |:------:|:----------------------------------------:|
 | `_maker`      | address    | maker contract or wallet address |
-| `_srcAmount`      | address    | Ether wei amount |
+| `_srcAmount`      | uint128    | Ether wei amount |
 | `_dstAmount`      | uint128    | destination ERC20 token amount in its token decimals |
 | `_prevId`      | uint32    | Order ID before this order |
 | `_nextId`      | uint32    | Order ID after this order |
@@ -544,13 +544,13 @@ result = await OrderbookReserve.methods.getTokenToEthMakerOrderIds(makerAddress)
 Obtain details of a specific Token To Ether order.
 ___
 function __getTokenToEthOrder__(uint32 orderId) public view returns (
-  address _maker,
-  uint128 _srcAmount,
-  uint128 _dstAmount,
-  uint32 _prevId,
-  uint32 _nextId
-  )
-  
+	address _maker,
+	uint128 _srcAmount,
+	uint128 _dstAmount,
+	uint32 _prevId,
+	uint32 _nextId
+	)
+
 | Parameter     | Type   | Description                              |
 | ------------- |:------:|:----------------------------------------:|
 | `orderId`      | uint32    | orderID of the order to obtain details from |
@@ -559,7 +559,7 @@ function __getTokenToEthOrder__(uint32 orderId) public view returns (
 | Parameter     | Type   | Description                              |
 | ------------- |:------:|:----------------------------------------:|
 | `_maker`      | address    | maker contract or wallet address |
-| `_srcAmount`      | address    | source ERC20 token amount in its token decimals |
+| `_srcAmount`      | uint128    | source ERC20 token amount in its token decimals |
 | `_dstAmount`      | uint128    | Ether wei amount |
 | `_prevId`      | uint32    | Order ID before this order |
 | `_nextId`      | uint32    | Order ID after this order |
@@ -724,7 +724,7 @@ txReceipt = await web3.eth.sendTransaction({
 <br />
 
 ### `submitEthToTokenOrderWHint`
-Submit an Ether to Token order using a hint. The hint can be obtained using the [`getEthToTokenAddOrderHint`](#getethtotokenaddorderhint) function. 
+Submit an Ether to Token order using a hint. The hint can be obtained using the [`getEthToTokenAddOrderHint`](#getethtotokenaddorderhint) function.
 ___
 function __submitEthToTokenOrderWHint__(uint128 srcAmount, uint128 dstAmount, uint32 hintPrevOrder) public returns (bool)
 | Parameter        | Type    | Description                                    |
@@ -744,7 +744,7 @@ var hint = await OrderbookReserve.methods.getEthToTokenAddOrderHint(srcAmount, d
 transactionData = OrderbookReserve.methods.submitEthToTokenOrderWHint(
   srcAmount,
   dstAmount,
-  hint
+	hint
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -785,7 +785,7 @@ txReceipt = await web3.eth.sendTransaction({
 <br />
 
 ### `submitTokenToEthOrderWHint`
-Submit a Token to Ether order using a hint. The hint can be obtained using the [`getTokenToEthAddOrderHint`](#gettokentoethaddorderhint) function. 
+Submit a Token to Ether order using a hint. The hint can be obtained using the [`getTokenToEthAddOrderHint`](#gettokentoethaddorderhint) function.
 ___
 function __submitTokenToEthOrderWHint__(uint128 srcAmount, uint128 dstAmount, uint32 hintPrevOrder) public returns (bool)
 | Parameter        | Type    | Description                                    |
@@ -805,7 +805,7 @@ var hint = await OrderbookReserve.methods.getTokentoEthAddOrderHint(srcAmount, d
 transactionData = OrderbookReserve.methods.submitTokenToEthOrderWHint(
   srcAmount,
   dstAmount,
-  hint
+	hint
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -853,8 +853,8 @@ const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 
 transactionData = OrderbookReserve.methods.updateEthToTokenOrder(
   orderID,
-  srcAmount,
-  dstAmount
+	srcAmount,
+	dstAmount
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -886,10 +886,10 @@ const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 var hint = await OrderbookReserve.methods.getEthToTokenUpdateOrderHint(orderID, srcAmount, dstAmount).call()
 
 transactionData = OrderbookReserve.methods.updateEthToTokenOrderWHint(
-  orderID,
-  srcAmount,
-  dstAmount,
-  hint
+	orderID,
+	srcAmount,
+	dstAmount,
+	hint
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -905,7 +905,7 @@ Update multiple orders in a single transaction. All arrays for the input paramet
 ___
 function __updateOrderBatch__(bool[] isEthToToken, uint32[] orderId, uint128[] srcAmount, uint128[] dstAmount,
         uint32[] hintPrevOrder) public returns (bool)
-        
+
 | Parameter     | Type   | Description                              |
 | ------------- |:------:|:----------------------------------------:|
 | `isEthToToken`         | bool array  | Index X is true if order X is an Ether to Token order |
@@ -927,11 +927,11 @@ const sellOrderSrcAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const sellOrderDstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 
 transactionData = OrderbookReserve.methods.addOrderBatch(
-  [true,true,false],
-  orderIDs,
-  [buyOrderOneSrcAmount,buyOrderTwoSrcAmount,sellOrderSrcAmount],
-  [buyOrderOneDstAmount,buyOrderTwoDstAmount,sellOrderDstAmount],
-  [0,0,0]
+	[true,true,false],
+	orderIDs,
+	[buyOrderOneSrcAmount,buyOrderTwoSrcAmount,sellOrderSrcAmount],
+	[buyOrderOneDstAmount,buyOrderTwoDstAmount,sellOrderDstAmount],
+	[0,0,0]
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -962,9 +962,9 @@ const srcAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const dstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 
 transactionData = OrderbookReserve.methods.updateTokenToEthOrder(
-  orderID,
-  srcAmount,
-  dstAmount
+	orderID,
+	srcAmount,
+	dstAmount
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -996,10 +996,10 @@ const dstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 var hint = await OrderbookReserve.methods.getTokenToEthUpdateOrderHint(orderID, srcAmount, dstAmount).call()
 
 transactionData = OrderbookReserve.methods.updateTokenToEthOrderWHint(
-  orderID,
-  srcAmount,
-  dstAmount,
-  hint
+	orderID,
+	srcAmount,
+	dstAmount,
+	hint
 ).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -1075,4 +1075,3 @@ txReceipt = await web3.eth.sendTransaction({
 })
 ```
 <br />
-

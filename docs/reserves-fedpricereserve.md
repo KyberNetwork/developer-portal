@@ -2,9 +2,18 @@
 id: Reserves-FedPriceReserve
 title: Fed Price Reserve
 ---
-## Introduction
+## Objective
+In this guide, we will learn how to configure and deploy a Fed Price Reserve either locally via ganache or to the Ropsten testnet.
 
-In this guide, we will configure and deploy a reserve locally / to the Ropsten testnet. As a reserve manager, your primary purpose is to keep your funds safe but this is a difficult task since your inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay updates of rates in your contracts.
+## Introduction
+A Fed Price Reserve consists of two main components: an on-chain component of your reserve smart contracts and an off-chain component (normally, an automated system) that manages your on-chain component. The two components are depicted in the diagram below.
+
+![Kyber Reserve Components](/uploads/kyberreservecomponents.png "Kyber Reserve Components")
+
+The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. The off-chain component hosts your [trading strategy](guide-miscellaneous.md#trading-strategy) that calculate and feed conversion rates and rebalance your reserve of tokens.
+
+## Points to Note
+A reserve manager's primary purpose is to keep funds safe. This however is a difficult task since inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay pricing rate updates in the contracts.
 
 With this in mind, the reserve was designed with various parameters to help secure your funds.
 * Valid duration gives a time limit to the last price update, when the duration is over trades are stopped until the next price update.
@@ -13,7 +22,6 @@ With this in mind, the reserve was designed with various parameters to help secu
 * Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
 
 ## How to set up your own reserve
-
 ### Local testnet deployment
 Here, we will walk you through an example on running the deployment script on [Truffle's Ganache](https://truffleframework.com/ganache).
 
@@ -52,7 +60,7 @@ In another terminal, run the script.
 ```
 
 #### Notes
-1. The script uses test tokens, which is configured in the JSON file at `smart-contracts/deployment_input.json`.
+1. The script uses test tokens, which is configured in the json file at `smart-contracts/deployment_input.json`.
 2. In the testing part of the script, under `"set eth to dgd rate"`, we initialize rates for 1 token. In order to change/add tokens, this part should be modified.
 3. For more information on how to change/add the set rates functionality, refer to [this section](guide-reserves.md#step-2-deploying-contracts).
 4. The validity of rates is determined by calls to `setValidRateDurationInBlocks()`. It is set to a large value (1000000) at the start of the script and reduced to 256 at the end of it. Refer to [the API](api-conversionrates.md#setvalidratedurationinblocks) for more information.
@@ -119,21 +127,21 @@ In essence, an example of the first part of `ropsten_reserve_input.json` would b
       "maxTotalImbalance" : "5709185508564730380288"
     }
   },
-  ...
+	...
 }
 ```
 
 ##### Defining withdrawal addresses
-Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the JSON file, a few withdrawal addresses can be defined per token and at least one address per exchange.
+Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the json file, a few withdrawal addresses can be defined per token and at least one address per exchange.
 
 Let's take a look at the `exchanges` dictionary in `ropsten_reserve_input.json`. Fill in your ETH and KNC withdraw addresses for the purposes of rebalancing your reserve. Note that the `binance` string is just an example. Also note that **all tokens you wish to support must have withdraw addresses**.
 
 ```json
   "exchanges": {
-    "binance" : {
-      "ETH" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
-      "KNC" : "0x1234567890ABCDEF1234567890ABCDEF1111111"
-    }
+		"binance" : {
+			"ETH" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
+			"KNC" : "0x1234567890ABCDEF1234567890ABCDEF1111111"
+		}
   },
 ```
 
@@ -142,16 +150,16 @@ In the `permission` dictionary, you will fill in the addresses for admin, operat
 
 ```json
 "permission" : {
-  "KyberReserve" : {
-    "admin" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
-    "operator" : ["0x9876543210FDECBA9876543210FDECBA2222222"],
-    "alerter" : ["0x1234567890ABCDEF9876543210FDECBA3333333"]
-  },
-  "ConversionRates" : {
-    "admin" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
-    "operator" : ["0x9876543210FDECBA9876543210FDECBA2222222","0x1234567890ABCDEF9876543210FDECBA3333333"],
-    "alerter" : ["0x1234567890ABCDEF9876543210FDECBA4444444","0x1234567890ABCDEF1234567890ABCDEF5555555"]
-  }
+	"KyberReserve" : {
+		"admin" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
+		"operator" : ["0x9876543210FDECBA9876543210FDECBA2222222"],
+		"alerter" : ["0x1234567890ABCDEF9876543210FDECBA3333333"]
+	},
+	"ConversionRates" : {
+		"admin" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
+		"operator" : ["0x9876543210FDECBA9876543210FDECBA2222222","0x1234567890ABCDEF9876543210FDECBA3333333"],
+		"alerter" : ["0x1234567890ABCDEF9876543210FDECBA4444444","0x1234567890ABCDEF1234567890ABCDEF5555555"]
+	}
 },
 ```
 
@@ -259,16 +267,16 @@ BUY_RATE = [500000000000000000000] //Eg. [100000000000000000000, 200000000000000
 SELL_RATE = [1820000000000000] //Eg. [1800000000000000, 1900000000000000]
 
 async function main() {
-  const blockNumber = await web3.eth.getBlockNumber()
-  var txData = ConversionRatesContract.methods.setBaseRate(
-      [KNC_TOKEN_CONTRACT_ADDRESS], //ERC20[] tokens
-      BUY_RATE, //uint[] baseBuy
-      SELL_RATE, //uint[] baseSell
-      [0], //bytes14[] buy
-      [0], //bytes14[] sell
-      blockNumber, //most recent ropsten ETH block number as time of writing
-      [0], //uint[] indices
-      ).encodeABI()
+	const blockNumber = await web3.eth.getBlockNumber()
+	var txData = ConversionRatesContract.methods.setBaseRate(
+	    [KNC_TOKEN_CONTRACT_ADDRESS], //ERC20[] tokens
+	    BUY_RATE, //uint[] baseBuy
+	    SELL_RATE, //uint[] baseSell
+	    [0], //bytes14[] buy
+	    [0], //bytes14[] sell
+	    blockNumber, //most recent ropsten ETH block number as time of writing
+	    [0], //uint[] indices
+	    ).encodeABI()
     var signedTx = await web3.eth.accounts.signTransaction(
         {
             from: SENDER_ACCOUNT.address,
@@ -299,9 +307,9 @@ Each index allows you to modify up to 14 tokens at once. The token index number 
 For simplicity, assume that we want to modify the base buy rates. The logic for modifying base sell rates is the same.
 * Suppose the reserve supports 3 tokens: DAI, BAT and DGX.
 * We want to make the following modifications to their base buy rates:
-  1. +2.5% (+25 pts) to DAI_BASE_BUY_RATE
-  2. +1% (+10 pts) to BAT_BASE_BUY_RATE
-  3. -3% (-30 pts) to DGX_BASE_BUY_RATE
+	1. +2.5% (+25 pts) to DAI_BASE_BUY_RATE
+	2. +1% (+10 pts) to BAT_BASE_BUY_RATE
+	3. -3% (-30 pts) to DGX_BASE_BUY_RATE
 
 **Note:**
 1. One pt here means a **0.1% change**, as compared to basis points used in step functions where 1 basis point = 0.01%.
@@ -353,12 +361,12 @@ Operators can call `setQtyStepFunction()` of `ConversionRates.sol` to allow diff
 
 ```js
 function setQtyStepFunction(
-  ERC20 token,
-  int[] xBuy,
-  int[] yBuy,
-  int[] xSell,
-  int[] ySell
-  )
+	ERC20 token,
+	int[] xBuy,
+	int[] yBuy,
+	int[] xSell,
+	int[] ySell
+	)
 ```
 More information regarding the input parameters of the `setQtyStepFunction` function can be found in [reference](api-conversionrates.md#setqtystepfunction).
 <!--| Input field | Explanation | Example |
@@ -389,12 +397,12 @@ They can also call `setImbalanceStepFunction()` of `ConversionRates.sol` to allo
 
 ```js
 function setImbalanceStepFunction(
-  ERC20 token,
-  int[] xBuy,
-  int[] yBuy,
-  int[] xSell,
-  int[] ySell
-  )
+	ERC20 token,
+	int[] xBuy,
+	int[] yBuy,
+	int[] xSell,
+	int[] ySell
+	)
 ```
 More information regarding the input parameters of the `setImbalanceStepFunction` function can be found in [reference](api-conversionrates.md#setimbalancestepfunction).
 

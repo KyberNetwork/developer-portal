@@ -119,18 +119,31 @@ function __getExpectedRate__(ERC20 src, ERC20 dest, uint srcQty) public view ret
 | `dest`    | ERC20 | destination ERC20 token contract address |
 | `srcQty`  | uint  | wei amount of source ERC20 token         |
 **Returns:**\
-The expected exchange rate and slippage rate. Note that these returned values are in 18 decimals regardless of the destination token's decimals.
+The expected exchange rate and slippage rate.<br>
+
+**Notes:**
+- Returned values are in 18 decimals regardless of the destination token's decimals
+- The Most Significant Bit (MSB) is used for excluding permissionless reserves, since this function lacks a hint parameter for this purpose.
 ___
 Web3 Example:
 ```js
 const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' // ETH
-const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+const dest = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359' // DAI
 const srcQty = new web3.utils.BN('3000000000000000000000')
 
 let result = await kyberNetworkProxyContract.methods.getExpectedRate(
 	src,
 	dest
 	srcQty
+).call()
+
+//Example where MSB is turned on to exclude permissionless reserves
+const hint = new web3.utils.BN('57896044618658097711785492504343953926634992332820282019729792003956564819968') // 2^255 (turning on MSB)
+const newSrcQty = srcQty.add(hint)
+let result = await kyberNetworkProxyContract.methods.getExpectedRate(
+	src,
+	dest
+	newSrcQty
 ).call()
 ```
 <br />
