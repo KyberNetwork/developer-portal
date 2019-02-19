@@ -2,9 +2,18 @@
 id: FedPriceReservesGuide
 title: Fed Price Reserve Setup
 ---
-## Introduction
+## Objective
+In this guide, we will learn how to configure and deploy a Fed Price Reserve either locally via ganache or to the Ropsten testnet.
 
-In this guide, we will configure and deploy a reserve locally / to the Ropsten testnet. As a reserve manager, your primary purpose is to keep your funds safe but this is a difficult task since your inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay updates of rates in your contracts.
+## Introduction
+A Fed Price Reserve consists of two main components: an on-chain component of your reserve smart contracts and an off-chain component (normally, an automated system) that manages your on-chain component. The two components are depicted in the diagram below.
+
+![Kyber Reserve Components](/uploads/kyberreservecomponents.png "Kyber Reserve Components")
+
+The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. The off-chain component hosts your [trading strategy](guide-miscellaneous.md#trading-strategy) that calculate and feed conversion rates and rebalance your reserve of tokens.
+
+## Points to Note
+A reserve manager's primary purpose is to keep funds safe. This however is a difficult task since inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay pricing rate updates in the contracts.
 
 With this in mind, the reserve was designed with various parameters to help secure your funds.
 * Valid duration gives a time limit to the last price update, when the duration is over trades are stopped until the next price update.
@@ -13,7 +22,6 @@ With this in mind, the reserve was designed with various parameters to help secu
 * Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
 
 ## How to set up your own reserve
-
 ### Local testnet deployment
 Here, we will walk you through an example on running the deployment script on [Truffle's Ganache](https://truffleframework.com/ganache).
 
@@ -52,7 +60,7 @@ In another terminal, run the script.
 ```
 
 #### Notes
-1. The script uses test tokens, which is configured in the JSON file at `smart-contracts/deployment_input.json`.
+1. The script uses test tokens, which is configured in the json file at `smart-contracts/deployment_input.json`.
 2. In the testing part of the script, under `"set eth to dgd rate"`, we initialize rates for 1 token. In order to change/add tokens, this part should be modified.
 3. For more information on how to change/add the set rates functionality, refer to [this section](guide-reserves.md#step-2-deploying-contracts).
 4. The validity of rates is determined by calls to `setValidRateDurationInBlocks()`. It is set to a large value (1000000) at the start of the script and reduced to 256 at the end of it. Refer to [the API](api-conversionrates.md#setvalidratedurationinblocks) for more information.
@@ -124,7 +132,7 @@ In essence, an example of the first part of `ropsten_reserve_input.json` would b
 ```
 
 ##### Defining withdrawal addresses
-Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the JSON file, a few withdrawal addresses can be defined per token and at least one address per exchange.
+Since withdrawing funds from the reserve contract might happen frequently, we assume the withdraw operation will be done from a hot wallet address, or even some automated script. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the json file, a few withdrawal addresses can be defined per token and at least one address per exchange.
 
 Let's take a look at the `exchanges` dictionary in `ropsten_reserve_input.json`. Fill in your ETH and KNC withdraw addresses for the purposes of rebalancing your reserve. Note that the `binance` string is just an example. Also note that **all tokens you wish to support must have withdraw addresses**.
 

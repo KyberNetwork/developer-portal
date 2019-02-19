@@ -18,12 +18,13 @@ ___
 ### `getExpectedRate`
 Get the expected exchange rate.
 ___
-function __getExpectedRate__(ERC20 src, ERC20 dest, uint srcQty) public view returns (uint, uint)
+function __getExpectedRate__(ERC20 src, ERC20 dest, uint srcQty, bool usePermissionless) public view returns (uint, uint)
 | Parameter | Type  | Description                              |
 | --------- |:-----:|:----------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address      |
 | `dest`    | ERC20 | destination ERC20 token contract address |
 | `srcQty`  | uint  | wei amount of source ERC20 token         |
+| `usePermissionless`  | bool  | `true` if permissionless reserves are to be included, `false` otherwise  |
 **Returns:**\
 The expected exchange rate and slippage rate
 <br />

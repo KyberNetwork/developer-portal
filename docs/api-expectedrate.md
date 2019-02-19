@@ -3,7 +3,7 @@ id: ExpectedRate
 title: ExpectedRate
 ---
 # contract ExpectedRate
-is [Withdrawable](api-withdrawable.md), [ExpectedRateInterface](api-expectedrateinterface.md), [Utils2](api-utils-2-.md)\
+is [Withdrawable](api-withdrawable.md), [ExpectedRateInterface](api-expectedrateinterface.md), Utils2\
 imports [ERC20Interface](api-erc-20-interface.md), [KyberNetwork](api-volumeimbalancerecorder.md), [Withdrawable](api-withdrawable.md), [ExpectedRateInterface](api-expectedrateinterface.md)
 
 *Source*: [ExpectedRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ExpectedRates.sol)
@@ -68,12 +68,13 @@ Expected rate for small quantity.
 ### `getExpectedRate`
 Gets the expected rate and slippage rate.
 ___
-function __getExpectedRate__(ERC20 src, ERC20 dest, uint srcQty) public view returns (uint expectedRate, uint slippageRate)
+function __getExpectedRate__(ERC20 src, ERC20 dest, uint srcQty, bool usePermissionless) public view returns (uint expectedRate, uint slippageRate)
 | Parameter | Type  | Description                             |
 | --------- |:-----:|:---------------------------------------:|
 | `src`     | ERC20 | source ERC20Token contract address      |
 | `dest`    | ERC20 | destination ERC20Token contract address |
 | `srcQty`  | uint  | quantity of source ERC20 tokens in wei  |
+| `usePermissionless`  | bool  | `true` if permissionless reserves are to be included, `false` otherwise  |
 **Returns:**\
 The expected rate and slippage  rate\
 <br />
