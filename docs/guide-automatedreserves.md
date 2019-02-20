@@ -45,17 +45,17 @@ git clone https://github.com/KyberNetwork/smart-contracts.git
 ```
 
 #### Specifying the supported token
-After you have a local copy, go to `web3deployment` directory and open `liquidityReserve_input.json`, where you will find a list of currently supported tokens on Kyber Network.
+After you have a local copy, go to `web3deployment` directory and open `liquidityReserve_input.json`, where you will find the token details that the automated reserve will support.
 
 ```json
 {
   "tokens": {
-    "OMG": {
-      "name": "OmiseGO",
+    "KNC": {
+      "name": "KyberNetwork",
       "decimals": 18,
-      "address": "0x4BFBa4a8F28755Cb2061c413459EE562c6B9c51b",
-    },
-    ...
+      "address": "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6",
+    }
+    (...)
   }
 }
 ```
