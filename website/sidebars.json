@@ -22,7 +22,6 @@
       "Integrations-DappsGuide",
       "Integrations-VendorsGuide",
       "Integrations-WalletsGuide",
-      "Integrations-TrackerAPIGuide",
       "Integrations-TradingAPIGuide",
       "Integrations-KyberWidgetGuide",
       "Integrations-KyberWidgetSwiftGuide",
@@ -94,7 +93,7 @@
     ],
     "REST API": [
       "References-RestOverview",
-      "References-TradingAPI"
+      "References-RestAPI"
     ],
     "Code Snippets": [
       "References-Web3",
