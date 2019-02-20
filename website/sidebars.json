@@ -37,8 +37,8 @@
   "Reserves": {
     "Getting Started": [
       "Reserves-Intro",
-      "Reserves-UseCase",
-      "Reserves-Types"
+      "Reserves-Types",
+      "Reserves-Requirements"
     ],
     "Setup Tutorials": [
       "Reserves-FedPriceReserve",
