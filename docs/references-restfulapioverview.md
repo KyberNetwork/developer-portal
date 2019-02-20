@@ -1,6 +1,6 @@
 ---
-id: References-RestOverview
-title: REST API Overview
+id: References-RESTfulAPIOverview
+title: RESTful API Overview
 ---
 ## Introduction
 
