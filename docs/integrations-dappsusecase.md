@@ -8,7 +8,7 @@ The diagram below explains how DApps can leverage on Kyber's protocol implementa
 
 ![Dapps](/uploads/dapps.png "DApps")
 
-DApps like ETHLend allows instant liquidation of assets in case of defaulted loans or collateral calling without leaving the ETHLend DApp while Financial DApps like Olympus Labs allows users to invest in different tokens with just a few taps within the app.
+DApps like ETHLend allows instant liquidation of assets in case of defaulted loans or collateral calling without leaving the ETHLend DApp while Etheremon allows users to buy NFT monsters with any tokens of their choice.
 
 DApps also have the opportunity to join Kyber's *Fee Sharing Program*, which allows fee sharing for each trade originating from your DApp. Learn more about the program [here](integrations-feesharing.md)!
 

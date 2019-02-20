@@ -1,6 +1,6 @@
 ---
-id: References-RestOverview
-title: REST API Overview
+id: References-RESTfulAPIOverview
+title: RESTful API Overview
 ---
 ## Introduction
 
@@ -36,7 +36,7 @@ The `reason` can be one of the following:
 
 ### REST Limitations
 
-There is a current limitation of **500 requests per minute per IP address**. If you exceed this you will get the following reply:
+There is a current limitation of **20 requests per minute per IP address**. If you exceed this you will get the following reply:
 
 ```json
 {

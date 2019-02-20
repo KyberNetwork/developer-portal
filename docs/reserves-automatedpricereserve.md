@@ -45,37 +45,29 @@ git clone https://github.com/KyberNetwork/smart-contracts.git
 ```
 
 #### Specifying the supported token
-After you have a local copy, go to `web3deployment` directory and open `ropsten.json`, where you will find a list of currently supported tokens on Kyber Network.
+After you have a local copy, go to `web3deployment` directory and open `liquidityReserve_input.json`, where you will find the token details that the automated reserve will support.
 
 ```json
 {
   "tokens": {
-    "OMG": {
-      "symbol": "OMG",
-      "name": "OmiseGO",
+    "KNC": {
+      "name": "KyberNetwork",
       "decimals": 18,
-      "address": "0x4BFBa4a8F28755Cb2061c413459EE562c6B9c51b",
-      "minimalRecordResolution": "1000000000000",
-      "maxPerBlockImbalance": "439790000000000000000",
-      "maxTotalImbalance": "922360000000000000000",
-      "rate": "0.01824780",
-      "internal use": true,
-      "listed": true
-    },
-    ...
+      "address": "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6",
+    }
+    (...)
   }
 }
 ```
 
-The most important properties are `symbol`, `name`, `decimals`, and `address`. The rest can be ignored. So you can specify your token details, filling in these fields.
+Specify your token details, filling in these fields.
 
-In essence, an example of the first part of `ropsten.json` would be:
+In essence, an example of the first part of `liquidityReserve_input.json` would be:
 
 ```json
 {
   "tokens": {
     "XYZ": {
-      "symbol": "XYZ",
       "name": "TokenXYZ",
       "decimals": 18,
       "address": "0xB2f3dD487708ca7794f633D9Df57Fdb9347a7afF"
@@ -89,14 +81,14 @@ In essence, an example of the first part of `ropsten.json` would be:
 
 Since withdrawing funds from the reserve contract might be needed in the future, we assume the withdraw operation will be done from a hot wallet address. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the JSON file, a few withdrawal addresses can be defined per token and at least one address per exchange.
 
-Let's take a look at the `exchanges` dictionary in `ropsten.json`. Fill in your ETH and XYZ token withdraw addresses. Note that the `binance` string is just an example. Also note that the **token you wish to support must have withdraw addresses**.
+Let's take a look at the `exchanges` dictionary in `liquidityReserve_input.json`. Fill in your ETH and XYZ token withdraw addresses. Note that the `binance` string is just an example. Also note that the **token you wish to support must have withdraw addresses**.
 
 ```json
   "exchanges": {
-    "binance" : {
-      "ETH" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
-      "XYZ" : "0x1234567890ABCDEF1234567890ABCDEF1111111"
-    }
+		"binance" : {
+			"ETH" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
+			"XYZ" : "0x1234567890ABCDEF1234567890ABCDEF1111111"
+		}
   },
 ```
 
@@ -107,11 +99,16 @@ In the `permission` dictionary, you will fill in the addresses for admin, operat
 
 ```json
 "permission" : {
-  "KyberReserve" : {
-    "admin" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
-    "operator" : ["0x9876543210FDECBA9876543210FDECBA2222222"],
-    "alerter" : ["0x1234567890ABCDEF9876543210FDECBA3333333"]
-  }
+	"KyberReserve" : {
+		"admin" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
+		"operator" : ["0x9876543210FDECBA9876543210FDECBA2222222"],
+		"alerter" : ["0x1234567890ABCDEF9876543210FDECBA3333333"]
+	},
+  "LiquidityConversionRates" : {
+		"admin" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
+		"operator" : ["0x9876543210FDECBA9876543210FDECBA2222222"],
+		"alerter" : ["0x1234567890ABCDEF9876543210FDECBA3333333"]
+	}
 },
 ```
 
@@ -139,7 +136,7 @@ npm install
 Then run the command
 
 ```
-node liquidityReserveDeployer.js --config-path ropsten.json --gas-price-gwei 30 ----rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x3f9a8e219ab1ad42f96b22c294e564b2b48fe636"
+node liquidityReserveDeployer.js --config-path liquidityReserve_input.json --gas-price-gwei 30 --rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x3f9a8e219ab1ad42f96b22c294e564b2b48fe636"
 
 ```
 * `--gas-price-gwei`: The gas price in gwei

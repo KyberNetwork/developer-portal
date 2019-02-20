@@ -2,9 +2,17 @@
 id: Integrations-Overview
 title: Overview
 ---
-- add diagram
+![Guides Overview](/uploads/guidesoverview.png "Guides Overview")
 
-There are 5 different ways a project can integrate with us
+A project that is looking to integrate with Kyber has 5 different avenues to interact with the protocol implementation. The integration types are as follows:
 
-talk about 5 different integration Types
-- SC, web3, widget, plugins and rest api
+![Integration Types](/uploads/integrationtypes.png "Integration Types")
+
+
+| Integration Type | Example |
+|:----------------:|:-------:|
+| `Smart Contracts` | Etheremon's wrapper contract allows their users to be able to buy NFT monsters in any tokens. |
+| `Web3` | Easwap is a swapping service that is powered by web3 interactions with our protocol implementation. |
+| `RESTful APIs` | Enjin's wallet built-in token swap functionality is enabled via the use of the RESTful API. |
+| `Widgets` | CoinGecko allows users to buy any supported ERC20 tokens directly from their website through the KyberWidget. |
+| `Plugins` | Hodlmoon uses our variant of the WooCommerce plugin to accept and receive payments in any supported ERC20 token. |
