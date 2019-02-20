@@ -24,7 +24,7 @@ ___
 | --------- |:---------------------:|:-----------------------------------------------------------:|
 | `trader` | address | trader's address                                  |
 | `src`     | ERC20                  | source ERC20 token contract address   |
-| `srcAmount`         | uint    | wei amount of source ERC20 token                                     |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
 | `dest`              | ERC20   | destination ERC20 token contract address                             |
 | `destAddress`       | address | recipient address for destination ERC20 token                        |
 | `maxDestAmount`     | uint    | limit on the amount of destination tokens                            |
@@ -144,7 +144,7 @@ event __ListReservePairs__(address reserve, ERC20 src, ERC20 dest, bool add)
 | `reserve` | address | reserve's contract address                                     |
 | `src`     | ERC20   | source ERC20 token contract address                            |
 | `dest`    | ERC20   | destination ERC20 token contract address                       |
-| `add`     | bool    | `true` if trades are allowed, otherwise `false` for disallowed |
+| `add`     | bool    | `true` if token pair is listed, `false` otherwise |
 <br />
 
 ### `RemoveReserveFromNetwork`
@@ -254,7 +254,7 @@ function __findBestRate__(ERC20 src, ERC20 dest, uint srcAmount) public view ret
 | --------- |:-----:|:----------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address      |
 | `dest`    | ERC20 | destination ERC20 token contract address |
-| `srcAmount`  | uint  | wei amount of source ERC20 token         |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
 **Returns:**\
 Index of the best reserve (depreciated) and the best exchange rate for the pair
 ___
@@ -262,11 +262,11 @@ Web3 Example:
 ```js
 const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; // ETH
 const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
-const srcQty = new web3.utils.BN('3000000000000000000000');
+const srcAmount = new web3.utils.BN('3000000000000000000000');
 result = await KyberNetwork.methods.findBestRate(
   src,
   dest,
-  srcQty
+  srcAmount
 ).call()
 
 rate = result[1]
@@ -281,7 +281,7 @@ function __findBestRateOnlyPermission__(ERC20 src, ERC20 dest, uint srcAmount) p
 | --------- |:-----:|:----------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address      |
 | `dest`    | ERC20 | destination ERC20 token contract address |
-| `srcAmount`  | uint  | wei amount of source ERC20 token         |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
 **Returns:**\
 Index of the best reserve (depreciated) and the best exchange rate for the pair
 ___
@@ -289,11 +289,11 @@ Web3 Example:
 ```js
 const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; // ETH
 const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
-const srcQty = new web3.utils.BN('3000000000000000000000');
+const srcAmount = new web3.utils.BN('3000000000000000000000');
 result = await KyberNetwork.methods.findBestRateOnlyPermission(
   src,
   dest,
-  srcQty
+  srcAmount
 ).call()
 
 rate = result[1]
@@ -308,20 +308,33 @@ function __getExpectedRate__(ERC20 src, ERC20 dest, uint srcQty) public view ret
 | --------- |:-----:|:----------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address      |
 | `dest`    | ERC20 | destination ERC20 token contract address |
-| `srcQty`  | uint  | wei amount of source ERC20 token         |
+| `srcQty`  | uint  | source ERC20 token amount in its token decimals             |
 **Returns:**\
 The expected exchange rate and slippage rate
+
+**Notes:**
+- Returned values are in 18 decimals regardless of the destination token's decimals
+- The Most Significant Bit (MSB) is used for excluding permissionless reserves, since this function lacks a hint parameter for this purpose. Alternatively, call the `getExpectedRateOnlyPermission` function.
 ___
 Web3 Example:
 ```js
 const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' // ETH
-const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+const dest = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359' // DAI
 const srcQty = new web3.utils.BN('3000000000000000000000')
 
-let result = await KyberNetwork.methods.getExpectedRate(
-  src,
-  dest,
+let result = await kyberNetworkProxyContract.methods.getExpectedRate(
+	src,
+	dest
 	srcQty
+).call()
+
+//Example where MSB is turned on to exclude permissionless reserves
+const hint = new web3.utils.BN('57896044618658097711785492504343953926634992332820282019729792003956564819968') // 2^255 (turning on MSB)
+const newSrcQty = srcQty.add(hint)
+let result = await kyberNetworkProxyContract.methods.getExpectedRate(
+	src,
+	dest
+	newSrcQty
 ).call()
 
 let expectedRate = result[0]
@@ -337,7 +350,7 @@ function __getExpectedRateOnlyPermission__(ERC20 src, ERC20 dest, uint srcQty) p
 | --------- |:-----:|:----------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address      |
 | `dest`    | ERC20 | destination ERC20 token contract address |
-| `srcQty`  | uint  | wei amount of source ERC20 token         |
+| `srcQty`  | uint  | source ERC20 token amount in its token decimals             |
 **Returns:**\
 The expected exchange rate and slippage rate
 ___
@@ -384,6 +397,25 @@ let reserves = await KyberNetwork.methods.getReserves().call();
 ```
 <br />
 
+### `getUserCapInTokenWei`
+Get the user's exchange limit in the specified ERC20 token based on whether user has been KYC'd or not. Future feature.
+___
+function __getUserCapInTokenWei__(address user, ERC20 token) public view returns (uint)
+| Parameter | Type    | Description    |
+| --------- |:-------:|:--------------:|
+| `user`    | address | user's address |
+| `token` | ERC20 | ERC20 token contract address |
+**Returns:**\
+The user's exchange limit in the specified ERC20 token decimals
+___
+Web3 Example:
+```js
+const user = account.address
+const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
+let userCapInTokenWei = await KyberNetwork.methods.getUserCapInTokenWei(user,token).call()
+```
+<br />
+
 ### `getUserCapInWei`
 Get the user's exchange limit in ETH based on whether user has been KYC'd or not. Currently not enforced.
 ___
@@ -398,25 +430,6 @@ Web3 Example:
 ```js
 const user = account.address;
 let userCapInWei = await KyberNetwork.methods.getUserCapInWei(user).call()
-```
-<br />
-
-### `getUserCapInTokenWei`
-Get the user's exchange limit in the specified ERC20 token based on whether user has been KYC'd or not. Currently not enforced.
-___
-function __getUserCapInTokenWei__(address user, ERC20 token) public view returns (uint)
-| Parameter | Type    | Description    |
-| --------- |:-------:|:--------------:|
-| `user`    | address | user's address |
-| `token` | ERC20 | ERC20 token contract address |
-**Returns:**\
-The user's exchange limit in the specified ERC20 token wei
-___
-Web3 Example:
-```js
-const user = account.address
-const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
-let userCapInTokenWei = await KyberNetwork.methods.getUserCapInTokenWei(user,token).call()
 ```
 <br />
 
@@ -524,7 +537,7 @@ function __searchBestRate__(ERC20 src, ERC20 dest, uint srcAmount) public view r
 | --------- |:-------:|:-----------------------------------:|
 | `src`   | ERC20 | source token contract address           |
 | `dest`   | ERC20 | destination token contract address           |
-| `srcAmount` | uint | wei amount of source ERC20 token |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
 **Returns:**\
 Reserve address that offered the best rate, and the actual exchange rate.
 ___
@@ -696,4 +709,67 @@ txReceipt = await web3.eth.sendTransaction({
     to: KYBER_NETWORK_ADDRESS,
     data: transactionData
 })
+```
+
+### `tradeWithHint`
+Makes a trade between src and dest token and send dest tokens to destAddress.
+___
+function __tradeWithHint__(address trader, ERC20 src, uint srcAmount, ERC20 dest, address destAddress, uint maxDestAmount, uint minConversionRate, address walletId, bytes hint) public nonReentrant payable returns (uint)
+| Parameter           | Type    | Description                                   |
+| ------------------- |:-------:|:--------------------------------------------------------------------:|
+| `trader`      |    address |  trader's address |
+| `src`               | ERC20   | source ERC20 token contract address                                  |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
+| `dest`              | ERC20   | destination ERC20 token contract address                             |
+| `destAddress`       | address | recipient address for destination ERC20 token                        |
+| `maxDestAmount`     | uint    | limit on the amount of destination tokens                            |
+| `minConversionRate` | uint    | minimum conversion rate;  trade is canceled if actual rate is lower |
+| `walletId`          | address | wallet address to send part of the fees to                           |
+| `hint` | bytes | for filtering permissionless reserves |
+**Returns:**\
+Amount of actual destination tokens
+
+**Notes:**
+#### `srcAmount` | `maxDestAmount`
+These amounts should be in the source and destination token decimals respectively. For example, if the user wants to swap from / to 10 POWR, which has 6 decimals, it would be `10 * (10 ** 6) = 10000000`
+
+#### `maxDestAmount`
+This parameter should never be zero. Set to an arbitarily large amount for all source tokens to be converted.
+
+#### `minConversionRate`
+This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
+
+#### `walletId`
+If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set to the null address if you are not a participant.
+
+#### `hint`
+By default, permissionless reserves are included for selection for the trade. To exclude permissionless reserves, parse `PERM` in the `hint` parameter.
+___
+Web3 Example:
+```js
+const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; // ETH
+const srcAmount = new web3.utils.BN('3000000000000000000000');
+const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
+const destAddress = "RECIPIENT_ADDRESS";
+const maxDestAmount = new web3.utils.BN(Math.pow(2, 255).toString);
+const minConversionRate = new web3.utils.BN('55555');
+const walletId = '0x0000000000000000000000000000000000000000';
+const hint = ""; //hint = "PERM" to filter permissionless reserves
+
+transactionData = KyberNetwork.methods.trade(
+	src,
+	srcAmount,
+	dest,
+	destAddress,
+	maxDestAmount,
+	minConversionRate,
+	walletId,
+	hint
+).encodeABI();
+
+txReceipt = await web3.eth.sendTransaction({
+	from: USER_WALLET_ADDRESS, //obtained from web3 interface
+	to: KYBER_NETWORK_ADDRESS,
+	data: transactionData
+ });
 ```

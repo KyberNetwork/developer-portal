@@ -32,24 +32,28 @@ function __getExpectedRate__(ERC20 src, ERC20 dest, uint srcQty) public view ret
 | --------- |:-----:|:----------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address      |
 | `dest`    | ERC20 | destination ERC20 token contract address |
-| `srcQty`  | uint  | wei amount of source ERC20 token         |
+| `srcQty`  | uint  | source ERC20 token amount in its token decimals             |
 **Returns:**\
 The expected exchange rate and slippage rate
 
+**Notes:**
+- Returned values are in 18 decimals regardless of the destination token's decimals
+- The Most Significant Bit (MSB) is used for excluding permissionless reserves, since this function lacks a hint parameter for this purpose.
+
 ### `getUserCapInTokenWei`
-Get the user's exchange limit based on whether user has been KYC'd or not.
+Get the user's exchange limit in the specified ERC20 token based on whether user has been KYC'd or not. Future feature.
 ___
 function __getUserCapInTokenWei__(address user, ERC20 token) public view returns (uint)
 | Parameter | Type    | Description    |
 | --------- |:-------:|:--------------:|
 | `user`    | address | user's address |
-| `token`    | ERC20 | token contract address |
+| `token` | ERC20 | ERC20 token contract address |
 **Returns:**\
-The user's exchange limit in the specified token wei
+The user's exchange limit in the specified ERC20 token decimals
 <br />
 
 ### `getUserCapInWei`
-Get the user's exchange limit based on whether user has been KYC'd or not.
+Get the user's exchange limit based on whether user has been KYC'd or not. Currently not enforced.
 ___
 function __getUserCapInWei__(address user) public view returns (uint)
 | Parameter | Type    | Description    |
@@ -81,16 +85,33 @@ Maximum gas price allowable for trade transactions.
 ### `tradeWithHint`
 Makes a trade between src and dest token and send dest tokens to destAddress.
 ___
-function __trade__(ERC20 src, uint srcAmount, ERC20 dest, address destAddress, uint maxDestAmount, uint minConversionRate, address walletId, bytes hint) public payable returns (uint)
+function __tradeWithHint__(address trader, ERC20 src, uint srcAmount, ERC20 dest, address destAddress, uint maxDestAmount, uint minConversionRate, address walletId, bytes hint) public payable returns (uint)
 | Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
+| `trader`      |    address |  trader's address |
 | `src`               | ERC20   | source ERC20 token contract address                                  |
-| `srcAmount`         | uint    | wei amount of source ERC20 token                                     |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
 | `dest`              | ERC20   | destination ERC20 token contract address                             |
 | `destAddress`       | address | recipient address for destination ERC20 token                        |
 | `maxDestAmount`     | uint    | limit on the amount of destination tokens                            |
 | `minConversionRate` | uint    | minimum conversion rate;  trade is canceled if actual rate is lower |
 | `walletId`          | address | wallet address to send part of the fees to                           |
-| `hint` | bytes | for internal use by the smart contract |
+| `hint` | bytes | for filtering permissionless reserves |
 **Returns:**\
 Amount of actual destination tokens
+
+**Notes:**
+#### `srcAmount` | `maxDestAmount`
+These amounts should be in the source and destination token decimals respectively. For example, if the user wants to swap from / to 10 POWR, which has 6 decimals, it would be `10 * (10 ** 6) = 10000000`
+
+#### `maxDestAmount`
+This parameter should never be zero. Set to an arbitarily large amount for all source tokens to be converted.
+
+#### `minConversionRate`
+This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
+
+#### `walletId`
+If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set to the null address if you are not a participant.
+
+#### `hint`
+By default, permissionless reserves are included for selection for the trade. To exclude permissionless reserves, parse `PERM` in the `hint` parameter.
