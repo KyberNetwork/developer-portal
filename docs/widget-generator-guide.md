@@ -4,21 +4,25 @@ title: Widget Generator Guide
 ---
 Go to https://developer.kyber.network/docs/WidgetGenerator. You will see the following interface:
 
-![Widgetgenerator](/uploads/widgetgenerator.png "Widgetgenerator")
+![Widget Generator](/uploads/widgetgenerator.png "Widgetgenerator")
 
 Test out the widget for yourself by clicking on the button!
 
-**Note:**
-Button's text, title, and CSS style can be changed if desired. You could add multiple buttons into a page.
+**Notes:**
+- The button's text, title, and CSS style can be changed if desired
+- You can add multiple buttons into a page
 
 
 ## Widget Options
-### Type
-|     Type     |     Pay     |     Swap     |     Buy     |
-| ---------- | ---------- | ----------- | ---------- |
-| Recipient Address | **Required** | Not required | Not required |
-| Receiving Token Symbol | **Required** | Not required | **Required** |
-| Use Case | Vendor who wants to receive cryptocurrency as payment | Website that wants to provide a generic swap service | Platform who wants to allow users to buy their token on their website|
+### Widget Type
+#### Pay
+This widget option caters to e-commerce sites and vendors who would like to receive cryptocurrencies as payment.
+
+#### Swap
+This widget option caters to parties who wish to provide a generic swap service on their websites, where users can swap from any supported ERC20 token to another.
+
+#### Buy
+This widget option caters to platforms who want to allow users to buy a specific token on their website.
 
 ### Mode
 #### Popup
@@ -34,7 +38,7 @@ The widget will open inside an iFrame on an overlay popup. Use this mode if you 
 Base URL: `https://widget.kyber.network/`
 
 | Parameter  | Type | Description   | Default | Example |
-| ------------ | ----- | -------------- | -------- | --------- |
+| ------------ | ----- | ------------------ | -------- | --------- |
 | `type`                  | string     |  Widget type. Either `pay`, `swap`, or `buy` | `pay` | `pay` |
 | `mode`                  | string     | Behavior of how the widget will appear to the user. Either `tab`, `popup`, or `iframe` | `popup` | `popup` |
 | `receiveAddr`   | address | Destination wallet address which will receive the destination tokens. | N.A | `0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
@@ -44,8 +48,37 @@ Base URL: `https://widget.kyber.network/`
 | `network` | string | ETH network that widget will run in | `ropsten` | 1 of the following values:<br>`test`<br>`ropsten`<br>`production`<br>`mainnet`|
 | `paramForwarding` | boolean | If `true`, all params that were passed to the widget will be submitted via the `callback`. Can be used to prevent malicious behaviour by giving your customer a OTP secret token and validating it in the `callback` | - | - |
 |`commissionId` | address | Registered ETH address that is part of the [fee sharing program](guide-feesharing.md) | - | `0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
-|`pinnedTokens` | string | Tokens that are pinned at the top of your token selector. Tokens are separated by an underscore (_). | `ETH_KNC_DAI` | `ETH_KNC_DAI` |
-|`defaultPair ` | string | This param only takes effect when type=swap, it indicates default token pair will show in swap layout. | `ETH_KNC` | `ETH_KNC` |
+|`pinnedTokens` | string | Tokens that are pinned at the top of your token selector. Tokens are separated by an underscore. | `ETH_KNC_DAI` | `ETH_KNC_DAI` |
+|`defaultPair ` | string | This param only takes effect when type=swap, it indicates default token pair will show in swap layout. | `ETHKNC` | `ETHKNC` |
+| `signer` | string | Concatenated list of Ethereum addresses which the user must make the payment from, separated by underscore. | N.A | `0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
+| `productName` | string | Name of the product bought. You can push multiple `productName` instances to the URL for multiple product names | N.A | `A%20Cat%20Picture` |
+| `productQty` | string | Amount of `productName` product. Multiple instances of `productQty` can be pushed into the URL | N.A | `7` |
+| `productImage` | string | Public URL of an image of `productName`.  Multiple instances of `productImage` can be pushed into the URL. | N.A. | `https://images.unsplash.com/photo-1518791841217-8f162f1e1131` |
+| `paymentData` | string | Auxiliary data attached to payment after the tx is broadcasted | N.A | N.A |
+
+**Notes:**
+#### `network`
+- `test` and `ropsten` runs on the Ethereum Ropsten network (ie. they are equivalent)
+- `production` and `mainnet` runs on the Ethereum mainnet.
+
+#### `productQty` | `productImage`
+- If either or both of these fields are used, there must be a corresponding `productName` parameter preceding it. Otherwise, these fields will be ignored.
+
+## Examples
+### Pay Mode with Multiple Products
+```
+https://widget.kyber.network/v0.6/?type=pay&mode=tab&receiveAddr=0x63B42a7662538A1dA732488c252433313396eade&receiveToken=KNC&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&receiveAmount=0.5&theme=theme-emerald&productName=A%20Cat%20Picture&productQty=7&productImage=https://images.unsplash.com/photo-1518791841217-8f162f1e1131&productName=Falling%20Autumn%20Leaves&productQty=24&productImage=https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/fabdf38b-1811-49e8-8eeb-4c5632076c3e/dczgthc-076fcdf7-4932-4672-8d94-f3b6ed07d100.png&commissionId=0x90A21dbB74D7684B7AF747963D7ac7A8086b82B6
+```
+
+### Swap Mode with Sunset Theme
+```
+https://widget.kyber.network/v0.6/?type=swap&mode=tab&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-sunset
+```
+
+### Buy Mode
+```
+https://widget.kyber.network/v0.6/?type=buy&mode=tab&receiveToken=ETH&receiveAmount=0.001&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-emerald`
+```
 
 ## FAQ
 
