@@ -19,14 +19,11 @@
     ],
     "Guides": [
       "Integrations-Overview",
-      "Integrations-DappsGuide",
-      "Integrations-VendorsGuide",
-      "Integrations-WalletsGuide",
-      "Integrations-TradingAPIGuide",
-      "Integrations-KyberWidgetGuide",
-      "Integrations-KyberWidgetSwiftGuide",
-      "Integrations-SignInWidgetGuide",
-      "Integrations-WooCommercePluginGuide"
+      "Integrations-SmartContractGuide",
+      "Integrations-Web3Guide",
+      "Integrations-RESTfulAPIGuide",
+      "Integrations-WidgetsGuide",
+      "Integrations-PluginsGuide"
     ],
     "Miscellaneous": [
       "Integrations-WidgetGenerator",

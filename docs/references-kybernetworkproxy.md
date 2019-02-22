@@ -268,7 +268,7 @@ function __swapTokenToEther__(ERC20 token, uint srcAmount, uint minConversionRat
 | Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
 | `token`               | ERC20   | destination ERC20 token contract address                                  |
-| `srcAmount`         | uint    | wei amount of source ERC20 token                                     |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
 | `minConversionRate` | uint    | minimum conversion rate;  trade is canceled if actual rate is lower |
 **Returns:**\
 Amount of actual ETH wei
@@ -295,7 +295,7 @@ function __swapTokenToToken__(ERC20 src, uint srcAmount, ERC20 dest, uint minCon
 | Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
 | `src`               | ERC20   | source ERC20 token contract address                                  |
-| `srcAmount`         | uint    | wei amount of source ERC20 token                                     |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
 | `dest`              | ERC20   | destination ERC20 token contract address                             |
 | `minConversionRate` | uint    | minimum conversion rate;  trade is canceled if actual rate is lower |
 **Returns:**\
@@ -324,7 +324,7 @@ function __trade__(ERC20 src, uint srcAmount, ERC20 dest, address destAddress, u
 | Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
 | `src`               | ERC20   | source ERC20 token contract address                                  |
-| `srcAmount`         | uint    | wei amount of source ERC20 token                                     |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
 | `dest`              | ERC20   | destination ERC20 token contract address                             |
 | `destAddress`       | address | recipient address for destination ERC20 token                        |
 | `maxDestAmount`     | uint    | limit on the amount of destination tokens                            |
@@ -370,3 +370,66 @@ txReceipt = await web3.eth.sendTransaction({
  })
 ```
 <br />
+
+### `tradeWithHint`
+Makes a trade between src and dest token and send dest tokens to destAddress.
+___
+function __tradeWithHint__(address trader, ERC20 src, uint srcAmount, ERC20 dest, address destAddress, uint maxDestAmount, uint minConversionRate, address walletId, bytes hint) public nonReentrant payable returns (uint)
+| Parameter           | Type    | Description                                   |
+| ------------------- |:-------:|:--------------------------------------------------------------------:|
+| `trader`      |    address |  trader's address |
+| `src`               | ERC20   | source ERC20 token contract address                                  |
+| `srcAmount`   | uint    | source ERC20 token amount in its token decimals             |
+| `dest`              | ERC20   | destination ERC20 token contract address                             |
+| `destAddress`       | address | recipient address for destination ERC20 token                        |
+| `maxDestAmount`     | uint    | limit on the amount of destination tokens                            |
+| `minConversionRate` | uint    | minimum conversion rate;  trade is canceled if actual rate is lower |
+| `walletId`          | address | wallet address to send part of the fees to                           |
+| `hint` | bytes | for filtering permissionless reserves |
+**Returns:**\
+Amount of actual destination tokens
+
+**Notes:**
+#### `srcAmount` | `maxDestAmount`
+These amounts should be in the source and destination token decimals respectively. For example, if the user wants to swap from / to 10 POWR, which has 6 decimals, it would be `10 * (10 ** 6) = 10000000`
+
+#### `maxDestAmount`
+This parameter should never be zero. Set to an arbitarily large amount for all source tokens to be converted.
+
+#### `minConversionRate`
+This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
+
+#### `walletId`
+If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set to the null address if you are not a participant.
+
+#### `hint`
+By default, permissionless reserves are included for selection for the trade. To exclude permissionless reserves, parse `PERM` in the `hint` parameter.
+___
+Web3 Example:
+```js
+const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; // ETH
+const srcAmount = new web3.utils.BN('3000000000000000000000');
+const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
+const destAddress = "RECIPIENT_ADDRESS";
+const maxDestAmount = new web3.utils.BN(Math.pow(2, 255).toString);
+const minConversionRate = new web3.utils.BN('55555');
+const walletId = '0x0000000000000000000000000000000000000000';
+const hint = ""; //hint = "PERM" to filter permissionless reserves
+
+transactionData = KyberNetworkProxy.methods.tradeWithHint(
+	src,
+	srcAmount,
+	dest,
+	destAddress,
+	maxDestAmount,
+	minConversionRate,
+	walletId,
+	hint
+).encodeABI();
+
+txReceipt = await web3.eth.sendTransaction({
+	from: USER_WALLET_ADDRESS, //obtained from web3 interface
+	to: KYBER_NETWORK_PROXY_ADDRESS,
+	data: transactionData
+ });
+```
