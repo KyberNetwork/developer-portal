@@ -112,7 +112,7 @@ This parameter should never be zero. Set to an arbitarily large amount for all s
 This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
 
 #### `walletId`
-If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set to the null address if you are not a participant.
+If you are part of our [fee sharing program](integrations-feesharing.md), this will be your registered wallet address. Set to the null address if you are not a participant.
 
 #### `hint`
 By default, permissionless reserves are included for selection for the trade. To exclude permissionless reserves, parse `PERM` in the `hint` parameter.

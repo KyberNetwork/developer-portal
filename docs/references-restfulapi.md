@@ -281,7 +281,7 @@ Example:
 | `src_qty`      | float  | Yes      | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the source asset. |
 | `min_dst_qty`  | float  | Yes      | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the destination asset. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
 | `gas_price`    | string  | Yes      | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
-| `wallet_id`    | string | Optional | The wallet address that is registered for the [fee sharing program](guide-feesharing.md). |
+| `wallet_id`    | string | Optional | The wallet address that is registered for the [fee sharing program](integrations-feesharing.md). |
 | `nonce`    | integer | Optional | Users can specify a nonce to override the default account nonce. |
 | `only_official_reserve` | bool  | optional      | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
 ___

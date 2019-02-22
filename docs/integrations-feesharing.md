@@ -244,7 +244,7 @@ main()
 
 ## Trading on KyberSwap on a built-in web3 browser
 
-For applications or wallets that have a built-in web3 browser feature, which can open DApps such as [KyberSwap](https://kyber.network/swap/), there are a couple of methods the app or wallet can still earn from the fee sharing program by facilitating a trade on KyberSwap. The prerequisite is that your wallet needs to be registered to the fee sharing program. Click [here](guide-feesharing.md#how-do-i-join-the-program) to learn how you can register to the program.
+For applications or wallets that have a built-in web3 browser feature, which can open DApps such as [KyberSwap](https://kyber.network/swap/), there are a couple of methods the app or wallet can still earn from the fee sharing program by facilitating a trade on KyberSwap. The prerequisite is that your wallet needs to be registered to the fee sharing program. Click [here](integrations-feesharing.md#how-do-i-join-the-program) to learn how you can register to the program.
 
 After any of the 2 methods below is completed, notify any developer from Kyber Network at the [KybeDeveloper](https://telegram.me/kyberdeveloper/) telegram group of your wallet address so we know who the wallet belongs to.
 
