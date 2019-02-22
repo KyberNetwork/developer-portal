@@ -52,8 +52,8 @@ Base URL: `https://widget.kyber.network/`
 |`defaultPair ` | string | This param only takes effect when type=swap, it indicates default token pair will show in swap layout. | `ETHKNC` | `ETHKNC` |
 | `signer` | string | Concatenated list of Ethereum addresses which the user must make the payment from, separated by underscore. | N.A | `0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
 | `productName` | string | Name of the product bought. You can push multiple `productName` instances to the URL for multiple product names | N.A | `A%20Cat%20Picture` |
-| `productQty` | string | Amount of `productName` product. Multiple instances of `productQty` can be pushed into the URL | N.A | `7` |
-| `productImage` | string | Public URL of an image of `productName`.  Multiple instances of `productImage` can be pushed into the URL. | N.A. | `https://images.unsplash.com/photo-1518791841217-8f162f1e1131` |
+| `productQty`\* | string | Amount of `productName` product. Multiple instances of `productQty` can be pushed into the URL | N.A | `7` |
+| `productImage`\* | string | Public URL of an image of `productName`.  Multiple instances of `productImage` can be pushed into the URL. | N.A. | `https://images.unsplash.com/photo-1518791841217-8f162f1e1131` |
 | `paymentData` | string | Auxiliary data attached to payment after the tx is broadcasted | N.A | N.A |
 
 **Notes:**
@@ -61,9 +61,15 @@ Base URL: `https://widget.kyber.network/`
 - `test` and `ropsten` runs on the Ethereum Ropsten network (ie. they are equivalent)
 - `production` and `mainnet` runs on the Ethereum mainnet.
 
-#### `productQty` | `productImage`
-- If either or both of these fields are used, there must be a corresponding `productName` parameter preceding it. Otherwise, these fields will be ignored.
+#### `productName`
+- Multiple product instances are only supported on v0.6+
 
+#### `productQty`
+- If this field is used, there must be a corresponding `productName` parameter preceding it. Otherwise, it will be ignored.
+
+#### `productImage`
+- Older versions (< v0.6) use `productAvatar` instead of `productImage`
+- If this field is used, there must be a corresponding `productName` parameter preceding it. Otherwise, it will be ignored.
 ## Examples
 ### Pay Mode with Multiple Products
 ```
@@ -82,11 +88,11 @@ https://widget.kyber.network/v0.6/?type=buy&mode=tab&receiveToken=ETH&receiveAmo
 
 ## FAQ
 
-1. I specify popup/iframe mode, but when user clicks payment button, the browser opens the widget in new tab?
+1. Even though I specified the popup / iframe mode, why does the browser open the widget in a new tab when the user clicks on the payment button?
 
 **Answer:**
 
-If your buttons do not have ‘kyber-widget-button’ class, or they are generated on the fly when the page already loaded, you need to manually activate the buttons as following:
+If your buttons do not have the ‘kyber-widget-button’ class, or they are generated on the fly when the page is already loaded, you need to manually activate the buttons as such:
 
 ```javascript
 window.kyberWidgetOptions.register(‘your buttons CSS selector here’);
