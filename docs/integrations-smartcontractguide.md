@@ -198,10 +198,10 @@ contract MyContract {
 
 ```
 ## Existing Smart Contract Integration
-The steps to integrate an existing smart contract are similar to those of integrating a new smart contract. The only difference is that you'll be wrapping multiple functions from the deployed contracts within a function in the wrapper contract. You can find an example of a wrapper contract [here](https://etherscan.io/address/0xf462b7dc7d85b416034833ee4f4e40906795c9f4#code).
+The steps for integrating an existing smart contract is similar to those of integrating a new smart contract. The only difference is that you'll be wrapping multiple functions from the deployed contracts within a single function in the wrapper contract. You can find an example of a wrapper contract [here](https://etherscan.io/address/0xf462b7dc7d85b416034833ee4f4e40906795c9f4#code).
 
 ## Filtering Out Permissionless Reserves
-By default, reserves that were listed permissionlessly are also included when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To learn more about how you can filter them out, please refer to the [KyberNetworkProxy reference](references-kybernetworkproxy.md).
+Reserves that are listed permissionlessly are included by default when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To learn more about how you can filter them out, please refer to the [KyberNetworkProxy reference](references-kybernetworkproxy.md).
 
 ## Fee Sharing Program
 DApps have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your app. Learn more about the program [here](guide-feesharing.md)!
