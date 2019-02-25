@@ -4,10 +4,12 @@ title: Testing Using Ganache
 ---
 ## Overview
 
-Ganache is...
+[Ganache](https://truffleframework.com/ganache) enables a developer to create a private Ethereum blockchain for running tests, executing commands and inspecting its state while controlling how the chain operates.
+
+We have written a workshop repository for quickly deploying and testing the Kyber contracts in your local machine using Ganache.
 
 ## Local Testnet Deployment
-Here, we will walk you through an example on deploying and testing reserves locally on [Truffle's Ganache](https://truffleframework.com/ganache).
+Here, we will walk you through an example on deploying and testing reserves locally.
 
 ### Before you begin
 Check that you have the following:
