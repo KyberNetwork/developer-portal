@@ -5,6 +5,10 @@ title: Rinkeby
 
 Please note that contracts `KyberReserve` and `ConversionRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these three contracts.
 
+### Supported Token Pairs
+https://rinkeby-api.kyber.network/currencies <br><br>
+Read more [here](references-resftulapi.md#currencies)
+
 ## Contract Addresses
 ### `KyberNetworkProxy`
 `0x39CC6802cF1625C30548B57D885932CB381EB4a4`
@@ -36,6 +40,9 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ### `KNC (Kyber Network)`
 `0x55080ac40700BdE5725D8a87f48a01e192F660AF`
+
+### `MANA (Decentraland)`
+`0xfea1141e988c1919a9b04b262b92f24adcdd8e9d`
 
 ### `OMG (OmiseGO)`
 `0x659c4206b2ee8CC00af837CddA132eb30fA58df8`
