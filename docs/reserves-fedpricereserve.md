@@ -22,52 +22,12 @@ With this in mind, the reserve was designed with various parameters to help secu
 * Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
 
 ## How to set up your own reserve
+
 ### Local testnet deployment
-Here, we will walk you through an example on running the deployment script on [Truffle's Ganache](https://truffleframework.com/ganache).
-
-#### Before you begin
-Check that you have the following:
-1. [node.js](https://nodejs.org/en/download/)
-2. [web3 v1.0.0](https://www.npmjs.com/package/web3)
-3. [Ganache CLI (previously TestRPC)](https://github.com/trufflesuite/ganache-cli)
-
-#### Setting up
-Create a  local directory and clone the `master` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
-```
-git clone https://github.com/KyberNetwork/smart-contracts.git
-```
-
-Run the command below in your terminal to install all required dependencies.
-```
-npm install
-```
-
-#### Running the script
-In one terminal, run the following command.
-```
-ganache-cli
-```
-
-or, if you're using an older version of testRPC,
-
-```
-testrpc
-```
-
-In another terminal, run the script.
-```
-./node_modules/.bin/truffle test scripts/deployment.js
-```
-
-#### Notes
-1. The script uses test tokens, which is configured in the json file at `smart-contracts/deployment_input.json`.
-2. In the testing part of the script, under `"set eth to dgd rate"`, we initialize rates for 1 token. In order to change/add tokens, this part should be modified.
-3. For more information on how to change/add the set rates functionality, refer to [this section](guide-reserves.md#step-2-deploying-contracts).
-4. The validity of rates is determined by calls to `setValidRateDurationInBlocks()`. It is set to a large value (1000000) at the start of the script and reduced to 256 at the end of it. Refer to [the API](api-conversionrates.md#setvalidratedurationinblocks) for more information.
-5. If any problems with rates validity occur, the second call to `setValidRateDurationInBlocks()` can be removed manually.
+You may refer to [this section](reserves-ganache.md) on how to deploy and test the reserve locally using [Truffle's Ganache](https://truffleframework.com/ganache).
 
 ### Public testnet deployment
-Here, we will walk you through an example to set up a reserve on the Ropsten testnet.
+Here, we will walk you through an example to set up a reserve on the Ropsten testnet. The guide is applicable for mainnet deployment as well.
 
 #### Before you begin
 Check that you have the following:
