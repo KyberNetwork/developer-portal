@@ -18,7 +18,9 @@ let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 
 ## New Smart Contract Integration
 ### Pragma and imports
-We will be using solidity version 0.4.18 
+We will be using solidity version 0.4.18 for our sample contract as there is an issue with tokens that were deployed prior to
+
+https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca?ref=tokendaily
 ```
 pragma solidity 0.4.18;
 

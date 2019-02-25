@@ -46,7 +46,7 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 `0xcb78b457c1F79a06091EAe744aA81dc75Ecb1183`
 
 ### `MKR (Maker)`
-`0x1Dad4783cf3fe3085C1426157aB175A6119A04bA`
+`0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD`
 
 ### `OMG (OmiseGO)`
 `0xdB7ec4E4784118D9733710e46F7C83fE7889596a`
