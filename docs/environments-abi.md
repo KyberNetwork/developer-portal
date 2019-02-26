@@ -134,7 +134,9 @@ The contract Application Binary Interface (ABI) is the standard way to interact 
 ```
 ### `ConversionRatesInterface`
 ```js
+[{"constant":true,"inputs":[{"name":"token","type":"address"},{"name":"currentBlockNumber","type":"uint256"},{"name":"buy","type":"bool"},{"name":"qty","type":"uint256"}],"name":"getRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"buyAmount","type":"int256"},{"name":"rateUpdateBlock","type":"uint256"},{"name":"currentBlock","type":"uint256"}],"name":"recordImbalance","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]
 ```
 ### `SanityRatesInterface`
 ```js
+[{"constant":true,"inputs":[{"name":"src","type":"address"},{"name":"dest","type":"address"}],"name":"getSanityRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]
 ```
