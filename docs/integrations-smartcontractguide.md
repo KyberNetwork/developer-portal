@@ -31,7 +31,7 @@ import "./KyberNetworkProxy.sol";
 ```
 
 ### Define variables and events
-Next, we will define all variables and events that will be used in our new contract. We need a local variable to store the existing instance of the KyberNetworkProxy contract and an event to emit when a trade is performed.
+Next, we will define all variables and events that will be used in our new contract. We need a local variable that points to the existing KyberNetworkProxy contract instance and an event to emit when a trade is performed.
 ```
 // Variables
 KyberNetworkProxy public kyberNetworkProxyContract;
