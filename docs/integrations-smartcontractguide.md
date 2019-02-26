@@ -2,8 +2,11 @@
 id: Integrations-SmartContractGuide
 title: Smart Contract
 ---
+## Introduction
+This guide will walk you through on how you can interact with our protocol implementation at a smart contract level. The most common group of users that can benefit from this guide are Dapps.
+
 ## Overview
-This guide will walk you through on how you can interact with our protocol implementation at a smart contract level. We will cover 2 scenarios of integration; the first being a new smart contract integration with our smart contracts. The second is integrating an already deployed smart contract with our protocol implementation.
+We will cover 2 scenarios of integration; the first being a new smart contract integration with our smart contracts. The second is integrating an already deployed smart contract with our protocol implementation.
 
 ## Things to note
 1) If possible, minimise the use of `msg.sender` within your smart contract. If you were to call a function within the wrapper contract, `msg.sender` [is the wrapper contract address]((https://ethereum.stackexchange.com/questions/28972/who-is-msg-sender-when-calling-a-contract-from-a-contract) instead of your wallet address.
@@ -18,8 +21,9 @@ let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 
 ## New Smart Contract Integration
 ### Pragma and imports
-We will be using Solidity compiler version 0.4.18 for deploying our sample contract in order to communicate with [tokens contracts that were deployed with versions earlier than 0.4.22](
-https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca?ref=tokendaily).
+We will be using Solidity compiler version 0.4.18 for deploying our sample contract. You are free to use later compiler versions but note that you will [not be able to interact with any tokens that are deployed with versions earlier than 0.4.22](
+https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca?ref=tokendaily).  
+
 
 ```
 pragma solidity 0.4.18;
@@ -195,13 +199,12 @@ contract MyContract {
         Swap(msg.sender, srcToken, destToken);
     }
 }
-
 ```
 ## Existing Smart Contract Integration
 The steps for integrating an existing smart contract is similar to those of integrating a new smart contract. The only difference is that you'll be wrapping multiple functions from the deployed contracts within a single function in the wrapper contract. You can find an example of a wrapper contract [here](https://etherscan.io/address/0xf462b7dc7d85b416034833ee4f4e40906795c9f4#code).
 
 ## Filtering Out Permissionless Reserves
-Reserves that are listed permissionlessly are included by default when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To learn more about how you can filter them out, please refer to the [KyberNetworkProxy reference](references-kybernetworkproxy.md).
+By default, reserves that were listed permissionlessly are also included when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To filter them out, use the `tradeWithHint()` function. Refer to [this section](references-kybernetworkproxy.md#hint) for more information.
 
 ## Fee Sharing Program
 DApps have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your app. Learn more about the program [here](guide-feesharing.md)!
