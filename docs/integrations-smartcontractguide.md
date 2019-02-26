@@ -23,8 +23,6 @@ let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 ### Pragma and imports
 We will be using Solidity compiler version 0.4.18 for deploying our sample contract. You are free to use later compiler versions but note that you will [not be able to interact with any tokens that are deployed with versions earlier than 0.4.22](
 https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca?ref=tokendaily).  
-
-
 ```
 pragma solidity 0.4.18;
 
@@ -33,7 +31,7 @@ import "./KyberNetworkProxy.sol";
 ```
 
 ### Define variables and events
-Next, we want to define all variables and events that will be used
+Next, we will define all variables and events that will be used in our new contract. We need a local variable to store the existing instance of the KyberNetworkProxy contract and an event to emit when a trade is performed.
 ```
 // Variables
 KyberNetworkProxy public kyberNetworkProxyContract;
@@ -42,7 +40,21 @@ KyberNetworkProxy public kyberNetworkProxyContract;
 event Swap(address indexed sender, ERC20 srcToken, ERC20 destToken);
 ```
 
+### Define constructor for deploying the contract
+In our constructor, the KyberNetworkProxy address will be passed as an argument which will be stored in the local variable that we created earlier.
+```
+/**
+ * @dev Contract constructor
+ * @param _kyberNetworkProxyContract KyberNetworkProxy contract address
+ */
+function MyContract(
+    KyberNetworkProxy _kyberNetworkProxyContract
+) public {
+    kyberNetworkProxyContract = _kyberNetworkProxyContract;
+}
+```
 ### Define a function to get conversion rates
+We can now define the necessary functions for interacting with the protocol implementation. The first function to create is a function that returns the conversion rate given the `srcToken`, `srcQty` and `destToken` parameters.
 ```
 /**
  * @dev Gets the conversion rate for the destToken given the srcQty.
@@ -64,6 +76,7 @@ function getConversionRates(
 ```
 
 ### Define a function to perform the token trade
+The second function that we need to create is a function to execute the swap to convert `srcQty` amount of `srcToken` to `destToken`. There is a `maxDestAmount` that the swap will convert to. The new tokens will be sent to the `destAddress`.
 ```
 /**
  * @dev Swap the user's ERC20 token to another ERC20 token/ETH
@@ -71,7 +84,7 @@ function getConversionRates(
  * @param srcQty amount of source tokens
  * @param destToken destination token contract address
  * @param destAddress address to send swapped tokens to
- * @param maxDestAmount address to send swapped tokens to
+ * @param maxDestAmount max destination amount to swap
  */
 function executeSwap(
     ERC20 srcToken,
