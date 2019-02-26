@@ -36,12 +36,12 @@ ___
 function __trade__(ERC20 srcToken, uint srcAmount, ERC20 destToken, address destAddress, uint conversionRate, bool validate) public payable returns (bool)
 | Parameter        | Type    | Description                                    |
 | ---------------- |:-------:|:----------------------------------------------:|
-| `srcToken`       | ERC20   | source ERC20 token contract address            |
-| `srcAmount`      | uint    | wei amount of source ERC20 token               |
-| `destToken`      | ERC20   | destination ERC20 token contract address       |
-| `destAddress`    | address | recipient address for destination ERC20 tokens |
-| `conversionRate` | uint    | conversion rate between srcToken and destToken |
-| `walletId`       | address | wallet address to send part of the fees to     |
+| `srcToken`       | ERC20   | source ERC20 token contract address             |
+| `srcAmount`      | uint    | source ERC20 token amount in its token decimals |
+| `destToken`      | ERC20   | destination ERC20 token contract address        |
+| `destAddress`    | address | recipient address for destination ERC20 tokens  |
+| `conversionRate` | uint    | conversion rate between srcToken and destToken  |
+| `validate`       | bool | Apply additional validations if `true` |
 **Returns:**\
 `true` if the trade was successful, otherwise `false` if unsuccessful
 <br />

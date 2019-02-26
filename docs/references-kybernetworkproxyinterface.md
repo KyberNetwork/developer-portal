@@ -40,6 +40,15 @@ The expected exchange rate and slippage rate.<br>
 - Returned values are in 18 decimals regardless of the destination token's decimals
 - The Most Significant Bit (MSB) is used for excluding permissionless reserves, since this function lacks a hint parameter for this purpose.
 
+#### Understanding the returned values
+To understand what this rate means, divide the obtained value by 10**18. Let us look at an example.
+Suppose calling `getExpectedRate(KNC_TOKEN,ZIL_TOKEN,1000000000000000000)` returns the following values:
+* `expectedRate: 8364817722526000000`
+* `slippageRate: 8113873190850220000`
+
+` 8364817722526000000 / (10**18) = 8.364817722526`
+Hence, 1 KNC token can be converted to 8.365 ZIL tokens.
+
 ### `getUserCapInTokenWei`
 Get the user's exchange limit based on whether user has been KYC'd or not.
 ___
@@ -116,3 +125,9 @@ If you are part of our [fee sharing program](integrations-feesharing.md), this w
 
 #### `hint`
 By default, permissionless reserves are included for selection for the trade. To exclude permissionless reserves, parse `PERM` in the `hint` parameter.
+
+#### Other Notes
+* Since ETH is not an ERC20 token, we use `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` as a proxy address to represent it.
+* If `src` is ETH, then you also need to send ether along with your call.
+* If `src` is an ERC20 token, then `token.approve(KYBER_NETWORK_PROXY_ADDRESS, amount)` should be made beforehand.
+* There is a minimum trading value of 1000 wei tokens. Anything fewer is considered as 0.
