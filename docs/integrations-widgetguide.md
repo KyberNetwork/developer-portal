@@ -119,3 +119,8 @@ If your buttons do not have the ‘kyber-widget-button’ class, or they are gen
 window.kyberWidgetOptions.register(‘your buttons CSS selector here’);
 ```
 If you don’t provide the CSS selector, it defaults to ‘kyber-widget-button’.
+
+2. How do I track or monitor the payment status?
+
+**Answer:**
+Onee may refer to [this monitoring PHP library](https://github.com/KyberNetwork/widget-monitor-php). More monitoring tools may be built by Kyber and the community in the future. Alternatively, vendors can choose to implement and run their own monitoring logic to get the payment status from the Ethereum network.
