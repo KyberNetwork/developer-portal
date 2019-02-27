@@ -124,7 +124,7 @@ function executeSwap(
 }
 ```
 
-### Full Code Example
+### Full code example
 ```
 pragma solidity ^0.4.18;
 
@@ -220,4 +220,4 @@ The steps for integrating an existing smart contract is similar to those of inte
 By default, reserves that were listed permissionlessly are also included when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To filter them out, use the `tradeWithHint()` function. Refer to [this section](references-kybernetworkproxy.md#hint) for more information.
 
 ## Fee Sharing Program
-DApps have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your app. Learn more about the program [here](guide-feesharing.md)!
+DApps have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your DApp. Learn more about the program [here](guide-feesharing.md)!
