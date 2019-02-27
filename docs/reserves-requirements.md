@@ -3,7 +3,7 @@ id: Reserves-Requirements
 title: Reserves Requirements
 ---
 ## Overview
-This section details some guidelines on creating a new reserve type.
+This section lists some guidelines on creating a new reserve type.
 
 ## Step 1: Implementing the Reserve Interface
 ![Reserve Interface](/uploads/reserveinterface.png "Reserve Interface")
@@ -12,10 +12,10 @@ The reserve interface provides a generic template of the contract functions one 
 For the exact functions and inputs to implement, refer to the [KyberReserveInterface](References-KyberReserveInterface.md) contract.
 
 ## Step 2: Write Unit Tests
-Smart contract security is of upmost importance. As such, we require tests to be written for the smart contract functions to ensure that they only do what is expected. You may take a look at our [test](https://github.com/KyberNetwork/smart-contracts/tree/master/test) repository for examples of test scripts.
+Smart contract security is of upmost importance. As such, we require tests to be written for the smart contract functions to ensure that they only do what is expected. You may take a look at our [test](https://github.com/KyberNetwork/smart-contracts/tree/master/test) repository for test script examples.
 
 ## Step 3: Setup KNC Fee Wallet
-Reserves of the network needs to hold some KNC tokens for the [fee sharing program](integrations-feesharing.md#fee-example) and fee burning. As such, a wallet should be setup with KNC tokens for the payment of these fees.
+Reserves of the network need to hold some KNC tokens for the [fee sharing program](integrations-feesharing.md#fee-example) and fee burning. As such, a wallet should be setup with KNC tokens for the payment of these fees.
 
 ## Step 4: Contact Us
 Once the previous steps are completed, contact us to list and test your reserve! You may do so via email at support@kyber.network, or our [Telegram group](https://t.me/kyberdeveloper).

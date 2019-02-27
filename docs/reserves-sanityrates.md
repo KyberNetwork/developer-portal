@@ -62,13 +62,3 @@ The numbers on the figure correspond to the examples below.
 | 2          | 100 (1 ETH = 100 KNC) | 10% | 115 | Your reserve **will not** process the conversion as `115 >= 110` <br>
 | 3          | 100 (1 ETH = 100 KNC) | 10% | 95 | Your reserve **will** process the conversion as `95 < 110`. <br>
 | 4          | 100 (1 ETH = 100 KNC) | 10% | 88 | Your reserve **will** process the conversion as `88 < 110`. <br>
-
-## Whitelist Categories & Limits
-| Category No. | Name | Trading Cap (SGD) |
-| -------------- | ------- | -------------------- |
-| - | Default | 5000 |
-| 1 | Users | 5000 |
-| 3 | Email | 5000 |
-| 4 | KYC | 10,000 |
-| 7 | Partner | 500,000 |
-| 9 | Testers | 5000 |
