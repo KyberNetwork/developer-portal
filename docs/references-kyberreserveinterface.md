@@ -31,7 +31,7 @@ Current conversion rate of token pairs at `blockNumber`
 
 **Notes:**
 * `blockNumber` is an optional field to be used, and is dependent on reserve type.
-* The conversion rate returned should be in precision values, where it is independent of both source and destination token decimals. To understand this better, check out [this example](references-kybernetworkproxy.md#understanding-the-returned-values). The [`calcRateFromQty`](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/Utils2.sol#L36) function will be useful for implementing this functionality.
+* The conversion rate returned should be in precision values, where it is independent of both source and destination token decimals. To understand this better, check out [this example](references-kybernetworkproxy.md#understanding-the-returned-values). The [`calcRateFromQty`](references-tokenquantityconversion.md#calcratefromqty) function will be useful for implementing this functionality.
 * If the trade for the requested `srcQty` to `dest` cannot be executed (Eg. due to insufficient liquidity), a value of `0` should be returned.
 <br />
 
@@ -53,7 +53,7 @@ function __trade__(ERC20 srcToken, uint srcAmount, ERC20 destToken, address dest
 **Notes**
 * `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` is used to represent Ether. We refer to this as `ETHER_ADDRESS` subsequently.
 * The implementation of this function should consider all security checks to prevent rate manipulation, and to make sure the trade executes as expected for the taker.
-* To calculate how much `destToken` is required for the trade given `srcAmount` and `conversionRate`, consider using the [`calcDestAmount`](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/Utils2.sol#L28) function.
+* To calculate how much `destToken` is required for the trade given `srcAmount` and `conversionRate`, consider using the [`calcDstQty`](references-tokenquantityconversion.md#calcdstqty) function.
 * The `validate` field can be ignored.
 
 #### Function Behaviour
