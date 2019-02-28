@@ -53,6 +53,7 @@ function MyContract(
     kyberNetworkProxyContract = _kyberNetworkProxyContract;
 }
 ```
+
 ### Define a function to get conversion rates
 We can now define the necessary functions for interacting with the protocol implementation. The first function to create is a function that returns the conversion rate given the `srcToken`, `srcQty` and `destToken` parameters.
 ```
@@ -124,7 +125,7 @@ function executeSwap(
 }
 ```
 
-### Full Code Example
+### Full code example
 ```
 pragma solidity ^0.4.18;
 
@@ -213,6 +214,7 @@ contract MyContract {
     }
 }
 ```
+
 ## Existing Smart Contract Integration
 The steps for integrating an existing smart contract is similar to those of integrating a new smart contract. The only difference is that you'll be wrapping multiple functions from the deployed contracts within a single function in the wrapper contract. You can find an example of a wrapper contract [here](https://etherscan.io/address/0xf462b7dc7d85b416034833ee4f4e40906795c9f4#code).
 
@@ -220,4 +222,4 @@ The steps for integrating an existing smart contract is similar to those of inte
 By default, reserves that were listed permissionlessly are also included when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To filter them out, use the `tradeWithHint()` function. Refer to [this section](references-kybernetworkproxy.md#hint) for more information.
 
 ## Fee Sharing Program
-DApps have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your app. Learn more about the program [here](guide-feesharing.md)!
+DApps have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your DApp. Learn more about the program [here](guide-feesharing.md)!
