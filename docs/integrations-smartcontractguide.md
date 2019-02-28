@@ -53,6 +53,7 @@ function MyContract(
     kyberNetworkProxyContract = _kyberNetworkProxyContract;
 }
 ```
+
 ### Define a function to get conversion rates
 We can now define the necessary functions for interacting with the protocol implementation. The first function to create is a function that returns the conversion rate given the `srcToken`, `srcQty` and `destToken` parameters.
 ```
@@ -213,6 +214,7 @@ contract MyContract {
     }
 }
 ```
+
 ## Existing Smart Contract Integration
 The steps for integrating an existing smart contract is similar to those of integrating a new smart contract. The only difference is that you'll be wrapping multiple functions from the deployed contracts within a single function in the wrapper contract. You can find an example of a wrapper contract [here](https://etherscan.io/address/0xf462b7dc7d85b416034833ee4f4e40906795c9f4#code).
 
