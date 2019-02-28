@@ -6,7 +6,7 @@ title: Web3
 This guide will walk you through on how you can interact with our protocol implementation using the [Web3](https://github.com/ethereum/web3.js/) Javascript package. The most common group of users that can benefit from this guide are Wallet providers or Vendors who wants to use their own UI.
 
 ## Overview
-In this guide, we will be going through how you can interact with our smart contracts using Web3 to get conversion rates and perform a token to token swap. The guide assumes that you are a wallet provider and a user of your wallet wants to swap 100 KNC for ZIL tokens. 
+In this guide, we will using Web3 to get conversion rates and perform a token to token swap. The guide assumes that you are a wallet provider and a user of your wallet wants to swap 100 KNC for ZIL tokens.
 
 ## Things to note
 1) If your version of Web3 is 1.0.0-beta.37 and below, the full code example will not work for you due to breaking changes that were introduced in version [1.0.0-beta.38](https://github.com/ethereum/web3.js/releases/tag/v1.0.0-beta.38).
