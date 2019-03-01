@@ -3,10 +3,10 @@ id: Integrations-RESTfulAPIGuide
 title: RESTful API
 ---
 ## Introduction
-This guide will walk you through on how you can interact with our protocol implementation using our RESTful APIs without needing much smart contract experience. The most common group of users that can benefit from this guide are Wallet providers or Vendors who wants to use their own UI.
+This guide will walk you through on how you can interact with our protocol implementation using our RESTful APIs. The most common group of users that can benefit from this guide are developers who have minimal smart contract experience, traders and wallets.
 
 ## Overview
-In this guide, we will be using the RESTful APIs to get conversion rates and perform a token to token swap. We will also learn how to get more information about the supported tokens. The guide assumes that you are a wallet provider trying extend the functionality of your platform.
+In this guide, we will cover 2 scenarios. The first scenario covers obtaining token information and historical price data, and the second covers a token to token swap.
 
 ## Things to note
 1) The `/buy_rate` and `/sell_rate` endpoints are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to run both APIs; the first to sell token A to ETH and the second to buy token B with ETH.
