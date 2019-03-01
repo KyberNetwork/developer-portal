@@ -3,24 +3,21 @@ id: WidgetAuthentication
 title: Kyber Sign-in Widget
 ---
 
-The Kyber Sign-in Widget conforms with the Auth 2.0 specs, so you'll be able to use it with any of your existing auth2.0-support libraries/frameworks.
+The Kyber Sign-in Widget conforms with the OAuth 2.0 specs, so you'll be able to use it with any of your existing oauth2.0-support libraries/frameworks.
 
 **Note:** This widget is under development, and is provided to partners for early testing.
 
-Before you start, make sure you are already registered in https://kyber.network. You can register using https://kyberswap.com/users/sign_up?normal=true. Next, contact our KyberDeveloper group at https://t.me/KyberDeveloper to get a developer account.
+Before you start, make sure you are already registered in https://kyberswap.com. You can register using https://kyberswap.com/users/sign_up?normal=true.
 
 
 ## Step 1: Register your app
+Contact one of our Kyber developers at the KyberDeveloper group at https://t.me/KyberDeveloper to get a developer account. You will need to provide the following information:
 
-Sign-in to `https://kyberswap.com/oauth/applications/` with your developer account and create an app.
+* Name: name of the app that will be displayed to the user when asked for login permissions
+* Redirect URI: the URI that Kyber's servers will redirect the users to and that will handle the data that Kyber passes; you can possibly provide multiple URIs, but they must be HTTPS (You can use ngrok or localtunel to create https urls for testing)
+* Icon: icon in SVG format with 1024x1024 resolution
 
-Enter these inputs:
-* Name: name of your app
-* Icon: PNG or JPG square icon
-* Callback URIs: You can possibly provide multiple URIs, but they must be HTTPS (You can use ngrok or localtunel to create https urls for testing)
-* Scope: Leave this field empty for now
-
-After registration, save your `app ID` and `app secret` for later use.
+You will then be provided with an `app ID` and `app secret` for later use.
 
 `app ID` is considered public and will be used in your public-facing code. `app secret` must be kept secret and must only be used at server-side.
 
@@ -32,7 +29,7 @@ Here's a [sample button style you can use.](https://codepen.io/thith/full/qYQOpX
 
 The HREF format should be:
 
-`https://kyber.network/oauth/authorize?client_id=APP_ID&redirect_uri=CALLBACK_URI&response_type=code&state=STATE`
+`https://kyberswap.com/oauth/authorize?client_id=APP_ID&redirect_uri=CALLBACK_URI&response_type=code&state=STATE`
 
 * `client_id` must be your app’s registered app ID.
 
@@ -60,7 +57,7 @@ Before proceeding with the authentication, you should check that the `CUSTOM_TOK
 
 You then use the `AUTH_CODE` provided to query our site for an `ACCESS_TOKEN`.
 
-	POST https://kyber.network/oauth/token
+	POST https://kyberswap.com/oauth/token
 	grant_type=authorization_code&
 	code=AUTH_CODE&
 	redirect_uri=REDIRECT_URI&
@@ -129,7 +126,7 @@ For other errors, it will return:
 ### Application-access APIs
 Application-access APIs are APIs designed for applications, and are not bound to a specific user. To call application-access API, you need to first obtain an application token instead of user token.
 
-	POST https://kyber.network/oauth/token
+	POST https://kyberswap.com/oauth/token
 	grant_type=client_credentials&
 	client_id=APP_ID&
 
@@ -138,7 +135,7 @@ Possible returned values are the same as when getting user token mentioned in th
 ### Supported Application-access APIs
 #### Get Authorized User List
 Get an array of all Kyber users who authorized your app. Users who had authorized but later revoked will not be included.
-Endpoint: https://kyber.network/api/authorized_users
+Endpoint: https://kyberswap.com/api/authorized_users
 
 Input:
 1. `uid` (optional, used for filtering results)
