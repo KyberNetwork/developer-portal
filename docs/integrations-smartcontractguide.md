@@ -11,7 +11,7 @@ We will cover 2 scenarios of integration; the first being a new smart contract i
 ## Things to note
 1) If possible, minimise the use of `msg.sender` within your smart contract. If you were to call a function within the wrapper contract, `msg.sender` [is the wrapper contract address]((https://ethereum.stackexchange.com/questions/28972/who-is-msg-sender-when-calling-a-contract-from-a-contract) instead of your wallet address.
 2) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/developV2/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
-3) The main functions to incorporate into your smart contract(s) are `getExpectedRate()` and `trade() ` of `KyberNetworkProxy.sol`.
+3) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](references-kybernetworkproxy.md#getexpectedrate) and [`trade()`](references-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
 4) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `transferFrom` function.
 5) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
 
@@ -21,7 +21,7 @@ let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 
 ## New Smart Contract Integration
 ### Pragma and imports
-We will be using Solidity compiler version 0.4.18 for deploying our sample contract. You are free to use later compiler versions but note that you will [not be able to interact with any tokens that are deployed with versions earlier than 0.4.22](
+We use Solidity compiler version 0.4.18 for deploying our sample contract. You are free to use later compiler versions, but note that you will [not be able to interact with any tokens that are deployed with versions earlier than 0.4.22](
 https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca?ref=tokendaily).  
 ```
 pragma solidity 0.4.18;
@@ -31,7 +31,7 @@ import "./KyberNetworkProxy.sol";
 ```
 
 ### Define variables and events
-Next, we will define all variables and events that will be used in our new contract. We need a local variable that points to the existing KyberNetworkProxy contract instance and an event to emit when a trade is performed.
+Next, we define all variables and events that will be used in our new contract. We need a local variable that points to the existing KyberNetworkProxy contract instance and an event to emit when a trade is performed.
 ```
 // Variables
 KyberNetworkProxy public kyberNetworkProxyContract;
@@ -117,7 +117,7 @@ function executeSwap(
         destAddress,
         maxDestAmount,
         minConversionRate,
-        0
+        0 //walletId for fee sharing program
     );
 
     // Log the event
@@ -206,7 +206,7 @@ contract MyContract {
             destAddress,
             maxDestAmount,
             minConversionRate,
-            0
+            0 //walletId for fee sharing program
         );
 
         // Log the event
