@@ -5,7 +5,7 @@ title: WooCommerce Plugin
 
 ## Introduction
 
-KyberWidget WooCommerce plugin allows developers to easily add a cryptocurrency payment gateway to Wordpress sites.
+The KyberWidget WooCommerce plugin allows developers to easily add a cryptocurrency payment gateway to Wordpress sites.
 
 
 ## Pre-requisites
@@ -18,14 +18,14 @@ KyberWidget WooCommerce plugin allows developers to easily add a cryptocurrency 
 ## Installation
 
 ### From Source
-1. Clone code repo to your `/wp-content/plugins/`
+1. Clone the code repo to your `/wp-content/plugins/` directory
 
 ```sh
 cd <PATH>/wp-content/plugins/
 git clone https://github.com/KyberNetwork/widget-woocommerce
 ```
 
-2. Install required components
+2. Install the required components
 
 ```sh
 composer install
@@ -34,33 +34,33 @@ composer install
 3. Activate the plugin
 
 ### From ZIP file
-1. Download the plugin zip file from [here](https://github.com/KyberNetwork/widget-woocommerce/releases/)
+1. Download the plugin zip file [here](https://github.com/KyberNetwork/widget-woocommerce/releases/)
 
 2. Unzip to your WordPress folder `/wp-content/plugins`
 
-3. Activate plugin in `/wp-admin/plugins.php`
+3. Activate the plugin in `/wp-admin/plugins.php`
 
 ## Usage
 
-After activation, you will find plugin settings in your WordPress Dashboard under WooCommerce->Payment. Enabling the plugin will add an option to pay by tokens on your checkout page.
+After activation, you will find the plugin settings in your WordPress Dashboard under WooCommerce->Payment. Enabling the plugin will add an option to pay with tokens on your checkout page.
 
 
 ## Configuration
 
-The configuration in this plugin are based on the widget configuration from the [Widget Generator](https://developer.kyber.network/docs/WidgetGenerator/) and modified to fit the WooCommerce model. Plugin settings include:
+The configuration in this plugin is based on the widget configuration from the [Widget Generator](https://developer.kyber.network/docs/WidgetGenerator/), and is modified to fit the WooCommerce model. Plugin settings include:
 
 ![WooCommerce Config](/uploads/woocommerce-1.png "Woocommerce Config")
 
 | Parameter                                  | Description                                                                                                                       | Example |
 | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ------------ |
 | `Title`                                    | The title to be displayed for the KyberWidget WooCommerce payment option for users in the checkout pages.          | Kyber Payment Gateway |
-| `Description`                       | Describe what payment gateway is for, and will be displayed under the payment options.                             | Pay with tokens |
-| `Receive Address`              | Wallet address where you want to receive the payment. This address is required. Without this address payment will not be processed | 0xf6d420FAB01826386e39664770299eADD68617da |
+| `Description`                       | Describe what the payment gateway is for. It will be displayed under the payment options.                             | Pay with tokens |
+| `Receive Address`              | Wallet address to receive the payment. This address is <b>required</b>. Without this address, payment will not be processed | 0xf6d420FAB01826386e39664770299eADD68617da |
 | `Receive Token Symbol`   | Token symbol of the token you want to receive from payments. The token must be supported by Kyber Network.         | KNC |
 | `Network`                               | ETH network that the payment gateway will run in. Options are: `Ropsten` (for testing), `Mainnet` (for production) | Ropsten |
 | `Mode`                                      | Behavior of how the widget will appear to the user. Either `tab`, `popup`, or `iframe`                             | popup |
 | `Network Node Endpoint` | Node endpoint to check tx status. If you do not have one, create one using [Infura](https://infura.io/)            | https://ropsten.infura.io/v3/fb1b33 |
-| `Block Confirmation`       | Number of block confirmations to finalize tx                                                                       | 40 |
+| `Block Confirmation`       | Number of block confirmations to finalize the transaction                                                                       | 40 |
 | `Commission ID`                  | Registered ETH address that is part of the [fee sharing program](guide-feesharing.md)                              | 0x2B522cABE9950D1153c26C1b399B293CaA99FcF9 |
 
 
@@ -115,19 +115,19 @@ The order's status follows the [Managing Orders](https://docs.woocommerce.com/do
 
 ## Transaction Monitoring
 
-In order to check if the payment is success, we use [widget-monitor-php](https://github.com/KyberNetwork/widget-monitor-php) to monitor transaction.
+In order to check if the payment is successful, we use [widget-monitor-php](https://github.com/KyberNetwork/widget-monitor-php) to monitor the transaction.
 
-### TX Monitoring
+This plugin will retrieve the transaction receipt from the blockchain and return its status as well as validate the payment. It provides 2 modes for monitoring the tx status: `useIntervalLoop` or none. The `useIntervalLoop` plugin will continuously query a node to get the tx receipt until it reaches the desired block confirmation number. Note that this approach will consume a lot of server resources if there are many orders on-hold and block confirmation numbers are large.
 
-That plugin will retrieve the transaction receipt from blockchain and return status as well as validate the payment. It provides 2 modes for monitoring the tx status: `useIntervalLoop` or none. If using `useIntervalLoop`, the plugin will continue to query a node to get the tx receipt until it reaches the block confirmation number. This approach will consume a lot of server resources if there are many orders on-hold and large block confirmation numbers.
-
-We recommended to use a cronjob to check the order tx status periodically. We are already using wp_cron to monitor every 30 seconds. You can install and use WP Crontrol to view and edit that job.
+We recommend using a cronjob to check the order tx status periodically. We are already using wp_cron to monitor every 30 seconds. You can install and use WP Crontrol to view and edit that job.
 
 ![Woocommerce Cron](/uploads/woocommerce-8.png "Woocommerce Cron")
 
 ### Advance Options
 
-The cron jobs above will run every page load. This approach has 2 main problems: 1) with any heavy job, it will slow down the page for users; 2) it depends on user request to run the cronjob. Therefore, it is recommended to disable the WordPress default cronjob and setup a Linux (server) cronjob using crontab.
+The cron jobs above will run upon every page load. This approach has 2 main issues:
+1) As with any heavy job, it will slow down the page for users
+2) It is dependent on the user request to run the cronjob. Therefore, it is recommended to disable the WordPress default cronjob and setup a Linux (server) cronjob using crontab.
 
 Here is a guide on how to do this:
 
