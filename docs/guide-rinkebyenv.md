@@ -41,6 +41,9 @@ Read more [here](api-trading.md#currencies)
 ### `KNC (Kyber Network)`
 `0x55080ac40700BdE5725D8a87f48a01e192F660AF`
 
+### `MANA (Decentraland)`
+`0xfea1141e988c1919a9b04b262b92f24adcdd8e9d`
+
 ### `OMG (OmiseGO)`
 `0x659c4206b2ee8CC00af837CddA132eb30fA58df8`
 
