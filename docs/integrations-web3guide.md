@@ -3,7 +3,7 @@ id: Integrations-Web3Guide
 title: Web3
 ---
 ## Introduction
-This guide will walk you through on how you can interact with our protocol implementation using the [Web3](https://github.com/ethereum/web3.js/) Javascript package. The most common group of users that can benefit from this guide are Wallet providers or Vendors who wants to use their own UI.
+This guide will walk you through on how you can interact with our protocol implementation using the [Web3](https://github.com/ethereum/web3.js/) Javascript package. The most common group of users that can benefit from this guide are Wallet providers or Vendors who want to use their own UI.
 
 ## Overview
 In this guide, we will using Web3 to get conversion rates and perform a token to token swap. The guide assumes that you are a wallet provider and a user of your wallet wants to swap 100 KNC for ZIL tokens.
@@ -11,9 +11,10 @@ In this guide, we will using Web3 to get conversion rates and perform a token to
 ## Things to note
 1) If your version of Web3 is 1.0.0-beta.37 and below, the full code example will not work for you due to breaking changes that were introduced in version [1.0.0-beta.38](https://github.com/ethereum/web3.js/releases/tag/v1.0.0-beta.38).
 2) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/developV2/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
-3) The main functions that we will be calling are `getExpectedRate()` and `trade() ` of the `KyberNetworkProxy.sol` contract.
+3) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](references-kybernetworkproxy.md#getexpectedrate) and [`trade()`](references-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
 4) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
 5) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
+6) The example swaps KNC tokens for ZIL. You may swap some Ropsten ETH for KNC tokens at https://ropsten.kyber.network.
 
 ```js
 let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
@@ -29,7 +30,7 @@ const Tx = require("ethereumjs-tx");
 ```
 
 ### Connect to an Ethereum node
-In this example, we will connect to infura's ropsten node.
+In this example, we will connect to Infura's ropsten node.
 ```js
 // Connecting to ropsten infura node
 const WS_PROVIDER = "wss://ropsten.infura.io/ws";
@@ -55,7 +56,7 @@ const KYBER_NETWORK_PROXY_ABI = [{"constant":false,"inputs":[{"name":"alerter","
 // Kyber Network Proxy Contract Address
 const KYBER_NETWORK_PROXY_ADDRESS = "0x818e6fecd516ecc3849daf6845e3ec868087b755";
 
-// Wallet Details
+// Wallet Address for Fee Sharing Program
 const REF_ADDRESS = "0x483C5100C3E544Aef546f72dF4022c8934a6945E";
 
 // Trade Details
@@ -63,8 +64,8 @@ const SRC_QTY = "100";
 const SRC_QTY_WEI = (SRC_QTY * 10**SRC_DECIMALS).toString();
 
 // User Details
-const USER_ADDRESS = "ENTER_USER_ADDRESS";
-const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex");
+const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); //exclude 0x prefix
+const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address;
 ```
 
 ### Getting the existing instance of the relevant contracts
@@ -163,6 +164,7 @@ async function main() {
 }
 ```
 ### Full code example
+Before running this code example, change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding the Ropsten KNC tokens.
 ```js
 // Importing the relevant packages
 const Web3 = require("web3");
@@ -188,7 +190,7 @@ const KYBER_NETWORK_PROXY_ABI = [{"constant":false,"inputs":[{"name":"alerter","
 // Kyber Network Proxy Contract Address
 const KYBER_NETWORK_PROXY_ADDRESS = "0x818e6fecd516ecc3849daf6845e3ec868087b755";
 
-// Wallet Details
+// Wallet Address for Fee Sharing Program
 const REF_ADDRESS = "0x483C5100C3E544Aef546f72dF4022c8934a6945E";
 
 // Trade Details
@@ -196,8 +198,8 @@ const SRC_QTY = "100";
 const SRC_QTY_WEI = (SRC_QTY * 10**SRC_DECIMALS).toString();
 
 // User Details
-const USER_ADDRESS = "ENTER_USER_ADDRESS";
-const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex");
+const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); //exclude 0x prefix
+const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address;
 
 // Get the contract instances
 const KYBER_NETWORK_PROXY_CONTRACT = new web3.eth.Contract(KYBER_NETWORK_PROXY_ABI, KYBER_NETWORK_PROXY_ADDRESS);;

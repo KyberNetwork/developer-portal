@@ -100,7 +100,7 @@ function trade(
       require(srcToken.transferFrom(msg.sender, this, srcAmount));
     }
 
-    //Update balances in orderbook
+    //Call internal function to update orderbook balances
     uint totalDstAmount = doTrade(
       srcToken,
       srcAmount,
