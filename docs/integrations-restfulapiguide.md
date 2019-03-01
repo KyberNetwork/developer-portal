@@ -17,6 +17,12 @@ In this guide, we will cover 2 scenarios. The first scenario covers obtaining to
 
 
 
+
+
+
+
+
+
 ## Filtering Out Permissionless Reserves
 By default, the RESTful APIs only interact with the official reserves. Most of these endpoints support a `only_official_reserve` parameter
 
