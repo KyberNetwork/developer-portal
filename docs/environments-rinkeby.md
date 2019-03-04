@@ -5,50 +5,55 @@ title: Rinkeby
 
 Please note that contracts `KyberReserve` and `ConversionRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these three contracts.
 
-### Supported Token Pairs
-https://rinkeby-api.kyber.network/currencies <br><br>
-Read more [here](references-resftulapi.md#currencies)
-
 ## Contract Addresses
 ### `KyberNetworkProxy`
-`0x39CC6802cF1625C30548B57D885932CB381EB4a4`
+`0xF77eC7Ed5f5B9a5aee4cfa6FFCaC6A4C315BaC76`
 
 ### `KyberNetwork`
-`0x4C095FE33e0D3873CA09CD00a13A131F182ba4ed`
+`0x55E7630f4fc1A96bAECB4fE9Ad3C7E9401B55E82`
+
+### `PermissionlessOrderbookReserveLister`
+`0x748b5b4828F2003111B2138fBf9955A8821c0Ad3`
 
 ### `KyberReserve`
-`0x55D4f434Eed38A35fd01FFD037C483C9E29337F5`
+`0xa452875276104B97BD5eaCfd22c929D8fC7Cc1f6`
 
 ### `ConversionRates`
-`0x680ACe54d12a6379705f1B7187B2706870d42bC4`
+`0xCDD8099f86FdDDf1c5E7c2DD17F7b09438eeEEf9`
 
 ### `ExpectedRate`
-`0x8A8FA07cDfe308D7513BbfF6670389D4490C0a35`
+`0xC363390E1703258107Be1f3998A6CB040769b5b5`
 
 ### `FeeBurner`
-`0xB222b941DeCB6DBCf5b9F9166f3EEB73e9D20D8d`
+`0xee2D191AD9273f5A8c448Fa209164f6DF97fC872`
 
 ### `SanityRates`
-`0x6B704EeFcE13BFb32697CC4EeC42EdFF0982A871`
+`0x1d9d4e3d881c4Ec1B53cDBCa82021Bb23Faca426`
 
 ### `WhiteList`
-`0xbA01Ac92bE7204BFa0B7168e462107FB4b6F33b4`
+`0x822d209CCE45a4977cf8107B80a788d01020C73C`
 
 ## Token Addresses
 ### `ETH (Ether)`
 `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
 ### `KNC (Kyber Network)`
-`0x55080ac40700BdE5725D8a87f48a01e192F660AF`
+`0x6FA355a7b6bD2D6bD8b927C489221BFBb6f1D7B2`
 
-### `MANA (Decentraland)`
-`0xfea1141e988c1919a9b04b262b92f24adcdd8e9d`
+### `MANA (Mana)`
+`0x725d648E6ff2B8C44c96eFAEa29b305e5bb1526a`
 
 ### `OMG (OmiseGO)`
-`0x659c4206b2ee8CC00af837CddA132eb30fA58df8`
+`0x732fBA98dca813C3A630b53a8bFc1d6e87B1db65`
+
+### `POLY (Polymath)`
+`0xBcb83bAFD042618d5c9b1a91D0Fcd4B935e08CEA`
 
 ### `SALT (Salt)`
-`0x6b1224743CC0E5994d1B35f2b90A1A12a51044aC`
+`0x058832CA736AB027c12367e53915e34e87a6081B`
+
+### `SNT (Status Network)`
+`0x01DAd357f21BD4fB1D3d8f3B05d1cc151807AA23`
 
 ### `ZIL (Zilliqa)`
-`0xa8787F4faB0467B80d2F57722b1Bc8DDE707630E`
+`0x405A656Dc1b672800D21a15eF5539D4776F6654c`
