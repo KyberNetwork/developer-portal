@@ -22,7 +22,7 @@ let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 
 ## Using Web3 to Interact
 ### Import the relevant packages
-We will be using the web3 package for interacting with the Ethereum blockchain. The ethereumjs-tx library is used to sign and serialize a raw transaction to be broadcasted.
+We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted.
 ```js
 // Importing the relevant packages
 const Web3 = require("web3");
