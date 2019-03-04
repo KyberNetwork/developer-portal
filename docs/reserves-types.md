@@ -34,7 +34,7 @@ As its name suggests, this fully on-chain reserve type allows anyone to provide 
 | Best suited for | Professional market makers paid by project teams or individuals who will market make numerous tokens | 1. Project teams who already have exposure to their token 2. Individuals with substantial holdings on a token and are bulish on it | Teams wanting to hire market makers without committing on liquidity |
 
 ## Permissionless vs Permissioned
-A reserve can be added to the network and have their tokens listed either by a network operator (Eg. someone from the Kyber team), or automatically by a smart contract (Eg. the PermissionlessOrderbookReserveLister contract). The former involves some KYC checks while the latter does not.
+A reserve can be added to the network and have their tokens listed either by a network operator (Eg. someone from the Kyber team), or automatically by a smart contract (Eg. the PermissionlessOrderbookReserveLister contract). The former involves KYC and legal processes while the latter does not.
 
 In order to comply with regulatory requirements, services using the Kyber protocol implementation may choose to only use permissioned reserves, such as KyberSwap. The table below highlights what services are supported for both permissioned and permissionless reserves.
 
