@@ -67,6 +67,7 @@
       "References-Intro"
     ],
     "Smart Contracts": [
+      "References-SmartContractsOverview",
       "References-KyberNetwork",
       "References-KyberNetworkInterface",
       "References-KyberNetworkProxy",
@@ -87,9 +88,18 @@
       "References-SimpleNetworkInterface",
       "References-Withdrawable"
     ],
-    "REST API": [
+    "RESTful API": [
       "References-RESTfulAPIOverview",
       "References-RESTfulAPI"
+    ],
+    "Widget": [
+      "References-WidgetOverview",
+      "References-KyberWidget",
+      "References-SignInWidget"
+    ],
+    "Plugins": [
+      "References-PluginsOverview",
+      "References-WooCommercePlugin"
     ],
     "Code Snippets": [
       "References-Web3",
