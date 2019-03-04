@@ -129,7 +129,9 @@ async function enableTokenTransfer(tokenAddress,walletAddress,gasPrice) {
 ### Step 4: Get approximate DAI token amount receivable
 For token to token conversions, a base token is used (Eg. ETH). We first query the `/sell_rate?id=<id>&qty=<qty>` endpoint, which returns the expected ETH amount receivable for a specific token. Details about the path parameters and output fields can be [found here](references-restfulapi.md#sell-rate).
 
-We next use the `buy_rate?id=<id>&qty=<qty>` endpoint, but this returns the ETH amount required to purchase a requested amount of tokens (`? ETH -> X tokens`), not the amount of tokens receivable for a requested ETH amount (`X ETH -> ? tokens`). As such, we perform the following steps:
+We next use the `buy_rate?id=<id>&qty=<qty>` endpoint, but this returns the ETH amount required to purchase a requested amount of tokens (`? ETH -> X tokens`), not the amount of tokens receivable for a requested ETH amount (`X ETH -> ? tokens`).  Details about the path parameters and output fields can be [found here](references-restfulapi.md#buy-rate).
+
+As such, we perform the following steps:
 1. Query the `buy_rate` endpoint for an approximate buy rate for 1 DAI token (`? ETH -> 1 DAI`)
 3. Use the approximated buy rate to calculate how much DAI we expect to receive
 4. Account for slippage in rates
