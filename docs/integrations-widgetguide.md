@@ -8,6 +8,10 @@ The KyberWidget is a straightforward approach that websites can leverage on to s
 ## Overview
 In this guide, we will be covering how you can integrate your website with the KyberWidget.
 
+There are 2 guides; html / js and swift.
+
+
+
 ## Things to note
 1) There are 3 different widget types:
 

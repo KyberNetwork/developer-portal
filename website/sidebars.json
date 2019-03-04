@@ -67,6 +67,7 @@
       "References-Intro"
     ],
     "Smart Contracts": [
+      "References-SmartContractsOverview",
       "References-KyberNetwork",
       "References-KyberNetworkInterface",
       "References-KyberNetworkProxy",
@@ -87,7 +88,7 @@
       "References-SimpleNetworkInterface",
       "References-Withdrawable"
     ],
-    "REST API": [
+    "RESTful API": [
       "References-RESTfulAPIOverview",
       "References-RESTfulAPI"
     ],
