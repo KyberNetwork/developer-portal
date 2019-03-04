@@ -4,8 +4,91 @@ title: Testing Using Ganache
 ---
 ## Overview
 
-Ganache is...
+[Ganache](https://truffleframework.com/ganache) enables a developer to create a private Ethereum blockchain for running tests, executing commands and inspecting its state while controlling how the chain operates.
 
+We have written a workshop repository for quickly deploying and testing the Kyber contracts in your local machine using Ganache.
+
+## Local Testnet Deployment
+Here, we will walk you through an example on deploying and testing reserves locally.
+
+### Before you begin
+Check that you have the following:
+1. [node.js](https://nodejs.org/en/download/)
+2. [web3 1.X.X](https://www.npmjs.com/package/web3)
+3. [Ganache CLI)](https://github.com/trufflesuite/ganache-cli)
+
+### Prerequisites
+1. Node and NPM LTS versions `10.14.1` and `6.4.1` respectively. Download from [nodejs.org](https://nodejs.org/en/download/)
+
+2. Ganache
+
+Install the Ganache AppImage by downloading here https://truffleframework.com/ganache.
+To use the provided Ganache snapshot, install `ganache-cli`.
+
+```sh
+sudo npm install -g ganache-cli
+```
+
+3. Truffle
+
+Install the latest Truffle v5.
+
+```sh
+sudo npm install -g truffle@latest
+```
+
+Truffle v5.0 is needed in order to take advantage of new features, such as using async/await in the migration scripts. You can read more about the new features in the [Truffle release page](https://github.com/trufflesuite/truffle/releases/tag/v5.0.0)
+
+
+#### Notes
+1. The sequence of migrating to Ganache can be seen in the migration scripts under `workshop/migrations`.
+2. The migration scripts or Ganache snapshot uses test tokens. New test tokens can be configured in `workshop/contracts/mockTokens`.
+
+
+### `Step 1: Cloning the repository`
+
+Create a local directory and clone the `master` branch from our [workshop repo](https://github.com/KyberNetwork/workshop) on GitHub.
+
+```sh
+git clone https://github.com/KyberNetwork/workshop.git
+```
+
+Install the the NPM packages
+
+```sh
+npm install
+```
+
+### `Step 2A: Running Ganache with local snapshot`
+
+A Ganache snapshot has already been pre-made with the Kyber contracts deployed. You can immediately interact with the contracts without having to do migrations. The snapshot is stored in `db` folder.
+
+We use the mnemonic `gesture rather obey video awake genuine patient base soon parrot upset lounge` for the accounts. The user wallet (`0x47a793D7D0AA5727095c3Fe132a6c1A46804c8D2`) already contains some ETH and test ERC20 tokens.
+
+**NOTE:** The mnemonic provided is used only for testing. DO NOT use the accounts generated for your own personal use in mainnet, as you can potentially lose those funds.
+
+To run the snapshot locally, run the command:
+
+```sh
+ganache-cli --db db --accounts 10 --defaultBalanceEther 500 --mnemonic 'gesture rather obey video awake genuine patient base soon parrot upset lounge' --networkId 5777 --debug
+```
+
+### `Step 2B: Running the Truffle migration scripts with new Ganache instance`
+
+If you wish to deploy the Kyber contracts in Ganache yourself, you can run the following commands:
+
+Run a new ganache-cli in one terminal session.
+
+```
+ganache-cli --accounts 10 --defaultBalanceEther 500 --mnemonic 'gesture rather obey video awake genuine patient base soon parrot upset lounge' --networkId 5777 --debug
+```
+
+In a new terminal session, connect to the Ganache, and run the truffle migration scripts
+```
+truffle migrate --network development --reset
+```
+
+### Ganache Settings & Options
 ```sh
 ganache-cli --port 8545 --accounts 5 --db ganache-db --mnemonic 'gesture rather obey video awake genuine patient base soon parrot upset lounge' --networkId 5777
 ```

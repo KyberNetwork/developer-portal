@@ -67,7 +67,6 @@
       "References-Intro"
     ],
     "Smart Contracts": [
-      "References-SmartContractOverview",
       "References-KyberNetwork",
       "References-KyberNetworkInterface",
       "References-KyberNetworkProxy",
@@ -94,7 +93,7 @@
     ],
     "Code Snippets": [
       "References-Web3",
-      "References-DecimalConversion"
+      "References-TokenQuantityConversion"
     ]
   }
 }

@@ -32,7 +32,7 @@ Suppose a user has successfully made a trade transaction of 10 ETH in value. 0.2
 | Fee Shared to Registered Party  | 0.0075 ETH (in KNC)  | `0.0075 = 0.025 * 30%` | 0.075% |
 
 ## How do I claim fees?
-Call the `sendFeeToWallet` function of the [fee burner contract](https://etherscan.io/address/0xed4f53268bfdFF39B36E8786247bA3A02Cf34B04). This function **will have to be called for each reserve**. In other words, you would have to iterate through every reserve and call this function for your wallet address. At the moment, our server has a [script](https://github.com/KyberNetwork/smart-contracts/blob/master/scripts/feeHandler.js) to call this function for all wallets once every week.
+Call the `sendFeeToWallet` function of the [fee burner contract](https://etherscan.io/address/0x52166528FCC12681aF996e409Ee3a421a4e128A3). This function **will have to be called for each reserve**. In other words, you would have to iterate through every reserve and call this function for your wallet address. At the moment, our server has a [script](https://github.com/KyberNetwork/smart-contracts/blob/master/scripts/feeHandler.js) to call this function for all wallets once every week.
 
 You may refer to this [code example](#claiming-fees-with-sendfeetowallet) on how you may go about calling the function. This script can be called once every few days, or whenever a reasonable amount has accumulated in your account. More information regarding the input parameters of the `sendFeeToWallet` function can be found in [reference](api-feeburner.md#sendfeetowallet).</br>
 
@@ -244,7 +244,7 @@ main()
 
 ## Trading on KyberSwap on a built-in web3 browser
 
-For applications or wallets that have a built-in web3 browser feature, which can open DApps such as [KyberSwap](https://kyber.network/swap/), there are a couple of methods the app or wallet can still earn from the fee sharing program by facilitating a trade on KyberSwap. The prerequisite is that your wallet needs to be registered to the fee sharing program. Click [here](guide-feesharing.md#how-do-i-join-the-program) to learn how you can register to the program.
+For applications or wallets that have a built-in web3 browser feature, which can open DApps such as [KyberSwap](https://kyber.network/swap/), there are a couple of methods the app or wallet can still earn from the fee sharing program by facilitating a trade on KyberSwap. The prerequisite is that your wallet needs to be registered to the fee sharing program. Click [here](integrations-feesharing.md#how-do-i-join-the-program) to learn how you can register to the program.
 
 After any of the 2 methods below is completed, notify any developer from Kyber Network at the [KybeDeveloper](https://telegram.me/kyberdeveloper/) telegram group of your wallet address so we know who the wallet belongs to.
 

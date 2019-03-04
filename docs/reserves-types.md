@@ -29,7 +29,7 @@ As its name suggests, this fully on-chain reserve type allows anyone to provide 
 | Permissionless Version  |     No    |     No    |      Yes     |
 | Technical Complexity    |     High   | Moderately High |     Moderate    |
 | No. of tokens supported per instance | >= 1   |     1     |      1       |
-| Inventory Requirements | 10-20 Ether, and 10-20 ETH worth per token | 70 Ether, 70 ETH worth of tokens | Minimum order value of $1000 USD |     
+| Inventory Requirements | 20 Ether, <b>and</b> an equivalent amount worth per token | 70 Ether <b>and</b> an equivalent amount worth of tokens | Minimum order value of $1000 USD |     
 | Maintenance costs | Moderately high | Moderately Low | Low |
 | Best suited for | Professional market makers paid by project teams or individuals who will market make numerous tokens | 1. Project teams who already have exposure to their token 2. Individuals with substantial holdings on a token and are bulish on it | Teams wanting to hire market makers without committing on liquidity |
 

@@ -315,6 +315,18 @@ The expected exchange rate and slippage rate
 **Notes:**
 - Returned values are in 18 decimals regardless of the destination token's decimals
 - The Most Significant Bit (MSB) is used for excluding permissionless reserves, since this function lacks a hint parameter for this purpose. Alternatively, call the `getExpectedRateOnlyPermission` function.
+
+#### Understanding the returned values
+To understand what this rate means, divide the obtained value by 10**18. Let us look at an example.
+Suppose calling `getExpectedRate(KNC_TOKEN,ZIL_TOKEN,1000000000000000000)` returns the following values:
+* `expectedRate: 8364817722526000000`
+* `slippageRate: 8113873190850220000`
+
+` 8364817722526000000 / (10**18) = 8.364817722526`
+Hence, 1 KNC token can be converted to 8.365 ZIL tokens.
+
+#### Turning on MSB to exclude permissionless reserves
+Add `2**255` to the desired `srcQty`. As `2**255` is a really large number, the use of a BigNum library / package is recommended for calculations. Refer to the latter part of the web3 example below.
 ___
 Web3 Example:
 ```js
@@ -712,7 +724,7 @@ txReceipt = await web3.eth.sendTransaction({
 ```
 
 ### `tradeWithHint`
-Makes a trade between src and dest token and send dest tokens to destAddress.
+Makes a trade between src and dest token and send dest tokens to destAddress, with an additional `hint` parameter for exclusion of permissionless reserves.
 ___
 function __tradeWithHint__(address trader, ERC20 src, uint srcAmount, ERC20 dest, address destAddress, uint maxDestAmount, uint minConversionRate, address walletId, bytes hint) public nonReentrant payable returns (uint)
 | Parameter           | Type    | Description                                   |
@@ -740,7 +752,7 @@ This parameter should never be zero. Set to an arbitarily large amount for all s
 This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
 
 #### `walletId`
-If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set to the null address if you are not a participant.
+If you are part of our [fee sharing program](integrations-feesharing.md), this will be your registered wallet address. Set to the null address if you are not a participant.
 
 #### `hint`
 By default, permissionless reserves are included for selection for the trade. To exclude permissionless reserves, parse `PERM` in the `hint` parameter.
