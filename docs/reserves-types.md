@@ -26,7 +26,7 @@ As its name suggests, this fully on-chain reserve type allows anyone to provide 
 ![Reserve Type](/uploads/reservetype.png "Reserve Type")
 
 ## Permissionless vs Permissioned
-A reserve can be added to the network and have their tokens listed either by a network operator (Eg. someone from the Kyber team), or automatically by a smart contract (Eg. the PermissionlessOrderbookReserveLister contract). The former involves some KYC checks while the latter does not.
+A reserve can be added to the network and have their tokens listed either by a network operator (Eg. someone from the Kyber team), or automatically by a smart contract (Eg. the PermissionlessOrderbookReserveLister contract). The former involves KYC and legal processes while the latter does not.
 
 In order to comply with regulatory requirements, services using the Kyber protocol implementation may choose to only use permissioned reserves, such as KyberSwap. The table below highlights what services are supported for both permissioned and permissionless reserves.
 
