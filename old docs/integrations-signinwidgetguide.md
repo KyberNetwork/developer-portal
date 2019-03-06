@@ -40,15 +40,15 @@ The user will be asked to sign-in with his Kyber account if he has not already d
 ![Signinwidget](/uploads/signinwidget.png "Signinwidget")
 
 ## Step 3: Implement server-side callback logic
-Kyber will call your callback URL when a user either denies or authorizes your app’s request to access his/her Kyber account.
+Kyber will call your callback URI when a user either denies or authorizes your app’s request to access his/her Kyber account.
 
-For example, let’s assume your callback URL is https://example.com/callback.
+For example, let’s assume your callback URI is https://example.com/callback.
 
 If the user denies, Kyber's servers will send a GET to https://example.com/callback?error=access_denied&error_description=The+resource+owner+or+authorization+server+denied+the+request.
 
 If the user authorizes, Kyber's servers will send a GET request to https://example.com/callback?code=AUTH_CODE&state=CUSTOM_TOKEN.
 
-Before proceeding with the authentication, you should check that the `CUSTOM_TOKEN` on your server-side logic is the same as the one provided in the callback URL, as specified above.
+Before proceeding with the authentication, you should check that the `CUSTOM_TOKEN` on your server-side logic is the same as the one provided in the callback URI, as specified above.
 
 You then use the `AUTH_CODE` provided to query our site for an `ACCESS_TOKEN`.
 
@@ -59,7 +59,7 @@ You then use the `AUTH_CODE` provided to query our site for an `ACCESS_TOKEN`.
 	client_id=APP_ID&
 	client_secret=APP_SECRET
 
-In order to keep `APP_SECRET` private, this code should be executed server-side. `REDIRECT_URL` must be one you previously used to get the `AUTH_CODE`.
+In order to keep `APP_SECRET` private, this code should be executed server-side. `REDIRECT_URI` must be one you previously used to get the `AUTH_CODE`.
 
 The server will reply with an access token and expiration time (in seconds):
 ```json
@@ -78,7 +78,6 @@ or if there is an error:
 ```
 
 ## Step 4: Call Kyber API
-
 With `ACCESS_TOKEN`, you can call Kyber Account APIs using one of these 2 methods:
 
 1. Add request header authorization: Bearer ACCESS_TOKEN (recommended)
@@ -106,10 +105,10 @@ It would return something like this:
 ```
 
 * `contact_type` should be email or telegram. For Telegram users, `contact_id` is his/her telegram ID (number, not the @username).
-* `kyc_status`: Either `pending`, `approved` or `none`. If user not yet submitted KYC, or his/her KYC was rejected, none is returned.
+* `kyc_status`: Either `pending`, `approved` or `none`. If user has not yet submitted KYC, or his/her KYC was rejected, none is returned.
 * One user could have up to 3 addresses. If no address registered, an empty array is returned.
 
-If `ACCESS_TOKEN` is invalid, HTTP status code 401 is returned. In that case, it is likely that the token has expired. You should use the refresh token provided to renew the token (see [https://auth0.com/learn/refresh-tokens/](https://auth0.com/learn/refresh-tokens).
+If `ACCESS_TOKEN` is invalid, HTTP status code 401 is returned. In that case, it is likely that the token has expired. You should use the refresh token provided to renew the token (see [https://auth0.com/learn/refresh-tokens/](https://auth0.com/learn/refresh-tokens)).
 
 For other errors, it will return:
 ```json
