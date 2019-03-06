@@ -10,7 +10,6 @@ Open https://developer.kyber.network/docs/WidgetGenerator in a new tab. You will
 Test out the widget for yourself by clicking on the "Preview" button!
 
 ### Things To Note:
-- The widget generator is not mandatory for use; it merely provides a quick way to specify the required parameters and settings
 - The button's text, title, and CSS style can be changed if desired
 - You can add multiple buttons into a page for multiple functionalities
 
@@ -57,7 +56,7 @@ The widget version to be used.
 | `callback` | string | Callback URL that will be called after the tx has been broadcasted to the blockchain. It includes tx hash as a param and must return HTTP status code of 200 for the success. If not, the callback will be fired another 5 times at most | - | https://yourwebsite.com/kybercallback |
 | `network` | string | ETH network that widget will run in | `ropsten` | 1 of the following values:<br>`test`<br>`ropsten`<br>`production`<br>`mainnet`|
 | `paramForwarding` | boolean | If `true`, all params that were passed to the widget will be submitted via the `callback`. Can be used to prevent malicious behaviour by giving your customer a OTP secret token and validating it in the `callback` | - | - |
-|`commissionId` | address | Registered ETH address that is part of the [fee sharing program](guide-feesharing.md) | - | `0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
+|`commissionId` | address | Registered ETH address that is part of the [fee sharing program](integrations-feesharing.md) | - | `0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
 |`pinnedTokens` | string | Tokens that are pinned at the top of your token selector. Tokens are separated by an underscore. | `ETH_KNC_DAI` | `ETH_KNC_DAI` |
 |`defaultPair ` | string | This param only takes effect when type=swap, it indicates default token pair will show in swap layout. | `ETHKNC` | `ETHKNC` |
 | `signer` | string | Concatenated list of Ethereum addresses which the user must make the payment from, separated by underscore. | N.A | `0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
