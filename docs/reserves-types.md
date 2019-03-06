@@ -38,6 +38,6 @@ In order to comply with regulatory requirements, services using the Kyber protoc
 | Parties integrated through their own smart contracts | Yes | Yes by default |
 
 ## Setup Your Reserve
-- To learn more about the Fed Price Reserve, [click here](guide-fedpricereserves.md).
-- To learn more about the Automated Price Reserve, [click here](guide-automatedreserves.md).
-- To learn more about the Orderbook Reserve, [click here](guide-orderbookreserves.md).
+- To learn more about the Fed Price Reserve, [click here](reserves-fedpricereserve.md).
+- To learn more about the Automated Price Reserve, [click here](reserves-automatedpricereserve.md).
+- To learn more about the Orderbook Reserve, [click here](reserves-orderbookreserve.md).
