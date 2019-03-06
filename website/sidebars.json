@@ -92,8 +92,8 @@
       "References-RESTfulAPIOverview",
       "References-RESTfulAPI"
     ],
-    "Widget": [
-      "References-WidgetOverview",
+    "Widgets": [
+      "References-WidgetsOverview",
       "References-KyberWidget",
       "References-SignInWidget"
     ],
