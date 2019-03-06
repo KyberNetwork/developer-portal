@@ -9,7 +9,7 @@ This guide will walk you through on how you can interact with our protocol imple
 In this guide, we will cover 2 scenarios. The first scenario covers how to perform a token to token swap. The second covers one can obtain token information and historical price data.
 
 ## Things to note
-1) The `/buy_rate` and `/sell_rate` endpoints are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to run both APIs; the first to sell token A to ETH and the second to buy token B with ETH.
+1) The `/buy_rate` and `/sell_rate` endpoints are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to use both APIs. Refer to [this section](#step-4-get-approximate-dai-token-amount-receivable) on how to do so.
 2) When converting from Token to ETH/Token, the user is required to call the `/enabled_data` endpoint **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
 3) Refer to the [API overview](references-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
 
@@ -132,15 +132,16 @@ For token to token conversions, a base token is used (Eg. ETH). We first query t
 We next use the `buy_rate?id=<id>&qty=<qty>` endpoint, but this returns the ETH amount required to purchase a requested amount of tokens (`? ETH -> X tokens`), not the amount of tokens receivable for a requested ETH amount (`X ETH -> ? tokens`).  Details about the path parameters and output fields can be [found here](references-restfulapi.md#buy-rate).
 
 As such, we perform the following steps:
+1. Query the `sell_rate` endpoint for expected ETH amount receivable from 100 BAT tokens (`100 BAT -> ? ETH`)
 1. Query the `buy_rate` endpoint for an approximate buy rate for 1 DAI token (`? ETH -> 1 DAI`)
-3. Use the approximated buy rate to calculate how much DAI we expect to receive
+3. Use the approximated buy rate to calculate how much DAI tokens we expect to receive
 4. Account for slippage in rates
 
 #### Example
 1. Querying the `sell_rate` endpoint for 100 BAT tokens yields `100 BAT -> 0.1 ETH`
 1. Querying the `buy_rate` endpoint for 1 DAI token yields `0.01 ETH -> 1 DAI`
 2. So `100 BAT -> 0.1 ETH -> 10 DAI`
-3. Assuming a 3% slippage rate, we expect to receive `0.97*10 = 9.7 DAI`
+3. Assuming a 3% slippage rate, we expect to receive a minimum of `0.97*10 = 9.7 DAI`
 
 ```js
 async function getSellQty(tokenAddress, qty) {
