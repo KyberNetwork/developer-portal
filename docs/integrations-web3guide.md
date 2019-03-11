@@ -22,7 +22,7 @@ let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 
 ## Using Web3 to Interact
 ### Import the relevant packages
-We will be using the web3 package for interacting with the Ethereum blockchain. The ethereumjs-tx library is used to sign and serialize a raw transaction to be broadcasted.
+We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted.
 ```js
 // Importing the relevant packages
 const Web3 = require("web3");
@@ -287,4 +287,4 @@ main()
 By default, reserves that were listed permissionlessly are also included when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To filter them out, use the `tradeWithHint()` function. Refer to [this section](references-kybernetworkproxy.md#hint) for more information.
 
 ## Fee Sharing Program
-Wallets have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your wallet. Learn more about the program [here](guide-feesharing.md)!
+Wallets have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your wallet. Learn more about the program [here](integrations-feesharing.md)!

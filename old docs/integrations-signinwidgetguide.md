@@ -3,57 +3,52 @@ id: Integrations-SignInWidgetGuide
 title: Sign-in Widget
 ---
 
-The Kyber Sign-in Widget conforms with the OAuth 2.0 specs, so you'll be able to use it with any of your existing oauth2.0-support libraries/frameworks.
+The Kyber Sign-in Widget conforms with the OAuth 2.0 specs, so you'll be able to use it with any of the existing oauth2.0-support libraries/frameworks.
 
 **Note:** This widget is under development, and is provided to partners for early testing.
 
+## Step 0: KyberSwap Registration
 Before you start, make sure you are already registered in https://kyberswap.com. You can register using https://kyberswap.com/users/sign_up?normal=true.
 
-
 ## Step 1: Register your app
-Contact one of our Kyber developers at the KyberDeveloper group at https://t.me/KyberDeveloper to get a developer account. You will need to provide the following information:
+Contact one of our Kyber developers at the KyberDeveloper group at https://t.me/KyberDeveloper to get a developer account. The following information is required:
+| Parameter            | Description |
+| -------------------  |:--------------------------------------------------------------------:|
+| Name                 | Application name that will be displayed to the user when asked for login permissions |
+| Redirect URI         | The URI that Kyber's servers will redirect the users to and that will handle the data that Kyber passes; you can possibly provide multiple URIs, but they must be HTTPS (You can use ngrok or localtunel to create https uris for testing) |
+| Icon                 | An icon in SVG format with 1024x1024 resolution |
 
-* Name: name of the app that will be displayed to the user when asked for login permissions
-* Redirect URI: the URI that Kyber's servers will redirect the users to and that will handle the data that Kyber passes; you can possibly provide multiple URIs, but they must be HTTPS (You can use ngrok or localtunel to create https urls for testing)
-* Icon: icon in SVG format with 1024x1024 resolution
+You will then be provided with 2 items:
+1. An `app ID`, which is considered public and will be used in your public-facing code.
+2. `app secret` to be kept secret and used only on the server side.
 
-You will then be provided with an `app ID` and `app secret` for later use.
-
-`app ID` is considered public and will be used in your public-facing code. `app secret` must be kept secret and must only be used at server-side.
-
-## Step 2: Add Kyber Signin Widget to your site
-
+## Step 2: Add Kyber Sign-in Widget to your site
 `<a href=“see below”>Sign-in with Kyber</a>`
 
 Here's a [sample button style you can use.](https://codepen.io/thith/full/qYQOpX)
 
 The HREF format should be:
-
 `https://kyberswap.com/oauth/authorize?client_id=APP_ID&redirect_uri=CALLBACK_URI&response_type=code&state=STATE`
 
 * `client_id` must be your app’s registered app ID.
-
 * `redirect_uri` must be one of your app’s registered callback URIs.
-
 * `request_type` should be “code”, meaning that you request an AUTH_CODE.
-
 * `state` may be anything of your choice. If you provide one, this parameter will be included as is when calling your callback
 
-User will be asked to sign-in with his Kyber account if he has not already done so. Please use the registered Kyber account to sign-in.
+The user will be asked to sign-in with his Kyber account if he has not already done so. Please use the registered Kyber account to sign-in.
 
 ![Signinwidget](/uploads/signinwidget.png "Signinwidget")
 
 ## Step 3: Implement server-side callback logic
+Kyber will call your callback URI when a user either denies or authorizes your app’s request to access his/her Kyber account.
 
-Kyber will call your callback URL when a user either denies or authorizes your app’s request to access his/her Kyber account.
-
-For example, let’s assume your callback URL is https://example.com/callback.
+For example, let’s assume your callback URI is https://example.com/callback.
 
 If the user denies, Kyber's servers will send a GET to https://example.com/callback?error=access_denied&error_description=The+resource+owner+or+authorization+server+denied+the+request.
 
-If user authorizes, Kyber's servers will send a GET request to https://example.com/callback?code=AUTH_CODE&state=CUSTOM_TOKEN.
+If the user authorizes, Kyber's servers will send a GET request to https://example.com/callback?code=AUTH_CODE&state=CUSTOM_TOKEN.
 
-Before proceeding with the authentication, you should check that the `CUSTOM_TOKEN` on your server-side logic is the same as the one provided in the callback URL, as specified above.
+Before proceeding with the authentication, you should check that the `CUSTOM_TOKEN` on your server-side logic is the same as the one provided in the callback URI, as specified above.
 
 You then use the `AUTH_CODE` provided to query our site for an `ACCESS_TOKEN`.
 
@@ -64,7 +59,7 @@ You then use the `AUTH_CODE` provided to query our site for an `ACCESS_TOKEN`.
 	client_id=APP_ID&
 	client_secret=APP_SECRET
 
-In order to keep `APP_SECRET` private, this code should be executed server-side. `REDIRECT_URL` must be one you previously used to get the `AUTH_CODE`.
+In order to keep `APP_SECRET` private, this code should be executed server-side. `REDIRECT_URI` must be one you previously used to get the `AUTH_CODE`.
 
 The server will reply with an access token and expiration time (in seconds):
 ```json
@@ -83,7 +78,6 @@ or if there is an error:
 ```
 
 ## Step 4: Call Kyber API
-
 With `ACCESS_TOKEN`, you can call Kyber Account APIs using one of these 2 methods:
 
 1. Add request header authorization: Bearer ACCESS_TOKEN (recommended)
@@ -111,10 +105,10 @@ It would return something like this:
 ```
 
 * `contact_type` should be email or telegram. For Telegram users, `contact_id` is his/her telegram ID (number, not the @username).
-* `kyc_status`: Either `pending`, `approved` or `none`. If user not yet submitted KYC, or his/her KYC was rejected, none is returned.
+* `kyc_status`: Either `pending`, `approved` or `none`. If user has not yet submitted KYC, or his/her KYC was rejected, none is returned.
 * One user could have up to 3 addresses. If no address registered, an empty array is returned.
 
-If `ACCESS_TOKEN` is invalid, HTTP status code 401 is returned. In that case, it is likely that the token has expired. You should use the refresh token provided to renew the token (see [https://auth0.com/learn/refresh-tokens/](https://auth0.com/learn/refresh-tokens).
+If `ACCESS_TOKEN` is invalid, HTTP status code 401 is returned. In that case, it is likely that the token has expired. You should use the refresh token provided to renew the token (see [https://auth0.com/learn/refresh-tokens/](https://auth0.com/learn/refresh-tokens)).
 
 For other errors, it will return:
 ```json

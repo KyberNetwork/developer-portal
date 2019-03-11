@@ -10,7 +10,7 @@ A Fed Price Reserve consists of two main components: an on-chain component of yo
 
 ![Kyber Reserve Components](/uploads/kyberreservecomponents.png "Kyber Reserve Components")
 
-The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. The off-chain component hosts your [trading strategy](guide-miscellaneous.md#trading-strategy) that calculate and feed conversion rates and rebalance your reserve of tokens.
+The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. The off-chain component hosts your [trading strategy](reserves-tradingstrategy.md) that calculate and feed conversion rates and rebalance your reserve of tokens.
 
 ## Points to Note
 A reserve manager's primary purpose is to keep funds safe. This however is a difficult task since inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay pricing rate updates in the contracts.
@@ -393,7 +393,7 @@ Given the example parameters in the reference section, assume the base buy rate 
 In the case of unforeseen adverse circumstances (Eg. a hack in your automated system or operator accounts), whereby your conversion rate is compromised to be very unfavorable, you may set up additional safeguards in place to protect your reserve.
 
 ##### Sanity Rates
-Operators can set a sanity rate by calling `setSanityRates` and `setReasonableDiff` from `SanityRates.sol` to allow automatic swap disabling if rate inconsistencies exceed a certain percentage between two rate updates. Refer to [this section](guide-miscellaneous.md#sanity-rates) and [API documentation](api-sanityrates.md) to learn more about sanity rates.
+Operators can set a sanity rate by calling `setSanityRates` and `setReasonableDiff` from `SanityRates.sol` to allow automatic swap disabling if rate inconsistencies exceed a certain percentage between two rate updates. Refer to [this section](reserves-sanityrates.md) and [API documentation](references-sanityrates.md) to learn more about sanity rates.
 
 ##### Alerters
 As mentioned previously, the role of alerters is to look out for unexpected / malicious behaviour of the reserve and halt operations. They can do so by calling `disableTokenTrade()` in the `ConversionRates.sol`. Thereafter, only the admin account is able to resume operations by calling `enableTokenTrade()` in the same contract.

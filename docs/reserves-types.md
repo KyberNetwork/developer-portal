@@ -23,18 +23,10 @@ The ease of maintenance and low development cost of this reserve comes at the ex
 As its name suggests, this fully on-chain reserve type allows anyone to provide liquidity to the ecosystem for any token of their choice through the placement of limit orders. It is also the first reserve type that can be listed permissionlessly, where no action is required from Kyber (such as the network administrator or operators).
 
 ## Reserve Type Comparison
-| Area of Comparison |      FPR       |      APR       |     OR     |
-| ------------------ |:---------------------:|:---------------------:|:-----------------------:|
-| Main benefit | Customisable prices and volume based adjustments. Using off-chain price feeds, complex trading strategies that would be expensive to compute on-chain | Infrequent rebalancing and adjustments needed | Allows the community to provide liquidity |
-| Permissionless Version  |     No    |     No    |      Yes     |
-| Technical Complexity    |     High   | Moderately High |     Moderate    |
-| No. of tokens supported per instance | >= 1   |     1     |      1       |
-| Inventory Requirements | 20 Ether, <b>and</b> an equivalent amount worth per token | 70 Ether <b>and</b> an equivalent amount worth of tokens | Minimum order value of $1000 USD |     
-| Maintenance costs | Moderately high | Moderately Low | Low |
-| Best suited for | Professional market makers paid by project teams or individuals who will market make numerous tokens | 1. Project teams who already have exposure to their token 2. Individuals with substantial holdings on a token and are bulish on it | Teams wanting to hire market makers without committing on liquidity |
+![Reserve Type](/uploads/reservetype.png "Reserve Type")
 
 ## Permissionless vs Permissioned
-A reserve can be added to the network and have their tokens listed either by a network operator (Eg. someone from the Kyber team), or automatically by a smart contract (Eg. the PermissionlessOrderbookReserveLister contract). The former involves some KYC checks while the latter does not.
+A reserve can be added to the network and have their tokens listed either by a network operator (Eg. someone from the Kyber team), or automatically by a smart contract (Eg. the PermissionlessOrderbookReserveLister contract). The former involves KYC and legal processes while the latter does not.
 
 In order to comply with regulatory requirements, services using the Kyber protocol implementation may choose to only use permissioned reserves, such as KyberSwap. The table below highlights what services are supported for both permissioned and permissionless reserves.
 
@@ -46,6 +38,6 @@ In order to comply with regulatory requirements, services using the Kyber protoc
 | Parties integrated through their own smart contracts | Yes | Yes by default |
 
 ## Setup Your Reserve
-- To learn more about the Fed Price Reserve, [click here](guide-fedpricereserves.md).
-- To learn more about the Automated Price Reserve, [click here](guide-automatedreserves.md).
-- To learn more about the Orderbook Reserve, [click here](guide-orderbookreserves.md).
+- To learn more about the Fed Price Reserve, [click here](reserves-fedpricereserve.md).
+- To learn more about the Automated Price Reserve, [click here](reserves-automatedpricereserve.md).
+- To learn more about the Orderbook Reserve, [click here](reserves-orderbookreserve.md).
