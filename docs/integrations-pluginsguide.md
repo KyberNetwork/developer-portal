@@ -3,10 +3,10 @@ id: Integrations-PluginsGuide
 title: Plugins
 ---
 ## Introduction
-This guide will walk you through on adding a cryptocurrency payment gateway via the KyberWidget WooCommerce Plugin. People who use WordPress to build their websites will benefit most from this guide.
+Like Widgets, plugins are another type of integration that websites and applications can easily leverage on to interact with our protocol implementation. There is currently one plugin: the KyberWidget WooCommerce Plugin, allowing people who are familiar with WordPress and WooCommerce to easily incorporate this plugin into their websites.
 
 ## Overview
-We will cover the scenario where we walk through the.....
+This guide will walk you through on adding a cryptocurrency payment gateway to an existing WordPress site via the KyberWidget WooCommerce Plugin.
 
 ## Prerequisites
 * PHP version 7.2+
@@ -55,12 +55,12 @@ For this guide, we use the following settings shown below. You may configure the
 
 ![WooCommerce Config](/uploads/woocommerce-1.png "Woocommerce Config")
 
-## Step 4: Set item prices in fiat.
+## Step 4: Set item prices in fiat
 Set the prices of your products in fiat currency.
 
 ![Woocommerce Prices](/uploads/woocommerce-2.png "Woocommerce Prices")
 
-After doing do, you will notice that the item prices will be displayed in fiat.
+After doing do, you will notice that the item prices will be displayed in fiat currency.
 
 ![Woocommerce Display](/uploads/woocommerce-3.png "Woocommerce Display")
 
@@ -89,3 +89,6 @@ The order's status follows the [Managing Orders](https://docs.woocommerce.com/do
 
 The order status flow is summarised below.
 `Order created` -> `Pending payment` -> `On-Hold` (payment broadcasted & mornitored) -> `Processing` (successful payment) OR `Failed` (failed payment)
+
+## Advanced options
+Visit the [WooCommerce Plugin Reference Page](references-woocommerceplugin.md) for more information.
