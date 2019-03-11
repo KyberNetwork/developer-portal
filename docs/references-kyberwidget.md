@@ -4,52 +4,41 @@ title: KyberWidget
 ---
 ## Overview
 
-2 widget types; HTML/JS and iOS
+2 widget types; HTML/JS and iOS add more stuff Here
 
-## Widget Generator
-Open https://developer.kyber.network/docs/WidgetGenerator in a new tab. You will see the following interface:
-
-![Widget Generator](/uploads/widgetgenerator.png "Widgetgenerator")
-
-Test out the widget for yourself by clicking on the "Preview" button!
-
-### Things To Note:
-- The button's text, title, and CSS style can be changed if desired
-- You can add multiple buttons into a page for multiple functionalities
-
-## Widget Types and Modes
-### Widget Type
+### KyberWidget (HTML/JS)
+#### Widget Types
 There are 3 different widget types. The use-case for each type is briefly described below.
-#### Pay
+##### Pay
 This widget option caters to e-commerce sites and vendors who would like to receive cryptocurrencies as payment.
 
-#### Swap
+##### Swap
 This widget option caters to parties who wish to provide a generic swap service on their websites, where users can swap from any supported ERC20 token to another.
 
-#### Buy
+##### Buy
 This widget option caters to platforms who want to allow users to buy a specific token on their website.
 
-### Widget Mode
-#### Popup
+#### Widget Mode
+##### Popup
 The widget will open as an overlay popup. The widget will be inserted directly into the host page's DOM. Use this mode if you want to customize the widget appearance by overriding CSS rules.
 
-#### New Tab
+##### New Tab
 The widget will open in a new browser tab.
 
-#### iFrame
+##### iFrame
 The widget will open inside an iFrame on an overlay popup. Use this mode if you prefer the widget's UI and don't want to override its CSS.
 
-## Widget URL Components
-### Base URL
+#### Widget URL Components
+##### Base URL
 `https://widget.kyber.network/`
 
-### Path
+##### Path
 The widget version to be used.
-#### Examples
+##### Examples
 `v0.3/?`<br>
 `v0.6/?`
 
-### Path Parameters
+##### Path Parameters
 | Parameter  | Type | Description   | Default | Example |
 | ------------ | ----- | ------------------ | -------- | --------- |
 | `type`                  | string     |  Widget type. Either `pay`, `swap`, or `buy` | `pay` | `pay` |
@@ -69,40 +58,40 @@ The widget version to be used.
 | `productImage`\* | string | Public URL of an image of `productName`.  Multiple instances of `productImage` can be pushed into the URL\* | N.A. | `https://images.unsplash.com/photo-1518791841217-8f162f1e1131` |
 | `paymentData` | string | Auxiliary data attached to payment after the tx is broadcasted | N.A | N.A |
 
-**Notes:**
-#### `network`
+#### Things to note
+##### `network`
 - `test` and `ropsten` runs on the Ethereum Ropsten network (ie. they are equivalent)
 - `production` and `mainnet` runs on the Ethereum mainnet.
 
-#### `productName`
+##### `productName`
 - Multiple product instances are only supported on v0.6+
 
-#### `productQty`
+##### `productQty`
 - If this field is used, there must be a corresponding `productName` parameter preceding it. Otherwise, it will be ignored.
 
-#### `productImage`
+##### `productImage`
 - Older versions (< v0.6) use `productAvatar` instead of `productImage`
 - If this field is used, there must be a corresponding `productName` parameter preceding it. Otherwise, it will be ignored.
 
-## Widget URL Examples
+#### Widget URL Examples
 Test out the links below by copying, pasting and opening them in a new tab!
 
-### Pay Mode with Multiple Products
+##### Pay Mode with Multiple Products
 ```
 https://widget.kyber.network/v0.6/?type=pay&mode=tab&receiveAddr=0x63B42a7662538A1dA732488c252433313396eade&receiveToken=KNC&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&receiveAmount=0.5&theme=theme-emerald&productName=A%20Cat%20Picture&productQty=7&productImage=https://images.unsplash.com/photo-1518791841217-8f162f1e1131&productName=Falling%20Autumn%20Leaves&productQty=24&productImage=https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/fabdf38b-1811-49e8-8eeb-4c5632076c3e/dczgthc-076fcdf7-4932-4672-8d94-f3b6ed07d100.png&commissionId=0x90A21dbB74D7684B7AF747963D7ac7A8086b82B6
 ```
 
-### Swap Mode with Sunset Theme
+##### Swap Mode with Sunset Theme
 ```
 https://widget.kyber.network/v0.6/?type=swap&mode=tab&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-sunset
 ```
 
-### Buy Mode
+##### Buy Mode
 ```
 https://widget.kyber.network/v0.6/?type=buy&mode=tab&receiveToken=ETH&receiveAmount=0.001&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-emerald`
 ```
 
-## FAQ
+#### FAQ
 
 1. Even though I specified the popup / iframe mode, why does the browser open the widget in a new tab when the user clicks on the payment button?
 
@@ -120,10 +109,30 @@ If you don’t provide the CSS selector, it defaults to ‘kyber-widget-button�
 **Answer:**
 Kindly refer to [this monitoring PHP library](https://github.com/KyberNetwork/widget-monitor-php). More monitoring tools may be built by Kyber and the community in the future. Alternatively, vendors can choose to implement and run their own monitoring logic to get the payment status from the Ethereum network.
 
+### KyberWidget (iOS)
+#### Valid use cases
 
-### ios widget
+##### Pay Widget
+- **receiveAddr** - **required**: must be a valid ETH address with 0x prefix
+- **receiveToken** - **required**: must be a supported token symbol by KyberNetwork
 
-NOTE: The values are for example only, check out the parameter details below.
+##### Swap Widget
+- **receiveAddr**, **receiveToken** and **receiveAmount** are all ignored
+
+##### Buy Widget
+- **receiveToken** - **required**:  must be a supported token symbol by KyberNetwork
+
+Other parameters are optional.
+
+NOTE:
+  - In any cases, **receiveAmount** will be ignored if **receiveToken** is empty.
+  - `func coordinatorDidFailed(with error: KWError)` will be immediately called after you `start` the coordinator if any parameters are invalid.
+
+#### Supported tokens
+See all supported tokens [here](https://api.kyber.network/currencies)
+
+#### KWCoordinator Sub-classes Parameters
+Note that if any of the parameters are invalid, an error will be thrown via delegation.
 
 ***Parameter details:***
 
@@ -151,31 +160,9 @@ NOTE: The values are for example only, check out the parameter details below.
 
 - ***productAvatarImage*** - (UIImage?) - image for your product avatar (only for _pay_ widget). You should either provide `productAvatar` or `productAvatarImage` (prefer `productAvatarImage` for faster displaying). If you provide both, `productAvatar` will be ignored.
 
-An error will be throw via delegation if parameters are invalid.
+#### Error cases to be handled
+These are some error / edge cases that should be handled in the **coordinatorDidFailed** function.
 
-Check our **_Valid use cases_** for more details.
-
-If you want to customize the widget UI, please check **_Customize color theme and string_** section later on this page.
-
-
-
-#### Delegation - KWCoordinatorDelegate
-
-The delegate class should implement the following 3 functions.
-
-```swift
-func coordinatorDidCancel() {
-  // TODO: handle user cancellation
-}
-```
-This function is called when user cancelled the action.
-
-```swift
-func coordinatorDidFailed(with error: KWError) {
-  // TODO: handle errors
-}
-```
-This function is called when something went wrong, some possible errors (please check our *Valid Use cases* below for more details)
 - `unsupportedToken`: the token you set is not supported by Kyber, or you are performing _payment_ but not set the `receiveToken` value.
 - `invalidAddress(errorMessage: String)`: the receive address is not set as `self` or a valid ETH address, check `errorMessage` for more details.
 - `invalidToken(errorMessage: String)`: the receive token symbol is not set for *Pay* or *Buy*. Or receive token is not supported by Kyber. Check `errorMessage` for more information.
@@ -188,39 +175,7 @@ This function is called when something went wrong, some possible errors (please 
 - `failedToLoadSupportedToken(errorMessage: String)`: something went wrong and we could not load supported tokens by Kyber.
 - `failedToSendTransaction(errorMessage: String)`: Could not send the transaction request. Check `errorMessage` for more information.
 
-In most cases, we provide a meaningful error message for you to either display it to user directly, or use the message to test/debug.
-
-```swift
-func coordinatorDidBroadcastTransaction(with txHash: String) {
-  // TODO: poll blockchain to check for transaction's status and validity
-}
-```
-This function is called when the transaction was broadcasted to Ethereum network. [Read here](https://github.com/KyberNetwork/KyberWidget/blob/master/README.md#how-to-get-payment-status) for How to check and confirm payment status.
-
-
-
-
-## Valid use cases
-
-##### Pay Widget
-
-- **receiveAddr** - **required**: must be a valid ETH address with 0x prefix
-- **receiveToken** - **required**: must be a supported token symbol by KyberNetwork
-
-##### Swap Widget
-- **receiveAddr**, **receiveToken** and **receiveAmount** are all ignored
-
-##### Buy Widget
-- **receiveToken** - **required**:  must be a supported token symbol by KyberNetwork
-
-Other parameters are optional.
-
-NOTE:
-  - In any cases, **receiveAmount** will be ignored if **receiveToken** is empty.
-  - `func coordinatorDidFailed(with error: KWError)` will be immediately called after you `start` the coordinator if any parameters are invalid.
-
-## Supported tokens
-See all supported tokens [here](https://tracker.kyber.network/#/tokens)
+In most cases, we will provide a meaningful error message for you to either display it to user directly, or use the message to test/debug.
 
 ## Acknowledgement
 The KyberWidget iOS uses following open source softwares:
