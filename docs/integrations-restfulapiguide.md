@@ -106,11 +106,12 @@ We use the `/users/<user_address>/currencies` endpoint to check whether the Kybe
 async function isTokenEnabledForUser(tokenAddress,walletAddress) {
   let enabledStatusesRequest = await fetch(NETWORK_URL + '/users/' + walletAddress + '/currencies');
   let enabledStatuses = await enabledStatusesRequest.json();
-	for (token in enabledStatuses.data) {
-		if (token.id == tokenAddress) {
-			return token.enabled;
-		}
-	}
+  for (var i=0; i < enabledStatuses.data.length; i++) {
+    token = enabledStatuses.data[i];
+    if (token.id == tokenAddress) {
+      return token.enabled;
+    }
+  }
 }
 ```
 
@@ -147,7 +148,8 @@ As such, we perform the following steps:
 ```js
 async function getSellQty(tokenAddress, qty) {
   let sellQtyRequest = await fetch(NETWORK_URL + '/sell_rate?id=' + tokenAddress + '&qty=' + qty);
-  let sellQty = await sellRateRequest.json();
+  let sellQty = await sellQtyRequest.json();
+  sellQty = sellQty.data[0].dst_qty[0];
   return sellQty;
 }
 
@@ -155,6 +157,7 @@ async function getApproximateBuyQty(tokenAddress) {
   const QTY = 1; //Quantity used for the approximation
   let approximateBuyRateRequest = await fetch(NETWORK_URL + '/buy_rate?id=' + tokenAddress + '&qty=' + QTY);
   let approximateBuyQty = await approximateBuyRateRequest.json();
+  approximateBuyQty = approximateBuyQty.data[0].src_qty[0];
   return approximateBuyQty;
 }
 
@@ -173,9 +176,9 @@ We now have all the required information to peform the trade transaction. Queryi
 
 ```js
 async function executeTrade(walletAddress,srcToken,dstToken,srcQty,minDstQty,gasPrice,refAddress) {
-  let tradeDetailsRequest = await fetch(NETWORK_URL + '/trade_data?user_address=' + walletAddress + '&src_id=' + srcToken + '&dst_id=' + dstToken + '&src_qty=' + srcQty + '&min_dst_qty=' + 'gas_price=' + gasPrice + '&wallet_id= + refAddress');
+  let tradeDetailsRequest = await fetch(NETWORK_URL + '/trade_data?user_address=' + walletAddress + '&src_id=' + srcToken + '&dst_id=' + dstToken + '&src_qty=' + srcQty + '&min_dst_qty=' + minDstQty + '&gas_price=' + gasPrice + '&wallet_id=' + refAddress);
   let tradeDetails = await tradeDetailsRequest.json();
-  let rawTx = tradeDetails.data;
+  let rawTx = tradeDetails.data[0];
 
   await broadcastTx(rawTx);
 }
@@ -193,9 +196,9 @@ async function main() {
   }
 
   //Step 2: Check if BAT token is enabled
-  if(! await isTokenEnabledForUser(BAT_TOKEN_ADDRESS)) {
+  if(! await isTokenEnabledForUser(BAT_TOKEN_ADDRESS,USER_ADDRESS)) {
     //Step 3: Approve BAT token for trade
-    await enableTokenTransfer(BAT_TOKEN_ADDRESS);
+    await enableTokenTransfer(BAT_TOKEN_ADDRESS,USER_ADDRESS,GAS_PRICE);
   }
 
   //Step 4: Get expected ETH qty from selling 100 BAT tokens
@@ -214,6 +217,7 @@ async function main() {
 ```
 
 ### Full code example
+Before running this code example, change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding the Ropsten BAT tokens.
 ```js
 // Importing the relevant packages
 const Web3 = require("web3");
@@ -229,7 +233,7 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 const NETWORK_URL = "https://ropsten-api.kyber.network";
 
 //User Details
-const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); //exclude 0x prefix
+const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); //exclude 0x prefix", "hex"); //exclude 0x prefix
 const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address;
 
 // Wallet Address for Fee Sharing Program
@@ -253,9 +257,9 @@ async function main() {
   }
 
   //Step 2: Check if BAT token is enabled
-  if(! await isTokenEnabledForUser(BAT_TOKEN_ADDRESS)) {
+  if(! await isTokenEnabledForUser(BAT_TOKEN_ADDRESS,USER_ADDRESS)) {
     //Step 3: Approve BAT token for trade
-    await enableTokenTransfer(BAT_TOKEN_ADDRESS);
+    await enableTokenTransfer(BAT_TOKEN_ADDRESS,USER_ADDRESS,GAS_PRICE);
   }
 
   //Step 4: Get expected ETH qty from selling 100 BAT tokens
@@ -285,11 +289,12 @@ async function isTokenSupported(tokenAddress) {
 async function isTokenEnabledForUser(tokenAddress,walletAddress) {
   let enabledStatusesRequest = await fetch(NETWORK_URL + '/users/' + walletAddress + '/currencies');
   let enabledStatuses = await enabledStatusesRequest.json();
-	for (token in enabledStatuses.data) {
-		if (token.id == tokenAddress) {
-			return token.enabled;
-		}
-	}
+  for (var i=0; i < enabledStatuses.data.length; i++) {
+    token = enabledStatuses.data[i];
+    if (token.id == tokenAddress) {
+      return token.enabled;
+    }
+  }
 }
 
 async function enableTokenTransfer(tokenAddress,walletAddress,gasPrice) {
@@ -316,6 +321,7 @@ async function broadcastTx(rawTx) {
 async function getSellQty(tokenAddress, qty) {
   let sellQtyRequest = await fetch(NETWORK_URL + '/sell_rate?id=' + tokenAddress + '&qty=' + qty);
   let sellQty = await sellQtyRequest.json();
+  sellQty = sellQty.data[0].dst_qty[0];
   return sellQty;
 }
 
@@ -323,6 +329,7 @@ async function getApproximateBuyQty(tokenAddress) {
   const QTY = 1; //Quantity used for the approximation
   let approximateBuyRateRequest = await fetch(NETWORK_URL + '/buy_rate?id=' + tokenAddress + '&qty=' + QTY);
   let approximateBuyQty = await approximateBuyRateRequest.json();
+  approximateBuyQty = approximateBuyQty.data[0].src_qty[0];
   return approximateBuyQty;
 }
 
@@ -336,9 +343,9 @@ async function getApproximateReceivableTokens(sellQty,buyQty,srcQty) {
 }
 
 async function executeTrade(walletAddress,srcToken,dstToken,srcQty,minDstQty,gasPrice,refAddress) {
-  let tradeDetailsRequest = await fetch(NETWORK_URL + '/trade_data?user_address=' + walletAddress + '&src_id=' + srcToken + '&dst_id=' + dstToken + '&src_qty=' + srcQty + '&min_dst_qty=' + 'gas_price=' + gasPrice + '&wallet_id= + refAddress');
+  let tradeDetailsRequest = await fetch(NETWORK_URL + '/trade_data?user_address=' + walletAddress + '&src_id=' + srcToken + '&dst_id=' + dstToken + '&src_qty=' + srcQty + '&min_dst_qty=' + minDstQty + '&gas_price=' + gasPrice + '&wallet_id=' + refAddress);
   let tradeDetails = await tradeDetailsRequest.json();
-  let rawTx = tradeDetails.data;
+  let rawTx = tradeDetails.data[0];
 
   await broadcastTx(rawTx);
 }
