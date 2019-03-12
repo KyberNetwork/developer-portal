@@ -8,15 +8,15 @@ Widgets are a type of integration that websites and applications can easily leve
 ## Overview
 There are a total of 3 tutorials that will be covered in this guide; the first is a [HTML / JS KyberWidget](#kyberwidget-html-js) integration guide, the second is an [iOS KyberWidget](#kyberwidget-ios) integration guide and the last will be a guide on using the [Sign In Widget](#sign-in-widget). Please select the tutorial that is most appropriate for you.
 
-### KyberWidget (HTML/JS)
+## KyberWidget (HTML/JS)
 
 In this guide, we will be implementing a `swap` pop up widget to enable the users of my platform with the ability to purchase any tokens.
-#### Things to note
+### Things to note
 * The widget generator is not mandatory for use; it merely provides a quick way to specify the required parameters and settings.
 * The button's text, title, and CSS style can be changed if desired
 * You can add multiple buttons into a page for multiple functionalities
 
-#### Configuring the KyberWidget
+### Configuring the KyberWidget
 1. Open https://developer.kyber.network/docs/WidgetGenerator/ in a new tab.
 2. Select `Swap` under **Widget Type** and `Popup` under **Widget Mode** fields.
 3. Enter your callback url into the **Callback URL** field which will be called after the transaction has been broadcasted. For example
@@ -32,7 +32,7 @@ ETH_DAI
 7. Lastly, if there are parameters to be passed into the callback function, input them into the **Extra Params** field.
 8. Once that is completed, click on the **HTML Source** button.
 
-#### Add the stylesheet used for the KyberWidget
+### Add the stylesheet used for the KyberWidget
 In the <head> tag, add the <link> tag as shown in the source code. For example
 ```HTML
 <head>
@@ -41,7 +41,7 @@ In the <head> tag, add the <link> tag as shown in the source code. For example
 </head>
 ```
 
-#### Add the javascript file used for the KyberWidget
+### Add the javascript file used for the KyberWidget
 Before the end of the <body> tag, add the <script></script> tag as shown in the source code. For example
 ```HTML
 <body>
@@ -64,21 +64,21 @@ target='_blank'>Swap tokens</a>
 ```
 Once this step is completed, you can serve up your website and the KyberWidget button should appear as implemented.
 
-### KyberWidget (iOS)
+## KyberWidget (iOS)
 In this guide, we will be learning how to add the KyberWidget into your iOS app. Currently, you have to manually add KyberWidget into your project. [Cocoapods](https://cocoapods.org/) will be available soon.
 
 Additionally, we will also cover how you can customise the colour scheme and string of the widget and how you can create your own UI.
-#### Things to note
+### Things to note
 * The guide uses version Swift 4 for APIKit framework.
 * iCloud must be enabled in your capabilities as the framework is using document picker (for importing JSON file).
 
-#### Download the KyberWidget source code
+### Download the KyberWidget source code
 Download the zip file [here](https://github.com/KyberNetwork/widget-swift/tree/master/KyberWidget/KyberWidget.framework.zip) (then unzip to get `KyberWidget.framework`) or clone this repo to get `KyberWidget.framework` from KyberWidget or example project
 
 #### Add KyberWidget into your project
 Go to your project `General settings`, add KyberWidget into `Embedded Binaries`.
 
-#### Add the dependency frameworks
+### Add the dependency frameworks
 Add these dependency frameworks below into your project via ([Cocoapods](https://cocoapods.org/)):
 ```swift
   pod 'Moya', '~> 10.0.1'
@@ -113,19 +113,19 @@ post_install do |installer|
 end
 ```
 
-#### Import KyberWidget into your code
+### Import KyberWidget into your code
 
 ```swift
 import KyberWidget
 ```
 
-#### Define KWCoodinator instance
+### Define KWCoodinator instance
 
 ```swift
 fileprivate var coordinator: KWCoordinator?
 ```
 
-#### Create KWCoordinator instance
+### Create KWCoordinator instance
 
 First, you need to create and initialize the `KWCoordinator` instance.
 There are 3 sub-classes `KWPayCoordinator`, `KWSwapCoordinator`, and `KWBuyCoordinator` corresponding to 3 use cases. You should only use these 3 classes depending on your purpose.
@@ -183,7 +183,7 @@ do {
 } catch {}
 ```
 
-#### Showing the Widget
+### Showing the Widget
 Please ensure that your delegate class has implemented these 3 functions:
 - coordinatorDidCancel()
 - coordinatorDidFailed(with error: KWError)
@@ -198,15 +198,15 @@ self.coordinator?.delegate = self
 self.coordinator?.start()
 ```
 
-#### Customize color theme and string
-##### Theme
+### Customize color theme and string
+#### Theme
 Get current `KWThemeConfig` instance.
 ```swift
 let config = KWThemeConfig.current
 ```
 From here you could config the color by your own choice. Go to `KWThemeConfig` class to see all available attributes that you could change the color.
 
-##### String
+#### String
 Similar to `KWThemeConfig`, using `KWStringConfig` to config the string.
 
 ```swift
@@ -216,7 +216,7 @@ config.youAreAboutToPay = "You are going to buy"
 
 The string "*You are about to pay*" should be changed to "*You are going to buy*"
 
-#### Create your own UIs
+### Create your own UIs
 You could also create your own UIs and use our helper functions to get list of supported tokens, get expected rate between tokens, get balance of ETH/token given the address, sign the transaction and send transfer/trade functions.
 
 **Supported Tokens**
@@ -276,17 +276,17 @@ func estimateGasLimit(from: String, to: String?, gasPrice: BigInt, value: BigInt
 
 Please check `KWExternalProvider` and `KWGeneralProvider` for more details.
 
-### Sign In Widget
-#### Things to note
+## Sign In Widget
+### Things to note
 * The Kyber Sign-in Widget conforms with the OAuth 2.0 specs, so it can be used with existing oauth2.0-support libraries/frameworks.
 * The widget is under development, and is provided to partners for early testing.
 
-#### Prerequisites
+### Prerequisites
 * A KYCed account with KyberSwap is required for testing. You can do so at https://kyberswap.com/users/sign_up?normal=true.
 * Your `APP_ID` and `APP_SECRET`. This is given upon registration of a Kyber developer account. Find out more [in this section](#developer-registration).
 
-#### Scenario 1: Create Sign-In Widget for Users
-##### Configure Sign-In Widget Parameters
+### Scenario 1: Create Sign-In Widget for Users
+#### Configure Sign-In Widget Parameters
 The widget URL format is <br>
 `https://kyberswap.com/oauth/authorize?client_id=APP_ID&redirect_uri=REDIRECT_URI&response_type=code&state=CUSTOM_TOKEN` where
 * `client_id` must be your `APP_ID`.
@@ -296,7 +296,7 @@ The widget URL format is <br>
 
 For example `https://kyberswap.com/oauth/authorize?client_id=MYAPP123&redirect_uri=https://example.com/callback&response_type=code&state=CUSTOM_TOKEN`
 
-##### Add Widget Into A Website
+#### Add Widget Into A Website
 You may incorporate the link into a button, as shown [in this sample button style](https://codepen.io/thith/full/qYQOpX).
 `<a href=“see below”>Sign-in with Kyber</a>`
 
@@ -304,7 +304,7 @@ You may incorporate the link into a button, as shown [in this sample button styl
 
 The user will be asked to sign-in with his Kyber account if he has not already done so. Please use your KYCed account with KyberSwap to sign-in.
 
-##### Implement Server Side Logic
+#### Implement Server Side Logic
 1. User Denial
 If the user denies authorization, Kyber's servers will send a GET request to `REDIRECT_URI?error=access_denied&error_description=The+resource+owner+or+authorization+server+denied+the+request`.
 
@@ -314,7 +314,7 @@ If the user approves authorization, Kyber's servers will send a GET request to
 
 Before proceeding with the authentication, a check can be performed on `CUSTOM_TOKEN` to verify that it is the same as the one provided in the callback URI.
 
-##### Obtain an `ACCESS_TOKEN`
+#### Obtain an `ACCESS_TOKEN`
 Upon user approval, you can make a POST request with the `AUTH_CODE` provided in the callback URI to query for an `ACCESS_TOKEN`.
 ```
 POST https://kyberswap.com/oauth/token
@@ -345,7 +345,7 @@ or if there is an error:
 }
 ```
 
-##### Obtain User Information
+#### Obtain User Information
 `ACCESS_TOKEN` can be used to call Kyber's APIs using 1 of the following 2 methods:
 1. Add request header authorization: Bearer `ACCESS_TOKEN` (recommended)
 2. Include `access_token=ACCESS_TOKEN` as a GET or POST parameter
@@ -385,10 +385,10 @@ Other errors will return:
 }
 ```
 
-#### Scenario 2: Obtaining list of authorized users
+### Scenario 2: Obtaining list of authorized users
 Suppose you want to obtain all Kyber users who have authorized your application. Users who had authorized your application, but subsequently revoked the authorization, will not be included.
 
-##### Obtain an `ACCESS_TOKEN`
+#### Obtain an `ACCESS_TOKEN`
 As we will be calling an application-access API, an application token should be obtained instead of a user token. Application-access APIs are APIs designed for applications, and are not bound to a specific user.
 ```
 POST https://kyberswap.com/oauth/token
@@ -413,7 +413,7 @@ or if there is an error:
 }
 ```
 
-##### Call `/authorized_users` endpoint
+#### Call `/authorized_users` endpoint
 `ACCESS_TOKEN` can be used to call Kyber's APIs using 1 of the following 2 methods:
 1. Add request header authorization: Bearer `ACCESS_TOKEN` (recommended)
 2. Include `access_token=ACCESS_TOKEN` as a GET or POST parameter
