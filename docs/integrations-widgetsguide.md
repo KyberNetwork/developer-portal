@@ -24,7 +24,7 @@ In this guide, we will be implementing a `swap` pop up widget to enable the user
 https://kyberpay-sample.knstats.com/callback
 ```
 4. Under the **Network** field, select the network to run the widget on. It is recommended to do some testing on one of the testnets first like `Ropsten` first prior to running it on `Mainnet`.
-5. Enter the default pair in the **Default Pair** field. For example
+5. Enter the default pair in the **Default Pair** field, as shown in the example below.
 ```
 ETH_DAI
 ```
@@ -33,30 +33,30 @@ ETH_DAI
 8. Once that is completed, click on the **HTML Source** button.
 
 ### Add the stylesheet used for the KyberWidget
-In the <head> tag, add the <link> tag as shown in the source code. For example
+In the <head> tag, add the <link> tag as shown in the source code. Refer to the example below.
 ```HTML
 <head>
     ... (some code in head)
-    <link rel='stylesheet' href='https://widget.kyber.network/v0.6.1/widget.css'>
+    <link rel='stylesheet' href='https://widget.kyber.network/v0.6.2/widget.css'>
 </head>
 ```
 
 ### Add the javascript file used for the KyberWidget
-Before the end of the <body> tag, add the <script></script> tag as shown in the source code. For example
+Before the end of the <body> tag, add the <script></script> tag as shown in the source code. Refer to the example below.
 ```HTML
 <body>
     ... (some code in body)
-    <script async src='https://widget.kyber.network/v0.6.1/widget.js'></script>
+    <script async src='https://widget.kyber.network/v0.6.2/widget.js'></script>
 </body>
 ```
 
 #### Add the code that represent the KyberWidget
-Wherever you want to use the KyberWidget button, add the <a href></a> tag as shown in the source code. For example
+Wherever you want to use the KyberWidget button, add the <a href></a> tag as shown in the source code. Refer to the example below.
 ```HTML
 <body>
 		... (some code in body)
     <div>
-        <a href='https://widget.kyber.network/v0.6.1/?type=swap&mode=popup&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&defaultPair=ETH_DAI&commissionId=0x0000111122223333444455556666777788889999&productImage=https://images.unsplash.com/photo-1518791841217-8f162f1e1131&theme=theme-emerald'
+        <a href='https://widget.kyber.network/v0.6.2/?type=swap&mode=popup&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&defaultPair=ETH_DAI&commissionId=0x0000111122223333444455556666777788889999&productImage=https://images.unsplash.com/photo-1518791841217-8f162f1e1131&theme=theme-emerald'
 class='kyber-widget-button theme-emerald theme-supported' name='KyberWidget - Powered by KyberNetwork' title='Pay with tokens'
 target='_blank'>Swap tokens</a>
     </div>
@@ -70,13 +70,13 @@ In this guide, we will be learning how to add the KyberWidget into your iOS app.
 Additionally, we will also cover how you can customise the colour scheme and string of the widget and how you can create your own UI.
 ### Things to note
 * The guide uses version Swift 4 for APIKit framework.
-* iCloud must be enabled in your capabilities as the framework is using document picker (for importing JSON file).
+* iCloud must be enabled in your capabilities as the framework is using document picker (for importing JSON files).
 
 ### Download the KyberWidget source code
 Download the zip file [here](https://github.com/KyberNetwork/widget-swift/tree/master/KyberWidget/KyberWidget.framework.zip) (then unzip to get `KyberWidget.framework`) or clone this repo to get `KyberWidget.framework` from KyberWidget or example project
 
 #### Add KyberWidget into your project
-Go to your project `General settings`, add KyberWidget into `Embedded Binaries`.
+Go to your project `General settings` and add KyberWidget into `Embedded Binaries`.
 
 ### Add the dependency frameworks
 Add these dependency frameworks below into your project via ([Cocoapods](https://cocoapods.org/)):
@@ -130,7 +130,7 @@ fileprivate var coordinator: KWCoordinator?
 First, you need to create and initialize the `KWCoordinator` instance.
 There are 3 sub-classes `KWPayCoordinator`, `KWSwapCoordinator`, and `KWBuyCoordinator` corresponding to 3 use cases. You should only use these 3 classes depending on your purpose.
 
-Please note that the values are **for example** only. For more details on the parameters used, please refer [here](references-kyberwidget.md).
+Please note that the values are **for illustration purposes** only. For more details on the parameters used, please refer [here](references-kyberwidget.md).
 
 To use the widget for `pay` use case:
 
@@ -217,7 +217,7 @@ config.youAreAboutToPay = "You are going to buy"
 The string "*You are about to pay*" should be changed to "*You are going to buy*"
 
 ### Create your own UIs
-You could also create your own UIs and use our helper functions to get list of supported tokens, get expected rate between tokens, get balance of ETH/token given the address, sign the transaction and send transfer/trade functions.
+You could also create your own UIs and use our helper functions to get the list of supported tokens, get expected rate between tokens, get balance of ETH/token given the address, sign the transaction and send transfer/trade functions.
 
 **Supported Tokens**
 To get Kyber supported tokens, call:
@@ -225,7 +225,7 @@ To get Kyber supported tokens, call:
 KWSupportedToken.shared.fetchTrackerSupportedTokens(network: KWEnvironment, completion: @escaping (Result<[KWTokenObject], AnyError>) -> Void)
 ```
 
-Return list of supported tokens by Kyber or error otherwise.
+Returns a list of supported tokens by Kyber or error otherwise.
 
 **Current gas price**
 Get current fast/standard/slow gas price using our server cache
