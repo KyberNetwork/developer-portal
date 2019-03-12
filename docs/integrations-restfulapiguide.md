@@ -218,7 +218,7 @@ async function main() {
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx");
-const fetch = require("node-fetch");
+var fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
 const WS_PROVIDER = "wss://ropsten.infura.io/ws";
@@ -315,7 +315,7 @@ async function broadcastTx(rawTx) {
 
 async function getSellQty(tokenAddress, qty) {
   let sellQtyRequest = await fetch(NETWORK_URL + '/sell_rate?id=' + tokenAddress + '&qty=' + qty);
-  let sellQty = await sellRateRequest.json();
+  let sellQty = await sellQtyRequest.json();
   return sellQty;
 }
 
