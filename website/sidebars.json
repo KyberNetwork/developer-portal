@@ -41,7 +41,8 @@
       "Reserves-FedPriceReserve",
       "Reserves-AutomatedPriceReserve",
       "Reserves-OrderbookReserve",
-      "Reserves-Ganache"
+      "Reserves-Ganache",
+      "Reserves-ListingProcess"
     ],
     "Miscellaneous": [
       "Reserves-TradingStrategy",
