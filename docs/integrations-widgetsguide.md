@@ -219,7 +219,7 @@ The string "*You are about to pay*" should be changed to "*You are going to buy*
 ### Create your own UIs
 You could also create your own UIs and use our helper functions to get the list of supported tokens, get expected rate between tokens, get balance of ETH/token given the address, sign the transaction and send transfer/trade functions.
 
-**Supported Tokens**
+#### Supported Tokens
 To get Kyber supported tokens, call:
 ```swift
 KWSupportedToken.shared.fetchTrackerSupportedTokens(network: KWEnvironment, completion: @escaping (Result<[KWTokenObject], AnyError>) -> Void)
@@ -227,13 +227,13 @@ KWSupportedToken.shared.fetchTrackerSupportedTokens(network: KWEnvironment, comp
 
 Returns a list of supported tokens by Kyber or error otherwise.
 
-**Current gas price**
+#### Current gas price
 Get current fast/standard/slow gas price using our server cache
 
 `func performFetchRequest(service: KWNetworkProvider, completion: @escaping (Result<JSONDictionary, AnyError>) -> Void)`
 Use `_KWNetworkProvider.gasGasPrice_` as service.
 
-**Keystore**
+#### Keystore
 Create a `KWKeystore` instance to help import wallet, get current account, sign transaction, etc
 
 ```swift
