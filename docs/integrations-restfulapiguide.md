@@ -6,7 +6,7 @@ title: RESTful API
 This guide will walk you through on how you can interact with our protocol implementation using our RESTful APIs. The most common group of users that can benefit from this guide are developers who have minimal smart contract experience, traders and wallets.
 
 ## Overview
-In this guide, we will cover 2 scenarios. The first scenario covers how to perform a token to token swap. The second covers one can obtain token information and historical price data.
+In this guide, we will be going through 2 scenarios. The first scenario covers how to perform a token to token swap using the RESTful apis and the second is about how one can obtain token information and historical price data.
 
 ## Things to note
 1) The `/buy_rate` and `/sell_rate` endpoints are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to use both APIs. Refer to [this section](#step-4-get-approximate-dai-token-amount-receivable) on how to do so.
@@ -25,6 +25,7 @@ Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conv
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx");
+const fetch = require("node-fetch");
 ```
 
 ### Connect to an Ethereum node
@@ -217,6 +218,7 @@ async function main() {
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx");
+const fetch = require("node-fetch");
 
 // Connecting to ropsten infura node
 const WS_PROVIDER = "wss://ropsten.infura.io/ws";
