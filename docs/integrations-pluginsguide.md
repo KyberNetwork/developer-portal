@@ -3,10 +3,10 @@ id: Integrations-PluginsGuide
 title: Plugins
 ---
 ## Introduction
-Like Widgets, plugins are another type of integration that websites and applications can easily leverage on to interact with our protocol implementation. There is currently one plugin: the KyberWidget WooCommerce Plugin, allowing people who are familiar with WordPress and WooCommerce to easily incorporate this plugin into their websites.
+Like Widgets, plugins are another type of integration that e-commerce websites built using WordPress can easily leverage on to interact with our protocol implementation. There is currently one plugin: the KyberWidget WooCommerce Plugin. The plugin is an extension of the traditional WooCommerce plugin with the extended functionality of being able to accept payments in token as well.
 
 ## Overview
-This guide will walk you through on adding a cryptocurrency payment gateway to an existing WordPress site via the KyberWidget WooCommerce Plugin.
+This guide will walk you through on how you can add a cryptocurrency payment gateway to an existing WordPress site via our WooCommerce Plugin.
 
 ## Prerequisites
 * PHP version 7.2+

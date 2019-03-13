@@ -14,7 +14,7 @@ In this guide, we will be going through 2 scenarios. The first scenario covers h
 3) Refer to the [API overview](references-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
 
 ## Scenario 1: Token to Token Swap
-Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conversion. Note that ETH is used as the quote pair.
+Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conversion. Note that ETH is used as the base pair i.e. BAT -> ETH -> DAI.
 
 ### Import relevant packages
 * We use `web3` for broadcasting transactions to the blockchain
@@ -25,7 +25,7 @@ Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conv
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx");
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 ```
 
 ### Connect to an Ethereum node
@@ -39,15 +39,14 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 
 ### Define constants
 Next, we will define the constants that we will be using for this guide.
-
 ```js
 //Base URL for API queries
 //Refer to References >> RESTFul API Overview >> Network URL section
 const NETWORK_URL = "https://ropsten-api.kyber.network";
 
 //User Details
-const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); //exclude 0x prefix
-const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address;
+const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex");
+const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address; // Remove the 0x prefix
 
 // Wallet Address for Fee Sharing Program
 const REF_ADDRESS = "0x483C5100C3E544Aef546f72dF4022c8934a6945E";
@@ -64,6 +63,7 @@ const GAS_PRICE = "medium";
 ```
 
 ### Define function for broadcasting transactions
+We will refactor the broadcast transaction functionality into its own function.
 ```js
 async function broadcastTx(rawTx) {
     // Extract raw tx details, create a new Tx
@@ -80,27 +80,24 @@ async function broadcastTx(rawTx) {
 ```
 
 ### Step 1: Check if BAT and DAI tokens are supported
-We first write a function for checking whether a token is supported on Kyber. We make use of the `/currencies` endpoint, which returns basic information about all tokens supported on Kyber. Details about possible path parameters and output fields can be [found here](references-restfulapi.md#currencies).
+Create a function to check whether a token is supported on Kyber. We make use of the `/currencies` endpoint, which returns basic information about all tokens supported on Kyber. Details about possible path parameters and output fields can be [found here](references-restfulapi.md#currencies).
 
-We recommend using the token contract address as the identifier instead of the token symbol, as multiple tokens may share the same symbol.
+It is recommended to use the token contract address as the identifier instead of the token symbol, as multiple tokens may share the same symbol.
 
 ```js
 async function isTokenSupported(tokenAddress) {
   let tokensBasicInfoRequest = await fetch(NETWORK_URL + '/currencies');
   let tokensBasicInfo = await tokensBasicInfoRequest.json();
-	let tokenSupported = tokensBasicInfo.data.some(token => {return tokenAddress == token.id});
-	if (!tokenSupported) {
-		console.log('Token is not supported');
-	}
-	return tokenSupported;
+  let tokenSupported = tokensBasicInfo.data.some(token => {return tokenAddress == token.id});
+  if (!tokenSupported) {
+    console.log('Token is not supported');
+  }
+  return tokenSupported;
 }
 ```
 
 ### Step 2: Check if BAT token is approved for use
-We use the `/users/<user_address>/currencies` endpoint to check whether the KyberNetwork contract has been approved for selling BAT tokens on behalf of the user. This endpoints returns a JSON of enabled statuses of ERC20 tokens for the
-
-
-, indicating whether the token can be sold immediately, or if additional transaction(s) need to be made. Details about the path parameters and output fields can be [found here](references-restfulapi.md#users-user-address-currencies).
+We use the `/users/<user_address>/currencies` endpoint to check whether the KyberNetwork contract has been approved for selling BAT tokens on behalf of the user. This endpoints returns a JSON of enabled statuses of ERC20 tokens for the given walletAddress. Details about the path parameters and output fields can be [found here](references-restfulapi.md#users-user-address-currencies).
 
 ```js
 async function isTokenEnabledForUser(tokenAddress,walletAddress) {
@@ -116,7 +113,7 @@ async function isTokenEnabledForUser(tokenAddress,walletAddress) {
 ```
 
 ### Step 3: Enable BAT token for transfer
-If the BAT token is not enabled for trading, querying the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint returns a JSON of transaction details needed to be signed and sent by the user to enable the KyberNetwork contract to trade BAT tokens on his behalf. Details about the path parameters and output fields can be [found here](references-restfulapi.md#users-user-address-currencies-currency-id-enable-data).
+If the BAT token is not enabled for trading, querying the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint returns a transaction payload needed to be signed and broadcasted by the user to enable the KyberNetwork contract to trade BAT tokens on his behalf. Details about the path parameters and output fields can be [found here](references-restfulapi.md#users-user-address-currencies-currency-id-enable-data).
 
 ```js
 async function enableTokenTransfer(tokenAddress,walletAddress,gasPrice) {
@@ -135,14 +132,14 @@ We next use the `buy_rate?id=<id>&qty=<qty>` endpoint, but this returns the ETH 
 
 As such, we perform the following steps:
 1. Query the `sell_rate` endpoint for expected ETH amount receivable from 100 BAT tokens (`100 BAT -> ? ETH`)
-1. Query the `buy_rate` endpoint for an approximate buy rate for 1 DAI token (`? ETH -> 1 DAI`)
+2. Query the `buy_rate` endpoint for an approximate buy rate for 1 DAI token (`? ETH -> 1 DAI`)
 3. Use the approximated buy rate to calculate how much DAI tokens we expect to receive
 4. Account for slippage in rates
 
 #### Example
 1. Querying the `sell_rate` endpoint for 100 BAT tokens yields `100 BAT -> 0.1 ETH`
-1. Querying the `buy_rate` endpoint for 1 DAI token yields `0.01 ETH -> 1 DAI`
-2. So `100 BAT -> 0.1 ETH -> 10 DAI`
+2. Querying the `buy_rate` endpoint for 1 DAI token yields `0.01 ETH -> 1 DAI`
+3. So `100 BAT -> 0.1 ETH -> 10 DAI`
 3. Assuming a 3% slippage rate, we expect to receive a minimum of `0.97*10 = 9.7 DAI`
 
 ```js
@@ -172,7 +169,7 @@ async function getApproximateReceivableTokens(sellQty,buyQty,srcQty) {
 ```
 
 ### Step 5: Convert BAT to DAI
-We now have all the required information to peform the trade transaction. Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion. Details about the path parameters and output fields can be [found here](references-restfulapi.md#trade-data).
+We now have all the required information to peform the trade transaction. Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>` will return the transaction payload to be signed and broadcasted by the user to make the conversion. Details about the path parameters and output fields can be [found here](references-restfulapi.md#trade-data).
 
 ```js
 async function executeTrade(walletAddress,srcToken,dstToken,srcQty,minDstQty,gasPrice,refAddress) {
@@ -222,7 +219,7 @@ Before running this code example, change `ENTER_USER_PRIVATE_KEY` to the private
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx");
-var fetch = require('node-fetch');
+const fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
 const WS_PROVIDER = "wss://ropsten.infura.io/ws";
@@ -233,7 +230,7 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 const NETWORK_URL = "https://ropsten-api.kyber.network";
 
 //User Details
-const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); //exclude 0x prefix", "hex"); //exclude 0x prefix
+const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); // Remove the 0x prefix
 const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address;
 
 // Wallet Address for Fee Sharing Program
@@ -370,7 +367,7 @@ async function getSupportedTokens() {
 await getSupportedTokens()
 ```
 #### Output
-```js
+```json
 {  
 	"error":false,
 	"data":[  
@@ -418,7 +415,7 @@ await getMarketInformation()
 ```
 
 #### Output
-```js
+```json
 {
   "error": false,
   "data": [
@@ -471,7 +468,7 @@ await getPast24HoursTokenInformation()
 ```
 
 #### Output
-```js
+```json
 {
   "ETH_KNC": {
     "timestamp": 1548065183567,
@@ -500,7 +497,7 @@ await getPast24HoursTokenInformation()
 ```
 
 ## Inclusion of Permissionless Reserves
-By default, the RESTful APIs only interact with reserves that were added in a permissioned manner. Most of these endpoints support a `only_official_reserve` parameter for the inclusion of permissionless reserves. You may find more information about the difference between permissioned and permissionless reserves [in this section](reserves-types.md#permissionless-vs-permissioned).
+By default, the RESTful APIs only interact with reserves that were added in a **permissioned** manner. Most of these endpoints support a `only_official_reserve` parameter for the inclusion of permissionless reserves. You may find more information about the difference between permissioned and permissionless reserves [in this section](reserves-types.md#permissionless-vs-permissioned).
 
 ## Fee Sharing Program
 Wallets have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your wallet. Learn more about the program [here](integrations-feesharing.md)!
