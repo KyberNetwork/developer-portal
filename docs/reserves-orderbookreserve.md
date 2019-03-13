@@ -46,7 +46,7 @@ Before setting up an Orderbook Reserve for any token, check if such a reserve ha
 
 ### `Step 0: Finding a deployed reserve`
 
-Call the [`getOrderbookListingStage()`](api-permissionlessorderbookreservelister.md#getorderbooklistingstage) function of the PermissionlessOrderbookReserveLister contract. If a reserve has been successfully deployed, the function should return:
+Call the [`getOrderbookListingStage()`](references-permissionlessorderbookreservelister.md#getorderbooklistingstage) function of the PermissionlessOrderbookReserveLister contract. If a reserve has been successfully deployed, the function should return:
 1. A non-null address
 2. A listing stage of 3.
 
@@ -56,13 +56,13 @@ A smaller listing stage number indicates that the listing process failed, or was
 
 To setup a reserve for a token that is not listed yet, the user should call the following functions of the deployed PermissionlessOrderbookReserveLister contract **in the specified order below**. The process is split into 3 steps due to gas limits.
 
-1. [`addOrderbookContract(tokenAddress)`](api-permissionlessorderbookreservelister.md#addorderbookcontract)
+1. [`addOrderbookContract(tokenAddress)`](references-permissionlessorderbookreservelister.md#addorderbookcontract)
 This function deploys a new Orderbook Reserve contract.
 
-2. [`initOrderbookContract(tokenAddress)`](api-permissionlessorderbookreservelister.md#initorderbookcontract)
+2. [`initOrderbookContract(tokenAddress)`](references-permissionlessorderbookreservelister.md#initorderbookcontract)
 This function initializes the orderbook contract deployed in step 1.
 
-3. [`listOrderbookContract(tokenAddress)`](api-permissionlessorderbookreservelister.md#listorderbookcontract)
+3. [`listOrderbookContract(tokenAddress)`](references-permissionlessorderbookreservelister.md#listorderbookcontract)
 This function lists the reserve created in step 1 in the network and fee burner contracts.
 
 After calling the 3 functions above for a specific token, the new orderbook reserve is ready to use. Its address can be found by calling the `getOrderbookListingStage()`function.
@@ -81,12 +81,12 @@ The limit value can be seen in `limits` public variable of the orderbook contrac
 
 #### Order KNC stake
 Sufficient KNC should be deposited. The stake amount required is dependent on the Ether value of the order.
-To calculate this amount, one can call the [`calcKncStake(weiAmount)`](api-orderbookreserve.md#calckncstake) function, where `weiAmount` is the Ether value of the order.
+To calculate this amount, one can call the [`calcKncStake(weiAmount)`](references-orderbookreserve.md#calckncstake) function, where `weiAmount` is the Ether value of the order.
 
-To check how much KNC is available for staking, one can call the [`makerUnlockedKnc(makerAddress)`](api-orderbookreserve.md#makerunlockedknc) function.
+To check how much KNC is available for staking, one can call the [`makerUnlockedKnc(makerAddress)`](references-orderbookreserve.md#makerunlockedknc) function.
 
 ### `Step 2: Deposit KNC Tokens`
-Deposit KNC tokens by executing the [`depositKncForFee(makerAddress, weiAmount)` ](api-orderbookreserve.md#depositkncforfee) function.
+Deposit KNC tokens by executing the [`depositKncForFee(makerAddress, weiAmount)` ](references-orderbookreserve.md#depositkncforfee) function.
 
 <br />**Notes:**
 - A KNC token allowance should be approved to this reserve before executing this function.
@@ -95,68 +95,68 @@ Deposit KNC tokens by executing the [`depositKncForFee(makerAddress, weiAmount)`
 ### `Step 3: Deposit Funds`
 
 #### `Option A: Deposit Ether for Ether to Token Orders`
-Deposit Ether by executing the [`depositEther(makerAddress)`](api-orderbookreserve.md#depositether) function.
+Deposit Ether by executing the [`depositEther(makerAddress)`](references-orderbookreserve.md#depositether) function.
 <br />**Note:** Ether should be sent when executing this function.
 
 #### `Option B: Deposit Tokens for Token To Ether Orders`
-Deposit tokens by executing the [`depositToken(makerAddress, amount)`](api-orderbookreserve.md#deposittoken) function.
+Deposit tokens by executing the [`depositToken(makerAddress, amount)`](references-orderbookreserve.md#deposittoken) function.
 <br />**Note:** An allowance should be approved to this reserve before executing this function.
 
 ### `Step 4: Creating Orders`
 
 #### `Option A: Creating an Ether to Token Order`
-Execute the [`submitEthToTokenOrder(srcAmount, dstAmount)`](api-orderbookreserve.md#submitethtotokenorder) function to submit a new Ether to Token order.
+Execute the [`submitEthToTokenOrder(srcAmount, dstAmount)`](references-orderbookreserve.md#submitethtotokenorder) function to submit a new Ether to Token order.
 <br/>**Note:** The sending address (`msg.sender`) must be the maker address specified when depositing funds.
 
 #### `Option B: Creating a Token to Ether Order`
-Execute the [`submitTokenToEthOrder(srcAmount, dstAmount)`](api-orderbookreserve.md#submittokentoethorder) function to submit a new Token to Ether order.
+Execute the [`submitTokenToEthOrder(srcAmount, dstAmount)`](references-orderbookreserve.md#submittokentoethorder) function to submit a new Token to Ether order.
 <br/>**Note:** The sending address (`msg.sender`) must be the maker address specified when depositing funds.
 
 ### Viewing Ether To Token Orders
 
 **Obtaining all active Ether to Token order IDs for a specific maker**<br />
-[`getEthToTokenMakerOrderIds(makerAddress)`](api-orderbookreserve.md#getethtotokenmakerorderids)
+[`getEthToTokenMakerOrderIds(makerAddress)`](references-orderbookreserve.md#getethtotokenmakerorderids)
 
 **Obtaining all active Ether to Token order IDs in the orderbook**<br />
-[`getEthToTokenOrderList()`](api-orderbookreserve.md#getethtotokenorderlist)
+[`getEthToTokenOrderList()`](references-orderbookreserve.md#getethtotokenorderlist)
 
 **View the details of an Ether to Token Order**<br />
-[`getEthToTokenOrder(orderId)`](api-orderbookreserve.md#getethtotokenorder)
+[`getEthToTokenOrder(orderId)`](references-orderbookreserve.md#getethtotokenorder)
 
 ### Viewing Token To Ether Orders
 
 **Obtaining all active Token to Ether order IDs for a specific maker**<br />
-[`getTokenToEthMakerOrderIds(makerAddress)`](api-orderbookreserve.md#gettokentoethmakerorderids)
+[`getTokenToEthMakerOrderIds(makerAddress)`](references-orderbookreserve.md#gettokentoethmakerorderids)
 
 **Obtaining all active Token to Ether order IDs in the orderbook**<br />
-[`getTokenToEthOrderList()`](api-orderbookreserve.md#gettokentoethorderlist)
+[`getTokenToEthOrderList()`](references-orderbookreserve.md#gettokentoethorderlist)
 
 **View the details of a Token to Ether Order**<br />
-[`getTokenToEthOrder(orderId)`](api-orderbookreserve.md#gettokentoethorder)
+[`getTokenToEthOrder(orderId)`](references-orderbookreserve.md#gettokentoethorder)
 
 ### Updating Orders
 
 **Updating an Ether to Token Order**<br />
-1) Obtain all active order IDs by calling [`getEthToTokenMakerOrderIds(makerAddress)`](api-orderbookreserve.md#getethtotokenmakerorderids).
-2) Find the order ID that matches the `srcAmount` and `dstAmount` of the order to be updated by calling [`getEthToTokenOrder(orderId)`](api-orderbookreserve.md#getethtotokenorder).
-3) Update the order by calling [`updateEthToTokenOrder(orderId, newSrcAmount, newDstAmount)`](api-orderbookreserve.md#updateethtotokenorder).
+1) Obtain all active order IDs by calling [`getEthToTokenMakerOrderIds(makerAddress)`](references-orderbookreserve.md#getethtotokenmakerorderids).
+2) Find the order ID that matches the `srcAmount` and `dstAmount` of the order to be updated by calling [`getEthToTokenOrder(orderId)`](references-orderbookreserve.md#getethtotokenorder).
+3) Update the order by calling [`updateEthToTokenOrder(orderId, newSrcAmount, newDstAmount)`](references-orderbookreserve.md#updateethtotokenorder).
 
 **Updating a Token to Ether Order**<br />
-1) Obtain all active order IDs by calling [`getTokenToEthMakerOrderIds(makerAddress)`](api-orderbookreserve.md#gettokentoethmakerorderids).
-2) Find the order ID that matches the `srcAmount` and `dstAmount` of the order to be updated by calling [`getTokenToEthOrder(orderId)`](api-orderbookreserve.md#gettokentoethorder).
-3) Update the order by calling [`updateTokenToEthOrder(orderId, newSrcAmount, newDstAmount)`](api-orderbookreserve.mde/#updatetokentoethorder).
+1) Obtain all active order IDs by calling [`getTokenToEthMakerOrderIds(makerAddress)`](references-orderbookreserve.md#gettokentoethmakerorderids).
+2) Find the order ID that matches the `srcAmount` and `dstAmount` of the order to be updated by calling [`getTokenToEthOrder(orderId)`](references-orderbookreserve.md#gettokentoethorder).
+3) Update the order by calling [`updateTokenToEthOrder(orderId, newSrcAmount, newDstAmount)`](references-orderbookreserve.mde/#updatetokentoethorder).
 
 ### Cancelling Orders
 
 **Canceling an Ether to Token Order**<br />
-1) Obtain all active order IDs by calling [`getEthToTokenMakerOrderIds(makerAddress)`](api-orderbookreserve.md#getethtotokenmakerorderids).
-2) Find the order ID that matches the srcAmount and dstAmount of the order to be canceled by calling [`getEthToTokenOrder(orderId)`](api-orderbookreserve.md#getethtotokenorder).
-3) Cancel the order by calling [`cancelEthToTokenOrder(orderId)`](api-orderbookreserve.md#cancelethtotokenorder).
+1) Obtain all active order IDs by calling [`getEthToTokenMakerOrderIds(makerAddress)`](references-orderbookreserve.md#getethtotokenmakerorderids).
+2) Find the order ID that matches the srcAmount and dstAmount of the order to be canceled by calling [`getEthToTokenOrder(orderId)`](references-orderbookreserve.md#getethtotokenorder).
+3) Cancel the order by calling [`cancelEthToTokenOrder(orderId)`](references-orderbookreserve.md#cancelethtotokenorder).
 
 **Canceling a Token To Ether Order**<br />
-1) Obtain all active order IDs by calling [`getTokenToEthMakerOrderIds(makerAddress)`](api-orderbookreserve.md#gettokentoethmakerorderids).
-2) Find the order ID that matches the srcAmount and dstAmount of the order to be canceled by calling [`getTokenToEthOrder(orderId)`](api-orderbookreserve.md#gettokentoethorder).
-3) Cancel the order by calling [`cancelTokenToEthOrder(orderId)`](api-orderbookreserve.md#canceltokentoethorder).
+1) Obtain all active order IDs by calling [`getTokenToEthMakerOrderIds(makerAddress)`](references-orderbookreserve.md#gettokentoethmakerorderids).
+2) Find the order ID that matches the srcAmount and dstAmount of the order to be canceled by calling [`getTokenToEthOrder(orderId)`](references-orderbookreserve.md#gettokentoethorder).
+3) Cancel the order by calling [`cancelTokenToEthOrder(orderId)`](references-orderbookreserve.md#canceltokentoethorder).
 
 ### Viewing Unused Fund Amounts
 The public variables below are used to view available funds for withdrawal or for creating new orders.
@@ -174,13 +174,13 @@ The public variables below are used to view available funds for withdrawal or fo
 Note that funds used for active orders cannot be withdrawn. One should first cancel an order so that he can withdraw the amount offered inside the order. The same applies for KNC deposits.
 
 **Withdrawing Ether**<br />
-[`withdrawEther(amount)`](api-orderbookreserve.md#withdrawether)
+[`withdrawEther(amount)`](references-orderbookreserve.md#withdrawether)
 
 **Withdrawing KNC Tokens**<br />
-[`withdrawKncFee(amount)`](api-orderbookreserve.md#withdrawkncfee)
+[`withdrawKncFee(amount)`](references-orderbookreserve.md#withdrawkncfee)
 
 **Withdrawing ERC20 Tokens**<br />
-[`withdrawToken(amount)`](api-orderbookreserve.md#withdrawtoken)
+[`withdrawToken(amount)`](references-orderbookreserve.md#withdrawtoken)
 
 ## Advanced Features
 To reduce gas costs, the functions for creating and updating orders have their counterparts that include an additional hint input parameter. Additionally, there are functions for creating and updating batch orders in a single transaction.
@@ -190,12 +190,12 @@ As the name suggests, this additional input parameter hints to the contract whic
 
 #### Obtaining the Hint
 The following functions are called to obtain the hint for creating orders:
-- [`getEthToTokenAddOrderHint(uint srcAmount, uint dstAmount)`](api-orderbookreserve.md#getethtotokenaddorderhint)
-- [`getTokenToEthAddOrderHint(uint srcAmount, uint dstAmount)`](api-orderbookreserve.md#gettokentoethaddorderhint)
+- [`getEthToTokenAddOrderHint(uint srcAmount, uint dstAmount)`](references-orderbookreserve.md#getethtotokenaddorderhint)
+- [`getTokenToEthAddOrderHint(uint srcAmount, uint dstAmount)`](references-orderbookreserve.md#gettokentoethaddorderhint)
 
 The following functions are called to obtain the hint for updating orders:
-- [`getEthToTokenUpdateOrderHint(uint srcAmount, uint dstAmount)`](api-orderbookreserve.md#getethtotokenupdateorderhint)
-- [`getTokenToEthUpdateOrderHint(uint srcAmount, uint dstAmount)`](api-orderbookreserve.md#gettokentoethupdateorderhint)
+- [`getEthToTokenUpdateOrderHint(uint srcAmount, uint dstAmount)`](references-orderbookreserve.md#getethtotokenupdateorderhint)
+- [`getTokenToEthUpdateOrderHint(uint srcAmount, uint dstAmount)`](references-orderbookreserve.md#gettokentoethupdateorderhint)
 
 To understand how this hint model works, let us look at an example. Suppose the ETH to BAT buy order list contains the following orders:
 | Order ID | srcAmount (`10^18`) | dstAmount (`10^18`) |
@@ -210,12 +210,12 @@ Hence, to create the order, we pass this value of `20` as the last parameter `hi
 
 #### Using the Hint
 The following functions are executed for creating orders:
-- [`submitEthToTokenOrderWHint(uint128 srcAmount, uint128 dstAmount, uint32 hintPrevOrder)`](api-orderbookreserve.md#submitethtotokenorderwhint)
-- [`submitTokenToEthOrderWHint(uint128 srcAmount, uint128 dstAmount, uint32 hintPrevOrder)`](api-orderbookreserve.md#submittokentoethorderwhint)
+- [`submitEthToTokenOrderWHint(uint128 srcAmount, uint128 dstAmount, uint32 hintPrevOrder)`](references-orderbookreserve.md#submitethtotokenorderwhint)
+- [`submitTokenToEthOrderWHint(uint128 srcAmount, uint128 dstAmount, uint32 hintPrevOrder)`](references-orderbookreserve.md#submittokentoethorderwhint)
 
 The following functions are executed for updating orders:
-- [`updateEthToTokenOrderWHint(uint srcAmount, uint dstAmount, uint32 hintPrevOrder)`](api-orderbookreserve.md#updateethtotokenorderwhint)
-- [`updateTokenToEthOrderWHint(uint srcAmount, uint dstAmount, uint32 hintPrevOrder)`](api-orderbookreserve.md#updatetokentoethorderwhint)
+- [`updateEthToTokenOrderWHint(uint srcAmount, uint dstAmount, uint32 hintPrevOrder)`](references-orderbookreserve.md#updateethtotokenorderwhint)
+- [`updateTokenToEthOrderWHint(uint srcAmount, uint dstAmount, uint32 hintPrevOrder)`](references-orderbookreserve.md#updatetokentoethorderwhint)
 
 #### Web3 Example
 The code snippet below illustrates how one can submit a ETH to ZIL buy order using the hint.
@@ -264,7 +264,7 @@ We would like to add the following orders:
 
 In this scenario, the best buy and sell orders for the taker are orders A and D respectively. Calling the respective getHint functions yield order IDs 5 and 38.
 
-We call the [`addOrderBatch`](api-orderbookreserve.md#addorderbatch) function to add orders A, B, C and D in this order, with the input parameters below.
+We call the [`addOrderBatch`](references-orderbookreserve.md#addorderbatch) function to add orders A, B, C and D in this order, with the input parameters below.
 | **Parameter** | **Example Input** | **Explanation** |
 | --------- |:----------:|:-----------:|
 |      `isEthToToken`       |    `[true,true,true,false]`    | Orders A, B, C are buy orders, Order D is a sell order |
@@ -285,10 +285,10 @@ transactionData = OrderbookReserve.methods.addOrderBatch(
 ```
 
 #### Adding Batch Orders
-[`addOrderBatch`](api-orderbookreserve.md#addorderbatch)
+[`addOrderBatch`](references-orderbookreserve.md#addorderbatch)
 
 #### Updating Batch Orders
-[`updateOrderBatch`](api-orderbookreserve.md#updateorderbatch)
+[`updateOrderBatch`](references-orderbookreserve.md#updateorderbatch)
 
 ## Local testnet deployment
 You may refer to [this section](reserves-ganache.md) on how to deploy and test the reserve locally using [Truffle's Ganache](https://truffleframework.com/ganache).

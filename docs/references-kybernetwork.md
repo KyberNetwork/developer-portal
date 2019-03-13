@@ -3,8 +3,8 @@ id: References-KyberNetwork
 title: KyberNetwork
 ---
 # contract KyberNetwork
-is [Withdrawable](api-withdrawable.md), Utils2, [KyberNetworkInterface](api-kybernetworkinterface.md)\
-imports ERC20Interface, [KyberReserveInterface](api-kyberreserveinterface.md), [KyberNetworkInterface](api-kybernetworkinterface.md), [Withdrawable](api-withdrawable.md), Utils, WhiteListInterface, ExpectedRateInterface, [FeeBurnerInterface](api-feeburnerinterface.md)
+is [Withdrawable](references-withdrawable.md), Utils2, [KyberNetworkInterface](references-kybernetworkinterface.md)\
+imports ERC20Interface, [KyberReserveInterface](references-kyberreserveinterface.md), [KyberNetworkInterface](references-kybernetworkinterface.md), [Withdrawable](references-withdrawable.md), Utils, WhiteListInterface, ExpectedRateInterface, [FeeBurnerInterface](references-feeburnerinterface.md)
 
 *Source*: [KyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetwork.sol)
 
@@ -108,7 +108,7 @@ event __KyberNetworkSetEnable__(bool isEnabled)
 <br />
 
 ### `KyberProxySet`
-Event for logging of updates to the [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md) contract address
+Event for logging of updates to the [`KyberNetworkProxy.sol`](references-kybernetworkproxy.md) contract address
 ___
 event __KyberProxySet__(address proxy, address sender)
 | Parameter          | Type            | Description                              |
@@ -200,7 +200,7 @@ const deploy = KyberNetwork.deploy({
 
 broadcastTx(deploy)
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
+Code snippet reference: [broadcastTx()](references-web3.md#broadcasting-transactions)
 
 <br />
 
@@ -212,7 +212,7 @@ function __addReserve__(KyberReserveInterface reserve, bool isPermissionless) pu
 | --------- |:---------------------:|:------------------------------------------------:|
 | `reserve` | KyberReserveInterface | reserve's contract address                       |
 | `isPermissionless`     | bool                  | `true` if added permissionlessly, `false` otherwise |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyoperator)
 ___
 Web3 Example:
 ```js
@@ -472,7 +472,7 @@ function __listPairForReserve__(address reserve, ERC20 token, bool ethToToken, b
 | `ethToToken`     | bool                 | `true` if ETH -> token trade supported, `false` otherwise      |
 | `tokenToEth`     | bool                 | `true` if token -> ETH trade supported, `false` otherwise                    |
 | `add`     | uint                  | `true` if trade enabled, otherwise disable trade if `false` |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyOperator)
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyOperator)
 ___
 Web3 Example:
 ```js
@@ -519,7 +519,7 @@ function __removeReserve__(KyberReserveInterface reserve, uint index) public onl
 | --------- |:---------------------:|:------------------------------------------------:|
 | `reserve` | KyberReserveInterface | reserve's contract address                       |
 | `index`     | uint                  | Reserve index in the reserve array |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyoperator)
 ___
 Web3 Example:
 ```js
@@ -572,7 +572,7 @@ function __setEnable__(bool \_enable) public onlyAdmin
 | Parameter | Type  | Description                              |
 | --------- |:-----:|:----------------------------------------:|
 | `_enable` | bool  | `true` to enable network, `false` to disable |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -594,7 +594,7 @@ function __setExpectedRate__(ExpectedRateInterface expectedRate) public onlyAdmi
 | Parameter             | Type                  | Description                                    |
 | ----------------------|:---------------------:|:----------------------------------------------:|
 | `expectedRate`          | ExpectedRateInterface     | ExpectedRate contract address                     |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -616,7 +616,7 @@ function __setFeeBurner__(FeeBurnerInterface  feeBurner) public onlyAdmin
 | Parameter             | Type                  | Description                                    |
 | ----------------------|:---------------------:|:----------------------------------------------:|
 | `feeBurner`          | FeeBurnerInterface     | FeeBurner contract address                      |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -639,7 +639,7 @@ function __setInfo__(bytes32 field, uint value) public onlyOperator
 | --------- |:-------:|:-----------------------------------:|
 | `field`   | bytes32 | key in the `info` mapping           |
 | `value`   | uint    | value to be set in the `info` field |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyoperator)
 ___
 Web3 Example:
 ```js
@@ -656,13 +656,13 @@ txReceipt = await web3.eth.sendTransaction({
 <br />
 
 ### `setKyberProxy`
-Sets the [`KyberNetworkProxy.sol`](api-kybernetworkproxy.md) contract address.
+Sets the [`KyberNetworkProxy.sol`](references-kybernetworkproxy.md) contract address.
 ___
 function __setKyberProxy__(address networkProxy) public onlyAdmin
 | Parameter | Type    | Description                         |
 | --------- |:-------:|:-----------------------------------:|
 | `networkProxy`   | address | KyberNetworkProxy contract address |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -685,7 +685,7 @@ function __setParams__(uint \_maxGasPrice, uint \_negligibleRateDiff) public onl
 | ----------------------|:---------------------:|:----------------------------------------------:|
 | `_maxGasPrice`        | uint                  | maximum gas price for trades |
 | `_negligibleRateDiff` | uint                  | Neligible rate difference         |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -709,7 +709,7 @@ function __setWhiteList__(WhiteListInterface whiteList) public onlyAdmin
 | Parameter             | Type                  | Description                                    |
 | ----------------------|:---------------------:|:----------------------------------------------:|
 | `whiteList`          | WhiteListInterface    | WhiteList contract address                     |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js

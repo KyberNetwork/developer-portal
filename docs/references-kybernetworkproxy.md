@@ -3,8 +3,8 @@ id: References-KyberNetworkProxy
 title: KyberNetworkProxy
 ---
 # contract KyberNetworkProxy
-is [KyberNetworkProxyInterface](api-kybernetworkproxyinterface.md), [SimpleNetworkInterface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol), [Withdrawable](api-withdrawable.md), Utils2\
-imports ERC20Interface, [Withdrawable](api-withdrawable.md), Utils2, [KyberNetworkInterface](api-kybernetworkinterface.md), [KyberNetworkProxyInterface](api-kybernetworkproxyinterface.md), [SimpleNetworkInterface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol)
+is [KyberNetworkProxyInterface](references-kybernetworkproxyinterface.md), [SimpleNetworkInterface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol), [Withdrawable](references-withdrawable.md), Utils2\
+imports ERC20Interface, [Withdrawable](references-withdrawable.md), Utils2, [KyberNetworkInterface](references-kybernetworkinterface.md), [KyberNetworkProxyInterface](references-kybernetworkproxyinterface.md), [SimpleNetworkInterface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol)
 
 *Source*: [KyberNetworkProxy.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol)
 
@@ -93,7 +93,7 @@ const deploy = KyberNetworkProxy.deploy({
 
 broadcastTx(deploy)
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
+Code snippet reference: [broadcastTx()](references-web3.md#broadcasting-transactions)
 <br />
 
 ### `enabled`
@@ -232,7 +232,7 @@ function __setKyberNetworkContract__(KyberNetworkInterface _kyberNetworkContract
 | Parameter | Type    | Description                         |
 | --------- |:-------:|:-----------------------------------:|
 | `_kyberNetworkContract`   | KyberNetworkInterface | `KyberNetwork.sol` contract address |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js

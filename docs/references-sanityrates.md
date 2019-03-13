@@ -3,8 +3,8 @@ id: References-SanityRates
 title: SanityRates
 ---
 # contract SanityRates
-is [SanityRatesInterface](api-sanityratesinterface.md), [Withdrawable](api-withdrawable.md), Utils\
-imports ERC20Interface, [Withdrawable](api-withdrawable.md), Utils, [SanityRatesInterface](api-sanityratesinterface.md)
+is [SanityRatesInterface](references-sanityratesinterface.md), [Withdrawable](references-withdrawable.md), Utils\
+imports ERC20Interface, [Withdrawable](references-withdrawable.md), Utils, [SanityRatesInterface](references-sanityratesinterface.md)
 
 *Source*: [SanityRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SanityRates.sol)
 
@@ -56,7 +56,7 @@ function __setReasonableDiff__(ERC20[] srcs, uint[] diff) public
 | --------- |:-----:|:-----------------------------------------------:|
 | `srcs`    | ERC20[] | list of source ERC20 token contract addresses |
 | `diff`    | uint[]  | list of reasonableDiffs in basis points (bps) <br>`1 bps = 0.01%`       
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)                  |
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)                  |
 ___
 Web3 Example:
 ```js
@@ -83,7 +83,7 @@ function setSanityRates(ERC20[] srcs, uint[] rates) public
 | --------- |:-------:|:---------------------------------------------:|
 | `srcs`    | ERC20[] | list of source ERC20 token contract addresses |
 | `rates`   | uint[]  | list of rates in ETH wei                          |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyoperator)
 ___
 Web3 Example:
 ```js

@@ -3,8 +3,8 @@ id: References-ConversionRates
 title: ConversionRates
 ---
 # contract ConversionRates
-is [ConversionRatesInterface](api-conversionratesinterface.md), VolumeImbalanceRecorder, Utils\
-imports ERC20Interface, VolumeImbalanceRecorder, [ConversionRatesInterface](api-conversionratesinterface.md), Utils
+is [ConversionRatesInterface](references-conversionratesinterface.md), VolumeImbalanceRecorder, Utils\
+imports ERC20Interface, VolumeImbalanceRecorder, [ConversionRatesInterface](references-conversionratesinterface.md), Utils
 
 *Source*: [ConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ConversionRates.sol)
 
@@ -75,7 +75,7 @@ const deploy = ConversionRates.deploy({
 
 broadcastTx(deploy)
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
+Code snippet reference: [broadcastTx()](references-web3.md#broadcasting-transactions)
 <br />
 
 ### `addToken`
@@ -85,7 +85,7 @@ function __addToken__(ERC20 token) public onlyAdmin
 | Parameter | Type  | Description                  |
 | ----------|:-----:|:----------------------------:|
 | `token`   | ERC20 | ERC20 token contract address |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -107,7 +107,7 @@ function __disableTokenTrade__(ERC20 token) public onlyAlerter
 | Parameter | Type  | Description                                 |
 | ----------|:-----:|:-------------------------------------------:|
 | `token`   | ERC20 | ERC20 token contract address to be disabled |
-Modifiers: [onlyAlerter](api-permissiongroups.md#onlyalerter)
+Modifiers: [onlyAlerter](references-permissiongroups.md#onlyalerter)
 ___
 Web3 Example:
 ```js
@@ -129,7 +129,7 @@ function __enableTokenTrade__(ERC20 token) public onlyAdmin
 | Parameter | Type  | Description                                |
 | ----------|:-----:|:------------------------------------------:|
 | `token`   | ERC20 | ERC20 token contract address to be enabled |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -348,7 +348,7 @@ function __setBaseRate__(ERC20[] tokens, uint[] baseBuy, uint[] baseSell, bytes1
 | `sell`        | bytes14[] | Compact data representation of basis points (bps) to adjust tokens' sell rates. `1bps = 0.01%`  |
 | `blockNumber` | uint      | ETH block number for which the adjustments are valid from   |
 | `indices`     | uint[]    | array of indexes to apply bps adjustments on                |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyoperator)
 ___
 Web3 Example:
 ```js
@@ -398,7 +398,7 @@ function __setCompactData__(bytes14[] buy, bytes14[] sell, uint blockNumber, uin
 | `sell`        | bytes14[] | basis points to adjust tokens' sell rates                      |
 | `blockNumber` | uint      | ETH block number for which the adjustment rates are valid from |
 | `indices`     | uint[]    | array of indexes to apply the buy / sell rate adjustments on   |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyoperator)
 ___
 Web3 Example:
 ```js
@@ -433,7 +433,7 @@ function __setQtyStepFunction__(ERC20[] tokens, int[] xBuy, int[] yBuy, int[] xS
 | `yBuy`         | int[]             | impact on buy rate in basis points (bps). `1 bps = 0.01%` Eg. `-30 = -0.3%`           |
 | `xSell`         | int[]            | array of sell steps in wei amount           |
 | `ySell`         | int[]             | impact on sell rate in basis points (bps). `1 bps = 0.01%` Eg. `-30 = -0.3%`           |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyoperator)
 * Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
 * When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory.
 ___
@@ -468,7 +468,7 @@ function __setImbalanceStepFunction__(ERC20 token, int[] xBuy, int[] yBuy, int[]
 | `yBuy`         | int[]             | impact on buy rate in basis points (bps). `1 bps = 0.01%` Eg. `-30 = -0.3%`           |
 | `xSell`         | int[]             | array of sell steps in wei amount           |
 | `ySell`         | int[]             | impact on sell rate in basis points (bps). `1 bps = 0.01%` Eg. `-30 = -0.3%`           |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyoperator)
 * Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
 * `yBuy` and `ySell` numbers should always be non-positive (`<=0`) because the smart contract **reduces** the output amount by the Y-value set in each step.
 ___
@@ -499,7 +499,7 @@ function __setValidRateDurationInBlocks__(uint duration) public onlyAdmin
 | Parameter        | Type                     | Description                      |
 | -----------------|:------------------------:|:--------------------------------:|
 | `duration`         | uint                  | Number of blocks for which the rates will be valid           |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -524,7 +524,7 @@ function __setReserveAddress__(address reserve) public onlyAdmin
 | Parameter        | Type                     | Description                      |
 | -----------------|:------------------------:|:--------------------------------:|
 | `reserve`         | address                  | reserve contract address          |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js

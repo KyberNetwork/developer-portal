@@ -184,7 +184,7 @@ First let's understand how the rate in `ConversionRates.sol` is defined and modi
 2. Compact Data
 3. Step Functions
 
-Base rate sets the basic rate per token, and is set separately for buy and sell values. Compact data and step functions enable advanced functionality and serve as modifiers of the base rate. To avoid frequent expensive updates of base rates, compact data enables modification to a group of tokens in one on chain storage operation. Each compact data array is squeezed into one bytes32 parameter and holds modifiers for buy / sell prices of 14 tokens. If your reserve supports more than 1-2 tokens, we recommend updating token rates using the `setCompactData` function to save gas costs for your updates. Finally, step functions enable degenerated order book functionality, whereby rates are modified according to imbalance values. Refer to the [step function section](#step-functions) for details. More information regarding the input parameters of the `setBaseRate` function can be found in [reference](api-conversionrates.md#setbaserate).
+Base rate sets the basic rate per token, and is set separately for buy and sell values. Compact data and step functions enable advanced functionality and serve as modifiers of the base rate. To avoid frequent expensive updates of base rates, compact data enables modification to a group of tokens in one on chain storage operation. Each compact data array is squeezed into one bytes32 parameter and holds modifiers for buy / sell prices of 14 tokens. If your reserve supports more than 1-2 tokens, we recommend updating token rates using the `setCompactData` function to save gas costs for your updates. Finally, step functions enable degenerated order book functionality, whereby rates are modified according to imbalance values. Refer to the [step function section](#step-functions) for details. More information regarding the input parameters of the `setBaseRate` function can be found in [reference](references-conversionrates.md#setbaserate).
 
 <!--Here are the input parameters of the `setBaseRate` function.
 | Input field | Explanation | Examples |
@@ -328,7 +328,7 @@ function setQtyStepFunction(
 	int[] ySell
 	)
 ```
-More information regarding the input parameters of the `setQtyStepFunction` function can be found in [reference](api-conversionrates.md#setqtystepfunction).
+More information regarding the input parameters of the `setQtyStepFunction` function can be found in [reference](references-conversionrates.md#setqtystepfunction).
 <!--| Input field | Explanation | Example |
 | ------------- | ------------- | ------------- |
 | `ERC20 token`  |  Token contract address | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6` |
@@ -364,7 +364,7 @@ function setImbalanceStepFunction(
 	int[] ySell
 	)
 ```
-More information regarding the input parameters of the `setImbalanceStepFunction` function can be found in [reference](api-conversionrates.md#setimbalancestepfunction).
+More information regarding the input parameters of the `setImbalanceStepFunction` function can be found in [reference](references-conversionrates.md#setimbalancestepfunction).
 
 <!--| Input field | Explanation | Example |
 | ------------- | ------------- | ------------- |
