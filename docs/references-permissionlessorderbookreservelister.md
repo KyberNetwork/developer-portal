@@ -3,7 +3,7 @@ id: References-PermissionlessOrderbookReserveLister
 title: PermissionlessOrderbookReserveLister
 ---
 # contract PermissionlessOrderbookReserveLister
-imports [OrderbookReserve](api-orderbookreserve.md), [FeeBurnerInterface](api-feeburnerinterface.md)
+imports [OrderbookReserve](references-orderbookreserve.md), [FeeBurnerInterface](references-feeburnerinterface.md)
 
 *Source*: [KyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/auditv3/contracts/permissionless/PermissionlessOrderbookReserveLister.sol)
 

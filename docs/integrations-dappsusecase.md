@@ -13,4 +13,4 @@ DApps like ETHLend allows instant liquidation of assets in case of defaulted loa
 DApps also have the opportunity to join Kyber's *Fee Sharing Program*, which allows fee sharing for each trade originating from your DApp. Learn more about the program [here](integrations-feesharing.md)!
 
 ## Integrate Your DApp
-To learn about how you can integrate with us as a DApp, please visit [here](integrations-dappsguide.md).
+The common methods existing DApps use to integrate with our protocol implementation are through their own **smart contracts** and **Web3**. Explore the [smart contract](integrations-smartcontractguide.md) and [Web3](integrations-web3guide.md) guides to learn more!

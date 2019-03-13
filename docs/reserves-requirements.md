@@ -5,7 +5,7 @@ title: Reserve Requirements
 ## Overview
 This section lists some guidelines on creating a new reserve type.
 
-## Step 1: Implementing the Reserve Interface
+## Step 1: Implement the Reserve Interface
 ![Reserve Interface](/uploads/reserveinterface.png "Reserve Interface")
 The reserve interface provides a generic template of the contract functions one should implement in their smart contract. This interface may be tweaked depending on the needs and features of each blockchain. All existing reserve types, like the ones covered in the developer portal (Eg. Fed Price Reserve), as well as integrated reserves (Eg. Uniswap Reserve), implement this interface.
 

@@ -64,7 +64,7 @@ Modifier that ensures only an address with admin role can execute a function.
 
 modifier __onlyAdmin__()
 ___
-invokable functions: [addToken](api-conversionrates.md#addtoken), [setValidRateDurationInBlocks](api-conversionrates.md#setvalidratedurationinblocks), [enableTokenTrade](api-conversionrates.md#enabletokentrade), [setReserveAddress](api-conversionrates.md#setreserveaddress), [setReserveData](api-feeburner.md#setreservedata), [setWalletFees](api-feeburner.md#setwalletfees), [setTaxInBps](api-feeburner.md#settaxinbps), [setTaxWallet](api-feeburner.md#settaxwallet), [setKNCRate](api-feeburner.md#setkncrate), [addReserve](api-kybernetwork.md#addreserve), [listPairForReserve](api-kybernetwork.md#listpairforreserve), [setEnable](api-kybernetwork.md#setenable), [enableTrade](api-kyberreserve.md#enabletrade), [approveWithdrawAddress](api-kyberreserve.md#approvewithdrawaddress), [setReasonableDiff](api-sanityrates.md#setreasonablediff), [setTokenControlInfo](api-volumeimbalancerecorder.md#settokencontrolinfo), [withdrawToken](api-withdrawable.md#withdrawtoken), [withdrawEther](api-withdrawable.md#withdrawether), [addAlerter](api-permissiongroups.md#addalerter), [addOperator](api-permissiongroups.md#addoperator), [removeAlerter](api-permissiongroups.md#removealerter), [removeOperator](api-permissiongroups.md#removeoperator), [transferAdmin](api-permissiongroups.md#transferadmin), [transferAdminQuickly](api-permissiongroups.md#transferadminquickly)
+invokable functions: [addToken](references-conversionrates.md#addtoken), [setValidRateDurationInBlocks](references-conversionrates.md#setvalidratedurationinblocks), [enableTokenTrade](references-conversionrates.md#enabletokentrade), [setReserveAddress](references-conversionrates.md#setreserveaddress), [setReserveData](references-feeburner.md#setreservedata), [setWalletFees](references-feeburner.md#setwalletfees), [setTaxInBps](references-feeburner.md#settaxinbps), [setTaxWallet](references-feeburner.md#settaxwallet), [setKNCRate](references-feeburner.md#setkncrate), [addReserve](references-kybernetwork.md#addreserve), [listPairForReserve](references-kybernetwork.md#listpairforreserve), [setEnable](references-kybernetwork.md#setenable), [enableTrade](references-kyberreserve.md#enabletrade), [approveWithdrawAddress](references-kyberreserve.md#approvewithdrawaddress), [setReasonableDiff](references-sanityrates.md#setreasonablediff), [setTokenControlInfo](references-volumeimbalancerecorder.md#settokencontrolinfo), [withdrawToken](references-withdrawable.md#withdrawtoken), [withdrawEther](references-withdrawable.md#withdrawether), [addAlerter](references-permissiongroups.md#addalerter), [addOperator](references-permissiongroups.md#addoperator), [removeAlerter](references-permissiongroups.md#removealerter), [removeOperator](references-permissiongroups.md#removeoperator), [transferAdmin](references-permissiongroups.md#transferadmin), [transferAdminQuickly](references-permissiongroups.md#transferadminquickly)
 
 
 <br />
@@ -74,7 +74,7 @@ Modifier that ensures only an address with alerter role can execute a function.
 
 modifier __onlyAlerter__()
 ___
-invokable functions: [disableTokenTrade](api-conversionrates.md#disabletokentrade), [disableTrade](api-kyberreserve.md#disabletrade)
+invokable functions: [disableTokenTrade](references-conversionrates.md#disabletokentrade), [disableTrade](references-kyberreserve.md#disabletrade)
 <br />
 
 ### `onlyOperator`
@@ -82,7 +82,7 @@ Modifier that ensures only an address with operator role can execute a function.
 
 modifier __onlyOperator__()
 ___
-invokable functions: [setCompactData](api-conversionrates.md#setcompactdata), [setBaseRate](api-conversionrates.md#setbaserate), [setQtyStepFunction](api-conversionrates.md#setqtystepfunction), [setImbalanceStepFunction](api-conversionrates.md#setimbalancestepfunction), [setQuantityFactor](api-expectedrate.md#setquantityfactor), [setMinSlippageFactor](api-expectedrate.md#setminslippagefactor), [setInfo](api-kybernetwork.md#setinfo), [withdraw](api-kyberreserve.md#withdraw), [setSanityRates](api-sanityrates.md#setsanityrates), [setUserCategory](api-whitelist.md#setusercategory), [setCategoryCap](api-whitelist.md#setcategorycap), [setSgdToEthRate](api-whitelist.md#setsgdtoethrate)
+invokable functions: [setCompactData](references-conversionrates.md#setcompactdata), [setBaseRate](references-conversionrates.md#setbaserate), [setQtyStepFunction](references-conversionrates.md#setqtystepfunction), [setImbalanceStepFunction](references-conversionrates.md#setimbalancestepfunction), [setQuantityFactor](references-expectedrate.md#setquantityfactor), [setMinSlippageFactor](references-expectedrate.md#setminslippagefactor), [setInfo](references-kybernetwork.md#setinfo), [withdraw](references-kyberreserve.md#withdraw), [setSanityRates](references-sanityrates.md#setsanityrates), [setUserCategory](references-whitelist.md#setusercategory), [setCategoryCap](references-whitelist.md#setcategorycap), [setSgdToEthRate](references-whitelist.md#setsgdtoethrate)
 <br />
 
 ### Functions
@@ -101,7 +101,7 @@ function __addAlerter__(address newAlerter) public
 | Parameter    | Type    | Description                |
 | -------------|:-------:|:--------------------------:|
 | `newAlerter` | address | address of the new alerter |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 
 <br />
 
@@ -112,7 +112,7 @@ function __addOperator__(address newOperator) public
 | Parameter     | Type    | Description                 |
 | --------------|:-------:|:---------------------------:|
 | `newOperator` | address | address of the new operator |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 
 <br />
 
@@ -148,7 +148,7 @@ function __removeAlerter__(address newOperator) public
 | Parameter | Type    | Description            |
 | ----------|:-------:|:----------------------:|
 | `alerter` | address | address of the alerter |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 
 <br />
 
@@ -159,7 +159,7 @@ function __removeOperator__(address newOperator) public
 | Parameter  | Type    | Description             |
 | -----------|:-------:|:-----------------------:|
 | `operator` | address | address of the operator |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 
 <br />
 
@@ -170,7 +170,7 @@ function __transferAdmin__(address newAdmin) public
 | Parameter  | Type    | Description                          |
 | -----------|:-------:|:------------------------------------:|
 | `newAdmin` | address | the address to transfer ownership to |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 
 <br />
 
@@ -181,6 +181,6 @@ function __transferAdminQuickly__(address newAdmin) public
 | Parameter  | Type    | Description                          |
 | -----------|:-------:|:------------------------------------:|
 | `newAdmin` | address | the address to transfer ownership to |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 
 <br />

@@ -3,8 +3,8 @@ id: References-OrderbookReserve
 title: OrderbookReserve
 ---
 # contract OrderbookReserve
-is OrderIdManager, Utils2, [KyberReserveInterface](api-kyberreserveinterface.md), [OrderbookReserveInterface](api-orderbookreserveinterface.md),\
-imports OrderListInterface, OrderIdManager, Utils2, [KyberReserveInterface](api-kyberreserveinterface.md), [OrderbookReserveInterface](api-orderbookreserveinterface.md),
+is OrderIdManager, Utils2, [KyberReserveInterface](references-kyberreserveinterface.md), [OrderbookReserveInterface](references-orderbookreserveinterface.md),\
+imports OrderListInterface, OrderIdManager, Utils2, [KyberReserveInterface](references-kyberreserveinterface.md), [OrderbookReserveInterface](references-orderbookreserveinterface.md),
 
 *Source*: [OrderbookReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/auditv3/contracts/permissionless/OrderbookReserve.sol)
 ___

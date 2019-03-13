@@ -13,4 +13,4 @@ Popular wallets like MyEtherWallet, imToken and TrustWallet are already using Ky
 Wallets also have the opportunity to join Kyber's *Fee Sharing Program*, which allows fee sharing for each swap originating from your wallet. Learn more about the program [here](integrations-feesharing.md)!
 
 ## Integrate Your Wallet
-To learn about how you can integrate with us as a wallet, please visit [here](integrations-walletsguide.md).
+The common methods existing vendors use to integrate with our protocol implementation are through **Web3** and  **RESTful API**. Explore the [Web3](integrations-web3guide.md) and [RESTful API](integrations-restfulapiguide.md) guides to learn more!

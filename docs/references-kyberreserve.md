@@ -3,8 +3,8 @@ id: References-KyberReserve
 title: KyberReserve
 ---
 # contract KyberReserve
-is [KyberReserveInterface](api-kyberreserveinterface.md), [Withdrawable](api-withdrawable.md), Utils\
-imports ERC20Interface, Utils, [Withdrawable](api-withdrawable.md),  [ConversionRatesInterface](api-conversionratesinterface.md), [SanityRatesInterface](api-sanityratesinterface.md), [KyberReserveInterface](api-kyberreserveinterface.md)
+is [KyberReserveInterface](references-kyberreserveinterface.md), [Withdrawable](references-withdrawable.md), Utils\
+imports ERC20Interface, Utils, [Withdrawable](references-withdrawable.md),  [ConversionRatesInterface](references-conversionratesinterface.md), [SanityRatesInterface](references-sanityratesinterface.md), [KyberReserveInterface](references-kyberreserveinterface.md)
 
 *Source*: [KyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberReserve.sol)
 
@@ -141,7 +141,7 @@ const deploy = KyberReserve.deploy({
 
 broadcastTx(deploy)
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
+Code snippet reference: [broadcastTx()](references-web3.md#broadcasting-transactions)
 
 <br />
 
@@ -154,7 +154,7 @@ function __approveWithdrawAddress__(ERC20 token, address addr, bool approve) pub
 | `token`   | ERC20   | ERC20 token contract address                                           |
 | `addr`    | address | withdrawal address                                                     |
 | `approve` | bool    | `true` if address is enabled, otherwise `false` if address is disabled |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -180,7 +180,7 @@ txReceipt = await web3.eth.sendTransaction({
 Disable trading for the reserve. Only alerter can invoke.
 ___
 function __disableTrade__() public onlyAlerter returns (bool)\
-Modifiers: [onlyAlerter](api-permissiongroups.md#onlyalerter)\
+Modifiers: [onlyAlerter](references-permissiongroups.md#onlyalerter)\
 **Returns:**\
 `true` if trade is successfully disabled, otherwise `false`
 ___
@@ -201,7 +201,7 @@ txReceipt = await web3.eth.sendTransaction({
 Enables trading in the reserve. Only admin can invoke.
 ___
 function __enableTrade__() public onlyAdmin returns (bool)\
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)\
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)\
 **Returns:**\
 `true` if trading is successfully enabled, otherwise `false`
 ___
@@ -330,7 +330,7 @@ function __setContracts__(address \_kyberNetwork, ConversionRatesInterface \_con
 | `_kyberNetwork`    | address                  | KyberNetwork contract address                  |
 | `_conversionRates` | ConversionRatesInterface | ConversionRates contract address               |
 | `_sanity`     | SanityRatesInterface     | SanityRates contract address                   |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -360,7 +360,7 @@ function __setTokenWallet__(ERC20 token, address wallet) public onlyAdmin
 | -------------------|:------------------------:|:----------------------------------------------:|
 | `token`    | ERC20                  | ERC20 token contract address                  |
 | `wallet` | address | wallet address               |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
@@ -386,7 +386,7 @@ function __withdraw__(ERC20 token, uint amount, address destination) public only
 | `token`       | ERC20   | ERC20 token contract address                   |
 | `amount`      | uint    | ERC20 token amount in wei                      |
 | `destination` | address | recipient address for destination ERC20 tokens |
-Modifiers: [onlyOperator](api-permissiongroups.md#onlyoperator)\
+Modifiers: [onlyOperator](references-permissiongroups.md#onlyoperator)\
 **Returns:**\
 `true` if the withdrawal was successful, otherwise `false` if unsuccessful
 ___

@@ -3,8 +3,8 @@ id: References-LiquidityConversionRates
 title: LiquidityConversionRates
 ---
 # contract LiquidityConversionRates
-is [ConversionRatesInterface](api-conversionratesinterface.md), LiquidityFormula, [Withdrawable](api-withdrawable.md), Utils\
-imports [ConversionRatesInterface](api-conversionratesinterface.md), LiquidityFormula, [Withdrawable](api-withdrawable.md), Utils
+is [ConversionRatesInterface](references-conversionratesinterface.md), LiquidityFormula, [Withdrawable](references-withdrawable.md), Utils\
+imports [ConversionRatesInterface](references-conversionratesinterface.md), LiquidityFormula, [Withdrawable](references-withdrawable.md), Utils
 
 *Source*: [LiquidityConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/LiquidityConversionRates.sol)
 
@@ -94,7 +94,7 @@ const deploy = LiquidityConversionRates.deploy({
 
 broadcastTx(deploy)
 ```
-Code snippet reference: [broadcastTx()](appendix-codes.md#broadcasting-tx)
+Code snippet reference: [broadcastTx()](references-web3.md#broadcasting-transactions)
 
 <br />
 
@@ -117,7 +117,7 @@ Conversion rate of the source token and reserve token
 Reset the amount of collected fees. Collected fees can be read through the state variable `collectedFeesInTwei`. Only admin can invoke.
 ___
 function __resetCollectedFees__() public onlyAdmin
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 
 <br />
 
@@ -135,7 +135,7 @@ function __setLiquidityParams__(uint \_rInFp, uint \_pMinInFp, uint \_numFpBits,
 | `uint`    | _feeInBps                     | fees in base points                                         |
 | `uint`    | _maxTokenToEthRateInPrecision | maximum allowed token to ETH rate in formula precision      |
 | `uint`    | _minTokenToEthRateInPrecision | minimum allowed token to ETH rate in formula precision      |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 
 <br />
 
@@ -146,4 +146,4 @@ function __setReserveAddress__(address reserve) public onlyAdmin
 | Parameter | Type    | Description                 |
 | --------- |:-------:|:---------------------------:|
 | `address` | reserve | reserve's contract address  |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)

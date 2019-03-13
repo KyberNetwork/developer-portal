@@ -3,8 +3,8 @@ id: References-Withdrawable
 title: Withdrawable
 ---
 # contract Withdrawable
-is [PermissionGroups](api-permissiongroups.md)\
-imports [ERC20Interface](api-erc-20-interface.md), [PermissionGroups](api-permissiongroups.md)
+is [PermissionGroups](references-permissiongroups.md)\
+imports ERC20Interface, [PermissionGroups](references-permissiongroups.md)
 
 *Source*: [Withdrawable.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/Withdrawable.sol)
 
@@ -50,7 +50,7 @@ function __withdrawEther__(uint amount, address sendTo) external onlyAdmin
 | --------- |:-------:|:---------------------:|
 | `amount`  | uint    | amount of ETH in wei  |
 | `sendTo`  | address | recipient's address   |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 <br />
 
 
@@ -63,5 +63,5 @@ function __withdrawToken__(ERC20 token, uint amount, address sendTo) external on
 | `token`   | ERC20   | ERC20 token contract address  |
 | `amount`  | uint    | amount of ERC20 tokens in wei |
 | `sendTo`  | address | recipient's address           |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 <br />

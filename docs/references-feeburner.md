@@ -3,8 +3,8 @@ id: References-FeeBurner
 title: FeeBurner
 ---
 # contract FeeBurner
-is [FeeBurnerInterface](api-feeburnerinterface.md), [Withdrawable](api-withdrawable.md), Utils\
-imports [FeeBurnerInterface](api-feeburnerinterface.md), [Withdrawable](api-withdrawable.md), Utils
+is [FeeBurnerInterface](references-feeburnerinterface.md), [Withdrawable](references-withdrawable.md), Utils\
+imports [FeeBurnerInterface](references-feeburnerinterface.md), [Withdrawable](references-withdrawable.md), Utils
 
 *Source*: [FeeBurner.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/FeeBurner.sol)
 
@@ -201,7 +201,7 @@ function __setReserveData__(address reserve, uint feesInBps, address kncWallet) 
 | `reserve`   | address | reserve's contract address |
 | `feesInBps` | uint    | fees in basis points (`1 bps = 0.01%`) |
 | `kncWallet` | address | reserve wallet address to store KNC tokens in |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyoperator)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyoperator)
 ___
 <br />
 
@@ -212,7 +212,7 @@ function __setTaxInBps__(uint \_taxFeeBps) public onlyAdmin
 | Parameter   | Type    | Description                |
 | ----------- |:-------:|:--------------------------:|
 | `taxFeeBps` | uint    | fees in basis points (`1 bps = 0.01%`)             |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 <br />
 
@@ -223,7 +223,7 @@ function __setTaxWallet__(address \_taxWallet) public onlyAdmin
 | Parameter    | Type    | Description                |
 | ------------ |:-------:|:--------------------------:|
 | `_taxWallet` | address | tax wallet address             |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 <br />
 
@@ -235,6 +235,6 @@ function setWalletFees(address wallet, uint feesInBps) public onlyAdmin
 | ----------- |:-------:|:--------------------------:|
 | `wallet`    | address | wallet address to send part of the fees to             |
 | `feesInBps` | uint    | fees in basis points (`1 bps = 0.01%`)           |
-Modifiers: [onlyAdmin](api-permissiongroups.md#onlyadmin)
+Modifiers: [onlyAdmin](references-permissiongroups.md#onlyadmin)
 ___
 <br />

@@ -194,7 +194,7 @@ Second, **r** is liquidity the rate in basis points or units of 100 which the pr
 
 For the **minimum/maximum supported price factor ratio**, it is recommended to start with a ratio of 0.5:2.0. This indicates that the inventory will suffice for up to 100% increase or 50% decrease in token price with respect to ETH.
 
-Setting the liquidity parameters is done by executing the [`setLiquidityParameters()`](api-liquidityconversionrates.md#setliquidityparams) function from the LiquidityConversionRates contract. We explain the different parameters below:
+Setting the liquidity parameters is done by executing the [`setLiquidityParameters()`](references-liquidityconversionrates.md#setliquidityparams) function from the LiquidityConversionRates contract. We explain the different parameters below:
 
 | Type      | Parameter                     | Explanation |
 | :-------: | :---------------------------: | :---------: |
