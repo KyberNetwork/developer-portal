@@ -296,7 +296,7 @@ Please check `KWExternalProvider` and `KWGeneralProvider` for more details.
 
 ### Prerequisites
 * A KYCed account with KyberSwap is required for testing. You can do so at https://kyberswap.com/users/sign_up?normal=true.
-* Your `APP_ID` and `APP_SECRET`. This is given upon registration of a Kyber developer account. Find out more [in this section](#developer-registration).
+* Your `APP_ID` and `APP_SECRET`. This is given upon registration of a Kyber developer account. Find out more [in this section](references-signinwidget.md#developer-registration).
 
 ### Scenario 1: Create Sign-In Widget for Users
 #### Configure Sign-In Widget Parameters
@@ -319,9 +319,11 @@ The user will be asked to sign-in with his Kyber account if he has not already d
 
 #### Implement Server Side Logic
 1. User Denial
+
 If the user denies authorization, Kyber's servers will send a GET request to `REDIRECT_URI?error=access_denied&error_description=The+resource+owner+or+authorization+server+denied+the+request`.
 
 2. User Approval
+
 If the user approves authorization, Kyber's servers will send a GET request to
 `REDIRECT_URI/callback?code=AUTH_CODE&state=CUSTOM_TOKEN`.
 
