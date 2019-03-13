@@ -178,13 +178,13 @@ These are some error / edge cases that should be handled in the **coordinatorDid
 In most cases, we will provide a meaningful error message for you to either display it to user directly, or use the message to test/debug.
 
 ## Acknowledgement
-The KyberWidget iOS uses following open source softwares:
+The KyberWidget iOS uses the following open source software:
 
 - [Moya](https://github.com/Moya/Moya)
 - [BigInt](https://github.com/attaswift/BigInt)
 - [APIKit](https://github.com/ishkawa/APIKit)
 - [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
-- [TrustKeystore'](https://github.com/TrustWallet/trust-keystore)
+- [TrustKeystore](https://github.com/TrustWallet/trust-keystore)
 - [TrustCore](https://github.com/TrustWallet/trust-core)
 - [JSONRPCKit](https://github.com/bricklife/JSONRPCKit.git)
 - [IQKeyboardManager](https://github.com/hackiftekhar/IQKeyboardManager)
@@ -192,18 +192,15 @@ The KyberWidget iOS uses following open source softwares:
 - [QRCodeReaderViewController](https://github.com/yannickl/QRCodeReaderViewController.git)
 - [JavaScriptKit](https://github.com/alexaubry/JavaScriptKit)
 
-Special thank to [TrustWallet](https://github.com/TrustWallet) team for their awesome works
+Special thanks to [TrustWallet](https://github.com/TrustWallet) team for their awesome work!
 
 ## License
-
 KyberWidget is available under MIT License, see [LICENSE](https://github.com/KyberNetwork/widget-swift/blob/master/LICENSE)  file for more information.
 
 ## Bugs/Features report
-
-Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a Github issue.
+Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a [Github issue here](https://github.com/KyberNetwork/widget-swift/issues).
 
 ## Swift 4.2, Xcode 10
-
 Please upgrade your pod by using commands:
 
 ```swift

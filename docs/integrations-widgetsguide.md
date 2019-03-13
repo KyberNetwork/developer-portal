@@ -19,12 +19,12 @@ In this guide, we will be implementing a `swap` pop up widget to enable the user
 ### Configuring the KyberWidget
 1. Open https://developer.kyber.network/docs/WidgetGenerator/ in a new tab.
 2. Select `Swap` under **Widget Type** and `Popup` under **Widget Mode** fields.
-3. Enter your callback url into the **Callback URL** field which will be called after the transaction has been broadcasted. For example
+3. Enter your callback url into the **Callback URL** field which will be called after the transaction has been broadcasted, like the example below.
 ```
 https://kyberpay-sample.knstats.com/callback
 ```
 4. Under the **Network** field, select the network to run the widget on. It is recommended to do some testing on one of the testnets first like `Ropsten` first prior to running it on `Mainnet`.
-5. Enter the default pair in the **Default Pair** field, as shown in the example below.
+5. Enter the default pair in the **Default Pair** field, like the example below.
 ```
 ETH_DAI
 ```
@@ -50,7 +50,7 @@ Before the end of the <body> tag, add the <script></script> tag as shown in the 
 </body>
 ```
 
-#### Add the code that represent the KyberWidget
+### Add the code that represents the KyberWidget
 Wherever you want to use the KyberWidget button, add the <a href></a> tag as shown in the source code. Refer to the example below.
 ```HTML
 <body>
@@ -119,7 +119,7 @@ end
 import KyberWidget
 ```
 
-### Define KWCoodinator instance
+### Define KWCoordinator instance
 
 ```swift
 fileprivate var coordinator: KWCoordinator?
@@ -128,9 +128,9 @@ fileprivate var coordinator: KWCoordinator?
 ### Create KWCoordinator instance
 
 First, you need to create and initialize the `KWCoordinator` instance.
-There are 3 sub-classes `KWPayCoordinator`, `KWSwapCoordinator`, and `KWBuyCoordinator` corresponding to 3 use cases. You should only use these 3 classes depending on your purpose.
+There are 3 sub-classes `KWPayCoordinator`, `KWSwapCoordinator`, and `KWBuyCoordinator` corresponding to 3 use cases. You should only use these 3 classes depending on your purpose. You may find more information about the different use cases [here](references-kyberwidget.md).
 
-Please note that the values are **for illustration purposes** only. For more details on the parameters used, please refer [here](references-kyberwidget.md).
+Please note that the values are **for illustration purposes** only.
 
 To use the widget for `pay` use case:
 
@@ -183,12 +183,20 @@ do {
 } catch {}
 ```
 
-### Showing the Widget
-Please ensure that your delegate class has implemented these 3 functions:
-- coordinatorDidCancel()
-- coordinatorDidFailed(with error: KWError)
-- coordinatorDidBroadcastTransaction(with txHash: String)
+**Note:** Should any parameter be invalid, an error will be thrown via delegation.
 
+### Delegation - `KWCoordinatorDelegate`
+Please ensure that your delegate class (`KWCoordinatorDelegate`) has implemented these 3 functions:
+#### 1. `coordinatorDidCancel()`
+This function is called when the user cancels the action.
+
+#### 2. `coordinatorDidFailed(with error: KWError)`
+This function is called in the event of an error. Refer to [this section](references-kyberwidget.md#error-cases-to-be-handled) for the error / edge cases to be handled by the `coordinatorDidFailed()` function.
+
+#### 3. `coordinatorDidBroadcastTransaction(with txHash: String)`
+This function is called when the transaction has been broadcasted to the blockchain. Refer to [this page](https://github.com/KyberNetwork/KyberWidget/blob/master/README.md#how-to-get-payment-status) on checking and confirming the payment status.
+
+### Showing the Widget
 Once done, set `delegate` and show the widget.
 ```swift
 // set delegate to receive transaction data
@@ -204,20 +212,20 @@ Get current `KWThemeConfig` instance.
 ```swift
 let config = KWThemeConfig.current
 ```
-From here you could config the color by your own choice. Go to `KWThemeConfig` class to see all available attributes that you could change the color.
+You can configure the color here. Go to `KWThemeConfig` class to see all available attributes for changing the color.
 
 #### String
-Similar to `KWThemeConfig`, using `KWStringConfig` to config the string.
+Similar to `KWThemeConfig`, use `KWStringConfig` to configure the text shown in the widget.
 
 ```swift
 let config = KWStringConfig.current
 config.youAreAboutToPay = "You are going to buy"
 ```
 
-The string "*You are about to pay*" should be changed to "*You are going to buy*"
+The string "*You are about to pay*" will be changed to "*You are going to buy*"
 
 ### Create your own UIs
-You could also create your own UIs and use our helper functions to get the list of supported tokens, get expected rate between tokens, get balance of ETH/token given the address, sign the transaction and send transfer/trade functions.
+You can also create your own UIs and use our helper functions to get the list of supported tokens, get expected rate between tokens, get balance of ETH/token given the address, sign the transaction and send transfer/trade functions.
 
 #### Supported Tokens
 To get Kyber supported tokens, call:
@@ -228,13 +236,16 @@ KWSupportedToken.shared.fetchTrackerSupportedTokens(network: KWEnvironment, comp
 Returns a list of supported tokens by Kyber or error otherwise.
 
 #### Current gas price
-Get current fast/standard/slow gas price using our server cache
+Get current slow / standard / fast gas price using our server cache
 
-`func performFetchRequest(service: KWNetworkProvider, completion: @escaping (Result<JSONDictionary, AnyError>) -> Void)`
+```
+func performFetchRequest(service: KWNetworkProvider, completion: @escaping (Result<JSONDictionary, AnyError>) -> Void)
+```
+
 Use `_KWNetworkProvider.gasGasPrice_` as service.
 
 #### Keystore
-Create a `KWKeystore` instance to help import wallet, get current account, sign transaction, etc
+Create a `KWKeystore` instance to help import a wallet, get current account, sign transactions, etc
 
 ```swift
 let keystore = try KWKeystore()
@@ -251,8 +262,10 @@ func signTransaction(transaction: KWDraftTransaction) -> Result<Data, KWKeystore
 ```
 
 **External Provider**
-
-`let externalProvider = KWExternalProvider(keystore: keystore, network: network)`: init `KWExternalProvider` with an instance of keystore and network.
+Initialize `KWExternalProvider` with an instance of keystore and network.
+```
+let externalProvider = KWExternalProvider(keystore: keystore, network: network)
+```
 
 External Provider provides all functions needed to perform a payment, or to use KyberSwap.
 
