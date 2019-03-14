@@ -6,7 +6,7 @@ title: KyberWidget Guide
 This guide will walk you through on how you can interact with our protocol implementation using our KyberWidget. The most common group of users that can benefit from this guide are vendors and websites.
 
 ## Overview
-We will be going through 2 scenarios. The first scenario teaches you how to implement a `swap` pop up widget to enable the users of your platform with the ability to purchase any tokens. The second scenario teaches you how you can add KyberWidget into your iOS application and even customise it to fit your app's theme.
+We will be going through 2 scenarios. The first scenario teaches you how to implement a **swap** pop up widget to enable the users of your platform with the ability to purchase any tokens. The second scenario teaches you how you can add KyberWidget into your iOS application and even customise it to fit your app's theme.
 
 ## KyberWidget (HTML/JS)
 ### Things to note
@@ -30,7 +30,7 @@ ETH_DAI
 7. Lastly, if there are parameters to be passed into the callback function, input them into the **Extra Params** field.
 8. Once that is completed, click on the **HTML Source** button.
 
-### Add the stylesheet used for the KyberWidget
+### Add the stylesheet
 In the <head> tag, add the <link> tag as shown in the source code. Refer to the example below.
 ```HTML
 <head>
@@ -39,7 +39,7 @@ In the <head> tag, add the <link> tag as shown in the source code. Refer to the 
 </head>
 ```
 
-### Add the javascript file used for the KyberWidget
+### Add the js script file
 Before the end of the <body> tag, add the <script></script> tag as shown in the source code. Refer to the example below.
 ```HTML
 <body>
@@ -48,7 +48,7 @@ Before the end of the <body> tag, add the <script></script> tag as shown in the 
 </body>
 ```
 
-### Add the code that represents the KyberWidget
+### Add the KyberWidget code
 Wherever you want to use the KyberWidget button, add the <a href></a> tag as shown in the source code. Refer to the example below.
 ```HTML
 <body>
@@ -68,7 +68,7 @@ Once this step is completed, you can serve up your website and the KyberWidget b
 * The guide uses version Swift 4 for APIKit framework.
 * iCloud must be enabled in your capabilities as the framework is using document picker (for importing JSON files).
 
-### Download the KyberWidget source code
+### Download the source code
 Download the zip file [here](https://github.com/KyberNetwork/widget-swift/tree/master/KyberWidget/KyberWidget.framework.zip) (then unzip to get `KyberWidget.framework`) or clone this repo to get `KyberWidget.framework` from KyberWidget or example project
 
 #### Add KyberWidget into your project
@@ -110,19 +110,16 @@ end
 ```
 
 ### Import KyberWidget into your code
-
 ```swift
 import KyberWidget
 ```
 
 ### Define KWCoordinator instance
-
 ```swift
 fileprivate var coordinator: KWCoordinator?
 ```
 
 ### Create KWCoordinator instance
-
 First, you need to create and initialize the `KWCoordinator` instance.
 There are 3 sub-classes `KWPayCoordinator`, `KWSwapCoordinator`, and `KWBuyCoordinator` corresponding to 3 use cases. You should only use these 3 classes depending on your purpose. You may find more information about the different use cases [here](references-kyberwidget.md).
 

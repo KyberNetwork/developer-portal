@@ -3,7 +3,7 @@ id: Integrations-WidgetsPluginsOverview
 title: Overview
 ---
 ## Introduction
-The Widgets and Plugins are 2 different types of integration that can be easily implemented on any websites or applications. There are currently 2 Widgets, the [KyberWidget](integrations-kyberwidgetguide.md) and the [Sign In Widget](integrations-signinwidgetguide.md), and one plugin, the [WooCommerce Plugin](integrations-woocommercepluginguide.md) that are available for users to implement. 
+The Widgets and Plugins are 2 different types of integration that can be easily implemented on any websites or applications. There are currently 2 widgets, the [KyberWidget](integrations-kyberwidgetguide.md) and the [Sign In Widget](integrations-signinwidgetguide.md), and one plugin, the [WooCommerce Plugin](integrations-woocommercepluginguide.md) that are available for users to implement. 
 
 ## KyberWidget
 The KyberWidget allows users to pay for goods using any token supported by Kyber while allowing merchants / vendors to accept the payment in their preferred token. It provides a friendly stock user interface for users to use ERC20 tokens to pay to an ETH address. Users can use different wallets of choice (e.g. keystore, Trezor, Ledger, private key, and MetaMask) to sign the transaction and make the payment. The widget will broadcast the transaction to the Ethereum network automatically and notify the app (vendors) about the transaction.
@@ -79,4 +79,4 @@ function paymentStatus(txhash, expectedPayment) -> return status {
 The Sign In Widget allows your users who have been registered with our platform to log into your platform using the same log in credentials. Note that the widget is still under development and is only provided to select partners for early testing. You can learn how to use the Sign In Widget [here](integrations-signinwidgetguide.md).
 
 ## WooCommerce Plugin
-E-commerce websites that are created with WordPress are traditionally restricted to fiat payment gateway. Our [extension](https://woocommerce.com/product-category/woocommerce-extensions/) of the WooCommerce plugin enables your users with the ability to pay in any tokens of their choice while you are receive the payment in your preferred token. Click [here](integrations-woocommercepluginguide.md) to integrate your WordPress powered e-commerce site with our extended WooCommerce plugin.
+E-commerce websites that are created with WordPress are traditionally restricted to fiat payment gateway. Our [extension](https://woocommerce.com/product-category/woocommerce-extensions/) of the WooCommerce plugin enables your users with the ability to pay in any tokens of their choice while you are receive the payment in your preferred token. Click [here](integrations-woocommercepluginguide.md) to learn how to integrate your WordPress powered e-commerce site with our extended WooCommerce plugin.
