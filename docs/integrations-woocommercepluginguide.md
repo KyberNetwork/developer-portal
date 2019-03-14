@@ -1,12 +1,12 @@
 ---
-id: Integrations-PluginsGuide
-title: Plugins
+id: Integrations-WooCommercePluginGuide
+title: WooCommerce Plugin Guide
 ---
 ## Introduction
-Like Widgets, plugins are another type of integration that e-commerce websites built using WordPress can easily leverage on to interact with our protocol implementation. There is currently one plugin which is the WooCommerce Plugin. The plugin is an extension of the traditional WooCommerce plugin with the extended functionality of being able to accept payments in token as well.
+This guide will walk you through on how you can interact with our protocol implementation using our WooCommerce plugin. The most common group of user that can benefit from this guide are vendors that use WordPress for their e-commerce websites. 
 
 ## Overview
-This guide will walk you through on how you can add a cryptocurrency payment gateway to an existing WordPress site via our WooCommerce Plugin.
+The guide will teach you how  you through on how you can add a cryptocurrency payment gateway to an existing WordPress site via our WooCommerce Plugin.
 
 ## WooCommerce Plugin
 ### Prerequisites
