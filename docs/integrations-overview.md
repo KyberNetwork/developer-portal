@@ -1,6 +1,6 @@
 ---
-id: Integrations-Overview
-title: Overview
+id: Integrations-IntegrationTypes
+title: Types Of Integration
 ---
 ![Guides Overview](/uploads/guidesoverview.png "Guides Overview")
 

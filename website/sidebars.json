@@ -18,15 +18,19 @@
       "Integrations-WalletsUseCase"
     ],
     "Guides": [
-      "Integrations-Overview",
+      "Integrations-IntegrationTypes",
       "Integrations-SmartContractGuide",
       "Integrations-Web3Guide",
-      "Integrations-RESTfulAPIGuide",
-      "Integrations-WidgetsGuide",
-      "Integrations-PluginsGuide"
+      "Integrations-RESTfulAPIGuide"
+    ],
+    "Widgets & Plugins": [
+      "Integrations-WidgetsPluginsOverview",
+      "Integrations-KyberWidgetGuide",
+      "Integrations-SignInWidgetGuide", 
+      "Integrations-WooCommercePluginGuide",
+      "Integrations-WidgetGenerator"
     ],
     "Miscellaneous": [
-      "Integrations-WidgetGenerator",
       "Integrations-FeeSharing",
       "Integrations-GettingHelp"
     ]

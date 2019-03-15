@@ -3,18 +3,17 @@ id: Integrations-Web3Guide
 title: Web3
 ---
 ## Introduction
-This guide will walk you through on how you can interact with our protocol implementation using the [Web3](https://github.com/ethereum/web3.js/) Javascript package. The most common group of users that can benefit from this guide are Wallet providers or Vendors who want to use their own UI.
+This guide will walk you through on how you can interact with our protocol implementation using the [Web3](https://github.com/ethereum/web3.js/) Javascript package. The most common group of users that can benefit from this guide are wallets or vendors who want to use their own UI.
 
 ## Overview
 In this guide, we will using Web3 to get conversion rates and perform a token to token swap. The guide assumes that you are a wallet provider and a user of your wallet wants to swap 100 KNC for ZIL tokens.
 
 ## Things to note
-1) If your version of Web3 is 1.0.0-beta.37 and below, the full code example will not work for you due to breaking changes that were introduced in version [1.0.0-beta.38](https://github.com/ethereum/web3.js/releases/tag/v1.0.0-beta.38).
-2) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/developV2/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
-3) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](references-kybernetworkproxy.md#getexpectedrate) and [`trade()`](references-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
-4) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
-5) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
-6) The example swaps KNC tokens for ZIL. You may swap some Ropsten ETH for KNC tokens at https://ropsten.kyber.network.
+1) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/developV2/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
+2) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](references-kybernetworkproxy.md#getexpectedrate) and [`trade()`](references-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
+3) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
+4) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
+5) The example swaps KNC tokens for ZIL. You may swap some Ropsten ETH for KNC tokens at https://ropsten.kyber.network.
 
 ```js
 let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
@@ -153,7 +152,7 @@ async function main() {
 	let contractAllowance = await SRC_TOKEN_CONTRACT.methods.allowance(USER_ADDRESS, KYBER_NETWORK_PROXY_ADDRESS).call();
 
 	// If insufficient allowance, approve else convert KNC to ETH.
-    if (SRC_QTY_WEI <= contractAllowance.remaining) {
+    if (SRC_QTY_WEI <= contractAllowance) {
         await trade(SRC_TOKEN_ADDRESS, SRC_QTY_WEI, DST_TOKEN_ADDRESS, USER_ADDRESS, MAX_ALLOWANCE, results.slippageRate, REF_ADDRESS);
     } else {
         await approveContract(MAX_ALLOWANCE);
@@ -213,7 +212,7 @@ async function main() {
 	let contractAllowance = await SRC_TOKEN_CONTRACT.methods.allowance(USER_ADDRESS, KYBER_NETWORK_PROXY_ADDRESS).call();
 
 	// If insufficient allowance, approve else convert KNC to ETH.
-    if (SRC_QTY_WEI <= contractAllowance.remaining) {
+    if (SRC_QTY_WEI <= contractAllowance) {
         await trade(SRC_TOKEN_ADDRESS, SRC_QTY_WEI, DST_TOKEN_ADDRESS, USER_ADDRESS, MAX_ALLOWANCE, results.slippageRate, REF_ADDRESS);
     } else {
         await approveContract(MAX_ALLOWANCE);
@@ -287,4 +286,4 @@ main()
 By default, reserves that were listed permissionlessly are also included when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To filter them out, use the `tradeWithHint()` function. Refer to [this section](references-kybernetworkproxy.md#hint) for more information.
 
 ## Fee Sharing Program
-Wallets have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your wallet. Learn more about the program [here](integrations-feesharing.md)!
+You have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your platform. Learn more about the program [here](integrations-feesharing.md)!
