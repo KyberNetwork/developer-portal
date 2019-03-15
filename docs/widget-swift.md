@@ -92,8 +92,10 @@ do {
     signer: nil,
     commissionId: nil,
     productName: "",
+    productQty: nil, // quantity/number of products
     productAvatar: "https://pbs.twimg.com/media/DVgWFLTVwAAUarj.png",
-    productAvatarImage: nil
+    productAvatarImage: nil,
+    paymentData: "PERM" // put empty string if you don't want to pass any value
   )
 } catch {}
 ```
