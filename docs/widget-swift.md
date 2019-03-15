@@ -153,9 +153,13 @@ NOTE: The values are for example only, check out the parameter details below.
 
 - ***productName*** - (String?) - your product name you want to display (only for _pay_ widget).
 
+- ***productQty*** - (Int?) - your product quantity you want to buy (only for pay widget).
+
 - ***productAvatar*** - (String?) - url string to your product avatar (only for _pay_ widget).
 
 - ***productAvatarImage*** - (UIImage?) - image for your product avatar (only for _pay_ widget). You should either provide `productAvatar` or `productAvatarImage` (prefer `productAvatarImage` for faster displaying). If you provide both, `productAvatar` will be ignored.
+
+- ***paymentData*** - (String) - A piece of additional information attached to the payment after broadcasted on the blockchain (*Note*: This param only takes effect when type=pay)
 
 An error will be throw via delegation if parameters are invalid.
 
