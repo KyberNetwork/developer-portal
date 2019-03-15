@@ -155,9 +155,13 @@ Note that if any of the parameters are invalid, an error will be thrown via dele
 
 - ***productName*** - (String?) - your product name you want to display (only for _pay_ widget).
 
+- ***productQty*** - (Int?) - your product quantity you want to buy (only for pay widget).
+
 - ***productAvatar*** - (String?) - url string to your product avatar (only for _pay_ widget).
 
 - ***productAvatarImage*** - (UIImage?) - image for your product avatar (only for _pay_ widget). You should either provide `productAvatar` or `productAvatarImage` (prefer `productAvatarImage` for faster displaying). If you provide both, `productAvatar` will be ignored.
+
+- ***paymentData*** - (String) - A piece of additional information attached to the payment after broadcasted on the blockchain (*Note*: This param only takes effect when type=pay)
 
 ### Error cases to be handled
 These are some error / edge cases that should be handled in the **coordinatorDidFailed** function.
