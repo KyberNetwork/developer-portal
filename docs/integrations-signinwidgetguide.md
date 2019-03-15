@@ -82,7 +82,7 @@ or if there is an error:
 
 For simplicity, we will call the `/user_info` API using the second method.
 ```
-https://kyber.network/api/user_info?access_token=ACCESS_TOKEN
+curl --header "access_token: ACCESS_TOKEN" https://kyberswap.com/api/user_info
 ```
 
 Example Output
