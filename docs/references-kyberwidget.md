@@ -7,25 +7,10 @@ The KyberWidget can be implemented via HTML/JS or iOS. The HTML / JS option has 
 
 ## KyberWidget (HTML/JS)
 ### Widget Types
-There are 3 different widget types. The use-case for each type is briefly described below.
-#### Pay
-This widget option caters to e-commerce sites and vendors who would like to receive cryptocurrencies as payment.
-
-#### Swap
-This widget option caters to parties who wish to provide a generic swap service on their websites, where users can swap from any supported ERC20 token to another.
-
-#### Buy
-This widget option caters to platforms who want to allow users to buy a specific token on their website.
+![Widget Types](/uploads/widgettypes.png "Widget Types")
 
 ### Widget Modes
-#### Popup
-The widget will open as an overlay popup. The widget will be inserted directly into the host page's DOM. Use this mode if you want to customize the widget appearance by overriding CSS rules.
-
-#### New Tab
-The widget will open in a new browser tab.
-
-#### iFrame
-The widget will open inside an iFrame on an overlay popup. Use this mode if you prefer the widget's UI and don't want to override its CSS.
+![Widget Modes](/uploads/widgetmodes.png "Widget Modes")
 
 ### Widget URL Components
 #### Base URL
