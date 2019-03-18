@@ -10,6 +10,21 @@ This guide will walk you through on how you can interact with our protocol imple
 * WordPress 3.8+
 * WooCommerce 3.0+
 
+Plus, current version of plugin (v0.2.0), will use library bcdiv from php to handle big number return from blockchain, please enable bcdiv if it have not enabled yet. For example install it as below:
+
+1. Install module bcmath
+
+```shell
+sudo apt-get install php-bcmath
+```
+(note: on ubuntu 16.04^ with PHP 7.0^ use php7.0-bcmath package instead)
+
+2. Restart apache service eventually
+
+```shell
+sudo service apache2 restart
+```
+
 ## Installing the plugin
 ### Option A: Clone Github Repo Source
 1. Clone the code repo to your `/wp-content/plugins/` directory
@@ -46,26 +61,10 @@ For this guide, we use the following settings shown below. You may configure the
 | `Receive Token Symbol`   | KNC |
 | `Network`                | Ropsten |
 | `Mode`                   | popup |
-| `Network Node Endpoint`  | https://ropsten.infura.io/v3/fb1b33 |
 | `Block Confirmation`     | 40 |
 | `Commission ID`          | 0x2B522cABE9950D1153c26C1b399B293CaA99FcF9 |
 
-![WooCommerce Config](/uploads/woocommerce-1.png "Woocommerce Config")
-
-## Set item prices in fiat
-Set the prices of your products in fiat currency.
-
-![Woocommerce Prices](/uploads/woocommerce-2.png "Woocommerce Prices")
-
-After doing do, you will notice that the item prices will be displayed in fiat currency.
-
-![Woocommerce Display](/uploads/woocommerce-3.png "Woocommerce Display")
-
 ## Checkout items
-Select an item for purchase and proceed to checkout. You will be presented with a similar view below.
-
-![Woocommerce Checkout](/uploads/woocommerce-4.png "Woocommerce Checkout")
-
 When the user pays for his shopping cart using the Kyber Payment Gateway option, the KyberWidget will handle the rest of the process. The user will be able to pay using any tokens supported by Kyber, while you (the vendor) will receive the payment in the token of your choice.
 
 ![Woocommerce Widget](/uploads/woocommerce-5.png "Woocommerce Widget")

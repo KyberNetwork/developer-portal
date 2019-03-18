@@ -13,7 +13,6 @@ The plugin parameters are defined in the widget as payment gateway settings in W
 | `Receive Token Symbol`   | Token symbol of the token you want to receive from payments. The token must be supported by Kyber Network. | KNC |
 | `Network` | ETH network that the payment gateway will run in. Either `Ropsten` (for testing) or `Mainnet` (for production) | Ropsten |
 | `Mode` | Behavior of how the widget will appear to the user. Find out more [here](references-kyberwidget.md#widget-mode). Either `tab`, `popup`, or `iframe` | popup |
-| `Network Node Endpoint` | Node endpoint to check tx status. If you do not have one, create one using [Infura](https://infura.io/) | https://ropsten.infura.io/v3/fb1b33 |
 | `Block Confirmation` | Number of block confirmations to finalize the transaction. Larger block confirmations mean longer confirmation times, but are more secure | 40 |
 | `Commission ID` | Registered ETH address that is part of the [fee sharing program](integrations-feesharing.md) | 0x2B522cABE9950D1153c26C1b399B293CaA99FcF9 |
 
