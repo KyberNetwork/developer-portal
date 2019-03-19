@@ -325,6 +325,12 @@ Suppose calling `getExpectedRate(KNC_TOKEN,ZIL_TOKEN,1000000000000000000)` retur
 ` 8364817722526000000 / (10**18) = 8.364817722526`
 Hence, 1 KNC token can be converted to 8.365 ZIL tokens.
 
+#### `0` expected and slippage rates
+A returned rate of `0` signifies that a trade from the requested source token amount to the destination token is not possible at the moment. It could be due to the following reasons:
+* No reserve is supporting either `src` or `dest` token, or both
+* No reserve can support the queried `srcQty` amount (Eg. due to insufficient liquidity, expired conversion rates)
+* The network is undergoing maintenance (this can be checked with [this function](#enabled))
+
 #### Turning on MSB to exclude permissionless reserves
 Add `2**255` to the desired `srcQty`. As `2**255` is a really large number, the use of a BigNum library / package is recommended for calculations. Refer to the latter part of the web3 example below.
 ___
