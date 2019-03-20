@@ -9,15 +9,16 @@ This guide will walk you through on how you can interact with our protocol imple
 In this guide, we will using Web3 to get conversion rates and perform a token to token swap. The guide assumes that you are a wallet provider and a user of your wallet wants to swap 100 KNC for ZIL tokens.
 
 ## Things to note
-1) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/developV2/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
+1) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
 2) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](references-kybernetworkproxy.md#getexpectedrate) and [`trade()`](references-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
 3) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
 4) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
-5) The example swaps KNC tokens for ZIL. You may swap some Ropsten ETH for KNC tokens at https://ropsten.kyber.network.
-
 ```js
 let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 ```
+5) The example swaps KNC tokens for ZIL. You may swap some Ropsten ETH for KNC tokens at https://ropsten.kyber.network.
+
+
 
 ## Using Web3 to Interact
 ### Import the relevant packages

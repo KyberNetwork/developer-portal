@@ -13,4 +13,4 @@ Projects such as Gifto and Request Network will be taking advantage of Kyber's p
 Vendors also have the opportunity to join Kyber's *Fee Sharing Program*, which allows fee sharing for each payment originating from your business. Learn more about the program [here](integrations-feesharing.md)!
 
 ## Integrate Your Platform
-The common methods existing vendors use to integrate with our protocol implementation are the **widgets** and **plugins**. Explore the [widgets](integrations-widgetsguide.md) and [plugins](integrations-pluginsguide.md) guides to learn more!
+The common methods existing vendors use to integrate with our protocol implementation are the **widgets** and **plugins**. Explore the [widgets](integrations-kyberwidgetguide.md) and [plugins](integrations-woocommercepluginguide.md) guides to learn more!

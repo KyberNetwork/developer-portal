@@ -3,7 +3,7 @@ id: Integrations-WooCommercePluginGuide
 title: WooCommerce Plugin Guide
 ---
 ## Introduction
-This guide will walk you through on how you can interact with our protocol implementation using our WooCommerce plugin. The most common group of user that can benefit from this guide are vendors that use WordPress for their e-commerce websites. 
+This guide will walk you through on how you can interact with our protocol implementation using our WooCommerce plugin. The most common group of user that can benefit from this guide are vendors that use WordPress for their e-commerce websites.
 
 ## Prerequisites
 * PHP version 7.2+
@@ -50,7 +50,7 @@ Activate the plugin in `/wp-admin/plugins.php`. After activation, you will find 
 
 
 ## Configure the plugin
-The configuration in this plugin is based on the widget configuration from the [Widget Generator](https://developer.kyber.network/docs/WidgetGenerator/), and is modified to fit the WooCommerce model. Information about the plugin settings can be found [here](references-woocommerceplugin.md#plugin-parameters).
+The configuration in this plugin is based on the widget configuration from the [Widget Generator](integrations-widgetgenerator.md), and is modified to fit the WooCommerce model. Information about the plugin settings can be found [here](references-woocommerceplugin.md#plugin-parameters).
 
 For this guide, we use the following settings shown below. You may configure them as you wish.
 | Parameter | Example |

@@ -3,7 +3,7 @@ id: Integrations-SignInWidgetGuide
 title: Sign In Widget Guide
 ---
 ## Introduction
-This guide will walk you through on how you can implement our sign in widget to allow the users of your platform (who are registered with us) to reuse the same credentials to log on to your platform. 
+This guide will walk you through on how you can implement our sign in widget to allow the users of your platform (who are registered with us) to reuse the same credentials to log on to your platform.
 
 ## Things to note
 * The Kyber Sign-in Widget conforms with the OAuth 2.0 specs, so it can be used with existing oauth2.0-support libraries/frameworks.
@@ -148,7 +148,7 @@ or if there is an error:
 1. Add request header authorization: Bearer `ACCESS_TOKEN` (recommended)
 2. Include `access_token=ACCESS_TOKEN` as a GET or POST parameter
 
-For simplicity, we will call the `/authorized_users` API using the second method. Refer to [this section](#authorized-users) for possible path parameters to parse.
+For simplicity, we will call the `/authorized_users` API using the second method. Refer to [this section](references-signinwidget.md#authorized-users) for possible path parameters to parse.
 ```
 https://kyberswap.com/api/authorized_users&access_token=ACCESS_TOKEN
 ```

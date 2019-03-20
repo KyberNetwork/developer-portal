@@ -8,7 +8,7 @@ The diagram below shows how wallets can streamline the token swap process for th
 
 ![Wallets](/uploads/wallets.png "Wallets")
 
-Popular wallets like MyEtherWallet, imToken and TrustWallet are already using Kyber's protocol implementation to empower their users with embedded token swap functionality.
+Popular wallets like MyEtherWallet, imToken and EnjinWallet are already using Kyber's protocol implementation to empower their users with embedded token swap functionality.
 
 Wallets also have the opportunity to join Kyber's *Fee Sharing Program*, which allows fee sharing for each swap originating from your wallet. Learn more about the program [here](integrations-feesharing.md)!
 

@@ -9,7 +9,7 @@ This guide will walk you through on how you can interact with our protocol imple
 In this guide, we will be going through 2 scenarios. The first scenario covers how to perform a token to token swap using the RESTful apis and the second is about how one can obtain token information and historical price data.
 
 ## Things to note
-1) The `/buy_rate` and `/sell_rate` endpoints are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to use both APIs. Refer to [this section](#step-4-get-approximate-dai-token-amount-receivable) on how to do so.
+1) The `/buy_rate` and `/sell_rate` endpoints are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to use both APIs. Refer to [this section](#get-approximate-dai-token-amount-receivable) on how to do so.
 2) When converting from Token to ETH/Token, the user is required to call the `/enabled_data` endpoint **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
 3) Refer to the [API overview](references-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
 
@@ -79,7 +79,7 @@ async function broadcastTx(rawTx) {
 }
 ```
 
-### Step 1: Check if BAT and DAI tokens are supported
+### Check if BAT and DAI tokens are supported
 Create a function to check whether a token is supported on Kyber. We make use of the `/currencies` endpoint, which returns basic information about all tokens supported on Kyber. Details about possible path parameters and output fields can be [found here](references-restfulapi.md#currencies).
 
 It is recommended to use the token contract address as the identifier instead of the token symbol, as multiple tokens may share the same symbol.
@@ -96,7 +96,7 @@ async function isTokenSupported(tokenAddress) {
 }
 ```
 
-### Step 2: Check if BAT token is approved for use
+### Check if BAT token is approved for use
 We use the `/users/<user_address>/currencies` endpoint to check whether the KyberNetwork contract has been approved for selling BAT tokens on behalf of the user. This endpoints returns a JSON of enabled statuses of ERC20 tokens for the given walletAddress. Details about the path parameters and output fields can be [found here](references-restfulapi.md#users-user-address-currencies).
 
 ```js
@@ -112,7 +112,7 @@ async function isTokenEnabledForUser(tokenAddress,walletAddress) {
 }
 ```
 
-### Step 3: Enable BAT token for transfer
+### Enable BAT token for transfer
 If the BAT token is not enabled for trading, querying the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint returns a transaction payload needed to be signed and broadcasted by the user to enable the KyberNetwork contract to trade BAT tokens on his behalf. Details about the path parameters and output fields can be [found here](references-restfulapi.md#users-user-address-currencies-currency-id-enable-data).
 
 ```js
@@ -125,7 +125,7 @@ async function enableTokenTransfer(tokenAddress,walletAddress,gasPrice) {
 }
 ```
 
-### Step 4: Get approximate DAI token amount receivable
+### Get approximate DAI token amount receivable
 For token to token conversions, a base token is used (Eg. ETH). We first query the `/sell_rate?id=<id>&qty=<qty>` endpoint, which returns the expected ETH amount receivable for a specific token. Details about the path parameters and output fields can be [found here](references-restfulapi.md#sell-rate).
 
 We next use the `buy_rate?id=<id>&qty=<qty>` endpoint, but this returns the ETH amount required to purchase a requested amount of tokens (`? ETH -> X tokens`), not the amount of tokens receivable for a requested ETH amount (`X ETH -> ? tokens`).  Details about the path parameters and output fields can be [found here](references-restfulapi.md#buy-rate).
@@ -168,7 +168,7 @@ async function getApproximateReceivableTokens(sellQty,buyQty,srcQty) {
 }
 ```
 
-### Step 5: Convert BAT to DAI
+### Convert BAT to DAI
 We now have all the required information to peform the trade transaction. Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>` will return the transaction payload to be signed and broadcasted by the user to make the conversion. Details about the path parameters and output fields can be [found here](references-restfulapi.md#trade-data).
 
 ```js

@@ -121,7 +121,7 @@ fileprivate var coordinator: KWCoordinator?
 
 ### Create KWCoordinator instance
 First, you need to create and initialize the `KWCoordinator` instance.
-There are 3 sub-classes `KWPayCoordinator`, `KWSwapCoordinator`, and `KWBuyCoordinator` corresponding to 3 use cases. You should only use these 3 classes depending on your purpose. You may find more information about the different use cases [here](references-kyberwidget.md).
+There are 3 sub-classes `KWPayCoordinator`, `KWSwapCoordinator`, and `KWBuyCoordinator` corresponding to 3 use cases. You should only use these 3 classes depending on your purpose. You may find more information about the different use cases [here](references-kyberwidget.md#valid-use-cases).
 
 Please note that the values are **for illustration purposes** only.
 
