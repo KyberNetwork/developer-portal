@@ -24,7 +24,7 @@ On creation and listing:
 
 On making orders:
 * There is a [**minimum order amount**](#minimum-order-size) defined in dollars (Eg. USD $1000) to prevent dust orders.
-* Each order requires some KNC tokens to be deposited, for the [fee sharing program](integrations-feesharing.md#fee-example) and fee burning.
+* Each order requires some KNC tokens to be deposited, for the [fee sharing program](integrations-feesharing.md) and fee burning.
 * Market makers have to deposit funds and KNC tokens first before making orders.
 * Funds locked up in active orders cannot be withdrawn until these active orders are canceled.
 * The required KNC amount for each order is dependent on the Ether value of the order.

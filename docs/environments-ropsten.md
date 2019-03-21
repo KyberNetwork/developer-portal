@@ -7,7 +7,7 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ### Supported Token Pairs
 https://ropsten-api.kyber.network/currencies <br><br>
-Read more [here](references-resftulapi.md#currencies)
+Read more [here](references-restfulapi.md#currencies)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`

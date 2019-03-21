@@ -7,7 +7,7 @@ Please note that `KyberReserve`, `ConversionRates`, `SanityRates`, `OrderbookRes
 
 ### Supported Token Pairs
 https://api.kyber.network/currencies <br><br>
-Read more [here](references-resftulapi.md#currencies)
+Read more [here](references-restfulapi.md#currencies)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`

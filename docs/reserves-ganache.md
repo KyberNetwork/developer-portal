@@ -282,7 +282,7 @@ Contracts
 | **SwapTokenToToken**                     | 0xB31b6edd85c386C259FB5488dae8Be4ed82C0778 |
 | **Trade**                                | 0x3f21DD3b2Aca23e495290a8dcb9A934984D93a6c |
 
-**NOTE:** The `KyberReserve` and `KyberAutomatedReserve` as well as the `KyberOrderbookReserve` and `OrderbookReserve` are the same contracts. A duplicate was made as a workaround due to a limitation of Truffle where only one instance of a contract can be migrated. Kyber has three types of reserves, the Fed Price Reserve, Automated Price Reserve, and Orderbook Reserve, which you can read more about [here](https://developer.kyber.network/docs/ReservesUseCase/).
+**NOTE:** The `KyberReserve` and `KyberAutomatedReserve` as well as the `KyberOrderbookReserve` and `OrderbookReserve` are the same contracts. A duplicate was made as a workaround due to a limitation of Truffle where only one instance of a contract can be migrated. Kyber has three types of reserves, the Fed Price Reserve, Automated Price Reserve, and Orderbook Reserve, which you can read more about [here](reserves-types.md).
 
 ## How to add a new ERC20 token with rates for initial migration
 
