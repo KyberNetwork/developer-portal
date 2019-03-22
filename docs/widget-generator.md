@@ -58,8 +58,8 @@ title: Widget Generator
 
 <script>  
   document.addEventListener('DOMContentLoaded', function() {
-    var defaultWidgetUrl = "https://widget.kyber.network/widget/config/?widget_url=https://widget.kyber.network";
-    var fallbackWidgetUrl = "https://dev-widget.knstats.com/widget/config/?widget_url=https://dev-widget.knstats.com&version=no";
+    var defaultWidgetUrl = "https://widget.kyber.network/widget/config/?widget_url=https://widget.kyber.network&embeddedIframe=true";
+    var fallbackWidgetUrl = "https://dev-widget.knstats.com/widget/config/?widget_url=https://dev-widget.knstats.com&version=no&embeddedIframe=true";
     var domain = window.location.hostname;
     var iframe = document.getElementById("widget-generator-iframe");
     if (domain === "developer.kyber.network") {
