@@ -10,4 +10,4 @@ For Ropsten contract and token addresses, [click here](environments-ropsten.md).
 For Rinkeby contract and token addresses, [click here](environments-rinkeby.md).
 For Kovan contract and token addresses, [click here](environments-kovan.md).
 
-For the contract Application Binary Interfaces (ABIs), [click here](environments-abi.md).
+For the contract Application Binary Interfaces (ABIs), [click here](references-abi.md).
