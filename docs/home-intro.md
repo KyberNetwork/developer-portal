@@ -16,8 +16,8 @@ You can learn more about the Kyber protocol specifications, our implementation o
 | [Design Principles](home-designprinciples.md) | Key Features of the Protocol |
 | [Integrations](integrations-intro.md) | Common integration use-cases and guides |
 | [Reserves](reserves-intro.md) | Reserve overview, types, use-cases and guides |
-| [Environments](environments-intro.md) | Contract ABIs and addresses |
-| [References](references-intro.md) | Detailed documentation on smart contracts and APIs |
+| [Environments](environments-intro.md) | Contract addresses for different environments |
+| [API/ABI](api_abi-intro.md) | Detailed documentation on our smart contracts, APIs and ABIs |
 
 ## Support and Community
 Should you have any question, feel free to join our telegram group at https://t.me/KyberDeveloper or shoot us an email at [hello@kyber.network](mailto:hello@kyber.network).

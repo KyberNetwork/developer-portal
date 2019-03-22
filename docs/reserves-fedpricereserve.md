@@ -184,7 +184,7 @@ First let's understand how the rate in `ConversionRates.sol` is defined and modi
 2. Compact Data
 3. Step Functions
 
-Base rate sets the basic rate per token, and is set separately for buy and sell values. Compact data and step functions enable advanced functionality and serve as modifiers of the base rate. To avoid frequent expensive updates of base rates, compact data enables modification to a group of tokens in one on chain storage operation. Each compact data array is squeezed into one bytes32 parameter and holds modifiers for buy / sell prices of 14 tokens. If your reserve supports more than 1-2 tokens, we recommend updating token rates using the `setCompactData` function to save gas costs for your updates. Finally, step functions enable degenerated order book functionality, whereby rates are modified according to imbalance values. Refer to the [step function section](#step-functions) for details. More information regarding the input parameters of the `setBaseRate` function can be found in [reference](references-conversionrates.md#setbaserate).
+Base rate sets the basic rate per token, and is set separately for buy and sell values. Compact data and step functions enable advanced functionality and serve as modifiers of the base rate. To avoid frequent expensive updates of base rates, compact data enables modification to a group of tokens in one on chain storage operation. Each compact data array is squeezed into one bytes32 parameter and holds modifiers for buy / sell prices of 14 tokens. If your reserve supports more than 1-2 tokens, we recommend updating token rates using the `setCompactData` function to save gas costs for your updates. Finally, step functions enable degenerated order book functionality, whereby rates are modified according to imbalance values. Refer to the [step function section](#step-functions) for details. More information regarding the input parameters of the `setBaseRate` function can be found in [API/ABI](api_abi-conversionrates.md#setbaserate).
 
 <!--Here are the input parameters of the `setBaseRate` function.
 | Input field | Explanation | Examples |
@@ -328,7 +328,7 @@ function setQtyStepFunction(
 	int[] ySell
 	)
 ```
-More information regarding the input parameters of the `setQtyStepFunction` function can be found in [reference](references-conversionrates.md#setqtystepfunction).
+More information regarding the input parameters of the `setQtyStepFunction` function can be found in [API/ABI](api_abi-conversionrates.md#setqtystepfunction).
 <!--| Input field | Explanation | Example |
 | ------------- | ------------- | ------------- |
 | `ERC20 token`  |  Token contract address | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6` |
@@ -339,7 +339,7 @@ More information regarding the input parameters of the `setQtyStepFunction` func
 * Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
 * When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory.-->
 
-Given the example parameters in the reference section, assume the base buy rate is 100 (1 ETH = 100 KNC) and sell rate is 0.01 (1 KNC = 0.01 ETH), different buy and sell quantities will result in different conversion rates as below:
+Given the example parameters in the API/ABI section, assume the base buy rate is 100 (1 ETH = 100 KNC) and sell rate is 0.01 (1 KNC = 0.01 ETH), different buy and sell quantities will result in different conversion rates as below:
 
 | Buy/Sell quantity | Actual conversion rate | Explanation |
 | ------------- | ------------- | ------------- |
@@ -364,7 +364,7 @@ function setImbalanceStepFunction(
 	int[] ySell
 	)
 ```
-More information regarding the input parameters of the `setImbalanceStepFunction` function can be found in [reference](references-conversionrates.md#setimbalancestepfunction).
+More information regarding the input parameters of the `setImbalanceStepFunction` function can be found in [API/ABI](api_abi-conversionrates.md#setimbalancestepfunction).
 
 <!--| Input field | Explanation | Example |
 | ------------- | ------------- | ------------- |
@@ -376,7 +376,7 @@ More information regarding the input parameters of the `setImbalanceStepFunction
 * Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
 * `yBuy` and `ySell` numbers should always be non-positive (`<=0`) because the smart contract **reduces** the output amount by the Y-value set in each step.-->
 
-Given the example parameters in the reference section, assume the base buy rate is 100 (1 ETH = 100 KNC) and sell rate is 0.01 (1 KNC = 0.01 ETH), different net traded amount will result in different conversion rates as below:
+Given the example parameters in the API/ABI section, assume the base buy rate is 100 (1 ETH = 100 KNC) and sell rate is 0.01 (1 KNC = 0.01 ETH), different net traded amount will result in different conversion rates as below:
 
 | Net traded amount | Actual conversion rate | Explanation |
 | ------------- | ------------- | ------------- |
@@ -393,7 +393,7 @@ Given the example parameters in the reference section, assume the base buy rate 
 In the case of unforeseen adverse circumstances (Eg. a hack in your automated system or operator accounts), whereby your conversion rate is compromised to be very unfavorable, you may set up additional safeguards in place to protect your reserve.
 
 ##### Sanity Rates
-Operators can set a sanity rate by calling `setSanityRates` and `setReasonableDiff` from `SanityRates.sol` to allow automatic swap disabling if rate inconsistencies exceed a certain percentage between two rate updates. Refer to [this section](reserves-sanityrates.md) and [API documentation](references-sanityrates.md) to learn more about sanity rates.
+Operators can set a sanity rate by calling `setSanityRates` and `setReasonableDiff` from `SanityRates.sol` to allow automatic swap disabling if rate inconsistencies exceed a certain percentage between two rate updates. Refer to [this section](reserves-sanityrates.md) and [API documentation](api_abi-sanityrates.md) to learn more about sanity rates.
 
 ##### Alerters
 As mentioned previously, the role of alerters is to look out for unexpected / malicious behaviour of the reserve and halt operations. They can do so by calling `disableTokenTrade()` in the `ConversionRates.sol`. Thereafter, only the admin account is able to resume operations by calling `enableTokenTrade()` in the same contract.

@@ -30,7 +30,7 @@ The FPR and conversion rates are represented by the `KyberReserve.sol` and `Conv
 
 The Automated Price Reserve (APR) is the second type of reserve, which was designed with ease of maintenance as the top consideration. Unlike the Price Fed Reserve (PFR), reserve managers of the APR will delegate the control of their pricing strategy to a predefined algorithm set in the smart contract. But in exchange, they will no longer incur the development costs that arose from having to build, run, and maintain an off-chain server and/or scripts to feed prices on-chain.
 
-Like the FPR, the APR can also be represented by the `KyberReserve.sol` contract. Reserve managers will instead interact with the `LiquidityConversionRates.sol` contract to [set the initial liquidity parameters](references-liquidityconversionrates.md#setliquidityparams).
+Like the FPR, the APR can also be represented by the `KyberReserve.sol` contract. Reserve managers will instead interact with the `LiquidityConversionRates.sol` contract to [set the initial liquidity parameters](api_abi-liquidityconversionrates.md#setliquidityparams).
 
 ### Orderbook Reserve
 ![Orderbook Reserve](/uploads/orderbookreserve.png "Orderbook Reserve")

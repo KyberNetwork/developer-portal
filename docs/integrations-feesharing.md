@@ -9,7 +9,7 @@ It’s an opportunity to be an integrated part of Kyber Network and receive comm
 Anyone can join the program by calling the [`registerWallet`](https://etherscan.io/address/0xECa04bB23612857650D727B8ed008f80952654ee#writeContract) function of [`KyberRegisterWallet`](https://etherscan.io/address/0xECa04bB23612857650D727B8ed008f80952654ee) contract! You may do so using [MyEtherWallet](#myetherwallet), [MyCrypto](#mycrypto) or programmatically via [web3](#web3).
 
 ## How do I earn fees?
-Send your registered wallet address as part of the trade transaction data. More information regarding the input parameters of the `trade` function can be found in [reference](references-kybernetworkproxy.md#trade).</br>
+Send your registered wallet address as part of the trade transaction data. More information regarding the input parameters of the `trade` function can be found in [API/ABI](api_abi-kybernetworkproxy.md#trade).</br>
 <!--The input parameters of the `trade` function are shown below.
 | Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
@@ -34,7 +34,7 @@ Suppose a user has successfully made a trade transaction of 10 ETH in value. 0.2
 ## How do I claim fees?
 Call the `sendFeeToWallet` function of the [fee burner contract](https://etherscan.io/address/0x52166528FCC12681aF996e409Ee3a421a4e128A3). This function **will have to be called for each reserve**. In other words, you would have to iterate through every reserve and call this function for your wallet address. At the moment, our server has a [script](https://github.com/KyberNetwork/smart-contracts/blob/master/scripts/feeHandler.js) to call this function for all wallets once every week.
 
-You may refer to this [code example](#claiming-fees-with-sendfeetowallet) on how you may go about calling the function. This script can be called once every few days, or whenever a reasonable amount has accumulated in your account. More information regarding the input parameters of the `sendFeeToWallet` function can be found in [reference](references-feeburner.md#sendfeetowallet).</br>
+You may refer to this [code example](#claiming-fees-with-sendfeetowallet) on how you may go about calling the function. This script can be called once every few days, or whenever a reasonable amount has accumulated in your account. More information regarding the input parameters of the `sendFeeToWallet` function can be found in [API/ABI](api_abi-feeburner.md#sendfeetowallet).</br>
 
 <!--###`sendFeeToWallet`
 | Parameter     | Type   | Description                                 |

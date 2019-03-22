@@ -12,7 +12,7 @@ The Kyber Core Smart Contracts contains the implementation of the major protocol
 
 ![Kyber Core Smart Contracts](/uploads/kybercoresmartcontracts.png "Kyber Core Smart Contracts")
 
-Additional information about these functions can be found [here](references-kybernetwork.md).
+Additional information about these functions can be found [here](api_abi-kybernetwork.md).
 
 ### Takers
 A taker is an entity that takes the liquidity provided by the registered reserves by calling the `tradeWithHint()` function in the Kyber Core Smart Contracts to trade from one token to another token. A taker can be any blockchain entity including end user address, decentralized exchanges, or any smart contracts.

@@ -44,9 +44,9 @@ class Footer extends React.Component {
               </div>
               <div className="kyber-link">
                 <span className="kyber-link__text semi-b">Integrations</span>
-                <a className="kyber-link__text" href="Integrations-DappsGuide">DApps</a>
-                <a className="kyber-link__text" href="Integrations-WalletsGuide">Wallets</a>
-                <a className="kyber-link__text" href="Integrations-VendorsGuide">Vendors</a>
+                <a className="kyber-link__text" href="Integrations-DappsUseCase">DApps</a>
+                <a className="kyber-link__text" href="Integrations-VendorsUseCase">Vendors</a>
+                <a className="kyber-link__text" href="Integrations-WalletsUseCase">Wallets</a>
                 <a className="kyber-link__text" href="Integrations-FeeSharing">Fee Sharing</a>
               </div>
               <div className="kyber-link">
@@ -61,7 +61,7 @@ class Footer extends React.Component {
         <div className="footer-under">
           <div className="wrapper">
             <div className="copyright">
-              <span>@ 2018 Kyber Network. All rights reserved.</span>
+              <span>@ 2019 Kyber Network. All rights reserved.</span>
             </div>
             <div className="media">
               <div className="social-icons">
@@ -76,10 +76,6 @@ class Footer extends React.Component {
                 <a className="social-icons__icon social-icons__icon--without-circle" href="https://github.com/kybernetwork" target="_blank">
                   <img src={`${this.props.config.baseUrl}img/github.svg`} />
                   <div className="social-icons__icon-tooltip">Follow us on Github</div>
-                </a>
-                <a className="social-icons__icon" href="https://kybernetwork.zendesk.com/hc/en-us/requests/new" target="_blank">
-                  <img src={`${this.props.config.baseUrl}img/email.svg`} />
-                  <div className="social-icons__icon-tooltip">Submit a request</div>
                 </a>
                 <a className="social-icons__icon social-icons__icon--without-circle" href="https://www.reddit.com/r/kybernetwork/" target="_blank">
                   <img src={`${this.props.config.baseUrl}img/reddit.svg`} />

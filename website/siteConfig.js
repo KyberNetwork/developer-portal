@@ -107,8 +107,8 @@ const siteConfig = {
       label: 'Environments',
     },
     {
-      doc: 'References-Intro',
-      label: 'References',
+      doc: 'API_ABI-Intro',
+      label: 'API/ABI',
     },
     {
       href: 'https://github.com/kybernetwork',

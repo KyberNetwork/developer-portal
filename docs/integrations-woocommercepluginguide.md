@@ -50,7 +50,7 @@ Activate the plugin in `/wp-admin/plugins.php`. After activation, you will find 
 
 
 ## Configure the plugin
-The configuration in this plugin is based on the widget configuration from the [Widget Generator](integrations-widgetgenerator.md), and is modified to fit the WooCommerce model. Information about the plugin settings can be found [here](references-woocommerceplugin.md#plugin-parameters).
+The configuration in this plugin is based on the widget configuration from the [Widget Generator](integrations-widgetgenerator.md), and is modified to fit the WooCommerce model. Information about the plugin settings can be found [here](api_abi-woocommerceplugin.md#plugin-parameters).
 
 For this guide, we use the following settings shown below. You may configure them as you wish.
 | Parameter | Example |
@@ -87,4 +87,4 @@ The order status flow is summarised below.
 `Order created` -> `Pending payment` -> `On-Hold` (payment broadcasted & mornitored) -> `Processing` (successful payment) OR `Failed` (failed payment)
 
 ## Advanced options
-Visit the [WooCommerce Plugin Reference Page](references-woocommerceplugin.md) for more information.
+Visit the [WooCommerce Plugin API Page](api_abi-woocommerceplugin.md) for more information.
