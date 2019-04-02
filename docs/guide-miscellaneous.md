@@ -115,6 +115,15 @@ The numbers on the figure correspond to the examples below.
 | 3          | 100 (1 ETH = 100 KNC) | 10% | 95 | Your reserve **will** process the conversion as `95 < 110`. <br>
 | 4          | 100 (1 ETH = 100 KNC) | 10% | 88 | Your reserve **will** process the conversion as `88 < 110`. <br>
 
+## Verifying Reserve Fees
+To verify the reserve fee percentage that will be charged for every trade, kindly perform the following steps:
+
+### Step 1: Read the FeeBurner contract in Etherscan
+Obtain the [FeeBurner contract address here](guide-mainnetenv.md#feeburner). You may then view this address in Etherscan.
+
+### Step 2: Query the `reserveFeesInBps` variable
+Key in your reserve's contract address in the input field for the `reserveFeesInBps` variable. The query should return the fees in basis points (bps). As an example, an output of `25` means that your reserve is charged 0.25% of the trade value (in KNC tokens) for every trade processed via your reserve.
+
 ## Whitelist Categories & Limits
 | Category No. | Name | Trading Cap (SGD) |
 | -------------- | ------- | -------------------- |
