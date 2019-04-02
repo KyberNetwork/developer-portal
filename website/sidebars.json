@@ -79,12 +79,12 @@
       "API_ABI-OrderbookReserve",
       "API_ABI-PermissionlessOrderbookReserveLister"
     ],
-    "Contract ABIs": [
-      "API_ABI-ABI"
-    ],
     "RESTful API": [
       "API_ABI-RESTfulAPIOverview",
       "API_ABI-RESTfulAPI"
+    ],
+    "Contract ABIs": [
+      "API_ABI-ABI"
     ],
     "Widgets": [
       "API_ABI-WidgetsOverview",

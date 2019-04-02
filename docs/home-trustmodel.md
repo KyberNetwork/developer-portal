@@ -4,7 +4,7 @@ title: Trust and Security Model
 ---
 ## Who should the users trust?
 
-The users are not required to trust anyone because the protocol does not hold their funds (only when a trade is being executed). Additionally, being entirely on-chain allows users to freely verify and audit the smart contracts. For added security, a multisig wallet is used for executing admin actions.
+The users are not required to trust anyone because the protocol does not hold their funds (only when a trade is being executed). Additionally, being entirely on-chain allows users to freely verify and audit the smart contracts. For added security, a multisig wallet is used for executing admin actions. Users can also specify a minimum conversion rate to prevent a trade from executing in the event slippage causes the conversion rate of a trading pair to fall below the minimum rate specified.
 
 ## Who should the reserves trust?
 

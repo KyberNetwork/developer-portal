@@ -17,7 +17,7 @@ This reserve type relies on a predefined algorithm written in a smart contract t
 The ease of maintenance and low development cost of this reserve comes at the expense of high financial liquidity requirements.
 
 ## Orderbook Reserve (OR)
-As its name suggests, this fully on-chain reserve type allows anyone to provide liquidity to the ecosystem for any token of their choice through the placement of limit orders. It is also the first reserve type that can be listed permissionlessly, where no action is required from Kyber (such as the network administrator or operators).
+As its name suggests, this fully on-chain reserve type allows anyone to provide liquidity to the ecosystem for any token of their choice through the placement of limit orders. It is also the first reserve type that can be listed permissionlessly, where no action is required from Kyber (such as the network administrator or operators). A caveat that comes with the trustless setup is that the KNC fees that is to be burnt will be locked up in advance when the order is made and subsequently burnt when the order is taken from.
 
 ## Reserve Type Comparison
 ![Reserve Type](/uploads/reservetype.png "Reserve Type")

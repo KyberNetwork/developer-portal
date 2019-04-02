@@ -1,6 +1,6 @@
 ---
 id: API_ABI-PermissionlessOrderbookReserveLister
-title: PermissionlessOrderbookReserveLister
+title: OrderbookReserveLister
 ---
 # contract PermissionlessOrderbookReserveLister
 imports [OrderbookReserve](api_abi-orderbookreserve.md), [FeeBurnerInterface](api_abi-feeburnerinterface.md)

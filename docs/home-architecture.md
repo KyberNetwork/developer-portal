@@ -51,7 +51,7 @@ The liquidity network allows takers to convert one type of token (e.g. KNC) and 
 
 When a taker (e.g. end user wallets, smart contracts, trading bots) initiates the trade function from `KyberNetworkProxy.sol` contract, the proxy contract will forward the trade request to the `KyberNetwork.sol` contract.
 
-An array of reserves that is stored on the `KyberNetwork.sol` contract will then be interated through to find the reserves that provide the best KNC to ETH and ETH to DAI rates. The actual trade amounts will be calculated and the change refunded to the taker. Subsequently, 2 trades will be performed to convert KNC to ETH and from ETH to DAI and the DAI is transferred to the taker.
+An array of reserves that is stored on the `KyberNetwork.sol` contract will then be iterated through to find the reserves that provide the best KNC to ETH and ETH to DAI rates. The actual trade amounts will be calculated and the change refunded to the taker. Subsequently, 2 trades will be performed to convert KNC to ETH and from ETH to DAI and the DAI is transferred to the taker.
 
 The takers do not need to pay any additional fees other than the standard Ethereum transaction gas fees. The platform fees are paid for by the reserve / maker that executes the exchange and these fees are subsequently burnt. Note that some fees might be paid to the project that directed the user to the Kyber protocol as part of our [fee sharing program](integrations-feesharing.md).
 
@@ -69,7 +69,7 @@ Every contract in the Kyber protocol has three permission groups:
 The admin account is unique (usually cold wallet) and handles infrequent, manual operations like listing new tokens in the exchange. All sensitive operations (e.g. fund related) are limited to the admin address.
 
 ### 2. Operators
-The operator account is a hot wallet and is used for frequent updates like setting reserve rates and withdrawing funds from the reserve to certain destinations (e.g. when selling excess tokens in the open market).
+The operator account is a hot wallet and is used for frequent updates like setting reserve rates and withdrawing funds from the reserve to addresses that have been whitelisted by the admin address.
 
 ### 3. Alerters
-The alerter account is also a hot wallet and is used to alert the admin of inconsistencies in the system (e.g., strange conversion rates). In such cases, the reserve operation is halted and can be resumed only by the admin account.
+The alerter account is also a hot wallet and is used halt the execution due to inconsistencies in the system (e.g., strange conversion rates). In such cases, the reserve operation is suspended and can be resumed only by the admin address.

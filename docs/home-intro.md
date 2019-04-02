@@ -4,9 +4,9 @@ title: Introduction
 ---
 ![Overview](/uploads/overview.png "Overview")
 
-Kyber is a fully on-chain liquidity protocol that can be implemented on any EDCC (a.k.a smart contract) enabled blockchain. Our implementation of the Kyber protocol aggregates liquidity from diverse sources into a single pool, which in turn provides a single endpoint for takers to perform multiple token swaps in a single blockchain transaction.
+Kyber is a fully on-chain liquidity protocol that can be implemented on any EDCC (a.k.a smart contract) enabled blockchain. Our implementation of the Kyber protocol aggregates liquidity from diverse sources into a single pool, which in turn provides one endpoint for takers to perform multiple token swaps in a blockchain transaction.
 
-Moreover, our implementation can be easily integrated into any applications thereby enabling value exchanges to be performed seamlessly between all parties in the ecosystem.
+Our implementation can be easily integrated into any applications thereby enabling value exchanges to be performed seamlessly between all parties in the ecosystem.
 
 You can learn more about the Kyber protocol specifications, our implementation of the protocol, the various integration use cases and guides on this website.
 
