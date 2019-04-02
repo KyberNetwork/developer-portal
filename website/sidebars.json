@@ -50,7 +50,8 @@
     ],
     "Miscellaneous": [
       "Reserves-TradingStrategy",
-      "Reserves-SanityRates"
+      "Reserves-SanityRates",
+      "Reserves-ReserveFees"
     ]
   },
   "Environments": {
