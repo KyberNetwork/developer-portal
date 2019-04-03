@@ -2,6 +2,9 @@
 id: Reserves-OrderbookReserve
 title: Orderbook Reserve
 ---
+## DISCLAIMER
+**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Objective
 
 In this guide, we will learn how to configure and deploy a Orderbook Reserve either locally via ganache or to the Ropsten testnet. Subsequently, we will also learn how to make, view, update and cancel orders.
@@ -13,9 +16,6 @@ The goal of the Orderbook Reserve is a fully on-chain reserve type that allows a
 2. Deposit funds and add buy or sell limit orders, subject to general (i.e., not user dependent) limitations.
 
 The actions above can be performed without the need for any action from Kyber (such as the network admin and / or operators).
-
-## Disclaimer
-**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 #### Points to Note
 

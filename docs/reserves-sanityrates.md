@@ -2,6 +2,9 @@
 id: Reserves-SanityRates
 title: Sanity Rates
 ---
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Sanity Rates
 ![Sanityrates](/uploads/sanityrates.png "Sanityrates")
 
@@ -11,9 +14,6 @@ The sanity module protects reserves from (1) bugs in the conversion rate logic o
 * An operator sets the `sanityRate` of a token by calling `setSanityRates()`
 
 To take the advantage of sanity rates, you will need to have a simple logic to decide on what rate is considered unreasonable at a given point of time. You should also run this logic on a server that is different from the one that sets your reserve's base conversion rate because you don't want them to get compromised at the same time if a hack happens.
-
-## Disclaimer
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ### Case Study
 

@@ -2,6 +2,9 @@
 id: Reserves-AutomatedPriceReserve
 title: Automated Price Reserve
 ---
+## DISCLAIMER
+**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Objective
 
 In this guide, we will learn how to configure and deploy an Automated Price Reserve either locally via Ganache or to the Ropsten testnet.
@@ -15,9 +18,6 @@ Moreover, the automated reserve was also designed to help discover the price of 
 The automated reserve consists of only one component: an on-chain component of your reserve smart contracts that manages prices based on inventory.
 
 The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. Since the smart contracts uses a pre-defined trading strategy based on initial parameters, the automated reserve automatically calculates the conversion rate. As a reserve manager, your primary purpose is to make sure that your automated reserve's ETH and token inventory is replenished when depleted. In the event of reserve depletion, you will need to deposit more ETH or tokens, and to set the parameters once again.
-
-## Disclaimer
-**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 #### Points to Note
 

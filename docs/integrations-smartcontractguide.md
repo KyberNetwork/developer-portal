@@ -2,6 +2,9 @@
 id: Integrations-SmartContractGuide
 title: Smart Contract
 ---
+## DISCLAIMER
+**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Introduction
 This guide will walk you through on how you can interact with our protocol implementation at a smart contract level. The most common group of users that can benefit from this guide are Dapps.
 
@@ -9,12 +12,11 @@ This guide will walk you through on how you can interact with our protocol imple
 We will cover 2 scenarios of integration; the first being a new smart contract integration with our smart contracts. The second is integrating an already deployed smart contract with our protocol implementation.
 
 ## Things to note
-1) **All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
-2) If possible, minimise the use of `msg.sender` within your smart contract. If you were to call a function within the wrapper contract, `msg.sender` [is the wrapper contract address](https://ethereum.stackexchange.com/questions/28972/who-is-msg-sender-when-calling-a-contract-from-a-contract) instead of your wallet address.
-3) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
-4) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](api_abi-kybernetworkproxy.md#getexpectedrate) and [`trade()`](api_abi-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
-5) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `transferFrom` function.
-6) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
+1) If possible, minimise the use of `msg.sender` within your smart contract. If you were to call a function within the wrapper contract, `msg.sender` [is the wrapper contract address](https://ethereum.stackexchange.com/questions/28972/who-is-msg-sender-when-calling-a-contract-from-a-contract) instead of your wallet address.
+2) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
+3) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](api_abi-kybernetworkproxy.md#getexpectedrate) and [`trade()`](api_abi-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
+4) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `transferFrom` function.
+5) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
 
 ```js
 let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()

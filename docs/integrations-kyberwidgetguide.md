@@ -2,6 +2,9 @@
 id: Integrations-KyberWidgetGuide
 title: KyberWidget Guide
 ---
+## DISCLAIMER
+**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Introduction
 This guide will walk you through on how you can interact with our protocol implementation using our KyberWidget. The most common group of users that can benefit from this guide are vendors and websites.
 
@@ -10,7 +13,6 @@ We will be going through 2 scenarios. The first scenario teaches you how to impl
 
 ## KyberWidget (HTML/JS)
 ### Things to note
-* **All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
 * The widget generator is not mandatory for use; it merely provides a quick way to specify the required parameters and settings.
 * The button's text, title, and CSS style can be changed if desired
 * You can add multiple buttons into a page for multiple functionalities
@@ -65,7 +67,6 @@ Once this step is completed, you can serve up your website and the KyberWidget b
 
 ## KyberWidget (iOS)
 ### Things to note
-* **All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
 * You have to manually add KyberWidget into your project. [Cocoapods](https://cocoapods.org/) will be available soon.
 * The guide uses version Swift 4 for APIKit framework.
 * iCloud must be enabled in your capabilities as the framework is using document picker (for importing JSON files).

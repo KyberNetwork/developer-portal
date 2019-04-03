@@ -2,11 +2,13 @@
 id: Integrations-SignInWidgetGuide
 title: Sign In Widget Guide
 ---
+## DISCLAIMER
+**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Introduction
 This guide will walk you through on how you can implement our sign in widget to allow the users of your platform (who are registered with us) to reuse the same credentials to log on to your platform.
 
 ## Things to note
-* **All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
 * The Kyber Sign-in Widget conforms with the OAuth 2.0 specs, so it can be used with existing oauth2.0-support libraries/frameworks.
 * The widget is under development, and is provided to partners for early testing.
 

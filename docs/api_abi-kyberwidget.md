@@ -2,7 +2,7 @@
 id: API_ABI-KyberWidget
 title: KyberWidget
 ---
-## Disclaimer
+## DISCLAIMER
 **All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## Overview
