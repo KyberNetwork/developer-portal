@@ -10,6 +10,8 @@ imports ERC20Interface, [Withdrawable](api_abi-withdrawable.md), Utils, [SanityR
 
 The SanityRates contract's role is provide a safeguard for reserves whereby trades are disabled in the event exchange rates fall below the lower limit or rise above the upper limit of the sanity rates.
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

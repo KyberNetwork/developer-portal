@@ -8,6 +8,8 @@ imports OrderListInterface, OrderIdManager, Utils2, [KyberReserveInterface](api_
 
 *Source*: [OrderbookReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/auditv3/contracts/permissionless/OrderbookReserve.sol)
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

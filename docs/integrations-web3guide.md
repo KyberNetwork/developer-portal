@@ -9,10 +9,11 @@ This guide will walk you through on how you can interact with our protocol imple
 In this guide, we will using Web3 to get conversion rates and perform a token to token swap. The guide assumes that you are a wallet provider and a user of your wallet wants to swap 100 KNC for ZIL tokens.
 
 ## Things to note
-1) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
-2) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](api_abi-kybernetworkproxy.md#getexpectedrate) and [`trade()`](api_abi-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
-3) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
-4) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
+1) **All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+2) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
+3) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](api_abi-kybernetworkproxy.md#getexpectedrate) and [`trade()`](api_abi-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
+4) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
+5) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
 ```js
 let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 ```
@@ -164,6 +165,8 @@ async function main() {
 }
 ```
 ### Full code example
+**Note: The following code is not audited and should not be used in production. If so, it is done at your own risk.**
+
 Before running this code example, change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding the Ropsten KNC tokens.
 ```js
 // Importing the relevant packages

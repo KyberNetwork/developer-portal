@@ -10,6 +10,8 @@ imports [ConversionRatesInterface](api_abi-conversionratesinterface.md), Liquidi
 
 The LiquidityConversionRates contract's role is to allow reserve operators to set liquidity parameters to the automated reserve for automated rate adjustment based on trades.
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

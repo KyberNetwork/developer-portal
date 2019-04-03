@@ -10,6 +10,8 @@ imports [FeeBurnerInterface](api_abi-feeburnerinterface.md), [Withdrawable](api_
 
 The FeeBurner contract's role is used mainly for the [Affliate Program](FeeSharingGuide) to distribute and burn fees
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

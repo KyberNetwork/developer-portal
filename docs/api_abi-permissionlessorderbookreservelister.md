@@ -9,6 +9,8 @@ imports [OrderbookReserve](api_abi-orderbookreserve.md), [FeeBurnerInterface](ap
 
 The Permissionless Orderbook Reserve Lister is used for creating, initialising and listing new Permissionless Orderbook Reserves.
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

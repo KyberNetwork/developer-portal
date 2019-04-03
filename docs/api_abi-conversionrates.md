@@ -10,6 +10,8 @@ imports ERC20Interface, VolumeImbalanceRecorder, [ConversionRatesInterface](api_
 
 The ConversionRates contract's role is to allow reserve operators to make simple on-chain adjustment to the prices and is an optimized cheap (w.r.t gas consumption) interface to enter rate feeds.
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

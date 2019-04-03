@@ -10,6 +10,8 @@ imports ERC20Interface, [KyberReserveInterface](api_abi-kyberreserveinterface.md
 
 The KyberNetwork contract's role is to facilitate two main functionalities, which is to return the expected exchange rate, and to execute a trade.
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

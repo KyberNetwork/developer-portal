@@ -12,6 +12,9 @@ The sanity module protects reserves from (1) bugs in the conversion rate logic o
 
 To take the advantage of sanity rates, you will need to have a simple logic to decide on what rate is considered unreasonable at a given point of time. You should also run this logic on a server that is different from the one that sets your reserve's base conversion rate because you don't want them to get compromised at the same time if a hack happens.
 
+## Disclaimer
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ### Case Study
 
 Assume you have a reserve that supports ETH<>KNC conversion pair. Suppose the admin sets the reasonable difference to be 10%.

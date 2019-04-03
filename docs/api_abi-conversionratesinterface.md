@@ -6,6 +6,8 @@ title: ConversionRatesInterface
 
 *Source*: [ConversionRatesInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ConversionRatesInterface.sol)
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

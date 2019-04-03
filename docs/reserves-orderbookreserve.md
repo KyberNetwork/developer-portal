@@ -14,6 +14,9 @@ The goal of the Orderbook Reserve is a fully on-chain reserve type that allows a
 
 The actions above can be performed without the need for any action from Kyber (such as the network admin and / or operators).
 
+## Disclaimer
+**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 #### Points to Note
 
 On creation and listing:

@@ -10,6 +10,8 @@ imports ERC20Interface, Utils, [Withdrawable](api_abi-withdrawable.md),  [Conver
 
 The KyberReserve contract's role is to execute exchanges and provide rates for Kyber Network. The contract has no direct interaction with the end users (the only interaction with them is via the network platform). Its main interaction is with the reserve operator who manages the token inventory and feeds exchange rates every few minutes.
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

@@ -7,6 +7,8 @@ imports OrderListInterface
 
 *Source*: [OrderbookReserveInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/auditv3/contracts/permissionless/OrderbookReserveInterface.sol)
 ___
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 
@@ -31,4 +33,3 @@ function __kncRateBlocksTrade__() public view returns (bool)
 **Returns:**\
 True if orderbook reserve's trades are blocked due to KNC depreciation.
 <br />
-

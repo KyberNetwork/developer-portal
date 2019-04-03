@@ -6,6 +6,10 @@ title: Testing Using Ganache
 
 [Ganache](https://truffleframework.com/ganache) enables you to create a private Ethereum blockchain on your local machine for running tests, executing commands, and inspecting its state while controlling how the chain operates. You can also refer to the [Workshop repository](https://github.com/KyberNetwork/workshop) for the same instructions.
 
+## Disclaimer
+
+**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Prerequisites
 
 1. Node and NPM latest LTS versions. Download from [nodejs.org](https://nodejs.org/en/download/)

@@ -9,9 +9,10 @@ This guide will walk you through on how you can interact with our protocol imple
 In this guide, we will be going through 2 scenarios. The first scenario covers how to perform a token to token swap using the RESTful apis and the second is about how one can obtain token information and historical price data.
 
 ## Things to note
-1) The `/buy_rate` and `/sell_rate` endpoints are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to use both APIs. Refer to [this section](#get-approximate-dai-token-amount-receivable) on how to do so.
-2) When converting from Token to ETH/Token, the user is required to call the `/enabled_data` endpoint **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
-3) Refer to the [API overview](api_abi-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
+1) **All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+2) The `/buy_rate` and `/sell_rate` endpoints are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to use both APIs. Refer to [this section](#get-approximate-dai-token-amount-receivable) on how to do so.
+3) When converting from Token to ETH/Token, the user is required to call the `/enabled_data` endpoint **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
+4) Refer to the [API overview](api_abi-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
 
 ## Scenario 1: Token to Token Swap
 Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conversion. Note that ETH is used as the base pair i.e. BAT -> ETH -> DAI.
@@ -214,6 +215,8 @@ async function main() {
 ```
 
 ### Full code example
+**Note: The following code is not audited and should not be used in production. If so, it is done at your own risk.**
+
 Before running this code example, change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding the Ropsten BAT tokens.
 ```js
 // Importing the relevant packages

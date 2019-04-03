@@ -12,6 +12,9 @@ A Fed Price Reserve consists of two main components: an on-chain component of yo
 
 The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. The off-chain component hosts your [trading strategy](reserves-tradingstrategy.md) that calculate and feed conversion rates and rebalance your reserve of tokens.
 
+## Disclaimer
+**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Points to Note
 A reserve manager's primary purpose is to keep funds safe. This however is a difficult task since inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay pricing rate updates in the contracts.
 

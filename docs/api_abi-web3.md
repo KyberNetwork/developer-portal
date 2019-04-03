@@ -2,6 +2,9 @@
 id: API_ABI-Web3
 title: Web3
 ---
+## DISCLAIMER
+**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Web3 Injection
 ### Adding web3
 You may add `web3` to your project using 1 of the following methods:
