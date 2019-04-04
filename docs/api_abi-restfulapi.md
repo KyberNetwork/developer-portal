@@ -191,7 +191,7 @@ ___
 
 ### `/gasLimitConfig`
 
-(GET) Returns the gas limit for approving token and swapping between ETH and each token.
+(GET) Returns the gas limit for approving token and swapping between ETH <-> ERC20 token. To calculate the gas limit for swapping between token A <-> token B, take the sum of the gas limit for swapping from token A -> ETH and for swapping from ETH -> Token B. Note that some tokens may require higher gas limits than others e.g. DAI, TUSD, MKR, DGX.
 ___
 **Response:**
 | Parameter      | Type   | Description                                                             |
