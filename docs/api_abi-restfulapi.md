@@ -40,28 +40,29 @@ Example:
 ```json
 > curl "https://api.kyber.network/buy_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1"
 {
-  "error": false,
-  "data": [
+  "error":false,
+  "data":[
     {
-      "src_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "dst_id": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
-      "src_qty": [
+      "src_id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "dst_id":"0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
+      "src_qty":[
         0.5671077504725898
       ],
-      "dst_qty": [
+      "dst_qty":[
         300
       ]
     },
     {
-      "src_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "dst_id": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
-      "src_qty": [
+      "src_id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "dst_id":"0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+      "src_qty":[
         0.18035714285714283
       ],
-      "dst_qty": [
+      "dst_qty":[
         10.1
       ]
-    }
+    },
+    ...
   ]
 }
 ```
@@ -92,27 +93,27 @@ Example:
 ```json
 > curl "https://api.kyber.network/change24h"
 {
-  "ETH_KNC": {
-    "timestamp": 1548065183567,
-    "token_name": "Kyber Network",
-    "token_symbol": "KNC",
-    "token_decimal": 18,
-    "token_address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-    "rate_eth_now": 0.001144689345999999,
-    "change_eth_24h": -2.7115507894449724,
-    "change_usd_24h": 13.883783963625097,
-    "rate_usd_now": 0.1443257387379925
+  "ETH_KNC":{
+    "timestamp":1548065183567,
+    "token_name":"Kyber Network",
+    "token_symbol":"KNC",
+    "token_decimal":18,
+    "token_address":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+    "rate_eth_now":0.001144689345999999,
+    "change_eth_24h":-2.7115507894449724,
+    "change_usd_24h":13.883783963625097,
+    "rate_usd_now":0.1443257387379925
   },
-  "ETH_OMG": {
-    "timestamp": 1548065183567,
-    "token_name": "OmiseGO",
-    "token_symbol": "OMG",
-    "token_decimal": 18,
-    "token_address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "rate_eth_now": 0.0105194607632,
-    "change_eth_24h": -2.0145305819746198,
-    "change_usd_24h": -10.129,
-    "rate_usd_now": 0.8
+  "ETH_OMG":{
+    "timestamp":1548065183567,
+    "token_name":"OmiseGO",
+    "token_symbol":"OMG",
+    "token_decimal":18,
+    "token_address":"0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+    "rate_eth_now":0.0105194607632,
+    "change_eth_24h":-2.0145305819746198,
+    "change_usd_24h":-10.129,
+    "rate_usd_now":0.8
   },
   ...
 }
@@ -132,10 +133,10 @@ ___
 **Response:**
 | Parameter  | Type   | Description                                                                                  |
 |:----------:|:------:|:--------------------------------------------------------------------------------------------:|
+| `symbol`   | string | The symbol of the asset in its native chain.                                                 |
 | `name`     | string | Name of the asset in its native chain.                                                       |
 | `decimals` | int    | Decimals that will be used to round-off the srcQty or dstQty of the asset in other requests. |
 | `address`  | string | The address of the asset in its native chain.                                                |
-| `symbol`   | string | The symbol of the asset in its native chain.                                                 |
 | `id`       | string | A unique ID used by Kyber Network to identify between different symbols.                     |
 | `reserves_src` | string[] | Reserve contract addresses supporting Token to Ether trades |
 | `reserves_dest` | string[] | Reserve contract addresses supporting Ether to Token trades |
@@ -145,33 +146,91 @@ ___
 ```json
 > curl "https://api.kyber.network/currencies"
 {
-  "error": false,
-  "data": [
+  "error":false,
+  "data":[
     {
-    "name": "Ethereum",
-    "decimals": 18,
-    "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "ETH",
-    "id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      "symbol":"ETH",
+      "name":"Ethereum",
+      "address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals":18,
+      "id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     },
     {
-    "name": "Kyber Network",
-    "decimals": 18,
-    "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-    "symbol": "KNC",
-    "id": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-    "reserves_src": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"],
-    "reserves_dest": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"]
+      "symbol":"WETH",
+      "name":"Wrapped Ether",
+      "address":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "decimals":18,
+      "id":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "reserves_src":[
+        "0x57f8160e1c59D16C01BbE181fD94db4E56b60495"
+      ],
+      "reserves_dest":[
+        "0x57f8160e1c59D16C01BbE181fD94db4E56b60495"
+      ]
     },
     {
-    "name": "OmiseGO",
-    "decimals": 18,
-    "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "symbol": "OMG",
-    "id": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "reserves_src": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"],
-    "reserves_dest": ["0x63825c174ab367968EC60f061753D3bbD36A0D8F","0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"]
-    }
+      "symbol":"KNC",
+      "name":"KyberNetwork",
+      "address":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "decimals":18,
+      "id":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "reserves_src":[
+        "0x63825c174ab367968EC60f061753D3bbD36A0D8F",
+        "0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"
+      ],
+      "reserves_dest":[
+        "0x63825c174ab367968EC60f061753D3bbD36A0D8F",
+        "0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"
+      ]
+    },
+    ...
+  ]
+}
+```
+<br />
+
+### `/gasLimitConfig`
+
+(GET) Returns the gas limit for approving token and swapping between ETH and each token.
+___
+**Response:**
+| Parameter      | Type   | Description                                                             |
+|:--------------:|:------:|:-----------------------------------------------------------------------:|
+| `id`           | string | A unique ID used by Kyber Network to identify between different symbols |
+| `enabled`      | bool   | Whether the user address has approved Kyber Network to spend the asset on their behalf. Applicable only to ERC20 tokens. See ‘allowance’ on the ERC20 standard. |
+| `txs_required` | int    | Number of transactions required until the ID is enabled for trading. When `enabled` is True, `txs_required` is 0. When `enabled` is False, majority of the time `tx_required` is 1. |
+
+Example response:
+```json
+> curl "https://api.kyber.network/gasLimitConfig"
+{
+  "error":false,
+  "data":[
+    {
+      "symbol":"ETH",
+      "address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "swapGasLimit":0,
+      "approveGasLimit":0
+    },
+    {
+      "symbol":"WETH",
+      "address":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "swapGasLimit":380000,
+      "approveGasLimit":120000
+    },
+    {
+      "symbol":"KNC",
+      "address":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "swapGasLimit":380000,
+      "approveGasLimit":120000
+    },
+    {
+      "symbol":"DAI",
+      "address":"0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "swapGasLimit":500000,
+      "approveGasLimit":120000
+    },
+    ...
   ]
 }
 ```
@@ -201,36 +260,37 @@ Example:
 ```json
 > curl "https://api.kyber.network/market"
 {
-  "error": false,
-  "data": [
+  "error":false,
+  "data":[
     {
-      "timestamp": 1536806619250,
-      "pair": "KNC_ETH",
-      "quote_symbol": "KNC",
-      "base_symbol": "ETH",
-      "past_24h_high": 0.001937984496124031,
-      "past_24h_low": 0.001857617770187944,
-      "usd_24h_volume": 5566.2079180166,
-      "eth_24h_volume": 31.8094685833,
-      "token_24h_volume": 16865.433010686364,
-      "current_bid": 0.001867351485999998,
-      "current_ask": 0.0018868074209224932,
-      "last_traded": 0.0018868074209224932
+      "timestamp":1536806619250,
+      "pair":"KNC_ETH",
+      "quote_symbol":"KNC",
+      "base_symbol":"ETH",
+      "past_24h_high":0.001937984496124031,
+      "past_24h_low":0.001857617770187944,
+      "usd_24h_volume":5566.2079180166,
+      "eth_24h_volume":31.8094685833,
+      "token_24h_volume":16865.433010686364,
+      "current_bid":0.001867351485999998,
+      "current_ask":0.0018868074209224932,
+      "last_traded":0.0018868074209224932
     },
     {
-      "timestamp": 1536806619251,
-      "pair": "OMG_ETH",
-      "quote_symbol": "OMG",
-      "base_symbol": "ETH",
-      "past_24h_high": 0.018518518518518517,
-      "past_24h_low": 0.017266283397471997,
-      "usd_24h_volume": 13871.8906588085,
-      "eth_24h_volume": 78.4248866967,
-      "token_24h_volume": 4381.367829085394,
-      "current_bid": 0.017379117142599983,
-      "current_ask": 0.0175141743763495,
-      "last_traded": 0.01777996566748282
-    }
+      "timestamp":1536806619251,
+      "pair":"OMG_ETH",
+      "quote_symbol":"OMG",
+      "base_symbol":"ETH",
+      "past_24h_high":0.018518518518518517,
+      "past_24h_low":0.017266283397471997,
+      "usd_24h_volume":13871.8906588085,
+      "eth_24h_volume":78.4248866967,
+      "token_24h_volume":4381.367829085394,
+      "current_bid":0.017379117142599983,
+      "current_ask":0.0175141743763495,
+      "last_traded":0.01777996566748282
+    },
+    ...
   ]
 }
 ```
@@ -260,29 +320,29 @@ Example:
 ```json
 > curl "https://api.kyber.network/sell_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&qty=150&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1&qty=20.2&qty=30"
 {
-  "error": false,
-  "data": [
+  "error":false,
+  "data":[
     {
-      "src_id": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
-      "dst_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "src_qty": [
+      "src_id":"0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
+      "dst_id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "src_qty":[
         300,
         150
       ],
-      "dst_qty": [
+      "dst_qty":[
         0.55963380759,
         0.279816903795
       ]
     },
     {
-      "src_id": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
-      "dst_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "src_qty": [
+      "src_id":"0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+      "dst_id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "src_qty":[
         10.1,
         20.2,
         30
       ],
-      "dst_qty": [
+      "dst_qty":[
         0.17552908314026,
         0.35105816628052,
         0.521373514278
@@ -325,13 +385,18 @@ Example:
 ```json
 > curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1&nonce=200"
 {
-  "from": "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
-  "to": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
-  "data": "0xcb3c28c7000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000044364c5bb0000000000000000000000000000dd974d5c2e2928dea5f71b9825b8b646686bd2000000000000000000000000008fa07f46353a2b17e92645592a94a0fc1ceb783f800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001b1ae4d6e2ef5000000000000000000000000000000859a7958e254234fdc1d200b941ffdfcab02fc1",
-  "value": "0x44364c5bb0000",
-  "gasPrice": "0x39eda2b80",
-  "nonce": "0xc8",
-  "gasLimit": "0x43d81"
+  "error":false,
+  "data":[
+    {
+      "from":"0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
+      "to":"0x818e6fecd516ecc3849daf6845e3ec868087b755",
+      "data":"0xcb3c28c7000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000044364c5bb0000000000000000000000000000dd974d5c2e2928dea5f71b9825b8b646686bd2000000000000000000000000008fa07f46353a2b17e92645592a94a0fc1ceb783f800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001b1ae4d6e2ef5000000000000000000000000000000859a7958e254234fdc1d200b941ffdfcab02fc1",
+      "value":"0x44364c5bb0000",
+      "gasPrice":"0x39eda2b80",
+      "nonce":"0xc8",
+      "gasLimit":"0x43d81"
+    }
+  ]
 }
 
 ```
@@ -366,21 +431,22 @@ Example response:
       "enabled":true,
       "txs_required":0
     },
-    {  
+    {
       "id":"0x595832f8fc6bf59c85c527fec3740a1b7a361269",
       "enabled":false,
       "txs_required":1
     },
-    {  
+    {
       "id":"0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
       "enabled":true,
       "txs_required":0
     },
-    {  
+    {
       "id":"0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
       "enabled":true,
       "txs_required":0
-    }
+    },
+    ...
   ]
 }
 ```
@@ -414,13 +480,18 @@ Example:
 ```json
 > curl "https://api.kyber.network/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=medium"
 {
-  "from": "0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
-  "to": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
-  "data": "0x095ea7b3000000000000000000000000818e6fecd516ecc3849daf6845e3ec868087b7558000000000000000000000000000000000000000000000000000000000000000",
-  "value": "0x0",
-  "gasPrice": "0x6",
-  "nonce": "0x3de",
-  "gasLimit": "0x186a0"
+  "error":false,
+  "data":[
+    {
+      "from":"0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
+      "to":"0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
+      "data":"0x095ea7b3000000000000000000000000818e6fecd516ecc3849daf6845e3ec868087b7558000000000000000000000000000000000000000000000000000000000000000",
+      "value":"0x0",
+      "gasPrice":"0x6",
+      "nonce":"0x3de",
+      "gasLimit":"0x186a0"
+    }
+  ]
 }
 ```
 <br />
