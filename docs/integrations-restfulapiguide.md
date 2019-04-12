@@ -512,7 +512,7 @@ The token conversion rate varies with different source token quantities. It is i
 2. Call `/buy_rate` or `sell_rate` for actual `srcToken` amount.
 3. If the obtained rates differ by a defined percentage (either in the smart contract, or as a user input), revert the transaction.
 
-### Method 2: Display Rate Slippage In the User Interface
+### Method 2: Display rate slippage in the user interface
 ![Showing Slippage Rate](/uploads/showing-slippage-rate.jpg "Showing SlippageRate")
 An example of how this could be done is shown above. How the rate slippage is calculated is as follows:
 1. Call `/buy_rate` or `sell_rate` for 1 ETH equivalent worth of `srcToken`.
@@ -520,7 +520,7 @@ An example of how this could be done is shown above. How the rate slippage is ca
 3. Calculate the rate difference and display it **prominently** in the user interface.
 
 ### Method 3: Pulling rates from other exchanges
-One could make use of other on-chain price feeds to see if the rate obtained from Kyber is within acceptable bounds.
+One could make use of feeds provided from other exchanges to see if the rate obtained from Kyber is within acceptable bounds.
 
 
 ## Fee Sharing Program
