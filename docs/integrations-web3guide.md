@@ -2,6 +2,9 @@
 id: Integrations-Web3Guide
 title: Web3
 ---
+## DISCLAIMER
+**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
+
 ## Introduction
 This guide will walk you through on how you can interact with our protocol implementation using the [Web3](https://github.com/ethereum/web3.js/) Javascript package. The most common group of users that can benefit from this guide are wallets or vendors who want to use their own UI.
 
@@ -9,15 +12,16 @@ This guide will walk you through on how you can interact with our protocol imple
 In this guide, we will using Web3 to get conversion rates and perform a token to token swap. The guide assumes that you are a wallet provider and a user of your wallet wants to swap 100 KNC for ZIL tokens.
 
 ## Things to note
-1) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/developV2/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
-2) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](references-kybernetworkproxy.md#getexpectedrate) and [`trade()`](references-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
+1) We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts
+2) The main functions to incorporate into your smart contract(s) are [`getExpectedRate()`](api_abi-kybernetworkproxy.md#getexpectedrate) and [`trade()`](api_abi-kybernetworkproxy.md#trade) of `KyberNetworkProxy.sol`.
 3) When converting from Token to ETH/Token, the user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
 4) To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
-5) The example swaps KNC tokens for ZIL. You may swap some Ropsten ETH for KNC tokens at https://ropsten.kyber.network.
-
 ```js
 let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
 ```
+5) The example swaps KNC tokens for ZIL. You may swap some Ropsten ETH for KNC tokens at https://ropsten.kyber.network.
+
+
 
 ## Using Web3 to Interact
 ### Import the relevant packages
@@ -163,6 +167,8 @@ async function main() {
 }
 ```
 ### Full code example
+**Note: The following code is not audited and should not be used in production. If so, it is done at your own risk.**
+
 Before running this code example, change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding the Ropsten KNC tokens.
 ```js
 // Importing the relevant packages
@@ -283,7 +289,25 @@ main()
 ```
 
 ## Filtering Out Permissionless Reserves
-By default, reserves that were listed permissionlessly are also included when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To filter them out, use the `tradeWithHint()` function. Refer to [this section](references-kybernetworkproxy.md#hint) for more information.
+By default, reserves that were listed permissionlessly are also included when performing `getExpectedRate()` and `trade()`. Depending on the jurisdiction where your platform is operating in, you may be required to exclude these reserves. To filter them out, use the `tradeWithHint()` function. Refer to [this section](api_abi-kybernetworkproxy.md#hint) for more information.
+
+## Safeguarding Users From Slippage Rates
+The token conversion rate varies with different source token quantities. It is important to highlight the slippage in rates to the user when dealing with large token amounts. We provide some methods how this can be done below.
+
+### Method 1: Display rate slippage in the user interface
+![Showing Slippage Rate](/uploads/showing-slippage-rate.jpeg "Showing SlippageRate")
+An example of how this could be done is shown above. How the rate slippage is calculated is as follows:
+1. Call `getExpectedRate` for 1 ETH equivalent worth of `srcToken`.
+2. Call `getExpectedRate` for actual `srcToken` amount.
+3. Calculate the rate difference and display it **prominently** in the user interface.
+
+### Method 2: Reject the transaction if the slippage rate exceeds a defined percentage
+1. Call `getExpectedRate` for 1 ETH equivalent worth of `srcToken`.
+2. Call `getExpectedRate` for actual `srcToken` amount.
+3. If the obtained rates differ by a defined percentage (either hard-coded in the script or user defined), prevent the transaction from being sent and display an error to the user.
+
+### Method 3: Pulling rates from other exchanges
+One could make use of feeds provided from other exchanges to see if the rate obtained from Kyber is within acceptable bounds.
 
 ## Fee Sharing Program
 You have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your platform. Learn more about the program [here](integrations-feesharing.md)!
