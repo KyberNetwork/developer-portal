@@ -2,21 +2,28 @@
 id: DappsGuide
 title: DApps Integration Guide
 ---
+
 ## Introduction
+
 We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/developV2/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts.
 
 `getExpectedRate()`, `swapTokenToToken()`, `swapEtherToToken()` and `swapTokenToEther()` and `trade()` of `KyberNetworkProxy.sol` are the functions you would want to incorporate into your DApp's smart contract(s).
 
 ## Scenario
+
 Consider 2 scenarios where you want to allow your users to convert between any ERC20 tokens that are supported by the Kyber Protocol
+
 1. Loose token conversion: Convert from token A to token B without concern for the amount of tokens you will receive
 2. Exact token conversion: Convert to an exact amount of token B, and return all excess change in token A
 
 We will make use of the [ERC20 Interface](https://github.com/KyberNetwork/smart-contracts/blob/developV2/contracts/ERC20Interface.sol) and [KyberNetworkProxy](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol) smart contracts. You would want to incorporate the `getExpectedRate()`, `swapTokenToToken()`, `swapEtherToToken()`, `swapTokenToEther()` and `trade()` functions of `KyberNetworkProxy.sol` into your DApp's smart contract(s).
 
 ### Scenario 1: Loose Token Conversion
+
 #### `swapTokenToToken`
+
 [**A note about swapping from ERC20 tokens**](#conversion-from-erc20-tokens)
+
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
 //@param srcToken source token contract address
@@ -48,6 +55,7 @@ function swapTokenToToken (KyberNetworkProxyInterface _kyberNetworkProxy, ERC20 
 ```
 
 #### `swapEtherToToken`
+
 ```
 //@dev assumed to be receiving ether wei
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
@@ -67,7 +75,9 @@ function swapEtherToToken (KyberNetworkProxyInterface _kyberNetworkProxy, ERC20 
 ```
 
 #### `swapTokenToEther`
+
 [**A note about swapping from ERC20 tokens**](#conversion-from-erc20-tokens)
+
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
 //@param token source token contract address
@@ -95,8 +105,11 @@ function swapTokenToEther (KyberNetworkProxyInterface _kyberNetworkProxy, ERC20 
 ```
 
 ### Scenario 2: Precise Token Conversion
+
 #### `swapTokenToTokenWithChange`
+
 [**A note about swapping from ERC20 tokens**](#conversion-from-erc20-tokens)
+
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
 //@param srcToken source token contract address
@@ -137,6 +150,7 @@ function swapTokenToTokenWithChange (
 ```
 
 #### `swapEtherToTokenWithChange`
+
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
 //@param token destination token contract address
@@ -169,7 +183,9 @@ function swapEtherToTokenWithChange (
 ```
 
 #### `swapTokenToEtherWithChange`
+
 [**A note about swapping from ERC20 tokens**](#conversion-from-erc20-tokens)
+
 ```
 //@param _kyberNetworkProxy kyberNetworkProxy contract address
 //@param token source token contract address
@@ -208,7 +224,9 @@ function swapTokenToEtherWithChange (
 ```
 
 ### Contract Example
+
 Note that this is just an example smart contract. How the smart contract functions are modified and incorporated into your DApp is dependent on your requirements.
+
 ```
 pragma solidity 0.4.18;
 
@@ -407,11 +425,15 @@ contract KyberExample {
 ```
 
 ## Things To Note
+
 ### Conversion From ERC20 Tokens
+
 The user is required to call the `approve` function **first** to give an allowance to the smart contract executing the `transferFrom` function.
 
 #### Example
+
 If the contract example above has an address of `0x818E6FECD516Ecc3849DAf6845e3EC868087B755`, and the user wants to swap from KNC to ETH, then we require the user to send the transaction below.
+
 ```
 srcTokenContract = new web3.eth.Contract(ERC20ABI,'0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6') //Ropsten KNC token contract
 txData = sourceTokenContract.methods.approve(
@@ -426,9 +448,10 @@ txReceipt = await web3.eth.sendTransaction({
 })
 ```
 
-
 ### `getExpectedRate`
+
 More information regarding the input parameters of the `getExpectedRate` function can be found in [reference](api-kybernetworkproxy.md#getexpectedrate).
+
 <!--| Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:------------------------------------:|
 | `src`     | ERC20 | source ERC20 token contract address |
@@ -438,7 +461,9 @@ More information regarding the input parameters of the `getExpectedRate` functio
 The expected exchange rate and slippage rate. Note that these returned values are in **18 decimals** regardless of the destination token's decimals-->
 
 ### `trade`
+
 More information regarding the input parameters of the `trade` function can be found in [reference](api-kybernetworkproxy.md#trade).
+
 <!--| Parameter           | Type    | Description                                   |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
 | `src`               | ERC20   | source ERC20 token contract address                                  |
@@ -459,11 +484,32 @@ This rate is independent of the source and destination token decimals. To calcul
 If you are part of our [fee sharing program](guide-feesharing.md), this will be your registered wallet address. Set it as `0` if you are not a participant.-->
 
 ### Maximum Gas Price
+
 To prevent user front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
 
 ```js
-let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call()
+let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call();
 ```
 
+## Safeguarding Users From Slippage Rates
+
+The token conversion rate varies with different source token quantities. It is important to highlight the slippage in rates to the user when dealing with large token amounts. We provide some methods how this can be done below.
+
+### Method 1: Reject the transaction if the slippage rate exceeds a defined percentage
+
+1. Call `getExpectedRate` for 1 ETH equivalent worth of `srcToken`.
+2. Call `getExpectedRate` for actual `srcToken` amount.
+3. If the obtained rates differ by a defined percentage (either in the smart contract, or as a user input), reject the transaction.
+
+### Method 2: Display rate slippage in the user interface
+
+![Showing Slippage Rate](/uploads/showing-slippage-rate.jpeg "Showing SlippageRate")
+An example of how this could be done is shown above. How the rate slippage is calculated is as follows:
+
+1. Call `getExpectedRate` for 1 ETH equivalent worth of `srcToken`.
+2. Call `getExpectedRate` for actual `srcToken` amount.
+3. Calculate the rate difference and display it **prominently** in the user interface.
+
 ### Fee Sharing Program
-DApps have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your app. Learn more about the program [here](guide-feesharing.md)!
+
+DApps have the opportunity to join our _Fee Sharing Program_, which allows fee sharing on each swap that originates from your app. Learn more about the program [here](guide-feesharing.md)!

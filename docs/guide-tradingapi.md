@@ -2,11 +2,16 @@
 id: TradingAPIGuide
 title: Using the Trading API
 ---
+
 ## Overview
+
 Our trading API allows you to programmatically interact with the Kyber Network contract without in depth understanding of smart contracts. **The /buy_rate and /sell_rate APIs are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to run both APIs; the first to sell token A to ETH and the second to buy token B with ETH.**
+
 ## Scenario 1: Perform ETH -> KNC (ERC20 token) conversion
+
 ### Step 1a - Check if KNC token is supported
-Querying ``https://api.kyber.network/currencies`` will return a JSON of tokens supported on Kyber Network. Details about the `currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#currencies). </br>
+
+Querying `https://api.kyber.network/currencies` will return a JSON of tokens supported on Kyber Network. Details about the `currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#currencies). </br>
 
 <!---Response Description
 | # | Field Name | Description |
@@ -18,19 +23,23 @@ Querying ``https://api.kyber.network/currencies`` will return a JSON of tokens s
 | 5 | id | A unique ID used by Kyber Network to identify between different symbols. |-->
 
 #### Code Example
+
 ```js
-const fetch = require('node-fetch')
+const fetch = require("node-fetch");
 
 async function getSupportedTokens() {
-  let tokensBasicInfoRequest = await fetch('https://api.kyber.network/currencies')
-  let tokensBasicInfo = await tokensBasicInfoRequest.json()
-  return tokensBasicInfo
+  let tokensBasicInfoRequest = await fetch(
+    "https://api.kyber.network/currencies"
+  );
+  let tokensBasicInfo = await tokensBasicInfoRequest.json();
+  return tokensBasicInfo;
 }
 
-await getSupportedTokens()
+await getSupportedTokens();
 ```
 
 #### Output
+
 ```json
 {
   "error": false,
@@ -53,8 +62,10 @@ await getSupportedTokens()
   ]
 }
 ```
+
 ### Step 1b - Get KNC/ETH buy rates
-Querying ``https://api.kyber.network/buy_rate?id=<id>&qty=<qty>`` will return a JSON of the latest buy rate (in ETH) for the specified token. Details about the `buy_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#buy-rate).</br>
+
+Querying `https://api.kyber.network/buy_rate?id=<id>&qty=<qty>` will return a JSON of the latest buy rate (in ETH) for the specified token. Details about the `buy_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#buy-rate).</br>
 
 <!--#### Argument Description
 | # | Field Name | Description |
@@ -70,19 +81,23 @@ Querying ``https://api.kyber.network/buy_rate?id=<id>&qty=<qty>`` will return a 
 | 4 | dst_qty | Array of floating point numbers which will be rounded off to the decimals of the `id` of the destination asset. They should match the request input parameter specified in `qty`. |-->
 
 #### Code Example
+
 ```js
-const fetch = require('node-fetch')
+const fetch = require("node-fetch");
 
 async function getBuyRates(id, qty) {
-  let ratesRequest = await fetch('https://api.kyber.network/buy_rate?id=' + id + '&qty=' + qty)
-  let rates = await ratesRequest.json()
-  return rates
+  let ratesRequest = await fetch(
+    "https://api.kyber.network/buy_rate?id=" + id + "&qty=" + qty
+  );
+  let rates = await ratesRequest.json();
+  return rates;
 }
 
-await getBuyRates('0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300')
+await getBuyRates("0xdd974D5C2e2928deA5F71b9825b8b646686BD200", "300");
 ```
 
 #### Output
+
 ```json
 {
   "error": false,
@@ -90,19 +105,16 @@ await getBuyRates('0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '300')
     {
       "src_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "dst_id": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
-      "src_qty": [
-        0.5671077504725898
-      ],
-      "dst_qty": [
-        300
-      ]
+      "src_qty": [0.5671077504725898],
+      "dst_qty": [300]
     }
   ]
 }
 ```
 
 ### Step 1c - Convert ETH to KNC
-Querying ``https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>`` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion between the specified pair. Details about the `trade_data` endpoint can be found in the `Trading` section of [reference](api-trading.md#trade-data). </br>
+
+Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>` will return a JSON of the transaction details needed for a user to create and sign a new transaction to make the conversion between the specified pair. Details about the `trade_data` endpoint can be found in the `Trading` section of [reference](api-trading.md#trade-data). </br>
 
 <!--#### Argument Description
 | # | Field Name | Description |
@@ -125,19 +137,52 @@ Querying ``https://api.kyber.network/trade_data?user_address=<user_address>&src_
 | 7 | gasLimit | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |-->
 
 #### Code Example
-```js
-const fetch = require('node-fetch')
 
-async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price, wallet_id) {
-  let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price + '&wallet_id=' + wallet_id)
-  let tradeDetails = await tradeDetailsRequest.json()
-  return tradeDetails
+```js
+const fetch = require("node-fetch");
+
+async function getTradeDetails(
+  user_address,
+  src_id,
+  dst_id,
+  src_qty,
+  min_dst_qty,
+  gas_price,
+  wallet_id
+) {
+  let tradeDetailsRequest = await fetch(
+    "https://api.kyber.network/trade_data?user_address=" +
+      user_address +
+      "&src_id=" +
+      src_id +
+      "&dst_id=" +
+      dst_id +
+      "&src_qty=" +
+      src_qty +
+      "&min_dst_qty=" +
+      min_dst_qty +
+      "&gas_price=" +
+      gas_price +
+      "&wallet_id=" +
+      wallet_id
+  );
+  let tradeDetails = await tradeDetailsRequest.json();
+  return tradeDetails;
 }
 
-await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '0xdd974D5C2e2928deA5F71b9825b8b646686BD200', '0.6', '300', 'medium', '0x0859A7958E254234FdC1d200b941fFdfCAb02fC1')
+await getTradeDetails(
+  "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
+  "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
+  "0.6",
+  "300",
+  "medium",
+  "0x0859A7958E254234FdC1d200b941fFdfCAb02fC1"
+);
 ```
 
 #### Output
+
 ```json
 {
   "from": "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
@@ -151,36 +196,38 @@ await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0xeeeeeeeee
 ```
 
 ### Full Code Example
+
 ```js
 // Import web3 for broadcasting transactions
-var Web3 = require('web3');
+var Web3 = require("web3");
 // Import node-fetch to query the trading API
-var fetch = require('node-fetch');
+var fetch = require("node-fetch");
 // import ethereumjs-tx to sign and serialise transactions
-var Tx = require('ethereumjs-tx');
+var Tx = require("ethereumjs-tx");
 
 // Connect to Infura's ropsten node
-const web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io"));
+const web3 = new Web3(
+  new Web3.providers.HttpProvider("https://ropsten.infura.io")
+);
 
 // Representation of ETH as an address on Ropsten
-const ETH_TOKEN_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+const ETH_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 // KNC contract address on Ropsten
-const KNC_TOKEN_ADDRESS = '0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6';
+const KNC_TOKEN_ADDRESS = "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6";
 const ETH_DECIMALS = 18;
 const KNC_DECIMALS = 18;
 // How many KNC you want to buy
 const QTY = 300;
 // Gas price of the transaction
-const GAS_PRICE = 'medium';
+const GAS_PRICE = "medium";
 // Your Ethereum wallet address
-const USER_ACCOUNT = 'ENTER_USER_ADDRESS_HERE';
+const USER_ACCOUNT = "ENTER_USER_ADDRESS_HERE";
 // Your private key
-const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex');
+const PRIVATE_KEY = Buffer.from("ENTER_PRIVATE_KEY_HERE", "hex");
 // Your fee sharing address
-const WALLET_ID = 'ENTER_FEE_SHARING_ADDRESS_HERE';
+const WALLET_ID = "ENTER_FEE_SHARING_ADDRESS_HERE";
 
 async function main() {
-
   /*
   #################################
   ### CHECK IF KNC IS SUPPORTED ###
@@ -188,15 +235,19 @@ async function main() {
   */
 
   // Querying the API /currencies endpoint
-  let tokenInfoRequest = await fetch('https://ropsten-api.kyber.network/currencies');
+  let tokenInfoRequest = await fetch(
+    "https://ropsten-api.kyber.network/currencies"
+  );
   // Parsing the output
   let tokens = await tokenInfoRequest.json();
   // Checking to see if KNC is supported
-  let supported = tokens.data.some(token => {return 'KNC' == token.symbol});
+  let supported = tokens.data.some(token => {
+    return "KNC" == token.symbol;
+  });
   // If not supported, return.
-  if(!supported) {
-    console.log('Token is not supported');
-    return
+  if (!supported) {
+    console.log("Token is not supported");
+    return;
   }
 
   /*
@@ -206,7 +257,12 @@ async function main() {
   */
 
   // Querying the API /buy_rate endpoint
-  let ratesRequest = await fetch('https://ropsten-api.kyber.network/buy_rate?id=' + KNC_TOKEN_ADDRESS + '&qty=' + QTY);
+  let ratesRequest = await fetch(
+    "https://ropsten-api.kyber.network/buy_rate?id=" +
+      KNC_TOKEN_ADDRESS +
+      "&qty=" +
+      QTY
+  );
   // Parsing the output
   let rates = await ratesRequest.json();
   // Getting the source quantity
@@ -220,7 +276,22 @@ async function main() {
 
   // Querying the API /trade_data endpoint
   // Note that a factor of 0.97 is used to account for slippage but you can use any value you want.
-  let tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + ETH_TOKEN_ADDRESS + '&dst_id=' + KNC_TOKEN_ADDRESS + '&src_qty=' + srcQty/0.97 + '&min_dst_qty=' + QTY + '&gas_price=' + GAS_PRICE + '&wallet_id=' + WALLET_ID);
+  let tradeDetailsRequest = await fetch(
+    "https://ropsten-api.kyber.network/trade_data?user_address=" +
+      USER_ACCOUNT +
+      "&src_id=" +
+      ETH_TOKEN_ADDRESS +
+      "&dst_id=" +
+      KNC_TOKEN_ADDRESS +
+      "&src_qty=" +
+      srcQty / 0.97 +
+      "&min_dst_qty=" +
+      QTY +
+      "&gas_price=" +
+      GAS_PRICE +
+      "&wallet_id=" +
+      WALLET_ID
+  );
   // Parsing the output
   let tradeDetails = await tradeDetailsRequest.json();
   // Extract the raw transaction details
@@ -232,20 +303,25 @@ async function main() {
   // Serialise the transaction (RLP encoding)
   let serializedTx = tx.serialize();
   // Broadcasting the transaction
-  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error));
+  txReceipt = await web3.eth
+    .sendSignedTransaction("0x" + serializedTx.toString("hex"))
+    .catch(error => console.log(error));
   // Log the transaction receipt
   console.log(txReceipt);
 }
 
-main()
+main();
 ```
 
 ## Scenario 2: Perform DAI (ERC20 token) -> ETH conversion
+
 ### Step 2a - Check if DAI token is supported
+
 Same as [step 1a](#step-1a-check-if-knc-token-is-supported).
 
 ### Step 2b - Get token enabled status of wallet.
-Querying ``https://api.kyber.network/users/<user_address>/currencies`` will return a JSON of enabled statuses of ERC20 tokens in the given address. Details about the `users/<user_address>/currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies).</br>
+
+Querying `https://api.kyber.network/users/<user_address>/currencies` will return a JSON of enabled statuses of ERC20 tokens in the given address. Details about the `users/<user_address>/currencies` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies).</br>
 
 <!--#### Argument Description
 | # | Field Name | Description |
@@ -259,19 +335,23 @@ Querying ``https://api.kyber.network/users/<user_address>/currencies`` will retu
 | 3 | txs_required | Number of transactions required until the ID is `enabled` for trading. When enabled is True, `txs_required` is 0. When `enabled` is False, majority of the time `tx_required` is 1 |-->
 
 #### Code Example
+
 ```js
-const fetch = require('node-fetch')
+const fetch = require("node-fetch");
 
 async function getEnabledStatuses(user_address) {
-  let enabledStatusesRequest = await fetch('https://api.kyber.network/users/' + user_address + '/currencies')
-  let enabledStatuses = await enabledStatusesRequest.json()
-  return enabledStatuses
+  let enabledStatusesRequest = await fetch(
+    "https://api.kyber.network/users/" + user_address + "/currencies"
+  );
+  let enabledStatuses = await enabledStatusesRequest.json();
+  return enabledStatuses;
 }
 
-await getEnabledStatuses('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F')
+await getEnabledStatuses("0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F");
 ```
 
 #### Output
+
 ```json
 {
   "error":false,
@@ -281,7 +361,7 @@ await getEnabledStatuses('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F')
       "enabled":true,
       "txs_required":0
     },
-    {  
+    {
       "id":"0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "enabled":false,
       "txs_required":1
@@ -292,7 +372,8 @@ await getEnabledStatuses('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F')
 ```
 
 ### Step 2c - Enable DAI for transfer
-Querying ``https://api.kyber.network/users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>`` will return a JSON of transaction details needed for a user to create and sign a new transaction to approve the KyberNetwork contract to spend tokens on the user's behalf. Details about the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies-currency-id-enable-data).</br>
+
+Querying `https://api.kyber.network/users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` will return a JSON of transaction details needed for a user to create and sign a new transaction to approve the KyberNetwork contract to spend tokens on the user's behalf. Details about the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint can be found in the `Trading` section of [reference](api-trading.md#users-user-address-currencies-currency-id-enable-data).</br>
 
 <!--#### Argument Description
 | # | Field Name | Description |
@@ -312,19 +393,32 @@ Querying ``https://api.kyber.network/users/<user_address>/currencies/<currency_i
 | 7 | gasLimit | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |-->
 
 #### Code Example
+
 ```js
-const fetch = require('node-fetch')
+const fetch = require("node-fetch");
 
 async function getEnableTokenDetails(user_address, id, gas_price) {
-  let enableTokenDetailsRequest = await fetch('https://api.kyber.network/users/' + user_address + '/currencies/' + id + '/enable_data?gas_price=' + gas_price)
-  let enableTokenDetails = await enableTokenDetailsRequest.json()
-  return enabletokenDetails
+  let enableTokenDetailsRequest = await fetch(
+    "https://api.kyber.network/users/" +
+      user_address +
+      "/currencies/" +
+      id +
+      "/enable_data?gas_price=" +
+      gas_price
+  );
+  let enableTokenDetails = await enableTokenDetailsRequest.json();
+  return enabletokenDetails;
 }
 
-await getEnableTokenDetails('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F', '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', 'medium')
+await getEnableTokenDetails(
+  "0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
+  "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+  "medium"
+);
 ```
 
 #### Output
+
 ```json
 {
   "from": "0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
@@ -338,7 +432,8 @@ await getEnableTokenDetails('0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F', '0x89d
 ```
 
 ### Step 2d - Get DAI/ETH sell rates
-Querying ``https://api.kyber.network/sell_rate?id=<id>&qty=<qty>`` will return a JSON of the latest sell rate for the specified token. Details about the `sell_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#sell-rate).</br>
+
+Querying `https://api.kyber.network/sell_rate?id=<id>&qty=<qty>` will return a JSON of the latest sell rate for the specified token. Details about the `sell_rate` endpoint can be found in the `Trading` section of [reference](api-trading.md#sell-rate).</br>
 
 <!--#### Argument Description
 | # | Field Name | Description |
@@ -354,19 +449,23 @@ Querying ``https://api.kyber.network/sell_rate?id=<id>&qty=<qty>`` will return a
 | 4 | dst_qty | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |-->
 
 #### Code Example
+
 ```js
-const fetch = require('node-fetch')
+const fetch = require("node-fetch");
 
 async function getSellRates(id, qty) {
-  let ratesRequest = await fetch('https://api.kyber.network/sell_rate?id=' + id + '&qty=' + qty)
-  let rates = await ratesRequest.json()
-  return rates
+  let ratesRequest = await fetch(
+    "https://api.kyber.network/sell_rate?id=" + id + "&qty=" + qty
+  );
+  let rates = await ratesRequest.json();
+  return rates;
 }
 
-await getSellRates('0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '100')
+await getSellRates("0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359", "100");
 ```
 
 #### Output
+
 ```json
 {
   "error": false,
@@ -374,64 +473,95 @@ await getSellRates('0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '100')
     {
       "src_id": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "dst_id": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "src_qty": [
-        100
-      ],
-      "dst_qty": [
-        0.5070763172999999
-      ]
+      "src_qty": [100],
+      "dst_qty": [0.5070763172999999]
     }
   ]
 }
 ```
 
 ### Step 2e - Convert DAI to ETH
+
 Similar to [step 1c](#step-1c-convert-eth-to-knc).
 
 #### Code Example
-```js
-const fetch = require('node-fetch')
 
-async function getTradeDetails(user_address, src_id, dst_id, src_qty, min_dst_qty, gas_price, wallet_id) {
-  let tradeDetailsRequest = await fetch('https://api.kyber.network/trade_data?user_address=' + user_address + '&src_id=' + src_id + '&dst_id=' + dst_id + '&src_qty=' + src_qty + '&min_dst_qty=' + min_dst_qty + '&gas_price=' + gas_price + '&wallet_id=' + wallet_id)
-  let tradeDetails = await tradeDetailsRequest.json()
-  return tradeDetails
+```js
+const fetch = require("node-fetch");
+
+async function getTradeDetails(
+  user_address,
+  src_id,
+  dst_id,
+  src_qty,
+  min_dst_qty,
+  gas_price,
+  wallet_id
+) {
+  let tradeDetailsRequest = await fetch(
+    "https://api.kyber.network/trade_data?user_address=" +
+      user_address +
+      "&src_id=" +
+      src_id +
+      "&dst_id=" +
+      dst_id +
+      "&src_qty=" +
+      src_qty +
+      "&min_dst_qty=" +
+      min_dst_qty +
+      "&gas_price=" +
+      gas_price +
+      "&wallet_id=" +
+      wallet_id
+  );
+  let tradeDetails = await tradeDetailsRequest.json();
+  return tradeDetails;
 }
 
-await getTradeDetails('0x8fa07f46353a2b17e92645592a94a0fc1ceb783f', '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '100', '0.52', 'medium', '0x0859A7958E254234FdC1d200b941fFdfCAb02fC1')
+await getTradeDetails(
+  "0x8fa07f46353a2b17e92645592a94a0fc1ceb783f",
+  "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+  "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "100",
+  "0.52",
+  "medium",
+  "0x0859A7958E254234FdC1d200b941fFdfCAb02fC1"
+);
 ```
 
 ### Full Code Example
+
 ```js
 // Import web3 for broadcasting transactions
-var Web3 = require('web3');
+var Web3 = require("web3");
 // Import node-fetch to query the trading API
-var fetch = require('node-fetch');
+var fetch = require("node-fetch");
 // import ethereumjs-tx to sign and serialise transactions
-var Tx = require('ethereumjs-tx');
+var Tx = require("ethereumjs-tx");
 
 // Connect to Infura's ropsten node
-const web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io"));
+const web3 = new Web3(
+  new Web3.providers.HttpProvider("https://ropsten.infura.io")
+);
 
 // Representation of ETH as an address on Ropsten
-const ETH_TOKEN_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+const ETH_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 // DAI contract address on Ropsten
-const DAI_TOKEN_ADDRESS = '0xaD6D458402F60fD3Bd25163575031ACDce07538D';
+const DAI_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D";
 const ETH_DECIMALS = 18;
 const DAI_DECIMALS = 18;
 // How many DAI you want to sell
 const QTY = 100;
 // Gas price of the transaction
-const GAS_PRICE = 'medium';
+const GAS_PRICE = "medium";
 // Your Ethereum wallet address
-const USER_ACCOUNT = 'ENTER_USER_ADDRESS_HERE';
+const USER_ACCOUNT = "ENTER_USER_ADDRESS_HERE";
 // Your private key
-const PRIVATE_KEY = Buffer.from('ENTER_PRIVATE_KEY_HERE', 'hex');
+const PRIVATE_KEY = Buffer.from("ENTER_PRIVATE_KEY_HERE", "hex");
 // Your fee sharing address
-const WALLET_ID = 'ENTER_FEE_SHARING_ADDRESS_HERE';
+const WALLET_ID = "ENTER_FEE_SHARING_ADDRESS_HERE";
 
 async function main() {
-
   /*
   #################################
   ### CHECK IF DAI IS SUPPORTED ###
@@ -439,15 +569,19 @@ async function main() {
   */
 
   // Querying the API /currencies endpoint
-  let tokenInfoRequest = await fetch('https://ropsten-api.kyber.network/currencies');
+  let tokenInfoRequest = await fetch(
+    "https://ropsten-api.kyber.network/currencies"
+  );
   // Parsing the output
   let tokens = await tokenInfoRequest.json();
   // Checking to see if DAI is supported
-  let supported = tokens.data.some(token => {return 'DAI' == token.symbol});
+  let supported = tokens.data.some(token => {
+    return "DAI" == token.symbol;
+  });
   // If not supported, return.
-  if(!supported) {
-    console.log('Token is not supported');
-    return
+  if (!supported) {
+    console.log("Token is not supported");
+    return;
   }
 
   /*
@@ -457,37 +591,52 @@ async function main() {
   */
 
   // Querying the API /users/<user_address>/currencies endpoint
-  let enabledStatusesRequest = await fetch('https://ropsten-api.kyber.network/users/' + USER_ACCOUNT + '/currencies')
+  let enabledStatusesRequest = await fetch(
+    "https://ropsten-api.kyber.network/users/" + USER_ACCOUNT + "/currencies"
+  );
   // Parsing the output
-  let enabledStatuses = await enabledStatusesRequest.json()
+  let enabledStatuses = await enabledStatusesRequest.json();
   // Checking to see if DAI is enabled
-  let enabled = enabledStatuses.data.some(token => {if(token.id == DAI_TOKEN_ADDRESS.toLowerCase()) {return token.enabled}})
+  let enabled = enabledStatuses.data.some(token => {
+    if (token.id == DAI_TOKEN_ADDRESS.toLowerCase()) {
+      return token.enabled;
+    }
+  });
 
-    /*
+  /*
   ####################################
   ### ENABLE WALLET IF NOT ENABLED ###
   ####################################
   */
 
-  if(!enabled) {
+  if (!enabled) {
     // Querying the API /users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price> endpoint
-    let enableTokenDetailsRequest = await fetch('https://ropsten-api.kyber.network/users/' + USER_ACCOUNT + '/currencies/' + DAI_TOKEN_ADDRESS + '/enable_data?gas_price=' + GAS_PRICE)
+    let enableTokenDetailsRequest = await fetch(
+      "https://ropsten-api.kyber.network/users/" +
+        USER_ACCOUNT +
+        "/currencies/" +
+        DAI_TOKEN_ADDRESS +
+        "/enable_data?gas_price=" +
+        GAS_PRICE
+    );
     // Parsing the output
-    let enableTokenDetails = await enableTokenDetailsRequest.json()
+    let enableTokenDetails = await enableTokenDetailsRequest.json();
     // Extract the raw transaction details
-    let rawTx = enableTokenDetails.data
+    let rawTx = enableTokenDetails.data;
     // Create a new transaction
-    let tx = new Tx(rawTx)
+    let tx = new Tx(rawTx);
     // Signing the transaction
-    tx.sign(PRIVATE_KEY)
+    tx.sign(PRIVATE_KEY);
     // Serialise the transaction (RLP encoding)
-    let serializedTx = tx.serialize()
+    let serializedTx = tx.serialize();
     // Broadcasting the transaction
-    txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
+    txReceipt = await web3.eth
+      .sendSignedTransaction("0x" + serializedTx.toString("hex"))
+      .catch(error => console.log(error));
     // Log the transaction receipt
-    console.log(txReceipt)
+    console.log(txReceipt);
   }
-  
+
   /*
   ####################################
   ### GET DAI/ETH CONVERSION RATES ###
@@ -495,11 +644,16 @@ async function main() {
   */
 
   // Querying the API /sell_rate endpoint
-  let ratesRequest = await fetch('https://ropsten-api.kyber.network/sell_rate?id=' + DAI_TOKEN_ADDRESS + '&qty=' + QTY)
+  let ratesRequest = await fetch(
+    "https://ropsten-api.kyber.network/sell_rate?id=" +
+      DAI_TOKEN_ADDRESS +
+      "&qty=" +
+      QTY
+  );
   // Parsing the output
-  let rates = await ratesRequest.json()
+  let rates = await ratesRequest.json();
   // Getting the source quantity
-  let dstQty = rates.data[0].dst_qty
+  let dstQty = rates.data[0].dst_qty;
 
   /*
   #######################
@@ -509,32 +663,52 @@ async function main() {
 
   // Querying the API /trade_data endpoint
   // Note that a factor of 0.97 is used to account for slippage but you can use any value you want.
-  tradeDetailsRequest = await fetch('https://ropsten-api.kyber.network/trade_data?user_address=' + USER_ACCOUNT + '&src_id=' + DAI_TOKEN_ADDRESS + '&dst_id=' + ETH_TOKEN_ADDRESS + '&src_qty=' + QTY + '&min_dst_qty=' + dstQty*0.97 + '&gas_price=' + GAS_PRICE + '&wallet_id=' + WALLET_ID)
+  tradeDetailsRequest = await fetch(
+    "https://ropsten-api.kyber.network/trade_data?user_address=" +
+      USER_ACCOUNT +
+      "&src_id=" +
+      DAI_TOKEN_ADDRESS +
+      "&dst_id=" +
+      ETH_TOKEN_ADDRESS +
+      "&src_qty=" +
+      QTY +
+      "&min_dst_qty=" +
+      dstQty * 0.97 +
+      "&gas_price=" +
+      GAS_PRICE +
+      "&wallet_id=" +
+      WALLET_ID
+  );
   // Parsing the output
-  let tradeDetails = await tradeDetailsRequest.json()
+  let tradeDetails = await tradeDetailsRequest.json();
   // Extract the raw transaction details
-  rawTx = tradeDetails.data[0]
+  rawTx = tradeDetails.data[0];
   // Create a new transaction
-  tx = new Tx(rawTx)
+  tx = new Tx(rawTx);
   // Signing the transaction
-  tx.sign(PRIVATE_KEY)
+  tx.sign(PRIVATE_KEY);
   // Serialise the transaction (RLP encoding)
-  serializedTx = tx.serialize()
+  serializedTx = tx.serialize();
   // Broadcasting the transaction
-  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error))
+  txReceipt = await web3.eth
+    .sendSignedTransaction("0x" + serializedTx.toString("hex"))
+    .catch(error => console.log(error));
   // Log the transaction receipt
-  console.log(txReceipt)
+  console.log(txReceipt);
 }
 
-main()
+main();
 ```
 
 ## Scenario 3: Get ZIL/ETH trading pair info
+
 ### Step 3a - Check if ZIL token is supported
+
 Same as [step 1a](#step-1a-check-if-knc-token-is-supported).
 
 ### Step 3b - Retrieve information about ZIL/ETH pair.
-Querying ``https://api.kyber.network/market`` will return a JSON of in depth information of all tokens supported on Kyber Network.</br>
+
+Querying `https://api.kyber.network/market` will return a JSON of in depth information of all tokens supported on Kyber Network.</br>
 
 <!--#### Response Description
 | # | Field Name | Description |
@@ -553,19 +727,23 @@ Querying ``https://api.kyber.network/market`` will return a JSON of in depth inf
 | 12 | pair | Pair name consisting of the quote and base asset symbols. |-->
 
 #### Code Example
+
 ```js
-const fetch = require('node-fetch')
+const fetch = require("node-fetch");
 
 async function getAllPrices() {
-  let tokensDetailedInfoRequest = await fetch('https://api.kyber.network/market')
-  let tokensDetailedInfo = await tokensDetailedInfoRequest.json()
-  return tokensDetailedInfo
+  let tokensDetailedInfoRequest = await fetch(
+    "https://api.kyber.network/market"
+  );
+  let tokensDetailedInfo = await tokensDetailedInfoRequest.json();
+  return tokensDetailedInfo;
 }
 
-await getAllPrices()
+await getAllPrices();
 ```
 
 #### Output
+
 ```json
 {
   "error": false,
@@ -604,12 +782,12 @@ await getAllPrices()
 ```
 
 ### Full Code Example
+
 ```js
 // Import node-fetch to query the trading API
-var fetch = require('node-fetch')
+var fetch = require("node-fetch");
 
 async function main() {
-
   /*
   #################################
   ### CHECK IF KNC IS SUPPORTED ###
@@ -617,15 +795,19 @@ async function main() {
   */
 
   // Querying the API /currencies endpoint
-  let tokenInfoRequest = await fetch('https://ropsten-api.kyber.network/currencies');
+  let tokenInfoRequest = await fetch(
+    "https://ropsten-api.kyber.network/currencies"
+  );
   // Parsing the output
   let tokens = await tokenInfoRequest.json();
   // Checking to see if KNC is supported
-  let supported = tokens.data.some(token => {return 'KNC' == token.symbol});
+  let supported = tokens.data.some(token => {
+    return "KNC" == token.symbol;
+  });
   // If not supported, return.
-  if(!supported) {
-    console.log('Token is not supported');
-    return
+  if (!supported) {
+    console.log("Token is not supported");
+    return;
   }
 
   /*
@@ -635,15 +817,43 @@ async function main() {
   */
 
   // Querying the API /market endpoint
-  let tokensDetailedInfoRequest = await fetch('https://api.kyber.network/market')
+  let tokensDetailedInfoRequest = await fetch(
+    "https://api.kyber.network/market"
+  );
   // Parsing the output
-  let tokensDetailedInfo = await tokensDetailedInfoRequest.json()
+  let tokensDetailedInfo = await tokensDetailedInfoRequest.json();
   // Getting detailed info about the ZIL/ETH trading pair
-  tokensDetailedInfo.data.some(token => {if(token.quote_symbol == "ZIL"){console.log(token)}})
+  tokensDetailedInfo.data.some(token => {
+    if (token.quote_symbol == "ZIL") {
+      console.log(token);
+    }
+  });
 }
 
-main()
+main();
 ```
+
+## Safeguarding Users From Slippage Rates
+
+The token conversion rate varies with different source token quantities. It is important to highlight the slippage in rates to the user when dealing with large token amounts. We provide some methods how this can be done below.
+
+### Method 1: Reject the transaction if the slippage rate exceeds a defined percentage
+
+1. Call `/buy_rate` or `sell_rate` for 1 ETH equivalent worth of `srcToken`.
+2. Call `/buy_rate` or `sell_rate` for actual `srcToken` amount.
+3. If the obtained rates differ by a defined percentage (either in the smart contract, or as a user input), reject the transaction.
+
+### Method 2: Display rate slippage in the user interface
+
+![Showing Slippage Rate](/uploads/showing-slippage-rate.jpeg "Showing SlippageRate")
+An example of how this could be done is shown above. How the rate slippage is calculated is as follows:
+
+1. Call `/buy_rate` or `sell_rate` for 1 ETH equivalent worth of `srcToken`.
+2. Call `/buy_rate` or `sell_rate` for actual `srcToken` amount.
+3. Calculate the rate difference and display it **prominently** in the user interface.
+
 ## Things to note
+
 ### Signing web3 transactions
+
 This guide assumes that the user has basic understanding of Web3 and how to create and broadcast transactions. If you require more assistance on this, please visit the [Web3 documentation](https://web3js.readthedocs.io/en/1.0/getting-started.html).
