@@ -295,7 +295,7 @@ By default, reserves that were listed permissionlessly are also included when pe
 The token conversion rate varies with different source token quantities. It is important to highlight the slippage in rates to the user when dealing with large token amounts. We provide some methods how this can be done below.
 
 ### Method 1: Display rate slippage in the user interface
-![Showing Slippage Rate](/uploads/showing-slippage-rate.jpg "Showing SlippageRate")
+![Showing Slippage Rate](/uploads/showing-slippage-rate.jpeg "Showing SlippageRate")
 An example of how this could be done is shown above. How the rate slippage is calculated is as follows:
 1. Call `getExpectedRate` for 1 ETH equivalent worth of `srcToken`.
 2. Call `getExpectedRate` for actual `srcToken` amount.

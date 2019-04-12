@@ -513,7 +513,7 @@ The token conversion rate varies with different source token quantities. It is i
 3. If the obtained rates differ by a defined percentage (either in the smart contract, or as a user input), revert the transaction.
 
 ### Method 2: Display rate slippage in the user interface
-![Showing Slippage Rate](/uploads/showing-slippage-rate.jpg "Showing SlippageRate")
+![Showing Slippage Rate](/uploads/showing-slippage-rate.jpeg "Showing SlippageRate")
 An example of how this could be done is shown above. How the rate slippage is calculated is as follows:
 1. Call `/buy_rate` or `sell_rate` for 1 ETH equivalent worth of `srcToken`.
 2. Call `/buy_rate` or `sell_rate` for actual `srcToken` amount.
