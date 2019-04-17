@@ -2,11 +2,6 @@
 id: Reserves-AutomatedPriceReserve
 title: Automated Price Reserve
 ---
-
-## DISCLAIMER
-
-**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ## Objective
 
 In this guide, we will learn how to configure and deploy an Automated Price Reserve either locally via Ganache or to the Ropsten testnet.

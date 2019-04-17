@@ -2,9 +2,6 @@
 id: API_ABI-SignInWidget
 title: Sign In Widget
 ---
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ## Developer Registration
 Contact one of our Kyber developers in the KyberDeveloper group at https://t.me/KyberDeveloper to get a developer account. The following information is required:
 | Parameter            | Description |

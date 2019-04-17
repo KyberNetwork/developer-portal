@@ -2,9 +2,6 @@
 id: Integrations-KyberWidgetGuide
 title: KyberWidget Guide
 ---
-## DISCLAIMER
-**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ## Introduction
 This guide will walk you through on how you can interact with our protocol implementation using our KyberWidget. The most common group of users that can benefit from this guide are vendors and websites.
 
@@ -80,22 +77,30 @@ Go to your project `General settings` and add KyberWidget into `Embedded Binarie
 ### Add the dependency frameworks
 Add these dependency frameworks below into your project via ([Cocoapods](https://cocoapods.org/)):
 ```swift
-  pod 'Moya', '~> 10.0.1'
-  pod 'BigInt', '~> 3.0'
-  pod 'APIKit'
-  pod 'MBProgressHUD'
-  pod 'TrustKeystore', '~> 0.4.2'
-  pod 'TrustCore', '~> 0.0.7'
-  pod 'JSONRPCKit', :git=> 'https://github.com/bricklife/JSONRPCKit.git'
-  pod 'IQKeyboardManager'
-  pod 'KeychainSwift'
-  pod 'QRCodeReaderViewController', :git=>'https://github.com/yannickl/QRCodeReaderViewController.git', :branch=>'master'
-  pod 'JavaScriptKit', '~> 1.0'
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+pod 'Moya', '~> 10.0.1'
+pod 'BigInt', '~> 3.0'
+pod 'APIKit'
+pod 'MBProgressHUD'
+pod 'TrustKeystore', '~> 0.4.2'
+pod 'TrustCore', '~> 0.0.7'
+pod 'JSONRPCKit', :git=> 'https://github.com/bricklife/JSONRPCKit.git'
+pod 'IQKeyboardManager'
+pod 'KeychainSwift'
+pod 'QRCodeReaderViewController', :git=>'https://github.com/yannickl/QRCodeReaderViewController.git', :branch=>'master'
+pod 'JavaScriptKit', '~> 1.0'
 ```
 
 NOTE: It is important to put the following codes into pod file as well:
 
 ```swift
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     if ['JSONRPCKit'].include? target.name
@@ -131,6 +136,10 @@ Please note that the values are **for illustration purposes** only.
 To use the widget for `pay` use case:
 
 ```swift
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 do {
   self.coordinator = try KWPayCoordinator(
     baseViewController: self,
@@ -153,6 +162,10 @@ do {
 To use the widget for `swap` use case:
 
 ```swift
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 do {
   self.coordinator = try KWSwapCoordinator(
     baseViewController: self,
@@ -168,6 +181,10 @@ do {
 To use the widget for `buy` use case:
 
 ```swift
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 do {
   self.coordinator = try KWBuyCoordinator(
     baseViewController: self,
@@ -246,11 +263,19 @@ Use `_KWNetworkProvider.gasGasPrice_` as service.
 Create a `KWKeystore` instance to help import a wallet, get current account, sign transactions, etc
 
 ```swift
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 let keystore = try KWKeystore()
 ```
 Available functions in `KWKeystore`:
 
 ```swift
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 var accounts: [Account] // list of accounts imported
 var account: Account? // return first imported account
 func removeAllAccounts(completion: @escaping () -> Void)//  remove all imported accounts
@@ -262,6 +287,10 @@ func signTransaction(transaction: KWDraftTransaction) -> Result<Data, KWKeystore
 **External Provider**
 Initialize `KWExternalProvider` with an instance of keystore and network.
 ```
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 let externalProvider = KWExternalProvider(keystore: keystore, network: network)
 ```
 
@@ -270,6 +299,10 @@ External Provider provides all functions needed to perform a payment, or to use 
 Some useful functions:
 
 ```swift
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 func getETHBalance(address: String, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 func getTokenBalance(for contract: Address, address: Address, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 func getTransactionCount(for address: String, completion: @escaping (Result<Int, AnyError>) -> Void)

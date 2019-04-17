@@ -4,9 +4,6 @@ title: WooCommerce Plugin
 ---
 The plugin parameters are defined in the widget as payment gateway settings in Woocommerce and also defined in the source file `kyber-settings.php`. The main logic of handling payments through the widget is defined in the source file `class-woo-kyber-payment-gateway.php`.
 
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ## Plugin Parameters
 | Parameter |          Description          |     Example     |
 | --------- | ----------------------------- | --------------- |

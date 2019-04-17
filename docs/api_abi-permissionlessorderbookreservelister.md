@@ -9,8 +9,6 @@ imports [OrderbookReserve](api_abi-orderbookreserve.md), [FeeBurnerInterface](ap
 
 The Permissionless Orderbook Reserve Lister is used for creating, initialising and listing new Permissionless Orderbook Reserves.
 ___
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 
@@ -59,6 +57,10 @@ True if the function was executed successfully.
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = PermissionlessOrderbookReserveLister.methods.addOrderbookContract(token).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -85,6 +87,10 @@ function __getOrderbookListingStage__(ERC20 token) public view returns (address,
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const token = '0xe41d2489571d322189246dafa5ebde1f4699f498' // ZRX
 result = await OrderbookReserve.methods.getOrderbookListingStage(token).call()
 ```
@@ -102,6 +108,10 @@ True if the function was executed successfully.
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = PermissionlessOrderbookReserveLister.methods.initOrderbookContract(token).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -124,6 +134,10 @@ True if the function was executed successfully.
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = PermissionlessOrderbookReserveLister.methods.listOrderbookContract(token).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -147,6 +161,10 @@ True if the reserve was successfully removed.
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = PermissionlessOrderbookReserveLister.methods.unlistOrderbookContract(token,hintReserveIndex).encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({

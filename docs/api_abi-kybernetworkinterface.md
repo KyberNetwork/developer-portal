@@ -7,8 +7,6 @@ imports ERC20Interface
 
 *Source*: [KyberNetworkInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkInterface.sol)
 ___
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 
@@ -60,6 +58,10 @@ A returned rate of `0` signifies that a trade from the requested source token am
 #### Turning on MSB to exclude permissionless reserves
 Add `2**255` to the desired `srcQty`. As `2**255` is a really large number, the use of a BigNum library / package is recommended for calculations. We give a web3 example below.
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const srcQty = new web3.utils.BN('3000000000000000000000')
 //Example where MSB is turned on to exclude permissionless reserves
 const hint = new web3.utils.BN('57896044618658097711785492504343953926634992332820282019729792003956564819968') // 2^255 (turning on MSB)

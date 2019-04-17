@@ -2,8 +2,6 @@
 id: API_ABI-Web3
 title: Web3
 ---
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## Web3 Injection
 ### Adding web3
@@ -46,6 +44,10 @@ There is no guarantee about what version of web3 will be injected in response to
 
 ### Broadcasting Transactions
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const Web3 = require('web3');
 const BN = require('bignumber.js');
 const web3 = new Web3(new Web3.providers.HttpProvider('<PROVIDER>'));

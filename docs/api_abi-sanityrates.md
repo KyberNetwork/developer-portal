@@ -10,8 +10,6 @@ imports ERC20Interface, [Withdrawable](api_abi-withdrawable.md), Utils, [SanityR
 
 The SanityRates contract's role is provide a safeguard for reserves whereby trades are disabled in the event exchange rates fall below the lower limit or rise above the upper limit of the sanity rates.
 ___
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 
@@ -43,6 +41,10 @@ The sanity rate for the pair of tokens
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 let sanityRate = await SanityRates.methods.getSanityRate(
   "0xdd974D5C2e2928deA5F71b9825b8b646686BD200", //ERC20 src: KNC token
   "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", //ERC20 dest: ETH
@@ -62,6 +64,10 @@ Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)                  |
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 SanityRates.methods.setReasonableDiff(
   ["0xdd974D5C2e2928deA5F71b9825b8b646686BD200"], //ERC20[] srcs: [KNC token]
   [1000] //uint[] diff: 10% = 1000 bps
@@ -89,6 +95,10 @@ Modifiers: [onlyOperator](api_abi-permissiongroups.md#onlyoperator)
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 SanityRates.methods.setSanityRates(
   ["0xdd974D5C2e2928deA5F71b9825b8b646686BD200"], //ERC20[] srcs: [KNC token]
   [2000000000000000] //uint[] rates: 1 KNC = 0.002 ETH = 2000000000000000 wei

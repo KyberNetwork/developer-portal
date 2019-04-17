@@ -2,10 +2,6 @@
 id: Reserves-Ganache
 title: Testing Using Ganache
 ---
-## DISCLAIMER
-
-**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ## Overview
 
 [Ganache](https://truffleframework.com/ganache) enables you to create a private Ethereum blockchain on your local machine for running tests, executing commands, and inspecting its state while controlling how the chain operates. You can also refer to the [Workshop repository](https://github.com/KyberNetwork/workshop) for the same instructions.
@@ -608,3 +604,8 @@ With Ganache running, execute:
 ```
 truffle migrate --network development --reset
 ```
+
+## Disclaimer
+Code snippets in this guide are just examples and you
+should always do your own testing. If you have questions, visit our
+https://t.me/KyberDeveloper.

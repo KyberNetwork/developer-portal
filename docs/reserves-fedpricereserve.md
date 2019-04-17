@@ -2,11 +2,6 @@
 id: Reserves-FedPriceReserve
 title: Fed Price Reserve
 ---
-
-## DISCLAIMER
-
-**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ## Objective
 
 In this guide, we will learn how to configure and deploy a Fed Price Reserve either locally via ganache or to the Ropsten testnet.
@@ -226,6 +221,10 @@ If you plan to support just 1 token, set `buy`, `sell` and `indices` to `[0]`. T
 3. Calculate desired buy and sell rates for your token(s) and set it to `BUY_RATE` and `SELL_RATE`.
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 //REPLACE WITH YOUR ConversionRates.sol CONTRACT ADDRESS
 const CONVERSION_RATES_CONTRACT_ADDRESS =
   "0x69E3D8B2AE1613bEe2De17C5101E58CDae8a59D4";
@@ -743,6 +742,10 @@ For simplicity, assume that we want to modify the base buy rates. The logic for 
 This gives us the buy array `[25,10,-30]`. Encoding this to hex yields `[0x190ae2]`. The code for encoding the array is shown below:
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 compactBuyArr = [25, 10, -30];
 let compactBuyHex = bytesToHex(compactBuyArr);
 
@@ -771,6 +774,10 @@ This should be the block number which you want your modified rates to be valid f
 ##### `Input Example`
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = ConversionRatesContract.methods
   .setCompactData(
     [0x190ae2], //bytes14 buy
@@ -792,6 +799,10 @@ Using flat rate might not be sufficient. A user that buys/sells a big number of 
 Operators can call `setQtyStepFunction()` of `ConversionRates.sol` to allow different conversion rates for different buy/sell quantities.
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 function setQtyStepFunction(
 	ERC20 token,
 	int[] xBuy,
@@ -831,6 +842,10 @@ Given the example parameters in the API/ABI section, assume the base buy rate is
 They can also call `setImbalanceStepFunction()` of `ConversionRates.sol` to allow different conversion rates based on the net traded token amount between price update operations. For example, if Alice buys 100 KNC, Bob sells 50 KNC and Carol buys 10 KNC, then the net traded amount is -60 KNC.
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 function setImbalanceStepFunction(
 	ERC20 token,
 	int[] xBuy,

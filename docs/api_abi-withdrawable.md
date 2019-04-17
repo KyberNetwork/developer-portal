@@ -10,8 +10,6 @@ imports ERC20Interface, [PermissionGroups](api_abi-permissiongroups.md)
 
 The Withdrawable contract's role is to allow recovery of any ERC20 token or ETH received in a contract. This will prevent any accidental loss of tokens.
 ___
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 

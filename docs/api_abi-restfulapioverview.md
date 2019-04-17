@@ -6,9 +6,6 @@ title: RESTful API Overview
 
 The RESTful API can be used to perform trades on the Kyber Network platform.
 
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ### NETWORK URL
 
 | Network    | URL                          |

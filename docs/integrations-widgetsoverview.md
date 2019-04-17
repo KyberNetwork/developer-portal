@@ -50,7 +50,11 @@ Customers pay in token A, vendors receive payment in token B where B != A, and *
 **Note:** For **cases 2 and 3**, the token amount recorded is **in wei**, and so would have to be divided by `10^TOKEN_DECIMALS`.
 
 **Pseudo code:**
-```javascript
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 function paymentStatus(txhash, expectedPayment) -> return status {
   startTime = time.Now()
   txStatus = not_found

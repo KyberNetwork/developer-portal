@@ -2,8 +2,6 @@
 id: Integrations-WooCommercePluginGuide
 title: WooCommerce Plugin Guide
 ---
-## DISCLAIMER
-**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## Introduction
 This guide will walk you through on how you can interact with our protocol implementation using our WooCommerce plugin. The most common group of user that can benefit from this guide are vendors that use WordPress for their e-commerce websites.

@@ -2,9 +2,6 @@
 id: Integrations-RESTfulAPIGuide
 title: RESTful API
 ---
-## DISCLAIMER
-**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ## Introduction
 This guide will walk you through on how you can interact with our protocol implementation using our RESTful APIs. The most common group of users that can benefit from this guide are developers who have minimal smart contract experience, traders and wallets.
 
@@ -25,6 +22,10 @@ Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conv
 * The `node-fetch` module is used for making API queries
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx");
@@ -35,6 +36,10 @@ const fetch = require('node-fetch');
 In this example, we will connect to Infura's ropsten node.
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 // Connecting to ropsten infura node
 const WS_PROVIDER = "wss://ropsten.infura.io/ws";
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
@@ -43,6 +48,10 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 ### Define constants
 Next, we will define the constants that we will be using for this guide.
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 //Base URL for API queries
 //Refer to API/ABI >> RESTFul API Overview >> Network URL section
 const NETWORK_URL = "https://ropsten-api.kyber.network";
@@ -68,6 +77,10 @@ const GAS_PRICE = "medium";
 ### Define function for broadcasting transactions
 We will refactor the broadcast transaction functionality into its own function.
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 async function broadcastTx(rawTx) {
     // Extract raw tx details, create a new Tx
     let tx = new Tx(rawTx);
@@ -88,6 +101,10 @@ Create a function to check whether a token is supported on Kyber. We make use of
 It is recommended to use the token contract address as the identifier instead of the token symbol, as multiple tokens may share the same symbol.
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 async function isTokenSupported(tokenAddress) {
   let tokensBasicInfoRequest = await fetch(NETWORK_URL + '/currencies');
   let tokensBasicInfo = await tokensBasicInfoRequest.json();
@@ -103,6 +120,10 @@ async function isTokenSupported(tokenAddress) {
 We use the `/users/<user_address>/currencies` endpoint to check whether the KyberNetwork contract has been approved for selling BAT tokens on behalf of the user. This endpoints returns a JSON of enabled statuses of ERC20 tokens for the given walletAddress. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#users-user-address-currencies).
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 async function isTokenEnabledForUser(tokenAddress,walletAddress) {
   let enabledStatusesRequest = await fetch(NETWORK_URL + '/users/' + walletAddress + '/currencies');
   let enabledStatuses = await enabledStatusesRequest.json();
@@ -119,6 +140,10 @@ async function isTokenEnabledForUser(tokenAddress,walletAddress) {
 If the BAT token is not enabled for trading, querying the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint returns a transaction payload needed to be signed and broadcasted by the user to enable the KyberNetwork contract to trade BAT tokens on his behalf. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#users-user-address-currencies-currency-id-enable-data).
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 async function enableTokenTransfer(tokenAddress,walletAddress,gasPrice) {
   let enableTokenDetailsRequest = await fetch(NETWORK_URL + '/users/' + walletAddress + '/currencies/' + tokenAddress + '/enable_data?gas_price=' + gasPrice);
   let enableTokenDetails = await enableTokenDetailsRequest.json();
@@ -146,6 +171,10 @@ As such, we perform the following steps:
 3. Assuming a 3% slippage rate, we expect to receive a minimum of `0.97*10 = 9.7 DAI`
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 async function getSellQty(tokenAddress, qty) {
   let sellQtyRequest = await fetch(NETWORK_URL + '/sell_rate?id=' + tokenAddress + '&qty=' + qty);
   let sellQty = await sellQtyRequest.json();
@@ -175,6 +204,10 @@ async function getApproximateReceivableTokens(sellQty,buyQty,srcQty) {
 We now have all the required information to peform the trade transaction. Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>` will return the transaction payload to be signed and broadcasted by the user to make the conversion. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#trade-data).
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 async function executeTrade(walletAddress,srcToken,dstToken,srcQty,minDstQty,gasPrice,refAddress) {
   let tradeDetailsRequest = await fetch(NETWORK_URL + '/trade_data?user_address=' + walletAddress + '&src_id=' + srcToken + '&dst_id=' + dstToken + '&src_qty=' + srcQty + '&min_dst_qty=' + minDstQty + '&gas_price=' + gasPrice + '&wallet_id=' + refAddress);
   let tradeDetails = await tradeDetailsRequest.json();
@@ -188,6 +221,10 @@ async function executeTrade(walletAddress,srcToken,dstToken,srcQty,minDstQty,gas
 The main function will combine the different functions together to obtain the conversion rate, check that conditions are met for the trade, and execute the trade.
 
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 async function main() {
   //Step 1: If either token is not supported, quit
   if (! await isTokenSupported(BAT_TOKEN_ADDRESS) || ! await isTokenSupported(DAI_TOKEN_ADDRESS)) {
@@ -221,6 +258,10 @@ async function main() {
 
 Before running this code example, change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding the Ropsten BAT tokens.
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx");
@@ -361,6 +402,10 @@ The `/currencies` endpoint returns basic information about all tokens supported 
 
 #### Code Example
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const fetch = require('node-fetch')
 
 async function getSupportedTokens() {
@@ -408,6 +453,10 @@ The `/market` endpoint returns price and volume information on token to ETH pair
 
 #### Code Example
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const fetch = require('node-fetch')
 
 async function getMarketInformation() {
@@ -461,6 +510,10 @@ The `/change24h` endpoint returns current token to ETH and USD rates and price p
 
 #### Code Example
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const fetch = require('node-fetch')
 
 async function getPast24HoursTokenInformation() {

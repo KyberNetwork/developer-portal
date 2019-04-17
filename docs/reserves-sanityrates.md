@@ -2,9 +2,6 @@
 id: Reserves-SanityRates
 title: Sanity Rates
 ---
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ## Sanity Rates
 ![Sanityrates](/uploads/sanityrates.png "Sanityrates")
 
@@ -19,6 +16,10 @@ To take the advantage of sanity rates, you will need to have a simple logic to d
 
 Assume you have a reserve that supports ETH<>KNC conversion pair. Suppose the admin sets the reasonable difference to be 10%.
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 let result = await sanityRatesContract.setReasonableDiff(
 	["0xdd974D5C2e2928deA5F71b9825b8b646686BD200"], //ERC20[] srcs: [KNC token]
 	[1000] //uint[] diff: 10% = 1000 bps
@@ -35,6 +36,10 @@ let result = await sanityRatesContract.setReasonableDiff(
 
 The operator sets the sanity rate to be 1 KNC = 0.01 ETH (or equivalently, 1 ETH = 100 KNC)
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 let result = await sanityRatesContract.setSanityRates(
 	["0xdd974D5C2e2928deA5F71b9825b8b646686BD200"], //ERC20[] srcs: [KNC token]
 	[10000000000000000] //uint[] rates: 0.01 ETH = 10000000000000000 wei

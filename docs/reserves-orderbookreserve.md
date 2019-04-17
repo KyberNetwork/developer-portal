@@ -2,9 +2,6 @@
 id: Reserves-OrderbookReserve
 title: Orderbook Reserve
 ---
-## DISCLAIMER
-**All code snippets in this guide have not been audited and should not be used in production. If so, it is done at your own risk.**
-
 ## Objective
 
 In this guide, we will learn how to configure and deploy a Orderbook Reserve either locally via ganache or to the Ropsten testnet. Subsequently, we will also learn how to make, view, update and cancel orders.
@@ -222,7 +219,11 @@ The following functions are executed for updating orders:
 
 #### Web3 Example
 The code snippet below illustrates how one can submit a ETH to ZIL buy order using the hint.
-```
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const srcAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 var hint = await OrderbookReserve.methods.getEthToTokenAddOrderHint(srcAmount, dstAmount).call()
@@ -277,7 +278,11 @@ We call the [`addOrderBatch`](api_abi-orderbookreserve.md#addorderbatch) functio
 |      `isAfterPrevOrder` |   `[false,true,false,false]`  | Since order B is to be in the position after order A, and order A will only have its ID assigned after its addition to the list, we cannot possibly know the previous ID for order B. Hence, we need to set its value to `true` in this array. If unsure, use `false` |
 
 We give a short code snippet below.
-```
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = OrderbookReserve.methods.addOrderBatch(
 	[true,true,true,false], //isEthToToken
 	[10000000000000000000,10000000000000000000,10000000000000000000,100000000000000000000], //srcAmount
@@ -302,7 +307,7 @@ You may refer to [this section](reserves-ganache.md) on how to deploy and test t
 3. Use compiler version `v0.4.18+commit.9cf6e910`
 4. Optimization: `On`
 5. Add the ABI-encoded constructor arguments which are as follows:
-```
+```js
 ERC20 knc //KNC token contract address
 ERC20 reserveToken, //Token contract address orderbook reserve supports
 address burner //feeBurner contract address

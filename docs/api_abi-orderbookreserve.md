@@ -8,8 +8,6 @@ imports OrderListInterface, OrderIdManager, Utils2, [KyberReserveInterface](api_
 
 *Source*: [OrderbookReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/auditv3/contracts/permissionless/OrderbookReserve.sol)
 ___
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 
@@ -163,6 +161,10 @@ function __addOrderBatch__(bool[] isEthToToken, uint128[] srcAmount, uint128[] d
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const buyOrderOneSrcAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 const buyOrderOneDstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const buyOrderTwoSrcAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
@@ -199,6 +201,10 @@ KNC token wei amount to be burnt for an order, depending on its Ether value.
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderEtherAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 result = await OrderbookReserve.methods.calcBurnAmount(orderEtherAmount).call()
 ```
@@ -216,6 +222,10 @@ KNC token wei amount to be burnt for an order, depending on its Ether value.
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderEtherAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 result = await OrderbookReserve.methods.calcBurnAmountFromFeeBurner(orderEtherAmount).call()
 ```
@@ -233,6 +243,10 @@ KNC token wei amount required for to create an order, depending on its Ether val
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderEtherAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 result = await OrderbookReserve.methods.calcKncStake(orderEtherAmount).call()
 ```
@@ -250,6 +264,10 @@ function __cancelEthToTokenOrder__(uint32 orderId) public returns (bool)
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 
 transactionData = OrderbookReserve.methods.cancelEthToTokenOrder(
@@ -276,6 +294,10 @@ function __cancelTokenToEthOrder__(uint32 orderId) public returns (bool)
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 
 transactionData = OrderbookReserve.methods.cancelTokenToEthOrder(
@@ -300,6 +322,10 @@ function __depositEther__(address maker) public payable
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = OrderbookReserve.methods.depositEther(
   WALLET_ADDRESS, //maker
 ).encodeABI()
@@ -324,6 +350,10 @@ function __depositKncForFee__(address maker, uint amount) public
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 //Assume that KNCToken.approve(ORDERBOOK_RESERVE_ADDRESS, allowance) transaction has been executed
 
 transactionData = OrderbookReserve.methods.depositKncForFee(
@@ -350,6 +380,10 @@ function __depositToken__(address maker, uint amount) public
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 //Assume that token.approve(ORDERBOOK_RESERVE_ADDRESS, allowance) transaction has been executed
 
 transactionData = OrderbookReserve.methods.depositToken(
@@ -380,6 +414,10 @@ Current conversion rate of token pairs at block number
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
 const dest = '0xe41d2489571d322189246dafa5ebde1f4699f498' // ZRX
 const srcQty = new web3.utils.BN('3000000000000000000000')
@@ -407,6 +445,10 @@ Order ID to use as the hint input parameter for the [`submitEthToTokenOrderWHint
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const srcAmount = new web3.utils.BN('1000000000000000000') // Eg. 10 ETH
 const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 hint = await OrderbookReserve.methods.getEthToTokenAddOrderHint(srcAmount,dstAmount).call()
@@ -427,6 +469,10 @@ function __getEthToTokenMakerOrderIds__(address maker) public view returns (uint
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 result = await OrderbookReserve.methods.getEthToTokenMakerOrderIds(makerAddress).call()
 ```
 <br />
@@ -457,6 +503,10 @@ function __getEthToTokenOrder__(uint32 orderId) public view returns (
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 result = await OrderbookReserve.methods.getEthToTokenOrder(orderID).call()
 
@@ -480,6 +530,10 @@ function __getEthToTokenOrderList__() public view returns (uint32[] orderList)
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 result = await OrderbookReserve.methods.getEthToTokenOrderList().call()
 ```
 <br />
@@ -498,6 +552,10 @@ Order ID to use as the hint input parameter for the [`submitEthToTokenOrderWHint
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 const srcAmount = new web3.utils.BN('1000000000000000000') // Eg. 10 ETH
 const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
@@ -518,6 +576,10 @@ Order ID to use as the hint input parameter for the [`submitTokenToEthOrderWHint
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const srcAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const dstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 hint = await OrderbookReserve.methods.getTokenToEthAddOrderHint(srcAmount,dstAmount).call()
@@ -538,6 +600,10 @@ function __getTokenToEthMakerOrderIds__(address maker) public view returns (uint
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 result = await OrderbookReserve.methods.getTokenToEthMakerOrderIds(makerAddress).call()
 ```
 <br />
@@ -568,6 +634,10 @@ function __getTokenToEthOrder__(uint32 orderId) public view returns (
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 result = await OrderbookReserve.methods.getTokenToEthOrder(orderID).call()
 
@@ -591,6 +661,10 @@ function __getTokenToEthOrderList__() public view returns (uint32[] orderList)
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 result = await OrderbookReserve.methods.getTokenToEthOrderList().call()
 ```
 <br />
@@ -609,6 +683,10 @@ Order ID to use as the hint input parameter for the [`updateTokenToEthOrderWHint
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 const srcAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const dstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
@@ -625,6 +703,10 @@ True if orderbook reserve's trades are blocked due to KNC depreciation.
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 kncRateBlocksTrade = await OrderbookReserve.methods.kncRateBlocksTrade().call()
 
 ```
@@ -642,6 +724,10 @@ KNC token wei amount required for all active orders made by a maker
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 result = await OrderbookReserve.methods.makerRequiredKncStake(makerAddress).call()
 ```
 <br />
@@ -658,6 +744,10 @@ KNC token wei amount available for withdrawal or use in creating new orders
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 result = await OrderbookReserve.methods.makerUnlockedKnc(makerAddress).call()
 ```
 <br />
@@ -669,6 +759,10 @@ function __setMinOrderSizeEth__() public
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = OrderbookReserve.methods.setMinOrderSizeEth().encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -686,6 +780,10 @@ function __setKncPerEthBaseRate__() public
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = OrderbookReserve.methods.setKncPerEthBaseRate().encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -709,6 +807,10 @@ function __submitEthToTokenOrder__(uint128 srcAmount, uint128 dstAmount) public 
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const srcAmount = new web3.utils.BN('1000000000000000000') // Eg. 10 ETH
 const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 
@@ -739,6 +841,10 @@ function __submitEthToTokenOrderWHint__(uint128 srcAmount, uint128 dstAmount, ui
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const srcAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 var hint = await OrderbookReserve.methods.getEthToTokenAddOrderHint(srcAmount, dstAmount).call()
@@ -770,6 +876,10 @@ function __submitTokenToEthOrder__(uint128 srcAmount, uint128 dstAmount) public 
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const srcAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const dstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 
@@ -800,6 +910,10 @@ function __submitTokenToEthOrderWHint__(uint128 srcAmount, uint128 dstAmount, ui
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const srcAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const dstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 var hint = await OrderbookReserve.methods.getTokentoEthAddOrderHint(srcAmount, dstAmount).call()
@@ -848,6 +962,10 @@ function __updateEthToTokenOrder__(uint32 orderId, uint128 newSrcAmount, uint128
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 const srcAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
@@ -882,6 +1000,10 @@ function __updateEthToTokenOrderWHint__(uint32 orderId, uint128 newSrcAmount, ui
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 const srcAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 const dstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
@@ -920,6 +1042,10 @@ function __updateOrderBatch__(bool[] isEthToToken, uint32[] orderId, uint128[] s
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderIDs = [5,3,11]
 const buyOrderOneSrcAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
 const buyOrderOneDstAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
@@ -959,6 +1085,10 @@ function __updateTokenToEthOrder__(uint32 orderId, uint128 newSrcAmount, uint128
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 const srcAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const dstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
@@ -992,6 +1122,10 @@ function __updateTokenToEthOrderWHint__(uint32 orderId, uint128 newSrcAmount, ui
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const orderID = 5
 const srcAmount = new web3.utils.BN('3000000000000000') // Eg. 3000 ZIL
 const dstAmount = new web3.utils.BN('10000000000000000000') // Eg. 10 ETH
@@ -1022,6 +1156,10 @@ function __withdrawEther__(uint amount) public
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = OrderbookReserve.methods.withdrawEther(
   tokenAmount,
 ).encodeABI()
@@ -1044,6 +1182,10 @@ function __withdrawKncFee__(uint amount) public
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = OrderbookReserve.methods.withdrawKncFee(
   tokenAmount,
 ).encodeABI()
@@ -1066,6 +1208,10 @@ function __withdrawToken__(uint amount) public
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = OrderbookReserve.methods.withdrawToken(
   tokenAmount,
 ).encodeABI()

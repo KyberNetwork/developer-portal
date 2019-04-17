@@ -10,8 +10,6 @@ imports [ConversionRatesInterface](api_abi-conversionratesinterface.md), Liquidi
 
 The LiquidityConversionRates contract's role is to allow reserve operators to set liquidity parameters to the automated reserve for automated rate adjustment based on trades.
 ___
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 
@@ -72,6 +70,10 @@ function __LiquidityConversionRates__(address \_admin, ERC20 \_token) public
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const fs = require('fs');
 const solc = require('solc');
 const Web3 = require('web3');

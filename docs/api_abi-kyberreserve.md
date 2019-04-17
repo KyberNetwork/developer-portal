@@ -10,8 +10,6 @@ imports ERC20Interface, Utils, [Withdrawable](api_abi-withdrawable.md),  [Conver
 
 The KyberReserve contract's role is to execute exchanges and provide rates for Kyber Network. The contract has no direct interaction with the end users (the only interaction with them is via the network platform). Its main interaction is with the reserve operator who manages the token inventory and feeds exchange rates every few minutes.
 ___
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 
@@ -117,6 +115,10 @@ function __KyberReserve__(address \_kyberNetwork, ConversionRatesInterface \_rat
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const fs = require('fs');
 const solc = require('solc');
 const Web3 = require('web3');
@@ -160,6 +162,10 @@ Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
 const addr = WITHDRAWAL_ADDRESS
 const approve = true
@@ -188,6 +194,10 @@ Modifiers: [onlyAlerter](api_abi-permissiongroups.md#onlyalerter)\
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = KyberReserve.methods.disableTrade().encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -209,6 +219,10 @@ Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)\
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 transactionData = KyberReserve.methods.enableTrade().encodeABI()
 
 txReceipt = await web3.eth.sendTransaction({
@@ -231,6 +245,10 @@ ERC20 token balance of the reserve in wei
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
 tokenBalance = await KyberReserve.methods.getBalance(token).call()
 ```
@@ -251,6 +269,10 @@ Current conversion rate of token pairs at block number
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
 const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
 const srcQty = new web3.utils.BN('3000000000000000000000')
@@ -280,6 +302,10 @@ Calculated destination ERC20 token quantity in wei
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
 const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
 const srcQty = new web3.utils.BN('3000000000000000000000')
@@ -309,6 +335,10 @@ Calculated source ERC20 token quantity in wei
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
 const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
 const destQty = new web3.utils.BN('3000000000000000000000')
@@ -336,6 +366,10 @@ Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const _kyberNetwork = '0x964F35fAe36d75B1e72770e244F6595B68508CF5';
 const _conversionRates = '0x798AbDA6Cc246D0EDbA912092A2a3dBd3d11191B';
 const _sanity = '0xdfc85C08d5e5924aB49750E006CF8a826ffb7B13';
@@ -366,6 +400,10 @@ Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
 wallet = WALLET_ADDRESS
 
@@ -394,6 +432,10 @@ Modifiers: [onlyOperator](api_abi-permissiongroups.md#onlyoperator)\
 ___
 Web3 Example:
 ```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
 const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
 const amount = new web3.utils.BN('12345');
 const destination = '0x12370dc7321e84ca96fcaedd0c8abcebbaeb68c6';

@@ -8,8 +8,6 @@ title: PermissionGroups
 
 The PermissionGroups contract's maintains function modifiers that makes sure permission conditions are met before executing any proceeding body of code.
 ___
-## DISCLAIMER
-**All code snippets in this document have not been audited and should not be used in production. If so, it is done at your own risk.**
 
 ## INDEX
 
