@@ -306,5 +306,8 @@ An example of how this could be done is shown above. How the rate slippage is ca
 2. Call `getExpectedRate` for actual `srcToken` amount.
 3. If the obtained rates differ by a defined percentage (either hard-coded in the script or user defined), prevent the transaction from being sent and display an error to the user.
 
+### Method 3: Pulling rates from other exchanges
+One could make use of feeds provided from other exchanges to see if the rate obtained from Kyber is within acceptable bounds.
+
 ## Fee Sharing Program
 You have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your platform. Learn more about the program [here](integrations-feesharing.md)!

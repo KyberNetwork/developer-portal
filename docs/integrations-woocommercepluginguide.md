@@ -13,21 +13,6 @@ This guide will walk you through on how you can interact with our protocol imple
 * WordPress 3.8+
 * WooCommerce 3.0+
 
-Plus, current version of plugin (v0.2.0), will use library bcdiv from php to handle big number return from blockchain, please enable bcdiv if it have not enabled yet. For example install it as below:
-
-1. Install module bcmath
-
-```shell
-sudo apt-get install php-bcmath
-```
-(note: on ubuntu 16.04^ with PHP 7.0^ use php7.0-bcmath package instead)
-
-2. Restart apache service eventually
-
-```shell
-sudo service apache2 restart
-```
-
 ## Installing the plugin
 ### Option A: Clone Github Repo Source
 1. Clone the code repo to your `/wp-content/plugins/` directory

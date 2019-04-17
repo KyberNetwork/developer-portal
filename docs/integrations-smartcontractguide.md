@@ -228,10 +228,10 @@ By default, reserves that were listed permissionlessly are also included when pe
 ## Safeguarding Users From Slippage Rates
 The token conversion rate varies with different source token quantities. It is important to highlight the slippage in rates to the user when dealing with large token amounts. We provide some methods how this can be done below.
 
-### Method 1: Reject the transaction if the slippage rate exceeds a defined percentage
+### Method 1: Revert the transaction if the slippage rate exceeds a defined percentage
 1. Call `getExpectedRate` for 1 ETH equivalent worth of `srcToken`.
 2. Call `getExpectedRate` for actual `srcToken` amount.
-3. If the obtained rates differ by a defined percentage (either in the smart contract, or as a user input), reject the transaction.
+3. If the obtained rates differ by a defined percentage (either in the smart contract, or as a user input), revert the transaction.
 
 ### Method 2: Display rate slippage in the user interface
 ![Showing Slippage Rate](/uploads/showing-slippage-rate.jpeg "Showing SlippageRate")
@@ -239,6 +239,9 @@ An example of how this could be done is shown above. How the rate slippage is ca
 1. Call `getExpectedRate` for 1 ETH equivalent worth of `srcToken`.
 2. Call `getExpectedRate` for actual `srcToken` amount.
 3. Calculate the rate difference and display it **prominently** in the user interface.
+
+### Method 3: Pulling rates from other exchanges
+One could make use of other on-chain price feeds to see if the rate obtained from Kyber is within acceptable bounds.
 
 ## Fee Sharing Program
 You have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your platform. Learn more about the program [here](integrations-feesharing.md)!
