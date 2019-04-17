@@ -36,24 +36,24 @@ class Footer extends React.Component {
             </div>
             <div className="kyber-link-container">
               <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="https://kyber.network/swap">KyberSwap</a>
+                <span className="kyber-link__text semi-b">Essentials</span>
+                <a className="kyber-link__text" href="Start">Getting Started</a>
+                <a className="kyber-link__text" href="Home-DesignPrinciples">Design Principles</a>
+                <a className="kyber-link__text" href="Home-ProtocolOverview">Protocol Overview</a>
+                <a className="kyber-link__text" href="Home-Architecture">Smart Contract Architecture</a>
               </div>
               <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="http://developer.kyber.network">
-                  <span className="translation_missing" title="translation missing: en.components.footer-application.kyber_developer">Kyber Developer</span>
-                </a>
+                <span className="kyber-link__text semi-b">Integrations</span>
+                <a className="kyber-link__text" href="Integrations-DappsUseCase">DApps</a>
+                <a className="kyber-link__text" href="Integrations-VendorsUseCase">Vendors</a>
+                <a className="kyber-link__text" href="Integrations-WalletsUseCase">Wallets</a>
+                <a className="kyber-link__text" href="Integrations-FeeSharing">Fee Sharing</a>
               </div>
               <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="#">About</a>
-                <a className="kyber-link__text" href="https://kyber.network/about/company">Kyber Network</a>
-                <a className="kyber-link__text" href="https://kyber.network/about/knc">KNC</a>
-                <a className="kyber-link__text" href="https://blog.kyber.network">Blog</a>
-                <a className="kyber-link__text" href="https://tracker.kyber.network/">Tracker</a>
-              </div>
-              <div className="kyber-link">
-                <a className="kyber-link__text semi-b" href="https://kyber.network/careers">Careers</a>
-                <a className="kyber-link__text semi-b" href="https://kybernetwork.zendesk.com/hc/en-us/sections/360000119052-FAQ">FAQ</a>
-                <a className="kyber-link__text semi-b" href="mailto:support@kyber.network">Contact Us</a>
+                <span className="kyber-link__text semi-b">Reserves</span>
+                <a className="kyber-link__text" href="Reserves-FedPriceReserve">Fed Price</a>
+                <a className="kyber-link__text" href="Reserves-AutomatedPriceReserve">Automated Price</a>
+                <a className="kyber-link__text" href="Reserves-OrderbookReserve">Orderbook</a>
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@ class Footer extends React.Component {
         <div className="footer-under">
           <div className="wrapper">
             <div className="copyright">
-              <span>@ 2018 Kyber Network. All rights reserved.</span>
+              <span>@ 2019 Kyber Network. All rights reserved.</span>
             </div>
             <div className="media">
               <div className="social-icons">
@@ -76,10 +76,6 @@ class Footer extends React.Component {
                 <a className="social-icons__icon social-icons__icon--without-circle" href="https://github.com/kybernetwork" target="_blank">
                   <img src={`${this.props.config.baseUrl}img/github.svg`} />
                   <div className="social-icons__icon-tooltip">Follow us on Github</div>
-                </a>
-                <a className="social-icons__icon" href="https://kybernetwork.zendesk.com/hc/en-us/requests/new" target="_blank">
-                  <img src={`${this.props.config.baseUrl}img/email.svg`} />
-                  <div className="social-icons__icon-tooltip">Submit a request</div>
                 </a>
                 <a className="social-icons__icon social-icons__icon--without-circle" href="https://www.reddit.com/r/kybernetwork/" target="_blank">
                   <img src={`${this.props.config.baseUrl}img/reddit.svg`} />
