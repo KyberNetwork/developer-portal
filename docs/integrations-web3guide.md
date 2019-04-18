@@ -277,6 +277,8 @@ async function main() {
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
 2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether
+3. Please ensure that you are running web3 version 1.0.0-beta.52. You can install this by doing
+`npm install web3@1.0.0-beta.52`
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -736,7 +738,9 @@ async function main() {
 ### Full code example
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
-2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether
+2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding KNC tokens.
+3. Please ensure that you are running web3 version 1.0.0-beta.52. You can install this by doing
+`npm install web3@1.0.0-beta.52`.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -1231,7 +1235,9 @@ async function main() {
 ### Full code example
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
-2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether
+2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding KNC tokens.
+3. Please ensure that you are running web3 version 1.0.0-beta.52. You can install this by doing
+`npm install web3@1.0.0-beta.52`.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
