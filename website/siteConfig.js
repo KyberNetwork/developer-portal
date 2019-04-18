@@ -58,19 +58,18 @@ const users = [
 
 const siteConfig = {
   // Markdown Plugins
-  markdownPlugins: [
-    createVariableInjectionPlugin(siteVariables),
-  ],
+  markdownPlugins: [createVariableInjectionPlugin(siteVariables)],
 
   // Search bar
   algolia: {
     apiKey: 'da025d0828b58484a96005dfb00595a2',
-    indexName: 'kyber'
+    indexName: 'kyber',
   },
 
   // Base details
   title: 'KyberDeveloper · Powering Liquidity for the Ecosystem',
-  tagline: 'Platforms and applications of all sizes can tap into Kyber\'s decentralized liquidity network to power their liquidity needs, ranging from inter-token payments to portfolio rebalancing.',
+  tagline:
+    "Platforms and applications of all sizes can tap into Kyber's decentralized liquidity network to power their liquidity needs, ranging from inter-token payments to portfolio rebalancing.",
   url: 'https://developer.kyber.network',
   baseUrl: '/',
   projectName: 'kyberdeveloper',
@@ -90,20 +89,24 @@ const siteConfig = {
   // URL links on header
   headerLinks: [
     {
-      href: 'https://developer.kyber.network/',
+      doc: 'Start',
       label: 'Home',
     },
     {
-      doc: 'Start',
-      label: 'Guides',
+      doc: 'Integrations-Intro',
+      label: 'Integrations',
     },
     {
-      doc: 'APIs',
-      label: 'Reference',
+      doc: 'Reserves-Intro',
+      label: 'Reserves',
     },
     {
-      href: 'https://blog.kyber.network/',
-      label: 'Blog',
+      doc: 'Environments-Intro',
+      label: 'Environments',
+    },
+    {
+      doc: 'API_ABI-Intro',
+      label: 'API/ABI',
     },
     {
       href: 'https://github.com/kybernetwork',
@@ -125,7 +128,7 @@ const siteConfig = {
   // Remove html extension
   cleanUrl: true,
 
-  // editUrl: 'http://localhost:1336/edit/',
+  // editUrl: 'http://ec2-54-254-161-180.ap-southeast-1.compute.amazonaws.com:1336/edit/',
 
   // Google Analytics tracking ID
   gaTrackingId: 'UA-99578428-4',
@@ -141,7 +144,12 @@ const siteConfig = {
   // Add custom scripts here that would be placed in <script> tags
   scripts: [
     'https://buttons.github.io/buttons.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
+    '/js/code-block-buttons.js',
   ],
+
+  // Add custom stylesheets here
+  stylesheets: ['/css/code-block-buttons.css'],
 
   // Enable scroll to top
   scrollToTop: true,
@@ -153,7 +161,7 @@ const siteConfig = {
   onPageNav: 'separate',
 
   // Users set above
-  // users,
+  users,
 };
 
 module.exports = siteConfig;

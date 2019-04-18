@@ -1,79 +1,115 @@
 {
-  "guides": {
-    "Overview": [
+  "Home": {
+    "Getting Started": [
       "Start",
-      "TrustModelOverview",
-      "ArchitectureOverview"
-    ],
-    "Use Cases": [
-      "ReservesUseCase",
-      "DappsUseCase",
-      "VendorsUseCase",
-      "WalletsUseCase"
-    ],
-    "Environments": [
-      "MainnetEnvGuide",
-      "RopstenEnvGuide",
-      "RinkebyEnvGuide",
-      "KovanEnvGuide",
-      "ABIEnvGuide"
-    ],
-    "Integration Guides": [
-      "DappsGuide",
-      "VendorsGuide",
-      "WalletsGuide",
-      "TrackerAPIGuide",
-      "TradingAPIGuide",
-      "FeeSharingGuide",
-      "GettingHelpGuide"
-    ],
-    "Reserve Guides": [
-      "FedPriceReservesGuide",
-      "AutomatedReservesGuide",
-      "OrderbookReservesGuide",
-      "MiscellaneousGuide"
-    ],
-    "Widget": [
-      "WidgetOverview",
-      "WidgetGeneratorGuide",
-      "WidgetGenerator",
-      "WidgetWooCommerce",
-      "WidgetSwift",
-      "WidgetAuthentication"
-    ],
-    "Appendix": [
-      "CodesAppendix"
+      "Home-DesignPrinciples",
+      "Home-ProtocolOverview",
+      "Home-Architecture",
+      "Home-TrustModel"
     ]
   },
-  "api": {
-    "Overview": [
-      "APIs",
-      "SmartContractOverview",
-      "RESTOverview"
+  "Integrations": {
+    "Getting Started": [
+      "Integrations-Intro"
     ],
-    "Web": [
-      "Trading"
+    "Use Cases": [
+      "Integrations-DappsUseCase",
+      "Integrations-VendorsUseCase",
+      "Integrations-WalletsUseCase"
     ],
-    "Smart Contracts": [
-      "KyberNetwork",
-      "KyberNetworkInterface",
-      "KyberNetworkProxy",
-      "KyberNetworkProxyInterface",
-      "KyberReserve",
-      "KyberReserveInterface",
-      "ConversionRates",
-      "ConversionRatesInterface",
-      "FeeBurner",
-      "FeeBurnerInterface",
-      "LiquidityConversionRates",
-      "OrderbookReserve",
-      "OrderbookReserveInterface",
-      "PermissionlessOrderbookReserveLister",
-      "PermissionGroups",
-      "SanityRates",
-      "SanityRatesInterface",
-      "SimpleNetworkInterface",
-      "Withdrawable"
+    "Guides": [
+      "Integrations-IntegrationTypes",
+      "Integrations-SmartContractGuide",
+      "Integrations-Web3Guide",
+      "Integrations-RESTfulAPIGuide"
+    ],
+    "Widgets & Plugins": [
+      "Integrations-WidgetsPluginsOverview",
+      "Integrations-KyberWidgetGuide",
+      "Integrations-SignInWidgetGuide",
+      "Integrations-WooCommercePluginGuide",
+      "Integrations-WidgetGenerator"
+    ],
+    "Miscellaneous": [
+      "Integrations-FeeSharing",
+      "Integrations-GettingHelp"
+    ]
+  },
+  "Reserves": {
+    "Getting Started": [
+      "Reserves-Intro",
+      "Reserves-Types",
+      "Reserves-Requirements"
+    ],
+    "Setup Tutorials": [
+      "Reserves-FedPriceReserve",
+      "Reserves-AutomatedPriceReserve",
+      "Reserves-OrderbookReserve",
+      "Reserves-Ganache"
+    ],
+    "Miscellaneous": [
+      "Reserves-TradingStrategy",
+      "Reserves-SanityRates",
+      "Reserves-ReserveFees"
+    ]
+  },
+  "Environments": {
+    "Getting Started": [
+      "Environments-Intro"
+    ],
+    "Environments": [
+      "Environments-Mainnet",
+      "Environments-Ropsten",
+      "Environments-Rinkeby",
+      "Environments-Kovan"
+    ]
+  },
+  "References": {
+    "Getting Started": [
+      "API_ABI-Intro"
+    ],
+    "Core Smart Contracts": [
+      "API_ABI-KyberNetworkProxy",
+      "API_ABI-KyberNetworkProxyInterface",
+      "API_ABI-KyberReserve",
+      "API_ABI-KyberReserveInterface",
+      "API_ABI-ConversionRates",
+      "API_ABI-FeeBurner",
+      "API_ABI-LiquidityConversionRates",
+      "API_ABI-OrderbookReserve",
+      "API_ABI-PermissionlessOrderbookReserveLister"
+    ],
+    "RESTful API": [
+      "API_ABI-RESTfulAPIOverview",
+      "API_ABI-RESTfulAPI"
+    ],
+    "Contract ABIs": [
+      "API_ABI-ABI"
+    ],
+    "Widgets": [
+      "API_ABI-WidgetsOverview",
+      "API_ABI-KyberWidget",
+      "API_ABI-SignInWidget"
+    ],
+    "Plugins": [
+      "API_ABI-PluginsOverview",
+      "API_ABI-WooCommercePlugin"
+    ],
+    "Code Snippets": [
+      "API_ABI-Web3",
+      "API_ABI-TokenQuantityConversion"
+    ],
+    "Misc Contracts": [
+      "API_ABI-KyberNetwork",
+      "API_ABI-KyberNetworkInterface",
+      "API_ABI-ConversionRatesInterface",
+      "API_ABI-FeeBurnerInterface",
+      "API_ABI-OrderbookReserveInterface",
+      "API_ABI-PermissionGroups",
+      "API_ABI-SanityRates",
+      "API_ABI-SanityRatesInterface",
+      "API_ABI-SimpleNetworkInterface",
+      "API_ABI-Withdrawable"
     ]
   }
 }
