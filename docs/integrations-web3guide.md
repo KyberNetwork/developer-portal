@@ -169,15 +169,12 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
-  await web3.eth.sendSignedTransaction("0x" + serializedTx.toString("hex"))
-  .on('confirmation', function(confNumber, receipt){
-    console.log(receipt);
-    process.exit(0);
-  })
-  .on('error', function(error){
-    console.log(error);
-    process.exit(0);
-  })
+  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+  .catch(error => console.log(error));
+
+  // Log the tx receipt
+  console.log(txReceipt);
+  return;
 }
 ```
 
@@ -277,8 +274,8 @@ async function main() {
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
 2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether
-3. Please ensure that you are running web3 version 1.0.0-beta.52. You can install this by doing
-`npm install web3@1.0.0-beta.52`
+3. Please ensure that you are running web3 version 1.0.0-beta.37. You can install this by doing
+`npm install web3@1.0.0-beta.37`
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -421,15 +418,12 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
-  await web3.eth.sendSignedTransaction("0x" + serializedTx.toString("hex"))
-  .on('confirmation', function(confNumber, receipt){
-    console.log(receipt);
-    process.exit(0);
-  })
-  .on('error', function(error){
-    console.log(error);
-    process.exit(0);
-  })
+  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+  .catch(error => console.log(error));
+
+  // Log the tx receipt
+  console.log(txReceipt);
+  return;
 }
 
 main();
@@ -587,15 +581,12 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
-  await web3.eth.sendSignedTransaction("0x" + serializedTx.toString("hex"))
-  .on('confirmation', function(confNumber, receipt){
-    console.log(receipt);
-    process.exit(0);
-  })
-  .on('error', function(error){
-    console.log(error);
-    process.exit(0);
-  })
+  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+  .catch(error => console.log(error));
+
+  // Log the tx receipt
+  console.log(txReceipt);
+  return;
 }
 ```
 
@@ -739,8 +730,8 @@ async function main() {
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
 2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding KNC tokens.
-3. Please ensure that you are running web3 version 1.0.0-beta.52. You can install this by doing
-`npm install web3@1.0.0-beta.52`.
+3. Please ensure that you are running web3 version 1.0.0-beta.37. You can install this by doing
+`npm install web3@1.0.0-beta.37`.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -902,15 +893,12 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
-  await web3.eth.sendSignedTransaction("0x" + serializedTx.toString("hex"))
-  .on('confirmation', function(confNumber, receipt){
-    console.log(receipt);
-    process.exit(0);
-  })
-  .on('error', function(error){
-    console.log(error);
-    process.exit(0);
-  })
+  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+  .catch(error => console.log(error));
+
+  // Log the tx receipt
+  console.log(txReceipt);
+  return;
 }
 
 async function approveContract(allowance) {
@@ -979,7 +967,7 @@ Next, we will define the constants that we will be using for this scenario.
 // Token Details
 const SRC_TOKEN = "KNC";
 const DST_TOKEN = "ZIL";
-const SRC_TOKEN_ADDRESS = "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6";
+const SRC_TOKEN_ADDRESS = "0xbF5d8683b9BE6C43fcA607eb2a6f2626A18837a6";
 const DST_TOKEN_ADDRESS = "0xaD78AFbbE48bA7B670fbC54c65708cbc17450167";
 const SRC_DECIMALS = 18;
 const DST_DECIMALS = 12;
@@ -1084,15 +1072,12 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
-  await web3.eth.sendSignedTransaction("0x" + serializedTx.toString("hex"))
-  .on('confirmation', function(confNumber, receipt){
-    console.log(receipt);
-    process.exit(0);
-  })
-  .on('error', function(error){
-    console.log(error);
-    process.exit(0);
-  })
+  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+  .catch(error => console.log(error));
+
+  // Log the tx receipt
+  console.log(txReceipt);
+  return;
 }
 ```
 
@@ -1236,8 +1221,8 @@ async function main() {
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
 2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding KNC tokens.
-3. Please ensure that you are running web3 version 1.0.0-beta.52. You can install this by doing
-`npm install web3@1.0.0-beta.52`.
+3. Please ensure that you are running web3 version 1.0.0-beta.37. You can install this by doing
+`npm install web3@1.0.0-beta.37`.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -1399,15 +1384,12 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
-  await web3.eth.sendSignedTransaction("0x" + serializedTx.toString("hex"))
-  .on('confirmation', function(confNumber, receipt){
-    console.log(receipt);
-    process.exit(0);
-  })
-  .on('error', function(error){
-    console.log(error);
-    process.exit(0);
-  })
+  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+  .catch(error => console.log(error));
+
+  // Log the tx receipt
+  console.log(txReceipt);
+  return;
 }
 
 async function approveContract(allowance) {
