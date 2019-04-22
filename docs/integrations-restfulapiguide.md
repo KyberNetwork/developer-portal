@@ -41,7 +41,8 @@ In this example, we will connect to Infura's ropsten node.
 // https://t.me/KyberDeveloper.
 
 // Connecting to ropsten infura node
-const WS_PROVIDER = "wss://ropsten.infura.io/ws";
+const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
+const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 ```
 
@@ -57,15 +58,15 @@ Next, we will define the constants that we will be using for this guide.
 const NETWORK_URL = "https://ropsten-api.kyber.network";
 
 //User Details
-const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex");
-const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address; // Remove the 0x prefix
+const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); // Remove the 0x prefix
+const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address;
 
 // Wallet Address for Fee Sharing Program
 const REF_ADDRESS = "0x483C5100C3E544Aef546f72dF4022c8934a6945E";
 
 //Token Addresses
-const BAT_TOKEN_ADDRESS = "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6".toLowerCase(); //Ropsten BAT token address
-const DAI_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D".toLowerCase(); //Ropsten DAI token address
+const BAT_TOKEN_ADDRESS = "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6"; //Ropsten BAT token address
+const DAI_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; //Ropsten DAI token address
 
 //Token Quantity
 const BAT_QTY = 100; //100 BAT tokens to swap from
@@ -82,16 +83,16 @@ We will refactor the broadcast transaction functionality into its own function.
 // https://t.me/KyberDeveloper.
 
 async function broadcastTx(rawTx) {
-    // Extract raw tx details, create a new Tx
-    let tx = new Tx(rawTx);
-    // Sign the transaction
-    tx.sign(PRIVATE_KEY);
-    // Serialize the transaction (RLP Encoding)
-    const serializedTx = tx.serialize();
-    // Broadcast the tx
-    txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error));
-    // Log the tx receipt
-    console.log(txReceipt);
+  // Extract raw tx details, create a new Tx
+  let tx = new Tx(rawTx);
+  // Sign the transaction
+  tx.sign(PRIVATE_KEY);
+  // Serialize the transaction (RLP Encoding)
+  const serializedTx = tx.serialize();
+  // Broadcast the tx
+  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error));
+  // Log the tx receipt
+  console.log(txReceipt);
 }
 ```
 
@@ -105,10 +106,20 @@ It is recommended to use the token contract address as the identifier instead of
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
+function caseInsensitiveEquals(a, b) {
+  return typeof a === 'string' && typeof b === 'string' ?
+    a.localeCompare(b, undefined, {
+      sensitivity: 'accent'
+    }) === 0 :
+    a === b;
+}
+
 async function isTokenSupported(tokenAddress) {
-  let tokensBasicInfoRequest = await fetch(NETWORK_URL + '/currencies');
+  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies`);
   let tokensBasicInfo = await tokensBasicInfoRequest.json();
-  let tokenSupported = tokensBasicInfo.data.some(token => {return tokenAddress == token.id});
+  let tokenSupported = tokensBasicInfo.data.some(token => {
+    return caseInsensitiveEquals(tokenAddress, token.id)
+  });
   if (!tokenSupported) {
     console.log('Token is not supported');
   }
@@ -116,27 +127,9 @@ async function isTokenSupported(tokenAddress) {
 }
 ```
 
-### Check if BAT token is approved for use
+### Check and Approve Bat token contract
 We use the `/users/<user_address>/currencies` endpoint to check whether the KyberNetwork contract has been approved for selling BAT tokens on behalf of the user. This endpoints returns a JSON of enabled statuses of ERC20 tokens for the given walletAddress. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#users-user-address-currencies).
 
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-async function isTokenEnabledForUser(tokenAddress,walletAddress) {
-  let enabledStatusesRequest = await fetch(NETWORK_URL + '/users/' + walletAddress + '/currencies');
-  let enabledStatuses = await enabledStatusesRequest.json();
-  for (var i=0; i < enabledStatuses.data.length; i++) {
-    token = enabledStatuses.data[i];
-    if (token.id == tokenAddress) {
-      return token.enabled;
-    }
-  }
-}
-```
-
-### Enable BAT token for transfer
 If the BAT token is not enabled for trading, querying the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint returns a transaction payload needed to be signed and broadcasted by the user to enable the KyberNetwork contract to trade BAT tokens on his behalf. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#users-user-address-currencies-currency-id-enable-data).
 
 ```js
@@ -144,11 +137,42 @@ If the BAT token is not enabled for trading, querying the `users/<user_address>/
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-async function enableTokenTransfer(tokenAddress,walletAddress,gasPrice) {
-  let enableTokenDetailsRequest = await fetch(NETWORK_URL + '/users/' + walletAddress + '/currencies/' + tokenAddress + '/enable_data?gas_price=' + gasPrice);
+async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
+  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);
+  let enabledStatuses = await enabledStatusesRequest.json();
+  let txsRequired = 0;
+  for (let token of enabledStatuses.data) {
+    if (caseInsensitiveEquals(tokenAddress, token.id)) {
+      txsRequired = token.txs_required;
+      break;
+    }
+  }
+  switch (txsRequired) {
+    case 1:
+      console.log("Approving to max amount");
+      // No allowance so approve to maximum amount (2^255)
+      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
+      break;
+    case 2:
+      // Allowance has been given but is insufficient.
+      // Have to approve to 0 first to avoid this issue https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+      // Approve to 0
+      console.log("Approving to 0");
+      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
+      // Approve to maximum amount (2^255)
+      console.log("Approving to max amount");
+      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
+      break;
+    default:
+      // Shouldn't need to do anything else in other scenarios.
+      break;
+  }
+}
+
+async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
+  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`);
   let enableTokenDetails = await enableTokenDetailsRequest.json();
   let rawTx = enableTokenDetails.data;
-
   await broadcastTx(rawTx);
 }
 ```
@@ -176,7 +200,7 @@ As such, we perform the following steps:
 // https://t.me/KyberDeveloper.
 
 async function getSellQty(tokenAddress, qty) {
-  let sellQtyRequest = await fetch(NETWORK_URL + '/sell_rate?id=' + tokenAddress + '&qty=' + qty);
+  let sellQtyRequest = await fetch(`${NETWORK_URL}/sell_rate?id=${tokenAddress}&qty=${qty}`);
   let sellQty = await sellQtyRequest.json();
   sellQty = sellQty.data[0].dst_qty[0];
   return sellQty;
@@ -184,7 +208,7 @@ async function getSellQty(tokenAddress, qty) {
 
 async function getApproximateBuyQty(tokenAddress) {
   const QTY = 1; //Quantity used for the approximation
-  let approximateBuyRateRequest = await fetch(NETWORK_URL + '/buy_rate?id=' + tokenAddress + '&qty=' + QTY);
+  let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${QTY}`);
   let approximateBuyQty = await approximateBuyRateRequest.json();
   approximateBuyQty = approximateBuyQty.data[0].src_qty[0];
   return approximateBuyQty;
@@ -193,7 +217,7 @@ async function getApproximateBuyQty(tokenAddress) {
 //sellQty = output from getSellQty function
 //buyQty = output from getApproximateBuyQty function
 //srcQty = token qty amount to swap from (100 BAT tokens in scenario)
-async function getApproximateReceivableTokens(sellQty,buyQty,srcQty) {
+async function getApproximateReceivableTokens(sellQty, buyQty, srcQty) {
   let expectedAmountWithoutSlippage = buyQty / sellQty * srcQty;
   let expectedAmountWithSlippage = 0.97 * expectedAmountWithoutSlippage;
   return expectedAmountWithSlippage;
@@ -208,11 +232,10 @@ We now have all the required information to peform the trade transaction. Queryi
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-async function executeTrade(walletAddress,srcToken,dstToken,srcQty,minDstQty,gasPrice,refAddress) {
-  let tradeDetailsRequest = await fetch(NETWORK_URL + '/trade_data?user_address=' + walletAddress + '&src_id=' + srcToken + '&dst_id=' + dstToken + '&src_qty=' + srcQty + '&min_dst_qty=' + minDstQty + '&gas_price=' + gasPrice + '&wallet_id=' + refAddress);
+async function executeTrade(useraddress, srcToken, dstToken, srcQty, minDstQty, gasPrice, refAddress) {
+  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}`);
   let tradeDetails = await tradeDetailsRequest.json();
   let rawTx = tradeDetails.data[0];
-
   await broadcastTx(rawTx);
 }
 ```
@@ -227,26 +250,23 @@ The main function will combine the different functions together to obtain the co
 
 async function main() {
   //Step 1: If either token is not supported, quit
-  if (! await isTokenSupported(BAT_TOKEN_ADDRESS) || ! await isTokenSupported(DAI_TOKEN_ADDRESS)) {
+  if (!await isTokenSupported(BAT_TOKEN_ADDRESS) || !await isTokenSupported(DAI_TOKEN_ADDRESS)) {
     // Quit the program
     process.exit(0);
   }
 
-  //Step 2: Check if BAT token is enabled
-  if(! await isTokenEnabledForUser(BAT_TOKEN_ADDRESS,USER_ADDRESS)) {
-    //Step 3: Approve BAT token for trade
-    await enableTokenTransfer(BAT_TOKEN_ADDRESS,USER_ADDRESS,GAS_PRICE);
-  }
+  //Step 2: Check if BAT token is enabled. If not, enable.
+  await checkAndApproveTokenContract(BAT_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
 
-  //Step 4: Get expected ETH qty from selling 100 BAT tokens
-  let sellQty = await getSellQty(BAT_TOKEN_ADDRESS,BAT_QTY);
+  //Step 3: Get expected ETH qty from selling 100 BAT tokens
+  let sellQty = await getSellQty(BAT_TOKEN_ADDRESS, BAT_QTY);
 
-  //Step 5: Get approximate DAI tokens receivable, set it to be minDstQty
+  //Step 4: Get approximate DAI tokens receivable, set it to be minDstQty
   let buyQty = await getApproximateBuyQty(DAI_TOKEN_ADDRESS);
-  let minDstQty = await getApproximateReceivableTokens(sellQty,buyQty,BAT_QTY);
+  let minDstQty = await getApproximateReceivableTokens(sellQty, buyQty, BAT_QTY);
 
-  //Step 6: Perform the BAT -> DAI trade
-  await executeTrade(USER_ADDRESS,BAT_TOKEN_ADDRESS,DAI_TOKEN_ADDRESS,BAT_QTY,minDstQty,GAS_PRICE,REF_ADDRESS);
+  //Step 5: Perform the BAT -> DAI trade
+  await executeTrade(USER_ADDRESS, BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY, minDstQty, GAS_PRICE, REF_ADDRESS);
 
   // Quit the program
   process.exit(0);
@@ -254,9 +274,11 @@ async function main() {
 ```
 
 ### Full code example
-**Note: The following code is not audited and should not be used in production. If so, it is done at your own risk.**
-
-Before running this code example, change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding the Ropsten BAT tokens.
+Before running this code example, the following fields need to be modified:
+1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
+2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether
+3. Please ensure that you are running web3 version 1.0.0-beta.37. You can install this by doing
+`npm install web3@1.0.0-beta.37`
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
@@ -268,7 +290,8 @@ const Tx = require("ethereumjs-tx");
 const fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
-const WS_PROVIDER = "wss://ropsten.infura.io/ws";
+const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
+const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 
 //Base URL for API queries
@@ -283,8 +306,8 @@ const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.to
 const REF_ADDRESS = "0x483C5100C3E544Aef546f72dF4022c8934a6945E";
 
 //Token Addresses
-const BAT_TOKEN_ADDRESS = "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6".toLowerCase(); //Ropsten BAT token address
-const DAI_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D".toLowerCase(); //Ropsten DAI token address
+const BAT_TOKEN_ADDRESS = "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6"; //Ropsten BAT token address
+const DAI_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; //Ropsten DAI token address
 
 //Token Quantity
 const BAT_QTY = 100; //100 BAT tokens to swap from
@@ -294,75 +317,102 @@ const GAS_PRICE = "medium";
 
 async function main() {
   //Step 1: If either token is not supported, quit
-  if (! await isTokenSupported(BAT_TOKEN_ADDRESS) || ! await isTokenSupported(DAI_TOKEN_ADDRESS)) {
+  if (!await isTokenSupported(BAT_TOKEN_ADDRESS) || !await isTokenSupported(DAI_TOKEN_ADDRESS)) {
     // Quit the program
     process.exit(0);
   }
 
-  //Step 2: Check if BAT token is enabled
-  if(! await isTokenEnabledForUser(BAT_TOKEN_ADDRESS,USER_ADDRESS)) {
-    //Step 3: Approve BAT token for trade
-    await enableTokenTransfer(BAT_TOKEN_ADDRESS,USER_ADDRESS,GAS_PRICE);
-  }
+  //Step 2: Check if BAT token is enabled. If not, enable.
+  await checkAndApproveTokenContract(BAT_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
 
-  //Step 4: Get expected ETH qty from selling 100 BAT tokens
-  let sellQty = await getSellQty(BAT_TOKEN_ADDRESS,BAT_QTY);
+  //Step 3: Get expected ETH qty from selling 100 BAT tokens
+  let sellQty = await getSellQty(BAT_TOKEN_ADDRESS, BAT_QTY);
 
-  //Step 5: Get approximate DAI tokens receivable, set it to be minDstQty
+  //Step 4: Get approximate DAI tokens receivable, set it to be minDstQty
   let buyQty = await getApproximateBuyQty(DAI_TOKEN_ADDRESS);
-  let minDstQty = await getApproximateReceivableTokens(sellQty,buyQty,BAT_QTY);
+  let minDstQty = await getApproximateReceivableTokens(sellQty, buyQty, BAT_QTY);
 
-  //Step 6: Perform the BAT -> DAI trade
-  await executeTrade(USER_ADDRESS,BAT_TOKEN_ADDRESS,DAI_TOKEN_ADDRESS,BAT_QTY,minDstQty,GAS_PRICE,REF_ADDRESS);
+  //Step 5: Perform the BAT -> DAI trade
+  await executeTrade(USER_ADDRESS, BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY, minDstQty, GAS_PRICE, REF_ADDRESS);
 
   // Quit the program
   process.exit(0);
 }
 
-async function isTokenSupported(tokenAddress) {
-  let tokensBasicInfoRequest = await fetch(NETWORK_URL + '/currencies');
-  let tokensBasicInfo = await tokensBasicInfoRequest.json();
-	let tokenSupported = tokensBasicInfo.data.some(token => {return tokenAddress == token.id});
-	if (!tokenSupported) {
-		console.log('Token is not supported');
-	}
-	return tokenSupported;
+function caseInsensitiveEquals(a, b) {
+  return typeof a === 'string' && typeof b === 'string' ?
+    a.localeCompare(b, undefined, {
+      sensitivity: 'accent'
+    }) === 0 :
+    a === b;
 }
 
-async function isTokenEnabledForUser(tokenAddress,walletAddress) {
-  let enabledStatusesRequest = await fetch(NETWORK_URL + '/users/' + walletAddress + '/currencies');
+async function isTokenSupported(tokenAddress) {
+  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies`);
+  let tokensBasicInfo = await tokensBasicInfoRequest.json();
+  let tokenSupported = tokensBasicInfo.data.some(token => {
+    return caseInsensitiveEquals(tokenAddress, token.id)
+  });
+  if (!tokenSupported) {
+    console.log('Token is not supported');
+  }
+  return tokenSupported;
+}
+
+async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
+  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);
   let enabledStatuses = await enabledStatusesRequest.json();
-  for (var i=0; i < enabledStatuses.data.length; i++) {
-    token = enabledStatuses.data[i];
-    if (token.id == tokenAddress) {
-      return token.enabled;
+  let txsRequired = 0;
+  for (let token of enabledStatuses.data) {
+    if (caseInsensitiveEquals(tokenAddress, token.id)) {
+      txsRequired = token.txs_required;
+      break;
     }
+  }
+  switch (txsRequired) {
+    case 1:
+      console.log("Approving to max amount");
+      // No allowance so approve to maximum amount (2^255)
+      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
+      break;
+    case 2:
+      // Allowance has been given but is insufficient.
+      // Have to approve to 0 first to avoid this issue https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+      // Approve to 0
+      console.log("Approving to 0");
+      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
+      // Approve to maximum amount (2^255)
+      console.log("Approving to max amount");
+      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
+      break;
+    default:
+      // Shouldn't need to do anything else in other scenarios.
+      break;
   }
 }
 
-async function enableTokenTransfer(tokenAddress,walletAddress,gasPrice) {
-  let enableTokenDetailsRequest = await fetch(NETWORK_URL + '/users/' + walletAddress + '/currencies/' + tokenAddress + '/enable_data?gas_price=' + gasPrice);
+async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
+  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`);
   let enableTokenDetails = await enableTokenDetailsRequest.json();
   let rawTx = enableTokenDetails.data;
-
   await broadcastTx(rawTx);
 }
 
 async function broadcastTx(rawTx) {
-    // Extract raw tx details, create a new Tx
-    let tx = new Tx(rawTx);
-    // Sign the transaction
-    tx.sign(PRIVATE_KEY);
-    // Serialize the transaction (RLP Encoding)
-    const serializedTx = tx.serialize();
-    // Broadcast the tx
-    txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error));
-    // Log the tx receipt
-    console.log(txReceipt);
+  // Extract raw tx details, create a new Tx
+  let tx = new Tx(rawTx);
+  // Sign the transaction
+  tx.sign(PRIVATE_KEY);
+  // Serialize the transaction (RLP Encoding)
+  const serializedTx = tx.serialize();
+  // Broadcast the tx
+  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error));
+  // Log the tx receipt
+  console.log(txReceipt);
 }
 
 async function getSellQty(tokenAddress, qty) {
-  let sellQtyRequest = await fetch(NETWORK_URL + '/sell_rate?id=' + tokenAddress + '&qty=' + qty);
+  let sellQtyRequest = await fetch(`${NETWORK_URL}/sell_rate?id=${tokenAddress}&qty=${qty}`);
   let sellQty = await sellQtyRequest.json();
   sellQty = sellQty.data[0].dst_qty[0];
   return sellQty;
@@ -370,7 +420,7 @@ async function getSellQty(tokenAddress, qty) {
 
 async function getApproximateBuyQty(tokenAddress) {
   const QTY = 1; //Quantity used for the approximation
-  let approximateBuyRateRequest = await fetch(NETWORK_URL + '/buy_rate?id=' + tokenAddress + '&qty=' + QTY);
+  let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${QTY}`);
   let approximateBuyQty = await approximateBuyRateRequest.json();
   approximateBuyQty = approximateBuyQty.data[0].src_qty[0];
   return approximateBuyQty;
@@ -379,21 +429,21 @@ async function getApproximateBuyQty(tokenAddress) {
 //sellQty = output from getSellQty function
 //buyQty = output from getApproximateBuyQty function
 //srcQty = token qty amount to swap from (100 BAT tokens in scenario)
-async function getApproximateReceivableTokens(sellQty,buyQty,srcQty) {
+async function getApproximateReceivableTokens(sellQty, buyQty, srcQty) {
   let expectedAmountWithoutSlippage = buyQty / sellQty * srcQty;
   let expectedAmountWithSlippage = 0.97 * expectedAmountWithoutSlippage;
   return expectedAmountWithSlippage;
 }
 
-async function executeTrade(walletAddress,srcToken,dstToken,srcQty,minDstQty,gasPrice,refAddress) {
-  let tradeDetailsRequest = await fetch(NETWORK_URL + '/trade_data?user_address=' + walletAddress + '&src_id=' + srcToken + '&dst_id=' + dstToken + '&src_qty=' + srcQty + '&min_dst_qty=' + minDstQty + '&gas_price=' + gasPrice + '&wallet_id=' + refAddress);
+async function executeTrade(useraddress, srcToken, dstToken, srcQty, minDstQty, gasPrice, refAddress) {
+  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}`);
   let tradeDetails = await tradeDetailsRequest.json();
   let rawTx = tradeDetails.data[0];
-
   await broadcastTx(rawTx);
 }
 
 main();
+
 ```
 
 ## Scenario 2: Obtaining Token and Market Info
