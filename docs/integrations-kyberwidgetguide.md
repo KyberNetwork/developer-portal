@@ -63,7 +63,7 @@ target='_blank'>Swap tokens</a>
 Once this step is completed, you can serve up your website and the KyberWidget button should appear as implemented.
 
 ### Unlocking Wallet in Widget
-If your application has its own wallet, it is recommended for the `New Tab` option to be used as the widget mode, so that the widget is able to detect the web3 instance.
+If your application has its own wallet, it is recommended for the `New Tab` or `Popup` option to be used as the widget mode, so that the widget is able to detect the web3 instance.
 
 ## KyberWidget (iOS)
 ### Things to note
