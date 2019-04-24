@@ -209,15 +209,10 @@ Example:
 **Response:**
 | Parameter | Type | Description |
 |:------------------:|:------:|:---------------------------------------------------------:|
-| `timestamp` | int | Server timestamp in UTC |
-| `token_name` | string | Name of the asset |
-| `token_symbol` | string | Symbol of the asset |
-| `token_decimal` | int | Decimals that will be used to round-off the srcQty or dstQty of the asset in other requests |
-| `token_address` | string | The asset contract address |
-| `rate_eth_now` | float | Current asset price against ETH |
-| `change_eth_24h` | float | Percentage change in ETH against the past 24 hours |
-| `change_usd_24h` | float | Percentage change in USD against the past 24 hours |
-| `rate_usd_now` | float | Current asset price in USD |
+| `symbol` | string | Symbol of the asset |
+| `address` | string | Contract address of the asset |
+| `swapGasLimit` | int | Gas limit when swapping between ETH <-> asset |
+| `approveGasLimit` | int | Gas limit when approving KNP to trade the asset on behalf of the user |
 Example:
 
 ```json
