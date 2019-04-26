@@ -8,7 +8,7 @@ The following diagram indicates how interacting with Kyber's protocol implementa
 
 ![Vendors](/uploads/vendors.png "Vendors")
 
-Projects such as Gifto and Request Network will be taking advantage of Kyber's protocol implementation to allow for payments in a wide range of tokens and currencies.
+Projects such as EDCON and Hodlmoon will be taking advantage of Kyber's protocol implementation to allow for payments in a wide range of tokens and currencies.
 
 Vendors also have the opportunity to join Kyber's *Fee Sharing Program*, which allows fee sharing for each payment originating from your business. Learn more about the program [here](integrations-feesharing.md)!
 
