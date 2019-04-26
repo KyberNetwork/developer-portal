@@ -12,3 +12,7 @@ The three main categories of users of the Kyber protocol are:
 3. [Wallets](integrations-walletsusecase.md)
 
 Click on the links above to learn more about the various use cases.
+
+The figure below shows some of the projects that have integrated with Kyber.
+
+![Ecosystem Map](/uploads/kyber-ecosystem.png "Ecosystem Map")
