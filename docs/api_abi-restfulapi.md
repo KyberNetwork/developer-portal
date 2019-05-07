@@ -19,7 +19,7 @@ The RESTful API provide a way for users to be able to programmatically interact 
 
 ### `/buy_rate`
 
-(GET) Returns the latest BUY conversion rate in ETH. For example, if you want to know how much ETH do you need to buy 1 DAI, you can use this function.
+(GET) Returns the latest BUY conversion rate in ETH. For example, if you w  ant to know how much ETH do you need to buy 1 DAI, you can use this function.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
@@ -377,7 +377,7 @@ Example:
 
 ### `/trade_data`
 
-(GET) Returns all needed information for a user to sign and do a transaction, to trade or convert an asset pair, from token A to token B.
+(GET) Returns the transaction payload for the user to sign and broadcast in order to trade or convert an asset pair from token A to token B.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
@@ -420,6 +420,55 @@ Example:
       "gasPrice":"0x39eda2b80",
       "nonce":"0xc8",
       "gasLimit":"0x43d81"
+    }
+  ]
+}
+
+```
+
+### `/transfer_data`
+
+(GET) Returns the transaction payload for the user to sign and broadcast in order to transfer an asset to a recipient.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:--------------:|:------:|:--------:|:-----------------------------------------------------------------------------------------------------:|
+| `from` | string | Yes | The Ethereum address of the sender. |
+| `to` | string | Yes | The Ethereum address of the receiver. |
+| `token` | string | No | The contract address of token. If no argument is provided, it will default to ETH. |
+| `value` | float | Yes | The number of token / ETH you want to send. For example, if you want to send 1.35 Zil (12 decimals), it would be 1.35. |
+| `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
+| `gas_limit` | integer | No | The limit of gas required for your transaction. |
+| `nonce` | integer | No | Users can specify a nonce to override the default account nonce. |
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:----------:|:------:|:---------------------------------------------------------------------------------------------------------:|
+| `from` | string | The ETH address that executed the swap. Must match the `from` input parameter. |
+| `to` | string | The contract address of the token or the recipient address (if transferring ETH). |
+| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. After the transaction has been mined, you can check the status with `/info/getAccount`. If sending ETH, the value for this parameter should be '0x0'. |
+| `value` | string | If sending token, the value for this parameter should be '0x0'. Else, it should match the `value` input parameter. |
+| `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you want to specify a price value, change this wei hex value. |
+| `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
+| `gasLimit` | string | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |
+
+Example:
+
+```json
+> curl "https://api.kyber.network/transfer_data?from=0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1&to=0x723f12209b9C71f17A7b27FCDF16CA5883b7BBB0&token=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&value=1.5&gas_price=medium&gas_limit=200000&nonce=123"
+{
+  "error":false,
+  "data":[
+    {
+      "from":"0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+      "to":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "data":"0xa9059cbb000000000000000000000000723f12209b9c71f17a7b27fcdf16ca5883b7bbb000000000000000000000000000000000000000000000000014d1120d7b160000",
+      "value":"0x0",
+      "gasPrice":"0x147d35700",
+      "nonce":"0x7b",
+      "gasLimit":"0x30d40"
     }
   ]
 }
