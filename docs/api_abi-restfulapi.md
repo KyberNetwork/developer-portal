@@ -19,7 +19,7 @@ The RESTful API provide a way for users to be able to programmatically interact 
 
 ### `/buy_rate`
 
-(GET) Returns the latest BUY conversion rate in ETH. For example, if you w  ant to know how much ETH do you need to buy 1 DAI, you can use this function.
+(GET) Returns the latest BUY conversion rate in ETH. For example, if you want to know how much ETH do you need to buy 1 DAI, you can use this function.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
