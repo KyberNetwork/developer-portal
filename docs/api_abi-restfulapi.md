@@ -446,8 +446,8 @@ Example:
 **Response:**
 | Parameter | Type | Description |
 |:----------:|:------:|:---------------------------------------------------------------------------------------------------------:|
-| `from` | string | The ETH address that executed the swap. Must match the `from` input parameter. |
-| `to` | string | The contract address of the token or the recipient address (if transferring ETH). |
+| `from` | string | The Ethereum address that executed the transfer. Must match the `from` input parameter. |
+| `to` | string | The contract address of the token or the recipient Ethereum address (if transferring ETH). |
 | `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. After the transaction has been mined, you can check the status with `/info/getAccount`. If sending ETH, the value for this parameter should be '0x0'. |
 | `value` | string | If sending token, the value for this parameter should be '0x0'. Else, it should match the `value` input parameter. |
 | `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you want to specify a price value, change this wei hex value. |
