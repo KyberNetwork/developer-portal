@@ -399,7 +399,7 @@ Example:
 |:----------:|:------:|:---------------------------------------------------------------------------------------------------------:|
 | `from` | string | The ETH address that executed the swap. Must match the `user_address` request input parameter. |
 | `to` | string | The contract address of the KyberNetwork smart contract. Verify that it should always be the address resolved from `kybernetwork.eth` ENS. |
-| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. After the transaction has been mined, you can check the status with `/info/getAccount`. |
+| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. |
 | `value` | string | This will be equal to 0 in hex (0x0) if the user tries to trade from token to ETH (assuming `src_id` is the source token address). |
 | `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you need to specify a price value, change this wei hex value. |
 | `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
@@ -448,7 +448,7 @@ Example:
 |:----------:|:------:|:---------------------------------------------------------------------------------------------------------:|
 | `from` | string | The Ethereum address that executed the transfer. Must match the `from` input parameter. |
 | `to` | string | The contract address of the token or the recipient Ethereum address (if transferring ETH). |
-| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. After the transaction has been mined, you can check the status with `/info/getAccount`. If sending ETH, the value for this parameter should be '0x0'. |
+| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. If sending ETH, the value for this parameter should be '0x0'. |
 | `value` | string | If sending token, the value for this parameter should be '0x0'. Else, it should match the `value` input parameter. |
 | `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you want to specify a price value, change this wei hex value. |
 | `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
@@ -551,7 +551,7 @@ Example response:
 |:--------------:|:------:|:-----------------------------------------------------------------------------------------------------:|
 | `from` | string | The ETH address of the user. Must match the `user_address` request parameter. |
 | `to` | string | The contract address of the token you want to enable trading in Kyber Network. Always verify this for security reasons. |
-| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. After the transaction has been mined, you can check the status with `/info/getAccount`. |
+| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. |
 | `value` | string | Should always be equal to 0 for this operation. Always verify that the value is 0 for security reasons. |
 | `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you need to specify a price value, change this wei hex value. |
 | `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
