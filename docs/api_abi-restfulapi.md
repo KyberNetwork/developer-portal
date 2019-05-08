@@ -136,6 +136,7 @@ Example:
 | Parameter | Type | Required | Description |
 |:--------------:|:-------:|:--------:|:------------------------------------------------------:|
 | `only_official_reserve` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `include_delisted` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to false. If true, the API will also return tokens that have been delisted. |
 | `page` | int | No | The page index of the response data, starts from `0`. If no value is specified, it will default to 0. Each page includes maximum 1000 records. |
 
 ---
@@ -148,6 +149,7 @@ Example:
 | `decimals` | int | Decimals that will be used to round-off the srcQty or dstQty of the asset in other requests. |
 | `address` | string | The address of the asset in its native chain. |
 | `id` | string | A unique ID used by Kyber Network to identify between different symbols. |
+| `active` | bool | A boolean value to represent if the token is still active on Kyber. Note that this field only appears when you specify a value for the `include_delisted` parameter. |
 | `reserves_src` | string[] | Reserve contract addresses supporting Token to Ether trades |
 | `reserves_dest` | string[] | Reserve contract addresses supporting Ether to Token trades |
 
