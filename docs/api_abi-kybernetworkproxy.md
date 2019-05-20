@@ -555,7 +555,8 @@ transactionData = KyberNetworkProxy.methods
 txReceipt = await web3.eth.sendTransaction({
   from: USER_WALLET_ADDRESS, //obtained from web3 interface
   to: KYBER_NETWORK_PROXY_ADDRESS,
-  data: transactionData
+  data: transactionData,
+  value: srcAmount.toString()
 });
 ```
 
@@ -645,6 +646,7 @@ transactionData = KyberNetworkProxy.methods
 txReceipt = await web3.eth.sendTransaction({
   from: USER_WALLET_ADDRESS, //obtained from web3 interface
   to: KYBER_NETWORK_PROXY_ADDRESS,
-  data: transactionData
+  data: transactionData,
+  value: srcAmount.toString()
 });
 ```

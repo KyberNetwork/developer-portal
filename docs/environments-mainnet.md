@@ -59,9 +59,6 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `ADX (AdEx)`
 `0x4470BB87d77b963A013DB939BE332f927f2b992e`
 
-### `AE (Aeternity)`
-`0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d`
-
 ### `AION (AION)`
 `0x4CEdA7906a5Ed2179785Cd3A40A69ee8bc99C466`
 
@@ -82,9 +79,6 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `BLZ (Bluzelle)`
 `0x5732046a883704404f284ce41ffadd5b007fd668`
-
-### `BNB (Binance Coin)`
-`0xB8c77482e45F1F44dE1745F52C74426C631bDD52`
 
 ### `BNT (Bancor)`
 `0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c`
@@ -271,9 +265,6 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `WINGS (Wings)`
 `0x667088b212ce3d06a1b553a7221E1fD19000d9aF`
-
-### `ZIL (Zilliqa)`
-`0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27`
 
 ### `ZRX (0x)`
 `0xE41d2489571d322189246DaFA5ebDe1F4699F498`
