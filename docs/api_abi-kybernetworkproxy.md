@@ -568,10 +568,9 @@ Makes a trade between src and dest token and send dest tokens to destAddress, wi
 
 ---
 
-function **tradeWithHint**(address trader, ERC20 src, uint srcAmount, ERC20 dest, address destAddress, uint maxDestAmount, uint minConversionRate, address walletId, bytes hint) public nonReentrant payable returns (uint)
+function **tradeWithHint**(ERC20 src, uint srcAmount, ERC20 dest, address destAddress, uint maxDestAmount, uint minConversionRate, address walletId, bytes hint) public nonReentrant payable returns (uint)
 | Parameter | Type | Description |
 | ------------------- |:-------:|:--------------------------------------------------------------------:|
-| `trader` | address | trader's address |
 | `src` | ERC20 | source ERC20 token contract address |
 | `srcAmount` | uint | source ERC20 token amount in its token decimals |
 | `dest` | ERC20 | destination ERC20 token contract address |

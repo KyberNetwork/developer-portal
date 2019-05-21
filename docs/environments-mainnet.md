@@ -167,6 +167,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `MAS (Midas)`
 `0x23Ccc43365D9dD3882eab88F43d515208f832430`
 
+### `MCO (Crypto.com)`
+`0xB63B606Ac810a52cCa15e44bB630fd42D8d1d83d`
+
 ### `MDS (MediShares)`
 `0x66186008C1050627F979d464eABb258860563dbE`
 
@@ -193,6 +196,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `PAL (PolicyPal Network)`
 `0xfedae5642668f8636a11987ff386bfd215f942ee`
+
+### `PAX (Paxos Standard)`
+`0x8E870D67F660D95d5be530380D0eC0bd388289E1`
 
 ### `PAY (TenX)`
 `0xB97048628DB6B661D4C2aA833e95Dbe1A905B280`
