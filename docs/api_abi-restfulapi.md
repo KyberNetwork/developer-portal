@@ -264,8 +264,8 @@ Example:
 |:------------------:|:------:|:---------------------------------------------------------:|
 | `timestamp` | int | Server timestamp in UTC. |
 | `pair` | string | Pair name consisting of the quote and base asset symbols. |
-| `quote_symbol` | string | Symbol of the quote asset of the pair. |
-| `base_symbol` | string | Symbol of the base asset of the pair. |
+| `quote_symbol` | string | Symbol of the asset used for quoting i.e. ETH |
+| `base_symbol` | string | Symbol of the asset to be quoted in terms of the `quote_symbol` |
 | `past_24h_high` | float | Highest ASK price for the last 24 hours of the pair. |
 | `past_24h_low` | float | Highest BID price for the last 24 hours of the pair. |
 | `usd_24h_volume` | float | Volume for the last 24 hours in USD. |
@@ -283,32 +283,46 @@ Example:
   "error":false,
   "data":[
     {
-      "timestamp":1536806619250,
-      "pair":"KNC_ETH",
-      "quote_symbol":"KNC",
-      "base_symbol":"ETH",
-      "past_24h_high":0.001937984496124031,
-      "past_24h_low":0.001857617770187944,
-      "usd_24h_volume":5566.2079180166,
-      "eth_24h_volume":31.8094685833,
-      "token_24h_volume":16865.433010686364,
-      "current_bid":0.001867351485999998,
-      "current_ask":0.0018868074209224932,
-      "last_traded":0.0018868074209224932
+       "timestamp":1558492393211,
+       "quote_symbol":"ETH",
+       "base_symbol":"WETH",
+       "past_24h_high":1,
+       "past_24h_low":1,
+       "usd_24h_volume":143726.84026054703,
+       "eth_24h_volume":563.0545545739344,
+       "token_24h_volume":563.0545545739344,
+       "current_bid":1,
+       "current_ask":1,
+       "last_traded":1,
+       "pair":"ETH_WETH"
     },
     {
-      "timestamp":1536806619251,
-      "pair":"OMG_ETH",
-      "quote_symbol":"OMG",
-      "base_symbol":"ETH",
-      "past_24h_high":0.018518518518518517,
-      "past_24h_low":0.017266283397471997,
-      "usd_24h_volume":13871.8906588085,
-      "eth_24h_volume":78.4248866967,
-      "token_24h_volume":4381.367829085394,
-      "current_bid":0.017379117142599983,
-      "current_ask":0.0175141743763495,
-      "last_traded":0.01777996566748282
+       "timestamp":1558492393211,
+       "quote_symbol":"ETH",
+       "base_symbol":"KNC",
+       "past_24h_high":0.001110383526447963,
+       "past_24h_low":0.001033735798918403,
+       "usd_24h_volume":33755.82521644965,
+       "eth_24h_volume":133.81888053626807,
+       "token_24h_volume":123851.92651283044,
+       "current_bid":0.001061573860546411,
+       "current_ask":0.0010630487587330675,
+       "last_traded":0.001060850105664333,
+       "pair":"ETH_KNC"
+    },
+    {
+       "timestamp":1558492393211,
+       "quote_symbol":"ETH",
+       "base_symbol":"DAI",
+       "past_24h_high":0.003991072796826141,
+       "past_24h_low":0.00378471306505907,
+       "usd_24h_volume":709051.4999945228,
+       "eth_24h_volume":2780.2612989626714,
+       "token_24h_volume":716238.82993307,
+       "current_bid":0.0038558605254144,
+       "current_ask":0.003893802835619083,
+       "last_traded":0.003846450468515019,
+       "pair":"ETH_DAI"
     },
     ...
   ]
