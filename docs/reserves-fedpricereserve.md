@@ -46,10 +46,10 @@ Check that you have the following:
 
 #### Step 1: Set reserve
 
-Create a local directory and clone the `deployment-tutorial` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
+Create a local directory and clone the `master` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
 
 ```
-git clone -b deployment_tutorial https://github.com/KyberNetwork/smart-contracts.git
+git clone https://github.com/KyberNetwork/smart-contracts.git
 ```
 
 ##### Adding Tokens
