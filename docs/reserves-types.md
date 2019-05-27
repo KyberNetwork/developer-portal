@@ -14,7 +14,7 @@ It is complex to setup and maintain, and requires Ether for making the periodic 
 ## Automated Price Reserve (APR)
 This reserve type relies on a predefined algorithm written in a smart contract to automatically provide rates for the token being served liquidity for. The initial rate is set based on the initial liquidity provided, and only adjusts after each executed trade.
 
-The ease of maintenance and low development cost of this reserve comes at the expense of high financial liquidity requirements.
+The ease of maintenance and low development cost of this reserve comes at the expense of high financial liquidity requirements. You can read more about the APR in our [blog post](https://blog.kyber.network/introducing-the-automated-price-reserve-77d41ed1aa70).
 
 ## Orderbook Reserve (OR)
 As its name suggests, this fully on-chain reserve type allows anyone to provide liquidity to the ecosystem for any token of their choice through the placement of limit orders. It is also the first reserve type that can be listed permissionlessly, where no action is required from Kyber (such as the network administrator or operators). A caveat that comes with the trustless setup is that the KNC fees that is to be burnt will be locked up in advance when the order is made and subsequently burnt when the order is taken from.
