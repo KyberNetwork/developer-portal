@@ -230,13 +230,13 @@ Below, we will calculate the different parameters.
 |            Parameter            |                Formula                |                                 Example Value                                  |
 | :-----------------------------: | :-----------------------------------: | :----------------------------------------------------------------------------: |
 |            `_rInFp`             |               r \* InFp               |                   \_rInFp = (0.01 \* 2^40) = **10995116277**                   |
-|           `_pMinInFp`           | pMin _ initial price of token _ InFp  |               \_pMinInFp = (0.5 \* 0.00005 \* 2^40) = **27487790**               |
+|           `_pMinInFp`           | pMin \* initial price of token \* InFp  |               \_pMinInFp = (0.5 \* 0.00005 \* 2^40) = **27487790**               |
 |          `_numFpBits`           |           InFp in numFpBits           |                              \_numFpBits = **40**                              |
 |        `_maxCapBuyInWei`        |         max buy cap \* 10^18          |           \_maxCapBuyInWei = (5 \* 10^18) = **5000000000000000000**            |
 |       `_maxCapSellInWei`        |         max sell cap \* 10^18         |           \_maxCapSellInWei = (5 \* 10^18) = **5000000000000000000**           |
 |           `_feeInBps`           |         fee percentage in BPS         |                              \_feeInBps = **25**                               |
-| `_maxTokenToEthRateInPrecision` | pMax _ initial price of token _ 10^18 | \_maxTokenToEthRateInPrecision = (2.0 \* 0.00005 \* 10^18) = **100000000000000** |
-| `_minTokenToEthRateInPrecision` | pMin _ initial price of token _ 10^18 | \_minTokenToEthRateInPrecision = (0.5 \* 0.00005 \* 10^18) = **25000000000000**  |
+| `_maxTokenToEthRateInPrecision` | pMax \* initial price of token \* 10^18 | \_maxTokenToEthRateInPrecision = (2.0 \* 0.00005 \* 10^18) = **100000000000000** |
+| `_minTokenToEthRateInPrecision` | pMin \* initial price of token \* 10^18 | \_minTokenToEthRateInPrecision = (0.5 \* 0.00005 \* 10^18) = **25000000000000**  |
 
 #### Using get_liquidity_params.py Python script
 
