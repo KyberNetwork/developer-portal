@@ -15,7 +15,7 @@ For the exact functions and inputs to implement, refer to the [KyberReserveInter
 Smart contract security is of upmost importance. As such, we require tests to be written for the smart contract functions to ensure that they only do what is expected. You may take a look at our [test](https://github.com/KyberNetwork/smart-contracts/tree/master/test) repository for test script examples.
 
 ## Step 3: Setup KNC Fee Wallet
-Reserves of the network need to hold some KNC tokens for the [fee sharing program](integrations-feesharing.md#fee-example) and fee burning. As such, a wallet should be setup with KNC tokens for the payment of these fees.
+Reserves of the network need to hold some KNC tokens to pay for network fees whenever the reserves facilitate a trade. Of the 0.25% that is paid by the reserve, a portion of that (currently 30%) is given to the Kyber-integrated application or platform that facilitated the trade as part of the [fee sharing program](integrations-feesharing.md#fee-example), and the rest of the KNC are burnt (taken out of circulation forever).
 
 ## Step 4: Contact Us
 Once the previous steps are completed, contact us to list and test your reserve! You may do so via email at support@kyber.network, or our [Telegram group](https://t.me/kyberdeveloper).
