@@ -90,6 +90,7 @@ Deposit KNC tokens by executing the [`depositKncForFee(makerAddress, weiAmount)`
 
 <br />**Notes:**
 - A KNC token allowance should be approved to this reserve before executing this function.
+- `makerAddress` should have sufficient KNC tokens. You may obtain some at https://ropsten.kyber.network (Ropsten) or https://kyberswap.com/ (Mainnet)
 - Consider depositing a large amount of KNC tokens if you are creating multiple orders, to reduce the need to execute this function numerous times.
 
 ### `Step 3: Deposit Funds`

@@ -196,7 +196,7 @@ There are several things to take note of in the list of parameters.
 
 First, notice that some parameters will have the **InFp** suffix. InFp refers to formula precision. While this is configurable, 2^40 is the recommended value.
 
-Second, **r** is liquidity the rate in basis points or units of 100 which the price should move each time the ETH/token inventory changes in 1 ETH worth of quantity. For an _r_ of 0.01, the price will move 1%. _r_ is calculated taking into account the amount of initial ETH and tokens deposited into the contract, and the desired minimum/maximum price factor ratio. A smaller _r_ also means more ETH and token inventory is needed to facilitate the liquidity.
+Second, **r** is liquidity the rate in basis points or units of 100 which the price should move each time the ETH/token inventory changes in 1 ETH worth of quantity. For an _r_ of 0.007, the price will move 0.7%. _r_ is calculated taking into account the amount of initial ETH and tokens deposited into the contract, and the desired minimum/maximum price factor ratio. A smaller _r_ also means more ETH and token inventory is needed to facilitate the liquidity.
 
 For the **minimum/maximum supported price factor ratio**, it is recommended to start with a ratio of 0.5:2.0. This indicates that the inventory will suffice for up to 100% increase or 50% decrease in token price with respect to ETH.
 
@@ -205,11 +205,11 @@ Setting the liquidity parameters is done by executing the [`setLiquidityParamete
 |  Type  |            Parameter            |                                                        Explanation                                                        |
 | :----: | :-----------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
 | `uint` |            `_rInFp`             |                                     r in formula precision, calculated as r \* InFp.                                      |
-| `uint` |           `_pMinInFp`           | Minimum supported price factor in formula precision, calculated as min price factor _ initial price of your token _ InFp. |
+| `uint` |           `_pMinInFp`           | Minimum supported price factor in formula precision, calculated as min price factor \* initial price of your token \* InFp. |
 | `uint` |          `_numFpBits`           |                The formula precision in bits, therefore for formula precision of 2^40, \_numFpBits is 40.                 |
 | `uint` |        `_maxCapBuyInWei`        |                                      The allowed quantity for one BUY trade in ETH.                                       |
 | `uint` |       `_maxCapSellInWei`        |                                      The allowed quantity for one SELL trade in ETH.                                      |
-| `uint` |           `_feeInBps`           |                   The fee amount in basis points (1 bp = 0.01%) that should be calculated in the price.                   |
+| `uint` |           `_feeInBps`           |                   The fee amount in basis points (1 bp = 0.007%) that should be calculated in the price.                   |
 | `uint` | `_maxTokenToEthRateInPrecision` |       The maximum allowed price taking into consideration the maximum supported price factor and must be in 10^18.        |
 | `uint` | `_minTokenToEthRateInPrecision` |       The minimum allowed price taking into consideration the minimum supported price factor and must be in 10^18.        |
 
@@ -217,7 +217,7 @@ Setting the liquidity parameters is done by executing the [`setLiquidityParamete
 
 Now, Let's assume we want to list a token with the following considerations:
 
-1. Liquidity Rate – 0.01 (1%)
+1. Liquidity Rate – 0.007 (0.7%)
 2. Initial Token Price – 1 token = 0.00005 ETH
 3. Initial Ether Amount – 100 ETH
 4. Initial Token Amount – 2,000,000 tokens (100 ETH worth)
@@ -229,14 +229,14 @@ Below, we will calculate the different parameters.
 
 |            Parameter            |                Formula                |                                 Example Value                                  |
 | :-----------------------------: | :-----------------------------------: | :----------------------------------------------------------------------------: |
-|            `_rInFp`             |               r \* InFp               |                   \_rInFp = (0.01 \* 2^40) = **10995116277**                   |
-|           `_pMinInFp`           | pMin _ initial price of token _ InFp  |               \_pMinInFp = (0.5 _ 0.00005 _ 2^40) = **27487790**               |
+|            `_rInFp`             |               r \* InFp               |                   \_rInFp = (0.007 \* 2^40) = **7696581394**                   |
+|           `_pMinInFp`           | pMin \* initial price of token \* InFp  |               \_pMinInFp = (0.5 \* 0.00005 \* 2^40) = **27487790**               |
 |          `_numFpBits`           |           InFp in numFpBits           |                              \_numFpBits = **40**                              |
 |        `_maxCapBuyInWei`        |         max buy cap \* 10^18          |           \_maxCapBuyInWei = (5 \* 10^18) = **5000000000000000000**            |
 |       `_maxCapSellInWei`        |         max sell cap \* 10^18         |           \_maxCapSellInWei = (5 \* 10^18) = **5000000000000000000**           |
 |           `_feeInBps`           |         fee percentage in BPS         |                              \_feeInBps = **25**                               |
-| `_maxTokenToEthRateInPrecision` | pMax _ initial price of token _ 10^18 | \_maxTokenToEthRateInPrecision = (2.0 _ 0.00005 _ 10^18) = **100000000000000** |
-| `_minTokenToEthRateInPrecision` | pMin _ initial price of token _ 10^18 | \_minTokenToEthRateInPrecision = (0.5 _ 0.00005 _ 10^18) = **25000000000000**  |
+| `_maxTokenToEthRateInPrecision` | pMax \* initial price of token \* 10^18 | \_maxTokenToEthRateInPrecision = (2.0 \* 0.00005 \* 10^18) = **100000000000000** |
+| `_minTokenToEthRateInPrecision` | pMin \* initial price of token \* 10^18 | \_minTokenToEthRateInPrecision = (0.5 \* 0.00005 \* 10^18) = **25000000000000**  |
 
 #### Using get_liquidity_params.py Python script
 
@@ -244,7 +244,7 @@ A Python script, located in `scripts/get_liquidity_params.py` in the `smart-cont
 
 ```json
 {
-  "liquidity_rate": 0.01,
+  "liquidity_rate": 0.007,
   "initial_ether_amount": 100.0,
   "initial_token_amount": 2000000,
   "initial_price": 0.00005,
@@ -268,14 +268,14 @@ python3 get_liquidity_params.py --input liquidity_input_params.json --get params
 It should give the following output:
 
 ```sh
-_rInFp: 10995116277
-_pMinInFp: 37933151
+_rInFp: 7696581394
+_pMinInFp: 27487790
 _numFpBits: 40
-_maxCapBuyInWei: 10000000000000000000
-_maxCapSellInWei: 10000000000000000000
+_maxCapBuyInWei: 5000000000000000000
+_maxCapSellInWei: 5000000000000000000
 _feeInBps: 25
-_maxTokenToEthRateInPrecision: 138000000000000
-_minTokenToEthRateInPrecision: 34500000000000
+_maxTokenToEthRateInPrecision: 100000000000000
+_minTokenToEthRateInPrecision: 25000000000000
 ```
 
 To finalize this step, deposit exact amount of Ether and tokens (in our example above, it is 100 ETH and 2,000,000 tokens), and finally invoke the `setLiquidityParams()` using web3, Etherescan's write contract feature, or MyEtherWallet, passing in the calculated parameters above.

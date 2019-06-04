@@ -39,7 +39,8 @@
     "Getting Started": [
       "Reserves-Intro",
       "Reserves-Types",
-      "Reserves-Requirements"
+      "Reserves-Requirements",
+      "Reserves-ListingProcess"
     ],
     "Setup Tutorials": [
       "Reserves-FedPriceReserve",

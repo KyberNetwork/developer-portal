@@ -59,9 +59,6 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `ADX (AdEx)`
 `0x4470BB87d77b963A013DB939BE332f927f2b992e`
 
-### `AE (Aeternity)`
-`0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d`
-
 ### `AION (AION)`
 `0x4CEdA7906a5Ed2179785Cd3A40A69ee8bc99C466`
 
@@ -82,9 +79,6 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `BLZ (Bluzelle)`
 `0x5732046a883704404f284ce41ffadd5b007fd668`
-
-### `BNB (Binance Coin)`
-`0xB8c77482e45F1F44dE1745F52C74426C631bDD52`
 
 ### `BNT (Bancor)`
 `0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c`
@@ -173,6 +167,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `MAS (Midas)`
 `0x23Ccc43365D9dD3882eab88F43d515208f832430`
 
+### `MCO (Crypto.com)`
+`0xB63B606Ac810a52cCa15e44bB630fd42D8d1d83d`
+
 ### `MDS (MediShares)`
 `0x66186008C1050627F979d464eABb258860563dbE`
 
@@ -199,6 +196,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `PAL (PolicyPal Network)`
 `0xfedae5642668f8636a11987ff386bfd215f942ee`
+
+### `PAX (Paxos Standard)`
+`0x8E870D67F660D95d5be530380D0eC0bd388289E1`
 
 ### `PAY (TenX)`
 `0xB97048628DB6B661D4C2aA833e95Dbe1A905B280`
@@ -271,9 +271,6 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `WINGS (Wings)`
 `0x667088b212ce3d06a1b553a7221E1fD19000d9aF`
-
-### `ZIL (Zilliqa)`
-`0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27`
 
 ### `ZRX (0x)`
 `0xE41d2489571d322189246DaFA5ebDe1F4699F498`

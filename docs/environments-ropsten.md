@@ -113,5 +113,8 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `STORM (Storm)`
 `0x8FFf7De21de8ad9c510704407337542073FDC44b`
 
+### `WETH (Wrapped ETH)`
+`0xbCA556c912754Bc8E7D4Aad20Ad69a1B1444F42d`
+
 ### `ZIL (Zilliqa)`
 `0xaD78AFbbE48bA7B670fbC54c65708cbc17450167`

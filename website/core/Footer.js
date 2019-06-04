@@ -10,12 +10,7 @@ const React = require('react');
 class Footer extends React.Component {
   docUrl(doc, language) {
     const { baseUrl } = this.props.config;
-    return `${baseUrl}docs/${(language ? `${language}/` : '')}${doc}`;
-  }
-
-  pageUrl(doc, language) {
-    const { baseUrl } = this.props.config.baseUrl;
-    return `${baseUrl}${(language ? `${language}/` : '')}${doc}`;
+    return `${baseUrl}docs/${language ? language + '/' : ''}${doc}`;
   }
 
   render() {
@@ -37,23 +32,24 @@ class Footer extends React.Component {
             <div className="kyber-link-container">
               <div className="kyber-link">
                 <span className="kyber-link__text semi-b">Essentials</span>
-                <a className="kyber-link__text" href="Start">Getting Started</a>
-                <a className="kyber-link__text" href="Home-DesignPrinciples">Design Principles</a>
-                <a className="kyber-link__text" href="Home-ProtocolOverview">Protocol Overview</a>
-                <a className="kyber-link__text" href="Home-Architecture">Smart Contract Architecture</a>
+                {/* Append this.props.language when translations are already available */}
+                <a className="kyber-link__text" href={this.docUrl('Start', '')}>Getting Started</a>
+                <a className="kyber-link__text" href={this.docUrl('Home-DesignPrinciples', '')}>Design Principles</a>
+                <a className="kyber-link__text" href={this.docUrl('Home-ProtocolOverview', '')}>Protocol Overview</a>
+                <a className="kyber-link__text" href={this.docUrl('Home-Architecture', '')}>Smart Contract Architecture</a>
               </div>
               <div className="kyber-link">
                 <span className="kyber-link__text semi-b">Integrations</span>
-                <a className="kyber-link__text" href="Integrations-DappsUseCase">DApps</a>
-                <a className="kyber-link__text" href="Integrations-VendorsUseCase">Vendors</a>
-                <a className="kyber-link__text" href="Integrations-WalletsUseCase">Wallets</a>
-                <a className="kyber-link__text" href="Integrations-FeeSharing">Fee Sharing</a>
+                <a className="kyber-link__text" href={this.docUrl('Integrations-DappsUseCase', '')}>DApps</a>
+                <a className="kyber-link__text" href={this.docUrl('Integrations-VendorsUseCase', '')}>Vendors</a>
+                <a className="kyber-link__text" href={this.docUrl('Integrations-WalletsUseCase', '')}>Wallets</a>
+                <a className="kyber-link__text" href={this.docUrl('Integrations-FeeSharing', '')}>Fee Sharing</a>
               </div>
               <div className="kyber-link">
                 <span className="kyber-link__text semi-b">Reserves</span>
-                <a className="kyber-link__text" href="Reserves-FedPriceReserve">Fed Price</a>
-                <a className="kyber-link__text" href="Reserves-AutomatedPriceReserve">Automated Price</a>
-                <a className="kyber-link__text" href="Reserves-OrderbookReserve">Orderbook</a>
+                <a className="kyber-link__text" href={this.docUrl('Reserves-FedPriceReserve', '')}>Fed Price</a>
+                <a className="kyber-link__text" href={this.docUrl('Reserves-AutomatedPriceReserve', '')}>Automated Price</a>
+                <a className="kyber-link__text" href={this.docUrl('Reserves-OrderbookReserve', '')}>Orderbook</a>
               </div>
             </div>
           </div>
@@ -61,7 +57,7 @@ class Footer extends React.Component {
         <div className="footer-under">
           <div className="wrapper">
             <div className="copyright">
-              <span>@ 2019 Kyber Network. All rights reserved.</span>
+              <span>© 2019 Kyber Network. All rights reserved.</span>
             </div>
             <div className="media">
               <div className="social-icons">

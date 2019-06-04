@@ -5,7 +5,7 @@ title: RESTful API
 
 ## INTRODUCTION
 
-The RESTful API provide a way for users to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. While the `trade_data` endpoint allows token <-> token trades, the **`/buy_rate` and `/sell_rate` endpoints are restricted to ETH <-> token** to ensure backwards compatibility. Refer to [this section](integrations-restfulapiguide.md#step-4-get-approximate-dai-token-amount-receivable) on calculation of rates for token <-> token trades.
+The RESTful API provide a way for users to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. While the `trade_data` endpoint allows token <-> token trades, the **`/buy_rate` and `/sell_rate` endpoints are restricted to ETH <-> token** to ensure backwards compatibility. Refer to [this section](integrations-restfulapiguide.md#scenario-1-token-to-token-swap) on calculation of rates for token <-> token trades.
 
 ---
 
@@ -136,6 +136,7 @@ Example:
 | Parameter | Type | Required | Description |
 |:--------------:|:-------:|:--------:|:------------------------------------------------------:|
 | `only_official_reserve` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `include_delisted` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to false. If true, the API will also return tokens that have been delisted. |
 | `page` | int | No | The page index of the response data, starts from `0`. If no value is specified, it will default to 0. Each page includes maximum 1000 records. |
 
 ---
@@ -148,6 +149,7 @@ Example:
 | `decimals` | int | Decimals that will be used to round-off the srcQty or dstQty of the asset in other requests. |
 | `address` | string | The address of the asset in its native chain. |
 | `id` | string | A unique ID used by Kyber Network to identify between different symbols. |
+| `active` | bool | A boolean value to represent if the token is still active on Kyber. Note that this field only appears when you specify a value for the `include_delisted` parameter. |
 | `reserves_src` | string[] | Reserve contract addresses supporting Token to Ether trades |
 | `reserves_dest` | string[] | Reserve contract addresses supporting Ether to Token trades |
 
@@ -262,8 +264,8 @@ Example:
 |:------------------:|:------:|:---------------------------------------------------------:|
 | `timestamp` | int | Server timestamp in UTC. |
 | `pair` | string | Pair name consisting of the quote and base asset symbols. |
-| `quote_symbol` | string | Symbol of the quote asset of the pair. |
-| `base_symbol` | string | Symbol of the base asset of the pair. |
+| `quote_symbol` | string | Symbol of the asset used for quoting i.e. ETH |
+| `base_symbol` | string | Symbol of the asset to be quoted in terms of the `quote_symbol` |
 | `past_24h_high` | float | Highest ASK price for the last 24 hours of the pair. |
 | `past_24h_low` | float | Highest BID price for the last 24 hours of the pair. |
 | `usd_24h_volume` | float | Volume for the last 24 hours in USD. |
@@ -281,32 +283,46 @@ Example:
   "error":false,
   "data":[
     {
-      "timestamp":1536806619250,
-      "pair":"KNC_ETH",
-      "quote_symbol":"KNC",
-      "base_symbol":"ETH",
-      "past_24h_high":0.001937984496124031,
-      "past_24h_low":0.001857617770187944,
-      "usd_24h_volume":5566.2079180166,
-      "eth_24h_volume":31.8094685833,
-      "token_24h_volume":16865.433010686364,
-      "current_bid":0.001867351485999998,
-      "current_ask":0.0018868074209224932,
-      "last_traded":0.0018868074209224932
+       "timestamp":1558492393211,
+       "quote_symbol":"ETH",
+       "base_symbol":"WETH",
+       "past_24h_high":1,
+       "past_24h_low":1,
+       "usd_24h_volume":143726.84026054703,
+       "eth_24h_volume":563.0545545739344,
+       "token_24h_volume":563.0545545739344,
+       "current_bid":1,
+       "current_ask":1,
+       "last_traded":1,
+       "pair":"ETH_WETH"
     },
     {
-      "timestamp":1536806619251,
-      "pair":"OMG_ETH",
-      "quote_symbol":"OMG",
-      "base_symbol":"ETH",
-      "past_24h_high":0.018518518518518517,
-      "past_24h_low":0.017266283397471997,
-      "usd_24h_volume":13871.8906588085,
-      "eth_24h_volume":78.4248866967,
-      "token_24h_volume":4381.367829085394,
-      "current_bid":0.017379117142599983,
-      "current_ask":0.0175141743763495,
-      "last_traded":0.01777996566748282
+       "timestamp":1558492393211,
+       "quote_symbol":"ETH",
+       "base_symbol":"KNC",
+       "past_24h_high":0.001110383526447963,
+       "past_24h_low":0.001033735798918403,
+       "usd_24h_volume":33755.82521644965,
+       "eth_24h_volume":133.81888053626807,
+       "token_24h_volume":123851.92651283044,
+       "current_bid":0.001061573860546411,
+       "current_ask":0.0010630487587330675,
+       "last_traded":0.001060850105664333,
+       "pair":"ETH_KNC"
+    },
+    {
+       "timestamp":1558492393211,
+       "quote_symbol":"ETH",
+       "base_symbol":"DAI",
+       "past_24h_high":0.003991072796826141,
+       "past_24h_low":0.00378471306505907,
+       "usd_24h_volume":709051.4999945228,
+       "eth_24h_volume":2780.2612989626714,
+       "token_24h_volume":716238.82993307,
+       "current_bid":0.0038558605254144,
+       "current_ask":0.003893802835619083,
+       "last_traded":0.003846450468515019,
+       "pair":"ETH_DAI"
     },
     ...
   ]
@@ -377,7 +393,7 @@ Example:
 
 ### `/trade_data`
 
-(GET) Returns all needed information for a user to sign and do a transaction, to trade or convert an asset pair, from token A to token B.
+(GET) Returns the transaction payload for the user to sign and broadcast in order to trade or convert an asset pair from token A to token B.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
@@ -399,7 +415,7 @@ Example:
 |:----------:|:------:|:---------------------------------------------------------------------------------------------------------:|
 | `from` | string | The ETH address that executed the swap. Must match the `user_address` request input parameter. |
 | `to` | string | The contract address of the KyberNetwork smart contract. Verify that it should always be the address resolved from `kybernetwork.eth` ENS. |
-| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. After the transaction has been mined, you can check the status with `/info/getAccount`. |
+| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. |
 | `value` | string | This will be equal to 0 in hex (0x0) if the user tries to trade from token to ETH (assuming `src_id` is the source token address). |
 | `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you need to specify a price value, change this wei hex value. |
 | `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
@@ -420,6 +436,55 @@ Example:
       "gasPrice":"0x39eda2b80",
       "nonce":"0xc8",
       "gasLimit":"0x43d81"
+    }
+  ]
+}
+
+```
+
+### `/transfer_data`
+
+(GET) Returns the transaction payload for the user to sign and broadcast in order to transfer an asset to a recipient.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:--------------:|:------:|:--------:|:-----------------------------------------------------------------------------------------------------:|
+| `from` | string | Yes | The Ethereum address of the sender. |
+| `to` | string | Yes | The Ethereum address of the receiver. |
+| `token` | string | No | The contract address of token. If no argument is provided, it will default to ETH. |
+| `value` | float | Yes | The number of token / ETH you want to send. For example, if you want to send 1.35 Zil (12 decimals), it would be 1.35. |
+| `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
+| `gas_limit` | integer | No | The limit of gas required for your transaction. |
+| `nonce` | integer | No | Users can specify a nonce to override the default account nonce. |
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:----------:|:------:|:---------------------------------------------------------------------------------------------------------:|
+| `from` | string | The Ethereum address that executed the transfer. Must match the `from` input parameter. |
+| `to` | string | The contract address of the token or the recipient Ethereum address (if transferring ETH). |
+| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. If sending ETH, the value for this parameter should be '0x0'. |
+| `value` | string | If sending token, the value for this parameter should be '0x0'. Else, it should match the `value` input parameter. |
+| `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you want to specify a price value, change this wei hex value. |
+| `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
+| `gasLimit` | string | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |
+
+Example:
+
+```json
+> curl "https://api.kyber.network/transfer_data?from=0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1&to=0x723f12209b9C71f17A7b27FCDF16CA5883b7BBB0&token=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&value=1.5&gas_price=medium&gas_limit=200000&nonce=123"
+{
+  "error":false,
+  "data":[
+    {
+      "from":"0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+      "to":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "data":"0xa9059cbb000000000000000000000000723f12209b9c71f17a7b27fcdf16ca5883b7bbb000000000000000000000000000000000000000000000000014d1120d7b160000",
+      "value":"0x0",
+      "gasPrice":"0x147d35700",
+      "nonce":"0x7b",
+      "gasLimit":"0x30d40"
     }
   ]
 }
@@ -502,7 +567,7 @@ Example response:
 |:--------------:|:------:|:-----------------------------------------------------------------------------------------------------:|
 | `from` | string | The ETH address of the user. Must match the `user_address` request parameter. |
 | `to` | string | The contract address of the token you want to enable trading in Kyber Network. Always verify this for security reasons. |
-| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. After the transaction has been mined, you can check the status with `/info/getAccount`. |
+| `data` | string | Transaction data. This data needs to be signed and broadcasted to the blockchain. |
 | `value` | string | Should always be equal to 0 for this operation. Always verify that the value is 0 for security reasons. |
 | `gasPrice` | string | Calculated ETHGasStation price according to the user's request. If you need to specify a price value, change this wei hex value. |
 | `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |

@@ -46,10 +46,10 @@ Check that you have the following:
 
 #### Step 1: Set reserve
 
-Create a local directory and clone the `deployment-tutorial` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
+Create a local directory and clone the `master` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
 
 ```
-git clone -b deployment_tutorial https://github.com/KyberNetwork/smart-contracts.git
+git clone https://github.com/KyberNetwork/smart-contracts.git
 ```
 
 ##### Adding Tokens
@@ -159,7 +159,7 @@ npm install
 Then run the command
 
 ```
-node reserveDeployer.js --config-path ropsten_reserve_input.json --gas-price-gwei 30 ----rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x91a502C678605fbCe581eae053319747482276b9"
+node reserveDeployer.js --config-path ropsten_reserve_input.json --gas-price-gwei 30 ----rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x3f9a8e219ab1ad42f96b22c294e564b2b48fe636"
 ```
 
 - `--gas-price-gwei`: The gas price in gwei
