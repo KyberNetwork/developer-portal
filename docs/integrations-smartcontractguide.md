@@ -2,7 +2,7 @@
 id: Integrations-SmartContractGuide
 title: Smart Contract
 ---
-
+[//]: # (tagline)
 ## Introduction
 
 This guide will walk you through on how you can interact with our protocol implementation at a smart contract level. The most common group of users that can benefit from this guide are Dapps.

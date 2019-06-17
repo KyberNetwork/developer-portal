@@ -2,6 +2,7 @@
 id: Integrations-WalletsUseCase
 title: Wallets
 ---
+[//]: # (tagline)
 Wallets that have been integrated with Kyber's protocol implementation enables their users to do even more. Users can now perform embedded token swaps without having to transfer their funds out of their wallets.
 
 The diagram below shows how wallets can streamline the token swap process for their users by integrating with Kyber's protocol implementation.

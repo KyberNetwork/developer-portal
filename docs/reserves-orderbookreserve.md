@@ -2,6 +2,7 @@
 id: Reserves-OrderbookReserve
 title: Orderbook Reserve
 ---
+[//]: # (tagline)
 ## Objective
 
 In this guide, we will learn how to configure and deploy a Orderbook Reserve either locally via ganache or to the Ropsten testnet. Subsequently, we will also learn how to make, view, update and cancel orders.

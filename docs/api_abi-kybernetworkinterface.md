@@ -2,6 +2,7 @@
 id: API_ABI-KyberNetworkInterface
 title: KyberNetworkInterface
 ---
+[//]: # (tagline)
 # interface KyberNetworkInterface
 imports ERC20Interface
 

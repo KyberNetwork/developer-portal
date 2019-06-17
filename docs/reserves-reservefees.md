@@ -2,6 +2,7 @@
 id: Reserves-ReserveFees
 title: Verifying Reserve Fees
 ---
+[//]: # (tagline)
 To verify the reserve fee percentage that will be charged for every trade, kindly perform the following steps:
 
 ### Step 1: Read the FeeBurner contract in Etherscan

@@ -2,7 +2,7 @@
 id: Environments-Rinkeby
 title: Rinkeby
 ---
-
+[//]: # (tagline)
 Please note that contracts `KyberReserve` and `ConversionRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these three contracts.
 
 ## Contract Addresses

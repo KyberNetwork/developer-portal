@@ -2,6 +2,7 @@
 id: Reserves-Types
 title: Reserve Types
 ---
+[//]: # (tagline)
 ## Introduction
 There are currently 3 different types of reserve that you can choose from, namely, the Fed Price Reserve, the Automated Price Reserve and the Orderbook Reserve.
 

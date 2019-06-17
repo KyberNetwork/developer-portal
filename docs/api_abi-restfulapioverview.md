@@ -2,6 +2,7 @@
 id: API_ABI-RESTfulAPIOverview
 title: RESTful API Overview
 ---
+[//]: # (tagline)
 ## Introduction
 
 The RESTful API can be used to perform trades on the Kyber Network platform.

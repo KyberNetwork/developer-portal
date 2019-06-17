@@ -2,6 +2,7 @@
 id: Integrations-DappsUseCase
 title: DApps
 ---
+[//]: # (tagline)
 Interacting with Kyber's protocol implementation grants your users to Kyber's fast, convenient and trustless token conversion and transfer services. The increased interchangeability of tokens not only improves your platform’s functionality, but also enhances your users' experiences.
 
 The diagram below explains how DApps can leverage on Kyber's protocol implementation to improve their functionality and user experience.

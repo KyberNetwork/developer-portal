@@ -2,6 +2,7 @@
 id: API_ABI-WooCommercePlugin
 title: WooCommerce Plugin
 ---
+[//]: # (tagline)
 The plugin parameters are defined in the widget as payment gateway settings in Woocommerce and also defined in the source file `kyber-settings.php`. The main logic of handling payments through the widget is defined in the source file `class-woo-kyber-payment-gateway.php`.
 
 ## Plugin Parameters

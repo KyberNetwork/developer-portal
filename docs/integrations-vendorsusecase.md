@@ -2,6 +2,7 @@
 id: Integrations-VendorsUseCase
 title: Vendors
 ---
+[//]: # (tagline)
 Kyber's protocol implementation empowers businesses and their users with greater flexibility and variety through seamless token swaps, enabling customers and vendors to pay and receive payments in their token of choice – all within a single transaction.
 
 The following diagram indicates how interacting with Kyber's protocol implementation can enhance the experience for your users.

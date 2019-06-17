@@ -2,6 +2,7 @@
 id: Reserves-FedPriceReserve
 title: Fed Price Reserve
 ---
+[//]: # (tagline)
 ## Objective
 
 In this guide, we will learn how to configure and deploy a Fed Price Reserve either locally via ganache or to the Ropsten testnet.

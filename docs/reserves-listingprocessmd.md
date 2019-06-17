@@ -2,7 +2,7 @@
 id: Reserves-ListingProcess
 title: Reserve Listing Process and Policies
 ---
-
+[//]: # (tagline)
 ## Requirements to be listed on KyberSwap.com
 
 There are few requirements to have your token listed on Kyber Network:

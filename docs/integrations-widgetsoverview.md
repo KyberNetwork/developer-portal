@@ -2,6 +2,7 @@
 id: Integrations-WidgetsPluginsOverview
 title: Overview
 ---
+[//]: # (tagline)
 ## Introduction
 The Widgets and Plugins are 2 different types of integration that can be easily implemented on any websites or applications. There are currently 2 widgets, the [KyberWidget](integrations-kyberwidgetguide.md) and the [Sign In Widget](integrations-signinwidgetguide.md), and one plugin, the [WooCommerce Plugin](integrations-woocommercepluginguide.md) that are available for users to implement.
 

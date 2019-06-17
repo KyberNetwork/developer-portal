@@ -2,6 +2,7 @@
 id: API_ABI-FeeBurnerInterface
 title: FeeBurnerInterface
 ---
+[//]: # (tagline)
 # interface FeeBurnerInterface
 
 *Source*: [FeeBurnerInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/FeeBurnerInterface.sol)

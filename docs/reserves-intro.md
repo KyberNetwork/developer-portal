@@ -2,6 +2,7 @@
 id: Reserves-Intro
 title: Introduction
 ---
+[//]: # (tagline)
 ![Kyber Reserve Overview](/uploads/kyberreserveoverview.png "Kyber Reserve Overview")
 
 Over time, Kyber aims to streamline the process of providing liquidity to network and make it as straightforward as possible. Makers provide liquidity to the protocol by contributing a diverse range of tokens. Makers are comprised of a wide range of parties, from project teams looking to list their tokens, to professional market makers with customised trading strategies and even developers looking to build new reserve types.

@@ -2,6 +2,7 @@
 id: Reserves-Requirements
 title: Reserve Requirements
 ---
+[//]: # (tagline)
 ## Overview
 This section lists some guidelines on creating a new reserve type.
 

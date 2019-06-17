@@ -2,7 +2,7 @@
 id: API_ABI-Web3
 title: Web3
 ---
-
+[//]: # (tagline)
 ## Web3 Injection
 ### Adding web3
 You may add `web3` to your project using 1 of the following methods:

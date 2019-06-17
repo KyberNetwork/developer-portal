@@ -2,6 +2,7 @@
 id: API_ABI-SanityRatesInterface
 title: SanityRatesInterface
 ---
+[//]: # (tagline)
 # interface SanityRatesInterface
 
 *Source*: [SanityRatesInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SanityRatesInterface.sol)

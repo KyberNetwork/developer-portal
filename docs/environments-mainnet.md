@@ -2,7 +2,7 @@
 id: Environments-Mainnet
 title: Mainnet
 ---
-
+[//]: # (tagline)
 Please note that `KyberReserve`, `ConversionRates`, `SanityRates`, `OrderbookReserve` and `LiquidityConversionRates` contracts below are example reserve addresses. Your reserve will have different addresses for these contracts.
 
 ### Supported Token Pairs

@@ -2,7 +2,7 @@
 id: Integrations-WidgetGenerator
 title: KyberWidget Generator
 ---
-
+[//]: # (tagline)
 <style>
     .navPusher article {
       padding: 0;

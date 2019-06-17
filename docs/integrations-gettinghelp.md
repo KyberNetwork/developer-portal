@@ -2,6 +2,7 @@
 id: Integrations-GettingHelp
 title: Getting Help
 ---
+[//]: # (tagline)
 ## Email
 
 You can reach us by our email at support@kyber.network

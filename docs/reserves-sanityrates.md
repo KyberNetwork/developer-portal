@@ -2,6 +2,7 @@
 id: Reserves-SanityRates
 title: Sanity Rates
 ---
+[//]: # (tagline)
 ## Sanity Rates
 ![Sanityrates](/uploads/sanityrates.png "Sanityrates")
 

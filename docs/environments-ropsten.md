@@ -2,7 +2,7 @@
 id: Environments-Ropsten
 title: Ropsten
 ---
-
+[//]: # (tagline)
 Please note that contracts `KyberReserve` and `ConversionRates` below are using Kyber Network's reserve addresses as an example. Your reserve will have different addresses for these contracts.
 
 ### Supported Token Pairs

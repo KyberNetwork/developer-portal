@@ -2,6 +2,7 @@
 id: Environments-Intro
 title: Introduction
 ---
+[//]: # (tagline)
 ## Overview
 The Environments section provides the Kyber Network and token contract addresses for the different testnets.
 

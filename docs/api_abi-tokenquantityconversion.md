@@ -2,7 +2,7 @@
 id: API_ABI-TokenQuantityConversion
 title: Token Quantity Conversion
 ---
-
+[//]: # (tagline)
 ## Token Amount Conversion
 Since `getExpectedRate` returns a rate, not the amount, the following code snippets show how to convert to both source and destination token amounts, taking their decimals into account.
 

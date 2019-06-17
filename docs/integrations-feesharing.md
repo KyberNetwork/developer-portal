@@ -2,6 +2,7 @@
 id: Integrations-FeeSharing
 title: Fee Sharing Program
 ---
+[//]: # (tagline)
 ## What is the Fee Sharing Program?
 
 It’s an opportunity to be an integrated part of Kyber Network and receive commission for each conversion that originates from your DApp, wallet or payment gateway.

@@ -2,7 +2,7 @@
 id: API_ABI-ABI
 title: ABIs
 ---
-
+[//]: # (tagline)
 The contract Application Binary Interface (ABI) is the standard way to interact with the smart contracts in Ethereum. For getting token conversion rates and trade execution, the main smart contract to interact with is the [KyberNetworkProxy](api_abi-kybernetworkproxy.md) contract. The canonical ABIs are provided below.
 
 ## Contract ABIs

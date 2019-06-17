@@ -2,7 +2,7 @@
 id: API_ABI-RESTfulAPI
 title: RESTful API
 ---
-
+[//]: # (tagline)
 ## INTRODUCTION
 
 The RESTful API provide a way for users to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. While the `trade_data` endpoint allows token <-> token trades, the **`/buy_rate` and `/sell_rate` endpoints are restricted to ETH <-> token** to ensure backwards compatibility. Refer to [this section](integrations-restfulapiguide.md#scenario-1-token-to-token-swap) on calculation of rates for token <-> token trades.

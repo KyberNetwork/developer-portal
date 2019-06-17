@@ -2,6 +2,7 @@
 id: API_ABI-Withdrawable
 title: Withdrawable
 ---
+[//]: # (tagline)
 # contract Withdrawable
 is [PermissionGroups](api_abi-permissiongroups.md)\
 imports ERC20Interface, [PermissionGroups](api_abi-permissiongroups.md)

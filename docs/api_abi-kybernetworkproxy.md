@@ -2,7 +2,7 @@
 id: API_ABI-KyberNetworkProxy
 title: KyberNetworkProxy
 ---
-
+[//]: # (tagline)
 # contract KyberNetworkProxy
 
 is [KyberNetworkProxyInterface](api_abi-kybernetworkproxyinterface.md), [SimpleNetworkInterface](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol), [Withdrawable](api_abi-withdrawable.md), Utils2\
