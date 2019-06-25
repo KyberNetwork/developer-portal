@@ -137,7 +137,13 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `EURS (STASIS EURS)`
 `0xdB25f211AB05b1c97D595516F45794528a807ad8`
 
-### `GTO (GIFTO)`
+### `GEN (DAOstack)`
+`0x543Ff227F64Aa17eA132Bf9886cAb5DB55DCAddf`
+
+### `GNO (Gnosis)`
+`0x6810e776880C02933D47DB1b9fc05908e5386b96`
+
+### `GTO (Gifto)`
 `0xc5bbae50781be1669306b9e001eff57a2957b09d`
 
 ### `IOST (IOStoken)`
@@ -157,6 +163,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `LINK (Chain Link)`
 `0x514910771af9ca656af840dff83e8264ecf986ca`
+
+### `LRC (LoopringCoin V2)`
+`0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD`
 
 ### `MKR (Maker)`
 `0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2`
@@ -184,6 +193,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `MTL (Metal)`
 `0xF433089366899D83a9f26A773D59ec7eCF30355e`
+
+### `NPXS (Pundi X Token)`
+`0xA15C7Ebe1f07CaF6bFF097D8a589fb8AC49Ae5B3`
 
 ### `OCN (Odyssey)`
 `0x4092678e4E78230F46A1534C0fbc8fA39780892B`
@@ -229,6 +241,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `REQ (Request)`
 `0x8f8221afbb33998d8584a2b05749ba73c37a938a`
+
+### `RLC (RLC)`
+`0x607F4C5BB672230e8672085532f7e901544a7375`
 
 ### `SALT (Salt)`
 `0x4156d3342d5c385a87d264f90653733592000581`

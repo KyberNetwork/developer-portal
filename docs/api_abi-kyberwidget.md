@@ -7,12 +7,6 @@ title: KyberWidget
 The KyberWidget can be implemented via HTML/JS or iOS. The HTML / JS option has a [widget generator](integrations-widgetgenerator.md) that provides a user interface for configuration of the parameters described below.
 
 ## KyberWidget (HTML/JS)
-### Widget Types
-![Widget Types](/uploads/widgettypes.png "Widget Types")
-
-### Widget Modes
-![Widget Modes](/uploads/widgetmodes.png "Widget Modes")
-
 ### Widget URL Components
 #### Base URL
 `https://widget.kyber.network/`

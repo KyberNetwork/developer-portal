@@ -14,6 +14,12 @@ The KyberWidget allows users to pay for goods using any token supported by Kyber
 
 The diagram above shows how components like the widget, Kyber Network smart contract, vendor wallet, vendor servers interact with each other.
 
+### KyberWidget Types
+![Widget Types](/uploads/widgettypes.png "Widget Types")
+
+### KyberWidget Modes
+![Widget Modes](/uploads/widgetmodes.png "Widget Modes")
+
 ### Demo
 A simple demo is available at https://widget.knstats.com/shop/. If you specify https://kyberpay-sample.knstats.com/callback as callback URL, you could go to https://kyberpay-sample.knstats.com/list to see postback transaction list.
 

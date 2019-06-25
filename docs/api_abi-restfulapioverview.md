@@ -29,11 +29,13 @@ If for any reason there is an error in the response, you will receive the follow
 
 The `reason` can be one of the following:
 
-`**request_limit**`:  indicates that the user exceeded the requests limit
-`**param_error**`: indicates that the user has passed an unknown parameter, a wrong type for that parameter, or has not passed a required parameter
-`**server_error**`: indicates internal API error, which should not be present most of the time
+- `**request_limit**`:  indicates that the user exceeded the requests limit
+- `**param_error**`: indicates that the user has passed an unknown parameter, a wrong type for that parameter, or has not passed a required parameter
+- `**server_error**`: indicates internal API error, which should not be present most of the time
 
-`additional_data` can contain more information on the error, such as indicating when the user can request again in case of “request_limit”, or indicating bad or missing parameters for `param_error`.
+`additional_data` will contain more information on the error, such as indicating when the user can request again in case of “request_limit”, or indicating bad or missing parameters for `param_error`.
+
+Please ensure that errors are being handled appropriately. For example, if you get an error when calling the `tradeData` endpoint, ensure that your users are not able to proceed with the trade.
 
 ### REST Limitations
 
