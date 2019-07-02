@@ -2,7 +2,7 @@
 id: Integrations-SignInWidgetGuide
 title: Sign In Widget Guide
 ---
-
+[//]: # (tagline)
 ## Introduction
 This guide will walk you through on how you can implement our sign in widget to allow the users of your platform (who are registered with us) to reuse the same credentials to log on to your platform.
 

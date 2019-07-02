@@ -2,6 +2,7 @@
 id: Home-Architecture
 title: Smart Contract Architecture
 ---
+[//]: # (tagline)
 ## Kyber Core Smart Contract Overview
 The three main components of any implementation of the Kyber protocol are the Kyber Core Smart Contracts, the Reserve Interface and the List of Registered Reserves and Token Pairs.
 

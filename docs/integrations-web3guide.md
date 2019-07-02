@@ -2,6 +2,7 @@
 id: Integrations-Web3Guide
 title: Web3
 ---
+[//]: # (tagline)
 ## Introduction
 
 This guide will walk you through on how you can interact with our protocol implementation using the [Web3](https://github.com/ethereum/web3.js/) Javascript package. The most common group of users that can benefit from this guide are wallets or vendors who want to use their own UI.

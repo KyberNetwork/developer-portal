@@ -2,6 +2,7 @@
 id: API_ABI-SignInWidget
 title: Sign In Widget
 ---
+[//]: # (tagline)
 ## Developer Registration
 Contact one of our Kyber developers in the KyberDeveloper group at https://t.me/KyberDeveloper to get a developer account. The following information is required:
 | Parameter            | Description |

@@ -2,6 +2,7 @@
 id: Integrations-WidgetsPluginsOverview
 title: Overview
 ---
+[//]: # (tagline)
 ## Introduction
 The Widgets and Plugins are 2 different types of integration that can be easily implemented on any websites or applications. There are currently 2 widgets, the [KyberWidget](integrations-kyberwidgetguide.md) and the [Sign In Widget](integrations-signinwidgetguide.md), and one plugin, the [WooCommerce Plugin](integrations-woocommercepluginguide.md) that are available for users to implement.
 
@@ -12,6 +13,12 @@ The KyberWidget allows users to pay for goods using any token supported by Kyber
 ![How the widget works](/uploads/widgetflow.png "Widgetflow")
 
 The diagram above shows how components like the widget, Kyber Network smart contract, vendor wallet, vendor servers interact with each other.
+
+### KyberWidget Types
+![Widget Types](/uploads/widgettypes.png "Widget Types")
+
+### KyberWidget Modes
+![Widget Modes](/uploads/widgetmodes.png "Widget Modes")
 
 ### Demo
 A simple demo is available at https://widget.knstats.com/shop/. If you specify https://kyberpay-sample.knstats.com/callback as callback URL, you could go to https://kyberpay-sample.knstats.com/list to see postback transaction list.

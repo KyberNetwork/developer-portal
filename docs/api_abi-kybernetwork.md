@@ -2,7 +2,7 @@
 id: API_ABI-KyberNetwork
 title: KyberNetwork
 ---
-
+[//]: # (tagline)
 # contract KyberNetwork
 
 is [Withdrawable](api_abi-withdrawable.md), Utils2, [KyberNetworkInterface](api_abi-kybernetworkinterface.md)\

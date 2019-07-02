@@ -2,7 +2,7 @@
 id: API_ABI-FeeBurner
 title: FeeBurner
 ---
-
+[//]: # (tagline)
 # contract FeeBurner
 
 is [FeeBurnerInterface](api_abi-feeburnerinterface.md), [Withdrawable](api_abi-withdrawable.md), Utils\

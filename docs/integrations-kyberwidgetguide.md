@@ -2,6 +2,7 @@
 id: Integrations-KyberWidgetGuide
 title: KyberWidget Guide
 ---
+[//]: # (tagline)
 ## Introduction
 This guide will walk you through on how you can interact with our protocol implementation using our KyberWidget. The most common group of users that can benefit from this guide are vendors and websites.
 

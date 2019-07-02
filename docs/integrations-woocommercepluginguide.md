@@ -2,7 +2,7 @@
 id: Integrations-WooCommercePluginGuide
 title: WooCommerce Plugin Guide
 ---
-
+[//]: # (tagline)
 ## Introduction
 This guide will walk you through on how you can interact with our protocol implementation using our WooCommerce plugin. The most common group of user that can benefit from this guide are vendors that use WordPress for their e-commerce websites.
 

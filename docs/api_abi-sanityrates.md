@@ -2,6 +2,7 @@
 id: API_ABI-SanityRates
 title: SanityRates
 ---
+[//]: # (tagline)
 # contract SanityRates
 is [SanityRatesInterface](api_abi-sanityratesinterface.md), [Withdrawable](api_abi-withdrawable.md), Utils\
 imports ERC20Interface, [Withdrawable](api_abi-withdrawable.md), Utils, [SanityRatesInterface](api_abi-sanityratesinterface.md)

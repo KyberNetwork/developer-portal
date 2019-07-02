@@ -2,6 +2,7 @@
 id: Home-ProtocolOverview
 title: Protocol Overview
 ---
+[//]: # (tagline)
 ![Protocol Overview](/uploads/protocoloverview.png "Protocol Overview")
 
 The protocol implementation consists of a set of network contract(s), a reserve interface and a list of registered reserves and token pairs. The network diagram above shows an overview of the various actors that interacts with the protocol implementation.

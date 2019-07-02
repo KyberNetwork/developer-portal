@@ -2,6 +2,7 @@
 id: API_ABI-PermissionGroups
 title: PermissionGroups
 ---
+[//]: # (tagline)
 # contract PermissionGroups
 
 *Source*: [PermissionGroups.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/PermissionGroups.sol)

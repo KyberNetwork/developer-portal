@@ -2,6 +2,7 @@
 id: API_ABI-SimpleNetworkInterface
 title: SimpleNetworkInterface
 ---
+[//]: # (tagline)
 # interface SimpleNetworkInterface
 *Source*: [SimpleNetworkInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/SimpleNetworkInterface.sol)
 

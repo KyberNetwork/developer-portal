@@ -2,6 +2,7 @@
 id: Home-DesignPrinciples
 title: Design Principles
 ---
+[//]: # (tagline)
 ## Design Properties
 ![Design Properties](/uploads/designproperties.png "Design Properties")
 

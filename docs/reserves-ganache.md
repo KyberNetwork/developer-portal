@@ -2,6 +2,7 @@
 id: Reserves-Ganache
 title: Testing Using Ganache
 ---
+[//]: # (tagline)
 ## Overview
 
 [Ganache](https://truffleframework.com/ganache) enables you to create a private Ethereum blockchain on your local machine for running tests, executing commands, and inspecting its state while controlling how the chain operates. You can also refer to the [Workshop repository](https://github.com/KyberNetwork/workshop) for the same instructions.

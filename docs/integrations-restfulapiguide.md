@@ -2,6 +2,7 @@
 id: Integrations-RESTfulAPIGuide
 title: RESTful API
 ---
+[//]: # (tagline)
 ## Introduction
 This guide will walk you through on how you can interact with our protocol implementation using our RESTful APIs. The most common group of users that can benefit from this guide are developers who have minimal smart contract experience, traders and wallets.
 

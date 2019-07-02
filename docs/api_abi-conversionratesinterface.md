@@ -2,6 +2,7 @@
 id: API_ABI-ConversionRatesInterface
 title: ConversionRatesInterface
 ---
+[//]: # (tagline)
 # interface ConversionRatesInterface
 
 *Source*: [ConversionRatesInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ConversionRatesInterface.sol)
