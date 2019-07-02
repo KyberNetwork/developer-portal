@@ -265,7 +265,9 @@ Example:
 | `timestamp` | int | Server timestamp in UTC. |
 | `pair` | string | Pair name consisting of the quote and base asset symbols. |
 | `quote_symbol` | string | Symbol of the asset used for quoting i.e. ETH |
+| `quote_address` | string | Contract address of the asset used for quoting |
 | `base_symbol` | string | Symbol of the asset to be quoted in terms of the `quote_symbol` |
+| `base_address` | string | Contract address of the asset to be quoted |
 | `past_24h_high` | float | Highest ASK price for the last 24 hours of the pair. |
 | `past_24h_low` | float | Highest BID price for the last 24 hours of the pair. |
 | `usd_24h_volume` | float | Volume for the last 24 hours in USD. |
@@ -285,7 +287,9 @@ Example:
     {
        "timestamp":1558492393211,
        "quote_symbol":"ETH",
+       "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
        "base_symbol":"WETH",
+       "base_address":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
        "past_24h_high":1,
        "past_24h_low":1,
        "usd_24h_volume":143726.84026054703,
@@ -299,7 +303,9 @@ Example:
     {
        "timestamp":1558492393211,
        "quote_symbol":"ETH",
+       "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
        "base_symbol":"KNC",
+       "base_address":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
        "past_24h_high":0.001110383526447963,
        "past_24h_low":0.001033735798918403,
        "usd_24h_volume":33755.82521644965,
@@ -313,7 +319,9 @@ Example:
     {
        "timestamp":1558492393211,
        "quote_symbol":"ETH",
+       "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
        "base_symbol":"DAI",
+       "base_address":"0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
        "past_24h_high":0.003991072796826141,
        "past_24h_low":0.00378471306505907,
        "usd_24h_volume":709051.4999945228,
