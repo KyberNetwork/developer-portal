@@ -41,7 +41,7 @@ We will be using the `web3` package for interacting with the Ethereum blockchain
 
 // Importing the relevant packages
 const Web3 = require("web3");
-const Tx = require("ethereumjs-tx");
+const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
 ```
 
@@ -285,7 +285,7 @@ Before running this code example, the following fields need to be modified:
 
 // Importing the relevant packages
 const Web3 = require("web3");
-const Tx = require("ethereumjs-tx");
+const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
 
 // Connecting to ropsten infura node
@@ -445,7 +445,7 @@ We will be using the `web3` package for interacting with the Ethereum blockchain
 
 // Importing the relevant packages
 const Web3 = require("web3");
-const Tx = require("ethereumjs-tx");
+const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
 ```
 
@@ -741,7 +741,7 @@ Before running this code example, the following fields need to be modified:
 
 // Importing the relevant packages
 const Web3 = require("web3");
-const Tx = require("ethereumjs-tx");
+const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
 
 // Connecting to ropsten infura node
@@ -936,7 +936,7 @@ We will be using the `web3` package for interacting with the Ethereum blockchain
 
 // Importing the relevant packages
 const Web3 = require("web3");
-const Tx = require("ethereumjs-tx");
+const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
 ```
 
@@ -1232,7 +1232,7 @@ Before running this code example, the following fields need to be modified:
 
 // Importing the relevant packages
 const Web3 = require("web3");
-const Tx = require("ethereumjs-tx");
+const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
 
 // Connecting to ropsten infura node

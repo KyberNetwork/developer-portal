@@ -29,7 +29,7 @@ Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conv
 
 // Importing the relevant packages
 const Web3 = require("web3");
-const Tx = require("ethereumjs-tx");
+const Tx = require("ethereumjs-tx").Transaction;
 const fetch = require('node-fetch');
 ```
 
@@ -116,7 +116,7 @@ function caseInsensitiveEquals(a, b) {
 }
 
 async function isTokenSupported(tokenAddress) {
-  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies`);
+  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies?only_official_reserve=false`);
   let tokensBasicInfo = await tokensBasicInfoRequest.json();
   let tokenSupported = tokensBasicInfo.data.some(token => {
     return caseInsensitiveEquals(tokenAddress, token.id)
@@ -139,7 +139,7 @@ If the BAT token is not enabled for trading, querying the `users/<user_address>/
 // https://t.me/KyberDeveloper.
 
 async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
-  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);
+  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies?only_official_reserve=false`);
   let enabledStatuses = await enabledStatusesRequest.json();
   let txsRequired = 0;
   for (let token of enabledStatuses.data) {
@@ -171,7 +171,7 @@ async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice)
 }
 
 async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
-  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`);
+  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}&only_official_reserve=false`);
   let enableTokenDetails = await enableTokenDetailsRequest.json();
   let rawTx = enableTokenDetails.data;
   await broadcastTx(rawTx);
@@ -201,7 +201,7 @@ As such, we perform the following steps:
 // https://t.me/KyberDeveloper.
 
 async function getSellQty(tokenAddress, qty) {
-  let sellQtyRequest = await fetch(`${NETWORK_URL}/sell_rate?id=${tokenAddress}&qty=${qty}`);
+  let sellQtyRequest = await fetch(`${NETWORK_URL}/sell_rate?id=${tokenAddress}&qty=${qty}&only_official_reserve=false`);
   let sellQty = await sellQtyRequest.json();
   sellQty = sellQty.data[0].dst_qty[0];
   return sellQty;
@@ -209,7 +209,7 @@ async function getSellQty(tokenAddress, qty) {
 
 async function getApproximateBuyQty(tokenAddress) {
   const QTY = 1; //Quantity used for the approximation
-  let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${QTY}`);
+  let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${QTY}&only_official_reserve=false`);
   let approximateBuyQty = await approximateBuyRateRequest.json();
   approximateBuyQty = approximateBuyQty.data[0].src_qty[0];
   return approximateBuyQty;
@@ -226,7 +226,7 @@ async function getApproximateReceivableTokens(sellQty, buyQty, srcQty) {
 ```
 
 ### Convert BAT to DAI
-We now have all the required information to peform the trade transaction. Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>` will return the transaction payload to be signed and broadcasted by the user to make the conversion. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#trade-data).
+We now have all the required information to peform the trade transaction. Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>&only_official_reserve=false` will return the transaction payload to be signed and broadcasted by the user to make the conversion. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#trade-data).
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -234,7 +234,7 @@ We now have all the required information to peform the trade transaction. Queryi
 // https://t.me/KyberDeveloper.
 
 async function executeTrade(useraddress, srcToken, dstToken, srcQty, minDstQty, gasPrice, refAddress) {
-  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}`);
+  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}&only_official_reserve=false`);
   let tradeDetails = await tradeDetailsRequest.json();
   let rawTx = tradeDetails.data[0];
   await broadcastTx(rawTx);
@@ -287,7 +287,7 @@ Before running this code example, the following fields need to be modified:
 
 // Importing the relevant packages
 const Web3 = require("web3");
-const Tx = require("ethereumjs-tx");
+const Tx = require("ethereumjs-tx").Transaction;
 const fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
@@ -349,7 +349,7 @@ function caseInsensitiveEquals(a, b) {
 }
 
 async function isTokenSupported(tokenAddress) {
-  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies`);
+  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies?only_official_reserve=false`);
   let tokensBasicInfo = await tokensBasicInfoRequest.json();
   let tokenSupported = tokensBasicInfo.data.some(token => {
     return caseInsensitiveEquals(tokenAddress, token.id)
@@ -361,7 +361,7 @@ async function isTokenSupported(tokenAddress) {
 }
 
 async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
-  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);
+  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies?only_official_reserve=false`);
   let enabledStatuses = await enabledStatusesRequest.json();
   let txsRequired = 0;
   for (let token of enabledStatuses.data) {
@@ -393,7 +393,7 @@ async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice)
 }
 
 async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
-  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`);
+  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}&only_official_reserve=false`);
   let enableTokenDetails = await enableTokenDetailsRequest.json();
   let rawTx = enableTokenDetails.data;
   await broadcastTx(rawTx);
@@ -413,7 +413,7 @@ async function broadcastTx(rawTx) {
 }
 
 async function getSellQty(tokenAddress, qty) {
-  let sellQtyRequest = await fetch(`${NETWORK_URL}/sell_rate?id=${tokenAddress}&qty=${qty}`);
+  let sellQtyRequest = await fetch(`${NETWORK_URL}/sell_rate?id=${tokenAddress}&qty=${qty}&only_official_reserve=false`);
   let sellQty = await sellQtyRequest.json();
   sellQty = sellQty.data[0].dst_qty[0];
   return sellQty;
@@ -421,7 +421,7 @@ async function getSellQty(tokenAddress, qty) {
 
 async function getApproximateBuyQty(tokenAddress) {
   const QTY = 1; //Quantity used for the approximation
-  let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${QTY}`);
+  let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${QTY}&only_official_reserve=false`);
   let approximateBuyQty = await approximateBuyRateRequest.json();
   approximateBuyQty = approximateBuyQty.data[0].src_qty[0];
   return approximateBuyQty;
@@ -437,7 +437,7 @@ async function getApproximateReceivableTokens(sellQty, buyQty, srcQty) {
 }
 
 async function executeTrade(useraddress, srcToken, dstToken, srcQty, minDstQty, gasPrice, refAddress) {
-  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}`);
+  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}&only_official_reserve=false`);
   let tradeDetails = await tradeDetailsRequest.json();
   let rawTx = tradeDetails.data[0];
   await broadcastTx(rawTx);
@@ -460,7 +460,7 @@ The `/currencies` endpoint returns basic information about all tokens supported 
 const fetch = require('node-fetch')
 
 async function getSupportedTokens() {
-  let tokensBasicInfoRequest = await fetch('https://api.kyber.network/currencies')
+  let tokensBasicInfoRequest = await fetch('https://api.kyber.network/currencies?only_official_reserve=false')
   let tokensBasicInfo = await tokensBasicInfoRequest.json()
   console.log(tokensBasicInfo)
 }
@@ -511,7 +511,7 @@ The `/market` endpoint returns price and volume information on token to ETH pair
 const fetch = require('node-fetch')
 
 async function getMarketInformation() {
-  let marketInfoRequest = await fetch('https://api.kyber.network/market')
+  let marketInfoRequest = await fetch('https://api.kyber.network/market?only_official_reserve=false')
   let marketInfo = await marketInfoRequest.json()
   return marketInfo
 }
@@ -568,7 +568,7 @@ The `/change24h` endpoint returns current token to ETH and USD rates and price p
 const fetch = require('node-fetch')
 
 async function getPast24HoursTokenInformation() {
-  let past24HoursTokenInfoRequest = await fetch('https://api.kyber.network/change24h')
+  let past24HoursTokenInfoRequest = await fetch('https://api.kyber.network/change24h?only_official_reserve=false')
   let past24HoursTokenInfo = await past24HoursTokenInfoRequest.json()
   return past24HoursTokenInfo
 }

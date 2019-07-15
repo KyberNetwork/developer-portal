@@ -182,25 +182,39 @@ However, only authorized accounts have the right to withdraw tokens from the res
 - `admin` can add withdraw/whitelisted address by calling `approveWithdrawAddress` of `KyberReserve.sol`.
 
 ### `Step 4: Depositing the inventory and setting the liquidity parameters`
+The reserve manager needs to decide on the initial liquidity parameters of the automated reserve. The following information are to be considered:
 
-The reserve manager needs to only decide on the initial liquidity parameters of the automated reserve. Specifically, the following information need to be considered:
-
-1. Liquidity Rate
-2. Initial Token Price
-3. Initial Ether Amount
+1. Liquidity Rate `r`
+2. Initial Token Price `initialPrice`
+3. Initial Ether Amount `E`
 4. Initial Token Amount
-5. Minimum and Maximum Supported Price Factor
+5. Minimum (`pMin`) and Maximum (`pMax`) Supported Price Factor
 6. Maximum Buy and Maximum Sell Amount in a Trade
 7. Fee Percentage
 
-There are several things to take note of in the list of parameters.
+#### About liquidity rate `r`
+`r` is liquidity the rate in basis points or units of 100 which the price should move each time the ETH/token inventory changes in 1 ETH worth of quantity. For an `r` of 0.007, the price will move 0.7%.
 
-First, notice that some parameters will have the **InFp** suffix. InFp refers to formula precision. While this is configurable, 2^40 is the recommended value.
+#### About `pMin` and `pMax`
+With regards to the minimum/maximum supported price factor ratio, it is recommended to start with a ratio of 0.5:2.0. This indicates that the inventory will suffice for up to 100% increase or 50% decrease in token price with respect to ETH.
 
-Second, **r** is liquidity the rate in basis points or units of 100 which the price should move each time the ETH/token inventory changes in 1 ETH worth of quantity. For an _r_ of 0.007, the price will move 0.7%. _r_ is calculated taking into account the amount of initial ETH and tokens deposited into the contract, and the desired minimum/maximum price factor ratio. A smaller _r_ also means more ETH and token inventory is needed to facilitate the liquidity.
+#### Relationship between `r`, `initialPrice`, `E` and `pMin`
+The initial token price determined by the pricing algorithm is as follows:
 
-For the **minimum/maximum supported price factor ratio**, it is recommended to start with a ratio of 0.5:2.0. This indicates that the inventory will suffice for up to 100% increase or 50% decrease in token price with respect to ETH.
+`initialPrice = minPrice * e^(r*E)` where  `minPrice` = `pMin * initialPrice`
 
+Rearranging the formula above, you find that
+`r = ln(initialPrice / minPrice) / E)`  or
+`r = ln(1 / pMin) / E`
+
+Hence, since the 4 variables are tightly coupled together, you are **only able to determine 3 out of these 4 variables, and use the formula to calculate the fourth.** Our recommendation is to **determine `initialPrice`, `E` and `pMin`, then calculate `r` using the above formula.**
+
+#### Graphical Illustration of Price adjustments
+A quick overview of how price adjusts for a given price range can be seen below. This illustration uses 0.1, 70, 2 and 0.5 for the `intial price`, initial ETH amount `E`, `pMax` and `pMin` respectively.
+
+![AprChart](/uploads/aprchart.png "AprChart")
+
+#### Setting liquidity parameters
 Setting the liquidity parameters is done by executing the [`setLiquidityParameters()`](api_abi-liquidityconversionrates.md#setliquidityparams) function from the LiquidityConversionRates contract. We explain the different parameters below:
 
 |  Type  |            Parameter            |                                                        Explanation                                                        |
