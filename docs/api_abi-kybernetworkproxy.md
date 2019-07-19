@@ -159,7 +159,7 @@ The expected exchange rate and slippage rate.<br>
 
 **Notes:**
 
-- Returned values are in 18 decimals regardless of the destination token's decimals
+- Returned values are in precision values `(10**18)`. Refer to the example below.
 - The Most Significant Bit (MSB) is used for excluding permissionless reserves, since this function lacks a hint parameter for this purpose.
 
 #### Understanding the returned values
