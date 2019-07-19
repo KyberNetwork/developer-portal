@@ -13,9 +13,11 @@ There are few requirements to have your token listed on Kyber Network:
 
 3. The legal opinion should come from a licensed Law Firm in its respective jurisdiction.
 
-3. Liquidity has to be provided for the token. This is done by being a permissioned token reserve, or by using an existing 3rd party reserve that is already integrated with Kyber.
+4. Liquidity has to be provided for the token. This is done by being a permissioned token reserve, or by using an existing 3rd party reserve that is already integrated with Kyber.
 
-4. Completed listing form as indicated here: [listing form](https://forms.gle/zWLwZEvjUudSikF67)
+5. Completed listing form as indicated here: [listing form](https://forms.gle/zWLwZEvjUudSikF67)
+
+6. A **deposit of USD $1000 worth of KNC** as commitment towards this listing process, because considerable effort is required on both parties. The funds will be returned once the token goes live on KyberSwap.
 
 ## Process to list a permissioned reserve on Kyber
 
