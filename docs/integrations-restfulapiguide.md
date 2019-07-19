@@ -606,7 +606,7 @@ await getPast24HoursTokenInformation()
 ```
 
 ## Inclusion of Permissionless Reserves
-By default, the RESTful APIs only interact with reserves that were added in a **permissioned** manner. Most of these endpoints support a `only_official_reserve` parameter for the inclusion of permissionless reserves. You may find more information about the difference between permissioned and permissionless reserves [in this section](reserves-types.md#permissionless-vs-permissioned).
+By default, the RESTful APIs only interact with reserves that were added in a **permissioned** manner. Most of these endpoints support a `only_official_reserve` parameter for the inclusion of permissionless reserves ([see RESTful API](api_abi-restfulapi.md)). You may find more information about the difference between permissioned and permissionless reserves [in this section](reserves-types.md#permissionless-vs-permissioned).
 
 
 ## Safeguarding Users From Slippage Rates
@@ -633,7 +633,7 @@ In the case where `maxDestAmount` is being used, beware of slippage rates when `
 
 1. Users wants to swap for a `maxDestAmount` of 3000 DAI, but specifies a `srcQty` of 300 ETH.
 2. Kyber will search the best rate for the `srcQty` of 200 ETH, but the rate might be significantly worse than rates for lower `srcQty`. For example, the user gets a rate of 1 ETH = 100 DAI, while he could have gotten a better rate of 1 ETH = 200 DAI if he specified a lower `srcQty`.
-3. Kyber will use the rate to calculate the amount necessary for 2900 DAI, and refund the rest of the unused ETH back to the user. In the case mentioned above, 30 ETH will be used, and the remaining 270 ETH returned to him. He could have instead needed just half that amount (15 ETH) had he specified a lower `srcQty` instead. 
+3. Kyber will use the rate to calculate the amount necessary for 2900 DAI, and refund the rest of the unused ETH back to the user. In the case mentioned above, 30 ETH will be used, and the remaining 270 ETH returned to him. He could have instead needed just half that amount (15 ETH) had he specified a lower `srcQty` instead.
 
 In summary, if `srcQty` is significantly larger than `maxDestAmount`, the user could potentially be forced to trade with significantly worse rates.
 

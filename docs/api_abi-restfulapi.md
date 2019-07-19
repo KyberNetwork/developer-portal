@@ -26,7 +26,7 @@ The RESTful API provide a way for users to be able to programmatically interact 
 |:---------:|:------:|:--------:|:------------------------------------------------:|
 | `id` | string | Yes | The `id` of the asset you want to buy using ETH. |
 | `qty` | float | Yes | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to buy. |
-| `only_official_reserve` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 
 ---
 
@@ -79,7 +79,7 @@ Example:
 **Arguments:**
 | Parameter | Type | Required | Description |
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
-| `only_official_reserve` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 
 ---
 
@@ -135,7 +135,7 @@ Example:
 **Arguments:**
 | Parameter | Type | Required | Description |
 |:--------------:|:-------:|:--------:|:------------------------------------------------------:|
-| `only_official_reserve` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 | `include_delisted` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to false. If true, the API will also return tokens that have been delisted. |
 | `page` | int | No | The page index of the response data, starts from `0`. If no value is specified, it will default to 0. Each page includes maximum 1000 records. |
 
@@ -348,7 +348,7 @@ Example:
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
 | `id` | string | Yes | The `id` of the assets you want to sell using ETH. |
 | `qty` | float | Yes | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to sell. |
-| `only_official_reserve` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 
 ---
 
@@ -414,7 +414,7 @@ Example:
 | `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
 | `wallet_id` | string | No | The wallet address that is registered for the [fee sharing program](integrations-feesharing.md). |
 | `nonce` | integer | No | Users can specify a nonce to override the default account nonce. |
-| `only_official_reserve` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 
 ---
 
@@ -509,7 +509,7 @@ Example:
 | Parameter | Type | Required | Description |
 |:--------------:|:-------:|:--------:|:------------------------------------------------------:|
 | `user_address` | string | Yes | The ETH address to get information from. |
-| `only_official_reserve` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 | `page` | int | No | The page index of the response data, starts from `0`. If no value is specified, it will default to 0. Each page includes maximum 1000 records. |
 
 ---
@@ -566,7 +566,7 @@ Example response:
 | `currency_id` | string | Yes | The unique ID of the destination asset. |
 | `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
 | `nonce` | int | No | You can manually specify a nonce to override the default account nonce. |
-| `only_official_reserve` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to true. If false, the API will also return tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 
 ---
 
