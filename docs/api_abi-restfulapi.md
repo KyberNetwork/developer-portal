@@ -265,12 +265,12 @@ Example:
 | `timestamp` | int | Server timestamp in UTC. |
 | `pair` | string | Pair name consisting of the quote and base asset symbols. |
 | `quote_symbol` | string | Symbol of the asset used for quoting i.e. ETH. |
-| `quote_name | string | Name of the asset in its native chain. i.e. Ethereum. |
-| `quote_decimals | int | Decimals that will be used to round-off the srcQty or dstQty of the asset in other requests. |
+| `quote_name` | string | Name of the asset in its native chain. i.e. Ethereum. |
+| `quote_decimals` | int | Decimals that will be used to round-off the srcQty or dstQty of the asset in other requests. |
 | `quote_address` | string | Contract address of the asset used for quoting. |
 | `base_symbol` | string | Symbol of the asset to be quoted in terms of the `quote_symbol`. |
-| `base_name | string | Name of the asset to be quoted in terms of the `quote_name`. |
-| `base_decimals | int | Decimals of the asset to be quoted. |
+| `base_name` | string | Name of the asset to be quoted in terms of the `quote_name`. |
+| `base_decimals` | int | Decimals of the asset to be quoted. |
 | `base_address` | string | Contract address of the asset to be quoted. |
 | `past_24h_high` | float | Highest ASK price for the last 24 hours of the pair. |
 | `past_24h_low` | float | Highest BID price for the last 24 hours of the pair. |

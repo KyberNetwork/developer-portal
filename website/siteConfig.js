@@ -109,6 +109,10 @@ const siteConfig = {
       label: 'API/ABI',
     },
     {
+      href: 'https://developer.kyber.network/tx-diagnose',
+      label: 'Trade Debugger',
+    },
+    {
       href: 'https://github.com/kybernetwork',
       label: 'GitHub',
     },
