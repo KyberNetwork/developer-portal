@@ -1,6 +1,6 @@
 ---
 id: Integrations-SlippageRateProtection
-title: Protection From Slippage Rates
+title: Slippage Rates Protection
 ---
 [//]: # (tagline)
 ## Safeguarding Users From Slippage Rates
