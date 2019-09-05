@@ -264,10 +264,14 @@ Example:
 |:------------------:|:------:|:---------------------------------------------------------:|
 | `timestamp` | int | Server timestamp in UTC. |
 | `pair` | string | Pair name consisting of the quote and base asset symbols. |
-| `quote_symbol` | string | Symbol of the asset used for quoting i.e. ETH |
-| `quote_address` | string | Contract address of the asset used for quoting |
-| `base_symbol` | string | Symbol of the asset to be quoted in terms of the `quote_symbol` |
-| `base_address` | string | Contract address of the asset to be quoted |
+| `quote_symbol` | string | Symbol of the asset used for quoting i.e. ETH. |
+| `quote_name` | string | Name of the asset in its native chain. i.e. Ethereum. |
+| `quote_decimals` | int | Decimals that will be used to round-off the srcQty or dstQty of the asset in other requests. |
+| `quote_address` | string | Contract address of the asset used for quoting. |
+| `base_symbol` | string | Symbol of the asset to be quoted in terms of the `quote_symbol`. |
+| `base_name` | string | Name of the asset to be quoted in terms of the `quote_name`. |
+| `base_decimals` | int | Decimals of the asset to be quoted. |
+| `base_address` | string | Contract address of the asset to be quoted. |
 | `past_24h_high` | float | Highest ASK price for the last 24 hours of the pair. |
 | `past_24h_low` | float | Highest BID price for the last 24 hours of the pair. |
 | `usd_24h_volume` | float | Volume for the last 24 hours in USD. |
@@ -285,53 +289,65 @@ Example:
   "error":false,
   "data":[
     {
-       "timestamp":1558492393211,
-       "quote_symbol":"ETH",
-       "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-       "base_symbol":"WETH",
-       "base_address":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-       "past_24h_high":1,
-       "past_24h_low":1,
-       "usd_24h_volume":143726.84026054703,
-       "eth_24h_volume":563.0545545739344,
-       "token_24h_volume":563.0545545739344,
-       "current_bid":1,
-       "current_ask":1,
-       "last_traded":1,
-       "pair":"ETH_WETH"
+      "timestamp": 1565676643703,
+      "quote_symbol": "ETH",
+      "quote_name": "Ethereum",
+      "quote_decimals": 18,
+      "quote_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "base_symbol": "WETH",
+      "base_name": "Wrapped Ether",
+      "base_decimals": 18,
+      "base_address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "past_24h_high": 1,
+      "past_24h_low": 1,
+      "usd_24h_volume": 55171.31700779925,
+      "eth_24h_volume": 261.98872813093953,
+      "token_24h_volume": 261.98872813093953,
+      "current_bid": 1,
+      "current_ask": 1,
+      "last_traded": 1,
+      "pair": "ETH_WETH"
     },
     {
-       "timestamp":1558492393211,
-       "quote_symbol":"ETH",
-       "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-       "base_symbol":"KNC",
-       "base_address":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-       "past_24h_high":0.001110383526447963,
-       "past_24h_low":0.001033735798918403,
-       "usd_24h_volume":33755.82521644965,
-       "eth_24h_volume":133.81888053626807,
-       "token_24h_volume":123851.92651283044,
-       "current_bid":0.001061573860546411,
-       "current_ask":0.0010630487587330675,
-       "last_traded":0.001060850105664333,
-       "pair":"ETH_KNC"
-    },
-    {
-       "timestamp":1558492393211,
-       "quote_symbol":"ETH",
-       "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-       "base_symbol":"DAI",
-       "base_address":"0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-       "past_24h_high":0.003991072796826141,
-       "past_24h_low":0.00378471306505907,
-       "usd_24h_volume":709051.4999945228,
-       "eth_24h_volume":2780.2612989626714,
-       "token_24h_volume":716238.82993307,
-       "current_bid":0.0038558605254144,
-       "current_ask":0.003893802835619083,
-       "last_traded":0.003846450468515019,
-       "pair":"ETH_DAI"
-    },
+      "timestamp": 1565676643703,
+      "quote_symbol": "ETH",
+      "quote_name": "Ethereum",
+      "quote_decimals": 18,
+      "quote_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "base_symbol": "KNC",
+      "base_name": "KyberNetwork",
+      "base_decimals": 18,
+      "base_address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "past_24h_high": 0.000793293929007035,
+      "past_24h_low": 0.000783163456436218,
+      "usd_24h_volume": 5751.223513558892,
+      "eth_24h_volume": 27.365939751337628,
+      "token_24h_volume": 34737.279673311226,
+      "current_bid": 0.000787059792040378,
+      "current_ask": 0.00079253036315891,
+      "last_traded": 0.000788978737325427,
+      "pair": "ETH_KNC"
+      },
+      {
+      "timestamp": 1565676643703,
+      "quote_symbol": "ETH",
+      "quote_name": "Ethereum",
+      "quote_decimals": 18,
+      "quote_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "base_symbol": "DAI",
+      "base_name": "DAI",
+      "base_decimals": 18,
+      "base_address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "past_24h_high": 0.004764611951928574,
+      "past_24h_low": 0.004672131147540981,
+      "usd_24h_volume": 202729.63505611182,
+      "eth_24h_volume": 963.3434244536832,
+      "token_24h_volume": 203591.66123820562,
+      "current_bid": 0.004743332850081698,
+      "current_ask": 0.004789407404832812,
+      "last_traded": 0.004789355488531787,
+      "pair": "ETH_DAI"
+      },
     ...
   ]
 }

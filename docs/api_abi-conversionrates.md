@@ -613,6 +613,23 @@ ConversionRates.methods
 
 <br />
 
+### `setTokenControlInfo`
+
+Set the `minimalRecordResolution`, `maxPerBlockImbalance` and `maxTotalImbalance` of an ERC20 token
+___
+function __setTokenControlInfo__(ERC20 token, uint minimalRecordResolution, uint maxPerBlockImbalance, uint maxTotalImbalance) public onlyAdmin
+| Parameter                 | Type  | Description                  |
+| ------------------------- |:-----:|:----------------------------:|
+| `token`                   | ERC20 | ERC20 token contract address |
+| `minimalRecordResolution` | uint  | minimum denominator in token wei that can be changed                |
+| `maxPerBlockImbalance`    | uint  |  maximum wei amount of net absolute (+/-) change for a token in an ethereum block              |
+| `maxTotalImbalance`       | uint  | wei amount of the maximum net token change allowable that happens between 2 price updates                 |
+Modifiers: [onlyAdmin](API_ABI-permissiongroups.md#onlyadmin)\
+**Returns:**\
+Data comprising minimalRecordResolution, maxPerBlockImbalance, and maxTotalImbalance
+
+<br />
+
 ### `setImbalanceStepFunction`
 
 Set adjustments for tokens' buy and sell rates depending on the net traded amounts. Only operator can invoke.

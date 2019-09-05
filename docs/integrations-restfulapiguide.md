@@ -217,9 +217,8 @@ async function getApproximateBuyQty(tokenAddress) {
 
 //sellQty = output from getSellQty function
 //buyQty = output from getApproximateBuyQty function
-//srcQty = token qty amount to swap from (100 BAT tokens in scenario)
-async function getApproximateReceivableTokens(sellQty, buyQty, srcQty) {
-  let expectedAmountWithoutSlippage = buyQty / sellQty * srcQty;
+async function getApproximateReceivableTokens(sellQty, buyQty) {
+  let expectedAmountWithoutSlippage = sellQty / buyQty;
   let expectedAmountWithSlippage = 0.97 * expectedAmountWithoutSlippage;
   return expectedAmountWithSlippage;
 }
@@ -429,9 +428,8 @@ async function getApproximateBuyQty(tokenAddress) {
 
 //sellQty = output from getSellQty function
 //buyQty = output from getApproximateBuyQty function
-//srcQty = token qty amount to swap from (100 BAT tokens in scenario)
-async function getApproximateReceivableTokens(sellQty, buyQty, srcQty) {
-  let expectedAmountWithoutSlippage = buyQty / sellQty * srcQty;
+async function getApproximateReceivableTokens(sellQty, buyQty) {
+  let expectedAmountWithoutSlippage = sellQty / buyQty;
   let expectedAmountWithSlippage = 0.97 * expectedAmountWithoutSlippage;
   return expectedAmountWithSlippage;
 }

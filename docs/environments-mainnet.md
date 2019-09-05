@@ -32,7 +32,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0x97D7126b6FF7C4D95601912f4Cdf790a3Cd1edaB`
 
 ### `ExpectedRate`
-`0x96B610046D63638d970E6243151311d8827D69a5`
+`0xB87304fBD18e669b932695d77cEFdEE0e8e7a6F1`
 
 ### `FeeBurner`
 `0x52166528FCC12681aF996e409Ee3a421a4e128A3`
@@ -68,6 +68,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `AST (AirSwap)`
 `0x27054b13b1b798b345b591a4d22e6562d47ea75a`
 
+### `BAM (Bamboo)`
+`0x22b3faaa8df978f6bafe18aade18dc2e3dfa0e0c`
+
 ### `BAT (Basic Attention Token)`
 `0x0d8775f648430679a709e98d2b0cb6250d2887ef`
 
@@ -91,6 +94,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `CHAT (Chatcoin)`
 `0x442bc47357919446eabc18c7211e57a13d983469`
+
+### `CND (Cindicator)`
+`0xd4c435f5b09f855c3317c8524cb1f586e42795fa`
 
 ### `CNN (Content Neutrality Network)`
 `0x8713d26637CF49e1b6B4a7Ce57106AaBc9325343`
@@ -132,6 +138,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4`
 
 ### `ENJ (EnjinCoin)`
+`0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c`
+
+### `EQUAD (Quadrant Protocol)`
 `0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c`
 
 ### `EURS (STASIS EURS)`
@@ -194,6 +203,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `MTL (Metal)`
 `0xF433089366899D83a9f26A773D59ec7eCF30355e`
 
+### `MYB (MyBit)`
+`0x5d60d8d7ef6d37e16ebabc324de3be57f135e0bc`
+
 ### `NPXS (Pundi X Token)`
 `0xA15C7Ebe1f07CaF6bFF097D8a589fb8AC49Ae5B3`
 
@@ -251,6 +263,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `SNT (Status Network)`
 `0x744d70fdbe2ba4cf95131626614a1763df805b9e`
 
+### `SPN (Sapien)`
+`0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a`
+
 ### `SSP (Smartshare)`
 `0x624d520BAB2E4aD83935Fa503fB130614374E850`
 
@@ -259,6 +274,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `SUB (Substratum)`
 `0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a`
+
+### `SNX (Synthetix Network Token)`
+`0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F`
 
 ### `TOMO (Tomocoin)`
 `0x8b353021189375591723E7384262F45709A3C3dC`
@@ -269,8 +287,14 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `TUSD (TrueUSD)`
 `0x8dd5fbce2f6a956c3022ba3663759011dd51e73e`
 
+### `UPP (Sentinel Protocol)`
+`0xc86d054809623432210c107af2e3f619dcfbf652`
+
 ### `USDC (USD Coin)`
 `0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+### `USDT (Tether)`
+`0xdac17f958d2ee523a2206206994597c13d831ec7`
 
 ### `WABI (WaBi)`
 `0x286BDA1413a2Df81731D4930ce2F862a35A609fE`
