@@ -274,7 +274,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
+const src = '0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
 const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
 const srcQty = new web3.utils.BN('3000000000000000000000')
 const blockNumber = 6015205
@@ -307,7 +307,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
+const src = '0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
 const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
 const srcQty = new web3.utils.BN('3000000000000000000000')
 const rate = new web3.utils.BN('55555')
@@ -340,7 +340,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
+const src = '0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
 const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
 const destQty = new web3.utils.BN('3000000000000000000000')
 const rate = new web3.utils.BN('55555')

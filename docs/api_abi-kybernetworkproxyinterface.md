@@ -134,7 +134,7 @@ If you are part of our [fee sharing program](integrations-feesharing.md), this w
 By default, permissionless reserves are included for selection for the trade. To exclude permissionless reserves, parse `PERM` in the `hint` parameter.
 
 #### Other Notes
-* Since ETH is not an ERC20 token, we use `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` as a proxy address to represent it.
+* Since ETH is not an ERC20 token, we use `0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` as a proxy address to represent it.
 * If `src` is ETH, then you also need to send ether along with your call.
 * If `src` is an ERC20 token, then `token.approve(KYBER_NETWORK_PROXY_ADDRESS, amount)` should be made beforehand.
 * There is a minimum trading value of 1000 wei tokens. Anything fewer is considered as 0.

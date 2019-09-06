@@ -164,7 +164,7 @@ Execute the [`submitTokenToEthOrder(srcAmount, dstAmount)`](api_abi-orderbookres
 The public variables below are used to view available funds for withdrawal or for creating new orders.
 
 **Viewing Unused Ether**<br />
-`makerFunds(makerAddress, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)`
+`makerFunds(makerAddress, 0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)`
 
 **Viewing Unused KNC Tokens**<br />
 `makerUnlockedKnc(makerAddress)`

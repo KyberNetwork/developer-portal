@@ -194,7 +194,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' // ETH
+const src = '0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' // ETH
 const dest = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359' // DAI
 const srcQty = new web3.utils.BN('3000000000000000000000')
 
@@ -466,7 +466,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
+const src = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
 const srcAmount = new web3.utils.BN("3000000000000000000000");
 const dest = "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07"; // OMG
 const minConversionRate = new web3.utils.BN("55555");
@@ -518,7 +518,7 @@ If you are part of our [fee sharing program](integrations-feesharing.md), this w
 
 #### Other Notes
 
-- Since ETH is not an ERC20 token, we use `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` as a proxy address to represent it.
+- Since ETH is not an ERC20 token, we use `0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` as a proxy address to represent it.
 - If `src` is ETH, then you also need to send ether along with your call.
 - If `src` is an ERC20 token, then `token.approve(KYBER_NETWORK_PROXY_ADDRESS, amount)` should be made beforehand.
 - There is a minimum trading value of 1000 wei tokens. Anything fewer is considered as 0.
@@ -532,7 +532,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
+const src = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
 const srcAmount = new web3.utils.BN("3000000000000000000000");
 const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
 const destAddress = "RECIPIENT_ADDRESS";
@@ -606,7 +606,7 @@ By default, permissionless reserves are included for selection for the trade. To
 
 #### Other Notes
 
-- Since ETH is not an ERC20 token, we use `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` as a proxy address to represent it.
+- Since ETH is not an ERC20 token, we use `0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` as a proxy address to represent it.
 - If `src` is ETH, then you also need to send ether along with your call.
 - If `src` is an ERC20 token, then `token.approve(KYBER_NETWORK_PROXY_ADDRESS, amount)` should be made beforehand.
 - There is a minimum trading value of 1000 wei tokens. Anything fewer is considered as 0.
@@ -620,7 +620,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
+const src = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
 const srcAmount = new web3.utils.BN("3000000000000000000000");
 const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
 const destAddress = "RECIPIENT_ADDRESS";

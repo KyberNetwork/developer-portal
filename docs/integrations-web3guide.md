@@ -74,7 +74,7 @@ Next, we will define the constants that we will be using for this scenario.
 // Token Details
 const SRC_TOKEN = "ETH";
 const DST_TOKEN = "ZIL";
-const SRC_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+const SRC_TOKEN_ADDRESS = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 const DST_TOKEN_ADDRESS = "0xaD78AFbbE48bA7B670fbC54c65708cbc17450167";
 const SRC_DECIMALS = 18;
 const DST_DECIMALS = 12;
@@ -296,7 +296,7 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 // Token Details
 const SRC_TOKEN = "ETH";
 const DST_TOKEN = "ZIL";
-const SRC_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+const SRC_TOKEN_ADDRESS = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 const DST_TOKEN_ADDRESS = "0xaD78AFbbE48bA7B670fbC54c65708cbc17450167";
 const SRC_DECIMALS = 18;
 const DST_DECIMALS = 12;
@@ -478,7 +478,7 @@ Next, we will define the constants that we will be using for this scenario.
 const SRC_TOKEN = "KNC";
 const DST_TOKEN = "ETH";
 const SRC_TOKEN_ADDRESS = "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6";
-const DST_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+const DST_TOKEN_ADDRESS = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 const SRC_DECIMALS = 18;
 const DST_DECIMALS = 18;
 const MAX_ALLOWANCE = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
@@ -753,7 +753,7 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 const SRC_TOKEN = "KNC";
 const DST_TOKEN = "ETH";
 const SRC_TOKEN_ADDRESS = "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6";
-const DST_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+const DST_TOKEN_ADDRESS = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 const SRC_DECIMALS = 18;
 const DST_DECIMALS = 18;
 const MAX_ALLOWANCE = "115792089237316195423570985008687907853269984665640564039457584007913129639935";

@@ -419,7 +419,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
+const src = '0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
 const dest = '0xe41d2489571d322189246dafa5ebde1f4699f498' // ZRX
 const srcQty = new web3.utils.BN('3000000000000000000000')
 const blockNumber = 6015205

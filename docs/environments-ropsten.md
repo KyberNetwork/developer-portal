@@ -36,7 +36,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ## Token Addresses
 ### `ETH (Ether)`
-`0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+`0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
 ### `ADX (AdEx)`
 `0x499990DB50b34687CDaFb2C8DaBaE4E99d6F38A7`

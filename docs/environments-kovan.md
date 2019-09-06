@@ -35,7 +35,7 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ## Token Addresses
 ### `ETH (Ether)`
-`0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+`0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
 ### `KNC (Kyber Network)`
 `0xad67cB4d63C9da94AcA37fDF2761AaDF780ff4a2`

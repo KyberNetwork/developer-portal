@@ -46,7 +46,7 @@ Example:
   "error":false,
   "data":[
     {
-      "src_id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "src_id":"0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "dst_id":"0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
       "src_qty":[
         0.5671077504725898
@@ -56,7 +56,7 @@ Example:
       ]
     },
     {
-      "src_id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "src_id":"0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "dst_id":"0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
       "src_qty":[
         0.18035714285714283
@@ -163,9 +163,9 @@ Example:
     {
       "symbol":"ETH",
       "name":"Ethereum",
-      "address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "address":"0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimals":18,
-      "id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      "id":"0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     },
     {
       "symbol":"WETH",
@@ -224,7 +224,7 @@ Example:
   "data":[
     {
       "symbol":"ETH",
-      "address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "address":"0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "swapGasLimit":0,
       "approveGasLimit":0
     },
@@ -293,7 +293,7 @@ Example:
       "quote_symbol": "ETH",
       "quote_name": "Ethereum",
       "quote_decimals": 18,
-      "quote_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "quote_address": "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "base_symbol": "WETH",
       "base_name": "Wrapped Ether",
       "base_decimals": 18,
@@ -313,7 +313,7 @@ Example:
       "quote_symbol": "ETH",
       "quote_name": "Ethereum",
       "quote_decimals": 18,
-      "quote_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "quote_address": "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "base_symbol": "KNC",
       "base_name": "KyberNetwork",
       "base_decimals": 18,
@@ -333,7 +333,7 @@ Example:
       "quote_symbol": "ETH",
       "quote_name": "Ethereum",
       "quote_decimals": 18,
-      "quote_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "quote_address": "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "base_symbol": "DAI",
       "base_name": "DAI",
       "base_decimals": 18,
@@ -385,7 +385,7 @@ Example:
   "data":[
     {
       "src_id":"0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
-      "dst_id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "dst_id":"0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "src_qty":[
         300,
         150
@@ -397,7 +397,7 @@ Example:
     },
     {
       "src_id":"0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
-      "dst_id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "dst_id":"0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "src_qty":[
         10.1,
         20.2,
@@ -448,7 +448,7 @@ Example:
 Example:
 
 ```json
-> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1&nonce=200"
+> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1&nonce=200"
 {
   "error":false,
   "data":[

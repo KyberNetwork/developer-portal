@@ -52,7 +52,7 @@ function __trade__(ERC20 srcToken, uint srcAmount, ERC20 destToken, address dest
 `true` if the trade was successful, otherwise `false` if unsuccessful
 
 **Notes**
-* `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` is used to represent Ether. We refer to this as `ETHER_ADDRESS` subsequently.
+* `0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` is used to represent Ether. We refer to this as `ETHER_ADDRESS` subsequently.
 * The implementation of this function should consider all security checks to prevent rate manipulation, and to make sure the trade executes as expected for the taker.
 * To calculate how much `destToken` is required for the trade given `srcAmount` and `conversionRate`, consider using the [`calcDstQty`](api_abi-tokenquantityconversion.md#calcdstqty) function.
 * The `validate` field can be ignored.

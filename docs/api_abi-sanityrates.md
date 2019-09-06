@@ -48,7 +48,7 @@ Web3 Example:
 
 let sanityRate = await SanityRates.methods.getSanityRate(
   "0xdd974D5C2e2928deA5F71b9825b8b646686BD200", //ERC20 src: KNC token
-  "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", //ERC20 dest: ETH
+  "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", //ERC20 dest: ETH
 ).call()
 ```
 <br />

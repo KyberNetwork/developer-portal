@@ -488,9 +488,9 @@ await getSupportedTokens()
 		{  
 			"name":"Ethereum",
 			"decimals":18,
-			"address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+			"address":"0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
 			"symbol":"ETH",
-			"id":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+			"id":"0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     },
   …
   ]

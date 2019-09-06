@@ -339,7 +339,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
+const src = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
 const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
 const srcAmount = new web3.utils.BN("3000000000000000000000");
 result = await KyberNetwork.methods.findBestRate(src, dest, srcAmount).call();
@@ -373,7 +373,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
+const src = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
 const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
 const srcAmount = new web3.utils.BN("3000000000000000000000");
 result = await KyberNetwork.methods
@@ -437,7 +437,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' // ETH
+const src = '0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' // ETH
 const dest = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359' // DAI
 const srcQty = new web3.utils.BN('3000000000000000000000')
 
@@ -486,7 +486,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
+const src = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
 const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
 const srcQty = new web3.utils.BN("3000000000000000000000");
 
@@ -767,7 +767,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
+src = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
 dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
 srcAmount = new web3.utils.BN("3000000000000000000000");
 
@@ -1072,7 +1072,7 @@ Web3 Example:
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
+const src = "0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
 const srcAmount = new web3.utils.BN("3000000000000000000000");
 const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
 const destAddress = "RECIPIENT_ADDRESS";

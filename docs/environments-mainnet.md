@@ -48,7 +48,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ## Token Addresses
 ### `ETH (Ether)`
-`0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+`0x00eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
 ### `ABT (ArcBlock)`
 `0xb98d4c97425d9908e66e53a6fdf673acca0be986`
