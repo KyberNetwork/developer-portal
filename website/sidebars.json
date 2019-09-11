@@ -30,6 +30,10 @@
       "Integrations-WooCommercePluginGuide",
       "Integrations-WidgetGenerator"
     ],
+    "Risk Mitigation": [
+      "Integrations-SlippageRateProtection",
+      "Integrations-PriceFeedSecurity"
+    ],
     "Miscellaneous": [
       "Integrations-FeeSharing",
       "Integrations-GettingHelp"
