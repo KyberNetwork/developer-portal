@@ -7,7 +7,7 @@ title: RESTful API
 This guide will walk you through on how you can interact with our protocol implementation using our RESTful APIs. The most common group of users that can benefit from this guide are developers who have minimal smart contract experience, traders and wallets.
 
 ## Risk Mitigation
-There are some risks when utilising Kyber. To safeguard users, we kindly ask that you refer to the "Risk Mitigation" section on what these risks are, and how to mitigate them.
+There are some risks when utilising Kyber. To safeguard users, we kindly ask that you refer to the [Slippage Rates Protection](integrations-slippagerateprotection.md) and [Price Feed Security](integrations-pricefeedsecurity.md) sections on what these risks are, and how to mitigate them.
 
 ## Overview
 In this guide, we will be going through 2 scenarios. The first scenario covers how to perform a token to token swap using the RESTful apis and the second is about how one can obtain token information and historical price data.
