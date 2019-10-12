@@ -14,7 +14,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0x818E6FECD516Ecc3849DAf6845e3EC868087B755`
 
 ### `KyberNetwork`
-`0x3f9a8e219ab1ad42f96b22c294e564b2b48fe636`
+`0x753fe1914db38ee744e071baadd123f50f9c8e46`
 
 ### `KyberReserve`
 `0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a`
