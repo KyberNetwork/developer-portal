@@ -29,7 +29,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0xDce692e577002298b3c7ce7E002Ac77244546884`
 
 ### `FeeBurner`
-`0x81ae4dE9A3Aec67a35C05c889052260E39BC42a4`
+`0x06b0fbaba8fba5161f725f2159de1e1d6409c35f`
 
 ### `WhiteList`
 `0x0f69eA3FA0F1766f91cAca1962e2E85d6a7c20A6`
