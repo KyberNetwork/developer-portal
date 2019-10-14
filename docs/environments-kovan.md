@@ -10,7 +10,7 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 `0x692f391bCc85cefCe8C237C01e1f636BbD70EA4D`
 
 ### `KyberNetwork`
-`0x118A7b23B7a2e6A57963d017A7E76A4E2636F075`
+`0xb5034418f6cc1fd494535f2d38f770c9827f88a1`
 
 ### `PermissionlessOrderbookReserveLister`
 `0x7dE123798f649c9937A75a0f6668E4d06bFf5993`
@@ -25,7 +25,7 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 `0xFf20EE9bfC059B2805cAB6046EAfea7Bccb8b60B`
 
 ### `FeeBurner`
-`0x0E49481279407295A2555b89D5e6C699b94621e0`
+`0x4c54ce422ab6b725dfb4cb317f8347e364bd37d9`
 
 ### `SanityRates`
 `0x152506cD5Ae485c65eC5551c77591fcE2A4bC482`
