@@ -14,7 +14,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0x818E6FECD516Ecc3849DAf6845e3EC868087B755`
 
 ### `KyberNetwork`
-`0x3f9a8e219ab1ad42f96b22c294e564b2b48fe636`
+`0x753fe1914db38ee744e071baadd123f50f9c8e46`
 
 ### `KyberReserve`
 `0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a`
@@ -29,7 +29,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0xDce692e577002298b3c7ce7E002Ac77244546884`
 
 ### `FeeBurner`
-`0x81ae4dE9A3Aec67a35C05c889052260E39BC42a4`
+`0x06b0fbaba8fba5161f725f2159de1e1d6409c35f`
 
 ### `WhiteList`
 `0x0f69eA3FA0F1766f91cAca1962e2E85d6a7c20A6`

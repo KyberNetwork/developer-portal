@@ -355,6 +355,38 @@ Example:
 
 <br />
 
+### `/quote_amount`
+
+(GET) Returns the amount of `quote` token needed to buy / received when selling `qty` amount of `base` token. This endpoint will only work for official reserves.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:---------:|:------:|:--------:|:----------------------------------------------------------:|
+| `base` | string | Yes | The base token contract address. |
+| `quote` | string | Yes | The quote token contract address. |
+| `base_amount` | number | The amount of base tokens you would like to buy / sell. |
+| `type` | string | Yes | Accepts `buy` or `sell` as arguments. Whether you want to buy / sell `base_amount` worth of `base` token. |
+
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:---------:|:-------:|:----------------------:|
+| `data` | string | The amount of `quote` token needed to buy / received when selling `base_amount` worth of `base` tokens. |
+
+Example:
+
+```json
+> curl "https://api.kyber.network/quote_amount?base=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&quote=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&base_amount=10&type=sell"
+{
+  "error":false,
+  "data":"0.010369400116360328"
+}
+```
+
+<br />
+
 ### `/sell_rate`
 
 (GET) Returns the latest SELL conversion rate in ETH. For example, if you want to know how much ETH you will get by SELLing 1 DAI, you can use this function.

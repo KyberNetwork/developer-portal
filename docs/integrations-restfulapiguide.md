@@ -88,7 +88,7 @@ We will refactor the broadcast transaction functionality into its own function.
 
 async function broadcastTx(rawTx) {
   // Extract raw tx details, create a new Tx
-  let tx = new Tx(rawTx);
+  let tx = new Tx(rawTx, { chain: 'ropsten', hardfork: 'petersburg' });
   // Sign the transaction
   tx.sign(PRIVATE_KEY);
   // Serialize the transaction (RLP Encoding)
@@ -184,19 +184,29 @@ async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
 ### Get approximate DAI token amount receivable
 For token to token conversions, a base token is used (Eg. ETH). We first query the `/sell_rate?id=<id>&qty=<qty>` endpoint, which returns the expected ETH amount receivable for a specific token. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#sell-rate).
 
-We next use the `buy_rate?id=<id>&qty=<qty>` endpoint, but this returns the ETH amount required to purchase a requested amount of tokens (`? ETH -> X tokens`), not the amount of tokens receivable for a requested ETH amount (`X ETH -> ? tokens`).  Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#buy-rate).
+Next, we use the `buy_rate?id=<id>&qty=<qty>` endpoint, but this returns the ETH amount required to purchase a requested amount of tokens (`? ETH -> X tokens`), not the amount of tokens receivable for a requested ETH amount (`X ETH -> ? tokens`).  Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#buy-rate).
+
+In the event the second part of the token to token conversion is illiquid, it is recommended to query the `buy_rate` endpoint with the approximated dest token qty amount to verify that the slippage is low.
 
 As such, we perform the following steps:
-1. Query the `sell_rate` endpoint for expected ETH amount receivable from 100 BAT tokens (`100 BAT -> ? ETH`)
-2. Query the `buy_rate` endpoint for an approximate buy rate for 1 DAI token (`? ETH -> 1 DAI`)
-3. Use the approximated buy rate to calculate how much DAI tokens we expect to receive
-4. Account for slippage in rates
+1. Query the `sell_rate` endpoint for expected ETH amount receivable from 100 BAT tokens (`100 BAT -> X ETH`)
+2. Query the `buy_rate` endpoint for a test buy rate for 1 DAI token (`Y ETH -> 1 DAI`)
+3. Use the test buy rate to approximate how much DAI tokens we expect to receive (`X ETH / Y ETH = Z DAI`)
+4. Query the `buy_rate` endpoint for a second buy rate based on the approximated amount of DAI token (`? ETH -> Z DAI`)
+5. Depending on the return value of the Eth amount from the previous query, you may need to repeat steps 3 & 4 until you reach an ETH amount that is close enough to the ETH amount returned by the query in step 1. Note that how close the two values should be depends on you.
+6. Account for slippage in rates
 
 #### Example
 1. Querying the `sell_rate` endpoint for 100 BAT tokens yields `100 BAT -> 0.1 ETH`
 2. Querying the `buy_rate` endpoint for 1 DAI token yields `0.01 ETH -> 1 DAI`
-3. So `100 BAT -> 0.1 ETH -> 10 DAI`
-3. Assuming a 3% slippage rate, we expect to receive a minimum of `0.97*10 = 9.7 DAI`
+3. Approximate the amount of DAI to receive bsaed on the test rate from (2) `0.1 / 0.01 = 10 DAI`
+4. Querying the `buy_rate` endpoint for 10 DAI tokens yields `0.2 ETH -> 10 DAI`
+5. Calculate the percentage difference between how much ETH I can spend compared to how much ETH I have to pay for the approximated dest quantity of 10 DAI i.e. `(0.1 - 0.2)/0.1`
+6. Since the percentage difference is below 0, we need to approximate the new amount of DAI based on the rate from (4) `0.1 * (10 / 0.2)  ETH = 5 DAI`. Note that a percentage difference of below 0 means that the your approximated dest qty is too high i.e. 10 DAI is too much since you need 0.2 ETH to buy 10 DAI but you only have 0.1 ETH to spend.
+7. Repeat step (4) i.e. Querying the `buy_rate` endpoint for 5 DAI tokens yields `0.097 ETH -> 5 DAI`
+8. Repeat step (5) i.e. Calculate the percentage difference between how much ETH I can spend compared to how much ETH I have to pay for the approximated dest quantity of 5 DAI i.e. `(0.1 - 0.097)/0.1`
+9. Since the percentage difference is greater than 0, we have more than enough ETH to fulfill the trade. Since the percentage difference is within my threshold of 0.05, we know that our ETH qty is being maximized.
+10. Assuming a 3% slippage rate, we expect to receive a minimum of `0.97*5 = 4.85 DAI`
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -210,12 +220,34 @@ async function getSellQty(tokenAddress, qty) {
   return sellQty;
 }
 
-async function getApproximateBuyQty(tokenAddress) {
-  const QTY = 1; //Quantity used for the approximation
-  let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${QTY}&only_official_reserve=false`);
-  let approximateBuyQty = await approximateBuyRateRequest.json();
-  approximateBuyQty = approximateBuyQty.data[0].src_qty[0];
-  return approximateBuyQty;
+async function getApproximateBuyQty(tokenAddress, ethQty) {
+  // Querying the buy_rate endpoint for 1 DAI token yields testBuyRateSrcQty
+  let BUY_RATE_TEST_DST_QTY = 1;
+  let testBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${BUY_RATE_TEST_DST_QTY}&only_official_reserve=false`);
+  let testBuyRate = await testBuyRateRequest.json();
+  testBuyRateSrcQty = testBuyRate.data[0].src_qty[0];
+
+  let dstQty = BUY_RATE_TEST_DST_QTY;
+  let srcQty = testBuyRateSrcQty
+
+  do {
+    // Calculate the approximated amount of DAI i.e. ethQty * rate = approximateDstQty
+    // where rate = BUY_RATE_TEST_DST_QTY / testBuyRateSrcQty
+    let rate = dstQty / srcQty
+    var approximateDstQty = ethQty * rate; // Approximate dest quantity based on rate for buying 1 token
+
+    // Querying the buy_rate endpoint for approximateDstQty tokens yields approximateBuyRateSrcQty
+    let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${approximateDstQty}&only_official_reserve=false`);
+    let approximateBuyRate = await approximateBuyRateRequest.json();
+    approximateBuyRateSrcQty = approximateBuyRate.data[0].src_qty[0];
+
+    // Check if approximateBuyRateSrcQty based on the rate is close to ethQty, if not repeat
+    var diff = (ethQty - approximateBuyRateSrcQty) / ethQty;
+    dstQty = approximateDstQty;
+    srcQty = approximateBuyRateSrcQty;
+  } while (diff > 0.05 || diff < 0); // I'm using 5% difference as a threshold but you should decide how many times you want to run this approximate loop.
+
+  return approximateDstQty;
 }
 
 //sellQty = output from getSellQty function
@@ -265,7 +297,7 @@ async function main() {
   let sellQty = await getSellQty(BAT_TOKEN_ADDRESS, BAT_QTY);
 
   //Step 4: Get approximate DAI tokens receivable, set it to be minDstQty
-  let buyQty = await getApproximateBuyQty(DAI_TOKEN_ADDRESS);
+  let buyQty = await getApproximateBuyQty(DAI_TOKEN_ADDRESS, sellQty);
   let minDstQty = await getApproximateReceivableTokens(sellQty, buyQty, BAT_QTY);
 
   //Step 5: Perform the BAT -> DAI trade
@@ -332,7 +364,7 @@ async function main() {
   let sellQty = await getSellQty(BAT_TOKEN_ADDRESS, BAT_QTY);
 
   //Step 4: Get approximate DAI tokens receivable, set it to be minDstQty
-  let buyQty = await getApproximateBuyQty(DAI_TOKEN_ADDRESS);
+  let buyQty = await getApproximateBuyQty(DAI_TOKEN_ADDRESS, sellQty);
   let minDstQty = await getApproximateReceivableTokens(sellQty, buyQty, BAT_QTY);
 
   //Step 5: Perform the BAT -> DAI trade
@@ -403,7 +435,7 @@ async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
 
 async function broadcastTx(rawTx) {
   // Extract raw tx details, create a new Tx
-  let tx = new Tx(rawTx);
+  let tx = new Tx(rawTx, { chain: 'ropsten', hardfork: 'petersburg' });
   // Sign the transaction
   tx.sign(PRIVATE_KEY);
   // Serialize the transaction (RLP Encoding)
@@ -421,12 +453,34 @@ async function getSellQty(tokenAddress, qty) {
   return sellQty;
 }
 
-async function getApproximateBuyQty(tokenAddress) {
-  const QTY = 1; //Quantity used for the approximation
-  let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${QTY}&only_official_reserve=false`);
-  let approximateBuyQty = await approximateBuyRateRequest.json();
-  approximateBuyQty = approximateBuyQty.data[0].src_qty[0];
-  return approximateBuyQty;
+async function getApproximateBuyQty(tokenAddress, ethQty) {
+  // Querying the buy_rate endpoint for 1 DAI token yields testBuyRateSrcQty
+  let BUY_RATE_TEST_DST_QTY = 1;
+  let testBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${BUY_RATE_TEST_DST_QTY}&only_official_reserve=false`);
+  let testBuyRate = await testBuyRateRequest.json();
+  testBuyRateSrcQty = testBuyRate.data[0].src_qty[0];
+
+  let dstQty = BUY_RATE_TEST_DST_QTY;
+  let srcQty = testBuyRateSrcQty
+
+  do {
+    // Calculate the approximated amount of DAI i.e. ethQty * rate = approximateDstQty
+    // where rate = BUY_RATE_TEST_DST_QTY / testBuyRateSrcQty
+    let rate = dstQty / srcQty
+    var approximateDstQty = ethQty * rate; // Approximate dest quantity based on rate for buying 1 token
+
+    // Querying the buy_rate endpoint for approximateDstQty tokens yields approximateBuyRateSrcQty
+    let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${approximateDstQty}&only_official_reserve=false`);
+    let approximateBuyRate = await approximateBuyRateRequest.json();
+    approximateBuyRateSrcQty = approximateBuyRate.data[0].src_qty[0];
+
+    // Check if approximateBuyRateSrcQty based on the rate is close to ethQty, if not repeat
+    var diff = (ethQty - approximateBuyRateSrcQty) / ethQty;
+    dstQty = approximateDstQty;
+    srcQty = approximateBuyRateSrcQty;
+  } while (diff > 0.05 || diff < 0); // I'm using 5% difference as a threshold but you should decide how many times you want to run this approximate loop.
+
+  return approximateDstQty;
 }
 
 //sellQty = output from getSellQty function

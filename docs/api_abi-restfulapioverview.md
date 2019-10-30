@@ -13,7 +13,6 @@ The RESTful API can be used to perform trades on the Kyber Network platform.
 |:----------:|:----------------------------:|
 | Mainnet    | https://api.kyber.network    |
 | Ropsten    | https://ropsten-api.kyber.network |
-| Rinkeby    | https://rinkeby-api.kyber.network |
 
 ## Things to note
 
