@@ -7,7 +7,7 @@ title: OrderbookReserve
 is OrderIdManager, Utils2, [KyberReserveInterface](api_abi-kyberreserveinterface.md), [OrderbookReserveInterface](api_abi-orderbookreserveinterface.md),\
 imports OrderListInterface, OrderIdManager, Utils2, [KyberReserveInterface](api_abi-kyberreserveinterface.md), [OrderbookReserveInterface](api_abi-orderbookreserveinterface.md),
 
-*Source*: [OrderbookReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/auditv3/contracts/permissionless/OrderbookReserve.sol)
+*Source*: [OrderbookReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/kyberReserves/orderBookReserve/permissionless/OrderbookReserve.sol)
 ___
 
 ## INDEX

@@ -7,7 +7,7 @@ title: LiquidityConversionRates
 is [ConversionRatesInterface](api_abi-conversionratesinterface.md), LiquidityFormula, [Withdrawable](api_abi-withdrawable.md), Utils\
 imports [ConversionRatesInterface](api_abi-conversionratesinterface.md), LiquidityFormula, [Withdrawable](api_abi-withdrawable.md), Utils
 
-*Source*: [LiquidityConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/LiquidityConversionRates.sol)
+*Source*: [LiquidityConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/kyberReserves/aprConversionRate/LiquidityConversionRates.sol)
 
 The LiquidityConversionRates contract's role is to allow reserve operators to set liquidity parameters to the automated reserve for automated rate adjustment based on trades.
 ___
