@@ -20,7 +20,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a`
 
 ### `PermissionlessOrderbookReserveLister`
-`0x405a5fae110c86eb2e5a76809a17fc5bee2d3ccd`
+`0xB62041bf19a89298554C5F1B301C1c526741557f`
 
 ### `ConversionRates`
 `0xE16E257a25e287AF50C5651A4c2728b32D7e5ef7`
