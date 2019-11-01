@@ -22,7 +22,7 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 `0x6B2e614977F893baddf3AA704698BD71BEf9CeFF`
 
 ### `ExpectedRate`
-`0xFf20EE9bfC059B2805cAB6046EAfea7Bccb8b60B`
+`0xa7d021dCe210D05cD239D57e36b5758D3E0dC00B`
 
 ### `FeeBurner`
 `0x4c54ce422ab6b725dfb4cb317f8347e364bd37d9`
