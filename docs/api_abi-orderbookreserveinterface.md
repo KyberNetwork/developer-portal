@@ -6,7 +6,7 @@ title: OrderbookReserveInterface
 # interface OrderbookReserveInterface
 imports OrderListInterface
 
-*Source*: [OrderbookReserveInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/kyberReserves/orderBookReserve/permissionless/OrderbookReserveInterface.sol)
+*Source*: [OrderbookReserveInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/reserves/orderBookReserve/permissionless/OrderbookReserveInterface.sol)
 ___
 
 ## INDEX
