@@ -387,6 +387,36 @@ Example:
 
 <br />
 
+### `/gas_limit`
+
+(GET) Return the estimated Gas Limit used for a transaction based on source token amount.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:---------:|:------:|:--------:|:----------------------------------------------------------:|
+| `source` | string | Yes | The source token contract address. |
+| `dest` | string | Yes | The destination token contract address. |
+| `amount` | number | The amount of source tokens. |
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:---------:|:-------:|:----------------------:|
+| `data` | string | The amount of `quote` token needed to buy / received when selling `base_amount` worth of `base` tokens. |
+
+Example:
+
+```json
+> curl "https://api.kyber.network/gas_limit?source=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&amount=10000"
+{
+  "data": 880000,
+  "error": false
+}
+```
+
+<br />
+
 ### `/sell_rate`
 
 (GET) Returns the latest SELL conversion rate in ETH. For example, if you want to know how much ETH you will get by SELLing 1 DAI, you can use this function.
