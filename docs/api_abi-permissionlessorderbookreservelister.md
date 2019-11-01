@@ -6,7 +6,7 @@ title: OrderbookReserveLister
 # contract PermissionlessOrderbookReserveLister
 imports [OrderbookReserve](api_abi-orderbookreserve.md), [FeeBurnerInterface](api_abi-feeburnerinterface.md)
 
-*Source*: [KyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/kyberReserves/orderBookReserve/permissionless/PermissionlessOrderbookReserveLister.sol)
+*Source*: [KyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/reserves/orderBookReserve/permissionless/PermissionlessOrderbookReserveLister.sol)
 
 The Permissionless Orderbook Reserve Lister is used for creating, initialising and listing new Permissionless Orderbook Reserves.
 ___
