@@ -373,6 +373,7 @@ Example:
 **Response:**
 | Parameter | Type | Description |
 |:---------:|:-------:|:----------------------:|
+| `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
 | `data` | string | The amount of `quote` token needed to buy / received when selling `base_amount` worth of `base` tokens. |
 
 Example:
@@ -403,7 +404,8 @@ Example:
 **Response:**
 | Parameter | Type | Description |
 |:---------:|:-------:|:----------------------:|
-| `data` | string | The amount of `quote` token needed to buy / received when selling `base_amount` worth of `base` tokens. |
+| `data` | string | The estimated gas limit to be used for a transaction based on the parameters. |
+| `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
 
 Example:
 
