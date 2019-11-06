@@ -13,9 +13,8 @@ There are some risks when utilising Kyber. To safeguard users, we kindly ask tha
 In this guide, we will be going through 2 scenarios. The first scenario covers how to perform a token to token swap using the RESTful apis and the second is about how one can obtain token information and historical price data.
 
 ## Things to note
-1) The `/buy_rate` and `/sell_rate` endpoints are currently restricted to ETH <-> ERC20 token. If you want to get the rates for a conversion between token A and token B, you need to use both APIs. Refer to [this section](#get-approximate-dai-token-amount-receivable) on how to do so.
-2) When converting from Token to ETH/Token, the user is required to call the `/enabled_data` endpoint **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
-3) Refer to the [API overview](api_abi-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
+1) When converting from Token to ETH/Token, the user is required to call the `/enabled_data` endpoint **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
+2) Refer to the [API overview](api_abi-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
 
 ## Scenario 1: Token to Token Swap
 Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conversion. Note that ETH is used as the base pair i.e. BAT -> ETH -> DAI.
@@ -45,8 +44,9 @@ In this example, we will connect to Infura's ropsten node.
 // https://t.me/KyberDeveloper.
 
 // Connecting to ropsten infura node
+const NETWORK = "ropsten"
 const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
+const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 ```
 
@@ -59,7 +59,7 @@ Next, we will define the constants that we will be using for this guide.
 
 //Base URL for API queries
 //Refer to API/ABI >> RESTFul API Overview >> Network URL section
-const NETWORK_URL = "https://ropsten-api.kyber.network";
+const NETWORK_URL = `https://${NETWORK}-api.kyber.network`;
 
 //User Details
 const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); // Remove the 0x prefix
@@ -88,7 +88,7 @@ We will refactor the broadcast transaction functionality into its own function.
 
 async function broadcastTx(rawTx) {
   // Extract raw tx details, create a new Tx
-  let tx = new Tx(rawTx, { chain: 'ropsten', hardfork: 'petersburg' });
+  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });
   // Sign the transaction
   tx.sign(PRIVATE_KEY);
   // Serialize the transaction (RLP Encoding)
@@ -119,7 +119,7 @@ function caseInsensitiveEquals(a, b) {
 }
 
 async function isTokenSupported(tokenAddress) {
-  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies?only_official_reserve=false`);
+  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies`);
   let tokensBasicInfo = await tokensBasicInfoRequest.json();
   let tokenSupported = tokensBasicInfo.data.some(token => {
     return caseInsensitiveEquals(tokenAddress, token.id)
@@ -142,7 +142,7 @@ If the BAT token is not enabled for trading, querying the `users/<user_address>/
 // https://t.me/KyberDeveloper.
 
 async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
-  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies?only_official_reserve=false`);
+  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);
   let enabledStatuses = await enabledStatusesRequest.json();
   let txsRequired = 0;
   for (let token of enabledStatuses.data) {
@@ -174,88 +174,25 @@ async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice)
 }
 
 async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
-  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}&only_official_reserve=false`);
+  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`);
   let enableTokenDetails = await enableTokenDetailsRequest.json();
   let rawTx = enableTokenDetails.data;
   await broadcastTx(rawTx);
 }
 ```
 
-### Get approximate DAI token amount receivable
-For token to token conversions, a base token is used (Eg. ETH). We first query the `/sell_rate?id=<id>&qty=<qty>` endpoint, which returns the expected ETH amount receivable for a specific token. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#sell-rate).
-
-Next, we use the `buy_rate?id=<id>&qty=<qty>` endpoint, but this returns the ETH amount required to purchase a requested amount of tokens (`? ETH -> X tokens`), not the amount of tokens receivable for a requested ETH amount (`X ETH -> ? tokens`).  Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#buy-rate).
-
-In the event the second part of the token to token conversion is illiquid, it is recommended to query the `buy_rate` endpoint with the approximated dest token qty amount to verify that the slippage is low.
-
-As such, we perform the following steps:
-1. Query the `sell_rate` endpoint for expected ETH amount receivable from 100 BAT tokens (`100 BAT -> X ETH`)
-2. Query the `buy_rate` endpoint for a test buy rate for 1 DAI token (`Y ETH -> 1 DAI`)
-3. Use the test buy rate to approximate how much DAI tokens we expect to receive (`X ETH / Y ETH = Z DAI`)
-4. Query the `buy_rate` endpoint for a second buy rate based on the approximated amount of DAI token (`? ETH -> Z DAI`)
-5. Depending on the return value of the Eth amount from the previous query, you may need to repeat steps 3 & 4 until you reach an ETH amount that is close enough to the ETH amount returned by the query in step 1. Note that how close the two values should be depends on you.
-6. Account for slippage in rates
-
-#### Example
-1. Querying the `sell_rate` endpoint for 100 BAT tokens yields `100 BAT -> 0.1 ETH`
-2. Querying the `buy_rate` endpoint for 1 DAI token yields `0.01 ETH -> 1 DAI`
-3. Approximate the amount of DAI to receive bsaed on the test rate from (2) `0.1 / 0.01 = 10 DAI`
-4. Querying the `buy_rate` endpoint for 10 DAI tokens yields `0.2 ETH -> 10 DAI`
-5. Calculate the percentage difference between how much ETH I can spend compared to how much ETH I have to pay for the approximated dest quantity of 10 DAI i.e. `(0.1 - 0.2)/0.1`
-6. Since the percentage difference is below 0, we need to approximate the new amount of DAI based on the rate from (4) `0.1 * (10 / 0.2)  ETH = 5 DAI`. Note that a percentage difference of below 0 means that the your approximated dest qty is too high i.e. 10 DAI is too much since you need 0.2 ETH to buy 10 DAI but you only have 0.1 ETH to spend.
-7. Repeat step (4) i.e. Querying the `buy_rate` endpoint for 5 DAI tokens yields `0.097 ETH -> 5 DAI`
-8. Repeat step (5) i.e. Calculate the percentage difference between how much ETH I can spend compared to how much ETH I have to pay for the approximated dest quantity of 5 DAI i.e. `(0.1 - 0.097)/0.1`
-9. Since the percentage difference is greater than 0, we have more than enough ETH to fulfill the trade. Since the percentage difference is within my threshold of 0.05, we know that our ETH qty is being maximized.
-10. Assuming a 3% slippage rate, we expect to receive a minimum of `0.97*5 = 4.85 DAI`
-
+### Get DAI token amount receivable
+Create a function to get an approximate of the destination token amount for the specified amount of source token. We will use the `/quote_amount` endpoint in this function.
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-async function getSellQty(tokenAddress, qty) {
-  let sellQtyRequest = await fetch(`${NETWORK_URL}/sell_rate?id=${tokenAddress}&qty=${qty}&only_official_reserve=false`);
-  let sellQty = await sellQtyRequest.json();
-  sellQty = sellQty.data[0].dst_qty[0];
-  return sellQty;
-}
-
-async function getApproximateBuyQty(tokenAddress, ethQty) {
-  // Querying the buy_rate endpoint for 1 DAI token yields testBuyRateSrcQty
-  let BUY_RATE_TEST_DST_QTY = 1;
-  let testBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${BUY_RATE_TEST_DST_QTY}&only_official_reserve=false`);
-  let testBuyRate = await testBuyRateRequest.json();
-  testBuyRateSrcQty = testBuyRate.data[0].src_qty[0];
-
-  let dstQty = BUY_RATE_TEST_DST_QTY;
-  let srcQty = testBuyRateSrcQty
-
-  do {
-    // Calculate the approximated amount of DAI i.e. ethQty * rate = approximateDstQty
-    // where rate = BUY_RATE_TEST_DST_QTY / testBuyRateSrcQty
-    let rate = dstQty / srcQty
-    var approximateDstQty = ethQty * rate; // Approximate dest quantity based on rate for buying 1 token
-
-    // Querying the buy_rate endpoint for approximateDstQty tokens yields approximateBuyRateSrcQty
-    let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${approximateDstQty}&only_official_reserve=false`);
-    let approximateBuyRate = await approximateBuyRateRequest.json();
-    approximateBuyRateSrcQty = approximateBuyRate.data[0].src_qty[0];
-
-    // Check if approximateBuyRateSrcQty based on the rate is close to ethQty, if not repeat
-    var diff = (ethQty - approximateBuyRateSrcQty) / ethQty;
-    dstQty = approximateDstQty;
-    srcQty = approximateBuyRateSrcQty;
-  } while (diff > 0.05 || diff < 0); // I'm using 5% difference as a threshold but you should decide how many times you want to run this approximate loop.
-
-  return approximateDstQty;
-}
-
-//sellQty = output from getSellQty function
-//buyQty = output from getApproximateBuyQty function
-async function getApproximateReceivableTokens(sellQty, buyQty) {
-  let expectedAmountWithoutSlippage = sellQty / buyQty;
-  let expectedAmountWithSlippage = 0.97 * expectedAmountWithoutSlippage;
-  return expectedAmountWithSlippage;
+async function getQuoteAmount(srcToken, destToken, srcQty) {
+  let quoteAmountRequest = await fetch(`${NETWORK_URL}/quote_amount?base=${srcToken}&quote=${destToken}&base_amount=${srcQty}&type=sell`)
+  let quoteAmount = await quoteAmountRequest.json();
+  quoteAmount = quoteAmount.data;
+  return quoteAmount * 0.97;
 }
 ```
 
@@ -268,7 +205,7 @@ We now have all the required information to peform the trade transaction. Queryi
 // https://t.me/KyberDeveloper.
 
 async function executeTrade(useraddress, srcToken, dstToken, srcQty, minDstQty, gasPrice, refAddress) {
-  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}&only_official_reserve=false`);
+  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}`);
   let tradeDetails = await tradeDetailsRequest.json();
   let rawTx = tradeDetails.data[0];
   await broadcastTx(rawTx);
@@ -293,14 +230,10 @@ async function main() {
   //Step 2: Check if BAT token is enabled. If not, enable.
   await checkAndApproveTokenContract(BAT_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
 
-  //Step 3: Get expected ETH qty from selling 100 BAT tokens
-  let sellQty = await getSellQty(BAT_TOKEN_ADDRESS, BAT_QTY);
+  // Step 3: Get expected DAI qty from selling 100 BAT tokens
+  let minDstQty = await getQuoteAmount(BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY);
 
-  //Step 4: Get approximate DAI tokens receivable, set it to be minDstQty
-  let buyQty = await getApproximateBuyQty(DAI_TOKEN_ADDRESS, sellQty);
-  let minDstQty = await getApproximateReceivableTokens(sellQty, buyQty, BAT_QTY);
-
-  //Step 5: Perform the BAT -> DAI trade
+  //Step 4: Perform the BAT -> DAI trade
   await executeTrade(USER_ADDRESS, BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY, minDstQty, GAS_PRICE, REF_ADDRESS);
 
   // Quit the program
@@ -312,8 +245,6 @@ async function main() {
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
 2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether
-3. Please ensure that you are running web3 version 1.0.0-beta.37. You can install this by doing
-`npm install web3@1.0.0-beta.37`
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
@@ -324,14 +255,15 @@ const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
 const fetch = require('node-fetch');
 
-// Connecting to ropsten infura node
+// Connecting to infura node
+const NETWORK = "ropsten"
 const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
+const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 
 //Base URL for API queries
 //Refer to API/ABI >> RESTFul API Overview >> Network URL section
-const NETWORK_URL = "https://ropsten-api.kyber.network";
+const NETWORK_URL = `https://${NETWORK}-api.kyber.network`;
 
 //User Details
 const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); // Remove the 0x prefix
@@ -360,14 +292,10 @@ async function main() {
   //Step 2: Check if BAT token is enabled. If not, enable.
   await checkAndApproveTokenContract(BAT_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
 
-  //Step 3: Get expected ETH qty from selling 100 BAT tokens
-  let sellQty = await getSellQty(BAT_TOKEN_ADDRESS, BAT_QTY);
+  // Step 3: Get expected DAI qty from selling 100 BAT tokens
+  let minDstQty = await getQuoteAmount(BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY);
 
-  //Step 4: Get approximate DAI tokens receivable, set it to be minDstQty
-  let buyQty = await getApproximateBuyQty(DAI_TOKEN_ADDRESS, sellQty);
-  let minDstQty = await getApproximateReceivableTokens(sellQty, buyQty, BAT_QTY);
-
-  //Step 5: Perform the BAT -> DAI trade
+  //Step 4: Perform the BAT -> DAI trade
   await executeTrade(USER_ADDRESS, BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY, minDstQty, GAS_PRICE, REF_ADDRESS);
 
   // Quit the program
@@ -383,7 +311,7 @@ function caseInsensitiveEquals(a, b) {
 }
 
 async function isTokenSupported(tokenAddress) {
-  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies?only_official_reserve=false`);
+  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies`);
   let tokensBasicInfo = await tokensBasicInfoRequest.json();
   let tokenSupported = tokensBasicInfo.data.some(token => {
     return caseInsensitiveEquals(tokenAddress, token.id)
@@ -395,7 +323,7 @@ async function isTokenSupported(tokenAddress) {
 }
 
 async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
-  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies?only_official_reserve=false`);
+  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);      
   let enabledStatuses = await enabledStatusesRequest.json();
   let txsRequired = 0;
   for (let token of enabledStatuses.data) {
@@ -427,7 +355,7 @@ async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice)
 }
 
 async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
-  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}&only_official_reserve=false`);
+  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`);
   let enableTokenDetails = await enableTokenDetailsRequest.json();
   let rawTx = enableTokenDetails.data;
   await broadcastTx(rawTx);
@@ -435,7 +363,7 @@ async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
 
 async function broadcastTx(rawTx) {
   // Extract raw tx details, create a new Tx
-  let tx = new Tx(rawTx, { chain: 'ropsten', hardfork: 'petersburg' });
+  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });
   // Sign the transaction
   tx.sign(PRIVATE_KEY);
   // Serialize the transaction (RLP Encoding)
@@ -446,60 +374,21 @@ async function broadcastTx(rawTx) {
   console.log(txReceipt);
 }
 
-async function getSellQty(tokenAddress, qty) {
-  let sellQtyRequest = await fetch(`${NETWORK_URL}/sell_rate?id=${tokenAddress}&qty=${qty}&only_official_reserve=false`);
-  let sellQty = await sellQtyRequest.json();
-  sellQty = sellQty.data[0].dst_qty[0];
-  return sellQty;
-}
-
-async function getApproximateBuyQty(tokenAddress, ethQty) {
-  // Querying the buy_rate endpoint for 1 DAI token yields testBuyRateSrcQty
-  let BUY_RATE_TEST_DST_QTY = 1;
-  let testBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${BUY_RATE_TEST_DST_QTY}&only_official_reserve=false`);
-  let testBuyRate = await testBuyRateRequest.json();
-  testBuyRateSrcQty = testBuyRate.data[0].src_qty[0];
-
-  let dstQty = BUY_RATE_TEST_DST_QTY;
-  let srcQty = testBuyRateSrcQty
-
-  do {
-    // Calculate the approximated amount of DAI i.e. ethQty * rate = approximateDstQty
-    // where rate = BUY_RATE_TEST_DST_QTY / testBuyRateSrcQty
-    let rate = dstQty / srcQty
-    var approximateDstQty = ethQty * rate; // Approximate dest quantity based on rate for buying 1 token
-
-    // Querying the buy_rate endpoint for approximateDstQty tokens yields approximateBuyRateSrcQty
-    let approximateBuyRateRequest = await fetch(`${NETWORK_URL}/buy_rate?id=${tokenAddress}&qty=${approximateDstQty}&only_official_reserve=false`);
-    let approximateBuyRate = await approximateBuyRateRequest.json();
-    approximateBuyRateSrcQty = approximateBuyRate.data[0].src_qty[0];
-
-    // Check if approximateBuyRateSrcQty based on the rate is close to ethQty, if not repeat
-    var diff = (ethQty - approximateBuyRateSrcQty) / ethQty;
-    dstQty = approximateDstQty;
-    srcQty = approximateBuyRateSrcQty;
-  } while (diff > 0.05 || diff < 0); // I'm using 5% difference as a threshold but you should decide how many times you want to run this approximate loop.
-
-  return approximateDstQty;
-}
-
-//sellQty = output from getSellQty function
-//buyQty = output from getApproximateBuyQty function
-async function getApproximateReceivableTokens(sellQty, buyQty) {
-  let expectedAmountWithoutSlippage = sellQty / buyQty;
-  let expectedAmountWithSlippage = 0.97 * expectedAmountWithoutSlippage;
-  return expectedAmountWithSlippage;
+async function getQuoteAmount(srcToken, destToken, srcQty) {
+  let quoteAmountRequest = await fetch(`${NETWORK_URL}/quote_amount?base=${srcToken}&quote=${destToken}&base_amount=${srcQty}&type=sell`)
+  let quoteAmount = await quoteAmountRequest.json();
+  quoteAmount = quoteAmount.data;
+  return quoteAmount * 0.97;
 }
 
 async function executeTrade(useraddress, srcToken, dstToken, srcQty, minDstQty, gasPrice, refAddress) {
-  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}&only_official_reserve=false`);
+  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}`);
   let tradeDetails = await tradeDetailsRequest.json();
   let rawTx = tradeDetails.data[0];
   await broadcastTx(rawTx);
 }
 
 main();
-
 ```
 
 ## Scenario 2: Obtaining Token and Market Info
