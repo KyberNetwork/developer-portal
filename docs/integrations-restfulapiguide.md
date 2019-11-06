@@ -182,7 +182,7 @@ async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
 ```
 
 ### Get DAI token amount receivable
-Create a function to get an approximate of the destination token amount for the specified amount of source token. We will use the `/quote_amount` endpoint in this function.
+Create a function to get an approximate of the destination token amount for the specified amount of source token. We will use the `/quote_amount` endpoint in this function. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#quote_amount).
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
@@ -197,7 +197,7 @@ async function getQuoteAmount(srcToken, destToken, srcQty) {
 ```
 
 ### Convert BAT to DAI
-We now have all the required information to peform the trade transaction. Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>&only_official_reserve=false` will return the transaction payload to be signed and broadcasted by the user to make the conversion. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#trade-data).
+We now have all the required information to peform the trade transaction. Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>&only_official_reserve=false` will return the transaction payload to be signed and broadcasted by the user to make the conversion. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#trade_data).
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
