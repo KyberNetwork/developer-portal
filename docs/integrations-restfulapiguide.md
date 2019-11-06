@@ -59,7 +59,7 @@ Next, we will define the constants that we will be using for this guide.
 
 //Base URL for API queries
 //Refer to API/ABI >> RESTFul API Overview >> Network URL section
-const NETWORK_URL = `https://${NETWORK}-api.kyber.network`;
+const NETWORK_URL = `https://${NETWORK == "mainnet" ? "" : NETWORK + "-"}api.kyber.network`;
 
 //User Details
 const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); // Remove the 0x prefix
@@ -263,7 +263,7 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 
 //Base URL for API queries
 //Refer to API/ABI >> RESTFul API Overview >> Network URL section
-const NETWORK_URL = `https://${NETWORK}-api.kyber.network`;
+const NETWORK_URL = `https://${NETWORK == "main" ? "" : NETWORK + "-"}api.kyber.network`;
 
 //User Details
 const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); // Remove the 0x prefix
