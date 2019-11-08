@@ -36,7 +36,7 @@ Let us assume that we would like to swap 1 Ether for ZIL tokens.
 
 ### Import the relevant packages
 
-We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bignumber.js` library is used to define BigNumber variables.
+We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bignumber.js` library is used to define BigNumber variables. The `node-fetch` library is used to make HTTP requests to the endpoint.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -47,6 +47,7 @@ We will be using the `web3` package for interacting with the Ethereum blockchain
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
+const fetch = require('node-fetch');
 ```
 
 ### Connect to an Ethereum node
@@ -59,8 +60,9 @@ In this example, we will connect to Infura's Ropsten node as our web3 provider. 
 // https://t.me/KyberDeveloper.
 
 // Connecting to ropsten infura node
+const NETWORK = "ropsten"
 const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
+const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 ```
 
@@ -82,6 +84,7 @@ const SRC_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 const DST_TOKEN_ADDRESS = "0xaD78AFbbE48bA7B670fbC54c65708cbc17450167";
 const SRC_DECIMALS = 18;
 const DST_DECIMALS = 12;
+const MAX_ALLOWANCE = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
 ```
 
 #### Define contract ABIs and addresses
@@ -102,8 +105,6 @@ Since we are swapping 1 Ether, `SRC_QTY = 1`. We also convert this amount to Eth
 // Trade Details
 const SRC_QTY = "1";
 const SRC_QTY_WEI = (SRC_QTY * 10 ** SRC_DECIMALS).toString();
-const MAX_DEST_AMOUNT = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
-const GAS_LIMIT = '500000'
 ```
 
 #### Define user details
@@ -170,7 +171,7 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
     nonce: txCount
   };
 
-  let tx = new Tx(rawTx);
+  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });;
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
@@ -237,14 +238,21 @@ async function trade(
       walletId
     )
     .encodeABI();
-
+  let gasLimit = await getGasLimit(SRC_TOKEN_ADDRESS, DST_TOKEN_ADDRESS, SRC_QTY);
   await broadcastTx(
     USER_ADDRESS,
     KYBER_NETWORK_PROXY_ADDRESS,
     txData,
     srcQtyWei, //Ether value to be included in the tx
-    GAS_LIMIT //gasLimit
+    gasLimit //gasLimit
   );
+}
+
+// Function to get gas limit for trading
+async function getGasLimit(source, dest, amount) {
+  let gasLimitRequest = await fetch(`https://${NETWORK == "mainnet" ? "" : NETWORK + "-"}api.kyber.network/gas_limit?source=${source}&dest=${dest}&amount=${amount}`);
+  let gasLimit = await gasLimitRequest.json();
+  return gasLimit.data;
 }
 ```
 
@@ -279,8 +287,6 @@ async function main() {
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
 2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether
-3. Please ensure that you are running web3 version 1.0.0-beta.37. You can install this by doing
-`npm install web3@1.0.0-beta.37`
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -291,10 +297,12 @@ Before running this code example, the following fields need to be modified:
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
+const fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
+const NETWORK = "ropsten"
 const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
+const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 
 // Token Details
@@ -304,10 +312,10 @@ const SRC_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 const DST_TOKEN_ADDRESS = "0xaD78AFbbE48bA7B670fbC54c65708cbc17450167";
 const SRC_DECIMALS = 18;
 const DST_DECIMALS = 12;
+const MAX_ALLOWANCE = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
 
 // KyberNetworkProxy Contract ABI
 const KYBER_NETWORK_PROXY_ABI = [{"constant":false,"inputs":[{"name":"alerter","type":"address"}],"name":"removeAlerter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"enabled","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"pendingAdmin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getOperators","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"src","type":"address"},{"name":"srcAmount","type":"uint256"},{"name":"dest","type":"address"},{"name":"destAddress","type":"address"},{"name":"maxDestAmount","type":"uint256"},{"name":"minConversionRate","type":"uint256"},{"name":"walletId","type":"address"},{"name":"hint","type":"bytes"}],"name":"tradeWithHint","outputs":[{"name":"","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"srcAmount","type":"uint256"},{"name":"minConversionRate","type":"uint256"}],"name":"swapTokenToEther","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"amount","type":"uint256"},{"name":"sendTo","type":"address"}],"name":"withdrawToken","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"maxGasPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newAlerter","type":"address"}],"name":"addAlerter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"kyberNetworkContract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"user","type":"address"}],"name":"getUserCapInWei","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"src","type":"address"},{"name":"srcAmount","type":"uint256"},{"name":"dest","type":"address"},{"name":"minConversionRate","type":"uint256"}],"name":"swapTokenToToken","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newAdmin","type":"address"}],"name":"transferAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"claimAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"minConversionRate","type":"uint256"}],"name":"swapEtherToToken","outputs":[{"name":"","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"newAdmin","type":"address"}],"name":"transferAdminQuickly","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getAlerters","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"src","type":"address"},{"name":"dest","type":"address"},{"name":"srcQty","type":"uint256"}],"name":"getExpectedRate","outputs":[{"name":"expectedRate","type":"uint256"},{"name":"slippageRate","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"user","type":"address"},{"name":"token","type":"address"}],"name":"getUserCapInTokenWei","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newOperator","type":"address"}],"name":"addOperator","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_kyberNetworkContract","type":"address"}],"name":"setKyberNetworkContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"operator","type":"address"}],"name":"removeOperator","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"field","type":"bytes32"}],"name":"info","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"src","type":"address"},{"name":"srcAmount","type":"uint256"},{"name":"dest","type":"address"},{"name":"destAddress","type":"address"},{"name":"maxDestAmount","type":"uint256"},{"name":"minConversionRate","type":"uint256"},{"name":"walletId","type":"address"}],"name":"trade","outputs":[{"name":"","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"},{"name":"sendTo","type":"address"}],"name":"withdrawEther","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"},{"name":"user","type":"address"}],"name":"getBalance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_admin","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"trader","type":"address"},{"indexed":false,"name":"src","type":"address"},{"indexed":false,"name":"dest","type":"address"},{"indexed":false,"name":"actualSrcAmount","type":"uint256"},{"indexed":false,"name":"actualDestAmount","type":"uint256"}],"name":"ExecuteTrade","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newNetworkContract","type":"address"},{"indexed":false,"name":"oldNetworkContract","type":"address"}],"name":"KyberNetworkSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"token","type":"address"},{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"sendTo","type":"address"}],"name":"TokenWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"sendTo","type":"address"}],"name":"EtherWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"pendingAdmin","type":"address"}],"name":"TransferAdminPending","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newAdmin","type":"address"},{"indexed":false,"name":"previousAdmin","type":"address"}],"name":"AdminClaimed","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newAlerter","type":"address"},{"indexed":false,"name":"isAdd","type":"bool"}],"name":"AlerterAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newOperator","type":"address"},{"indexed":false,"name":"isAdd","type":"bool"}],"name":"OperatorAdded","type":"event"}];
-
 
 // Kyber Network Proxy Contract Address
 const KYBER_NETWORK_PROXY_ADDRESS = "0x818e6fecd516ecc3849daf6845e3ec868087b755";
@@ -315,8 +323,6 @@ const KYBER_NETWORK_PROXY_ADDRESS = "0x818e6fecd516ecc3849daf6845e3ec868087b755"
 // Trade Details
 const SRC_QTY = "1";
 const SRC_QTY_WEI = (SRC_QTY * 10 ** SRC_DECIMALS).toString();
-const MAX_DEST_AMOUNT = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
-const GAS_LIMIT = '500000'
 
 // User Details
 const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); //exclude 0x prefix
@@ -345,7 +351,7 @@ async function main() {
     SRC_QTY_WEI,
     DST_TOKEN_ADDRESS,
     USER_ADDRESS,
-    MAX_DEST_AMOUNT,
+    MAX_ALLOWANCE,
     results.slippageRate,
     REF_ADDRESS
   );
@@ -382,17 +388,23 @@ async function trade(
       walletId
     )
     .encodeABI();
-
+  let gasLimit = await getGasLimit(SRC_TOKEN_ADDRESS, DST_TOKEN_ADDRESS, SRC_QTY);
   await broadcastTx(
     USER_ADDRESS,
     KYBER_NETWORK_PROXY_ADDRESS,
     txData,
     srcQtyWei, //Ether value to be included in the tx
-    GAS_LIMIT //gasLimit
+    gasLimit //gasLimit
   );
 }
 
-// Auxiliary function
+// Function to get gas limit for trading
+async function getGasLimit(source, dest, amount) {
+  let gasLimitRequest = await fetch(`https://${NETWORK == "mainnet" ? "" : NETWORK + "-"}api.kyber.network/gas_limit?source=${source}&dest=${dest}&amount=${amount}`);
+  let gasLimit = await gasLimitRequest.json();
+  return gasLimit.data;
+}
+
 // Function to broadcast transactions
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
@@ -419,7 +431,7 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
     nonce: txCount
   };
 
-  let tx = new Tx(rawTx);
+  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });;
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
@@ -440,7 +452,7 @@ Let us assume that we would like to swap 100 KNC tokens for Ether. You may obtai
 
 ### Import the relevant packages
 
-We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bignumber.js` library is used to define BigNumber variables.
+We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bignumber.js` library is used to define BigNumber variables. The `node-fetch` library is used to make HTTP requests to the endpoint.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -451,6 +463,7 @@ We will be using the `web3` package for interacting with the Ethereum blockchain
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
+const fetch = require('node-fetch');
 ```
 
 ### Connect to an Ethereum node
@@ -463,8 +476,9 @@ In this example, we will connect to Infura's Ropsten node as our web3 provider. 
 // https://t.me/KyberDeveloper.
 
 // Connecting to ropsten infura node
+const NETWORK = "ropsten"
 const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
+const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 ```
 
@@ -510,7 +524,6 @@ Since we are swapping from 100 KNC tokens, `SRC_QTY = 100`. We also convert this
 
 const SRC_QTY = "100";
 const SRC_QTY_WEI = (SRC_QTY * 10 ** SRC_DECIMALS).toString();
-const GAS_LIMIT = '500000';
 ```
 
 #### Define user details
@@ -582,7 +595,7 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
     nonce: txCount
   };
 
-  let tx = new Tx(rawTx);
+  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });;
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
@@ -674,14 +687,21 @@ async function trade(
       walletId
     )
     .encodeABI();
-
+  let gasLimit = await getGasLimit(SRC_TOKEN_ADDRESS, DST_TOKEN_ADDRESS, SRC_QTY);
   await broadcastTx(
     USER_ADDRESS,
     KYBER_NETWORK_PROXY_ADDRESS,
     txData,
     0, //Ether value to be included in the tx
-    GAS_LIMIT //gasLimit
+    gasLimit //gasLimit
   );
+}
+
+// Function to get gas limit for trading
+async function getGasLimit(source, dest, amount) {
+  let gasLimitRequest = await fetch(`https://${NETWORK == "mainnet" ? "" : NETWORK + "-"}api.kyber.network/gas_limit?source=${source}&dest=${dest}&amount=${amount}`);
+  let gasLimit = await gasLimitRequest.json();
+  return gasLimit.data;
 }
 ```
 
@@ -734,9 +754,7 @@ async function main() {
 ### Full code example
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
-2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding KNC tokens.
-3. Please ensure that you are running web3 version 1.0.0-beta.37. You can install this by doing
-`npm install web3@1.0.0-beta.37`.
+2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding KNC tokens
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -747,10 +765,12 @@ Before running this code example, the following fields need to be modified:
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
+const fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
+const NETWORK = "ropsten"
 const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
+const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 
 // Token Details
@@ -772,7 +792,6 @@ const KYBER_NETWORK_PROXY_ADDRESS = "0x818e6fecd516ecc3849daf6845e3ec868087b755"
 // Trade Details
 const SRC_QTY = "100";
 const SRC_QTY_WEI = (SRC_QTY * 10 ** SRC_DECIMALS).toString();
-const GAS_LIMIT = '500000';
 
 // User Details
 const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); //exclude 0x prefix
@@ -857,17 +876,23 @@ async function trade(
       walletId
     )
     .encodeABI();
-
+  let gasLimit = await getGasLimit(SRC_TOKEN_ADDRESS, DST_TOKEN_ADDRESS, SRC_QTY);
   await broadcastTx(
     USER_ADDRESS,
     KYBER_NETWORK_PROXY_ADDRESS,
     txData,
     0, //Ether value to be included in the tx
-    GAS_LIMIT //gasLimit
+    gasLimit //gasLimit
   );
 }
 
-// Auxiliary function
+// Function to get gas limit for trading
+async function getGasLimit(source, dest, amount) {
+  let gasLimitRequest = await fetch(`https://${NETWORK == "mainnet" ? "" : NETWORK + "-"}api.kyber.network/gas_limit?source=${source}&dest=${dest}&amount=${amount}`);
+  let gasLimit = await gasLimitRequest.json();
+  return gasLimit.data;
+}
+
 // Function to broadcast transactions
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
@@ -894,7 +919,7 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
     nonce: txCount
   };
 
-  let tx = new Tx(rawTx);
+  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });;
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
@@ -906,6 +931,7 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
   return;
 }
 
+// Function to approve KNP contract
 async function approveContract(allowance) {
   console.log("Approving KNP contract to manage my KNC");
   let txData = await SRC_TOKEN_CONTRACT.methods
@@ -931,7 +957,7 @@ Let us assume that we would like to swap 100 KNC tokens for ZIL tokens. You may 
 
 ### Import the relevant packages
 
-We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bignumber.js` library is used to define BigNumber variables.
+We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bignumber.js` library is used to define BigNumber variables. The `node-fetch` library is used to make HTTP requests to the endpoint.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -942,6 +968,7 @@ We will be using the `web3` package for interacting with the Ethereum blockchain
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
+const fetch = require('node-fetch');
 ```
 
 ### Connect to an Ethereum node
@@ -954,8 +981,9 @@ In this example, we will connect to Infura's Ropsten node as our web3 provider. 
 // https://t.me/KyberDeveloper.
 
 // Connecting to ropsten infura node
+const NETWORK = "ropsten"
 const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
+const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 ```
 
@@ -972,7 +1000,7 @@ Next, we will define the constants that we will be using for this scenario.
 // Token Details
 const SRC_TOKEN = "KNC";
 const DST_TOKEN = "ZIL";
-const SRC_TOKEN_ADDRESS = "0xbF5d8683b9BE6C43fcA607eb2a6f2626A18837a6";
+const SRC_TOKEN_ADDRESS = "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6";
 const DST_TOKEN_ADDRESS = "0xaD78AFbbE48bA7B670fbC54c65708cbc17450167";
 const SRC_DECIMALS = 18;
 const DST_DECIMALS = 12;
@@ -1001,7 +1029,6 @@ Since we are swapping from 100 KNC tokens, `SRC_QTY = 100`. We also convert this
 
 const SRC_QTY = "100";
 const SRC_QTY_WEI = (SRC_QTY * 10 ** SRC_DECIMALS).toString();
-const GAS_LIMIT = '500000';
 ```
 
 #### Define user details
@@ -1073,7 +1100,7 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
     nonce: txCount
   };
 
-  let tx = new Tx(rawTx);
+  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });;
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
@@ -1165,14 +1192,21 @@ async function trade(
       walletId
     )
     .encodeABI();
-
+  let gasLimit = await getGasLimit(SRC_TOKEN_ADDRESS, DST_TOKEN_ADDRESS, SRC_QTY);
   await broadcastTx(
     USER_ADDRESS,
     KYBER_NETWORK_PROXY_ADDRESS,
     txData,
     0, //Ether value to be included in the tx
-    GAS_LIMIT //gasLimit
+    gasLimit //gasLimit
   );
+}
+
+// Function to get gas limit for trading
+async function getGasLimit(source, dest, amount) {
+  let gasLimitRequest = await fetch(`https://${NETWORK == "mainnet" ? "" : NETWORK + "-"}api.kyber.network/gas_limit?source=${source}&dest=${dest}&amount=${amount}`);
+  let gasLimit = await gasLimitRequest.json();
+  return gasLimit.data;
 }
 ```
 
@@ -1226,8 +1260,6 @@ async function main() {
 Before running this code example, the following fields need to be modified:
 1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
 2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding KNC tokens.
-3. Please ensure that you are running web3 version 1.0.0-beta.37. You can install this by doing
-`npm install web3@1.0.0-beta.37`.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -1238,10 +1270,12 @@ Before running this code example, the following fields need to be modified:
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
 const BN = require("bignumber.js");
+const fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
+const NETWORK = "ropsten"
 const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = "wss://ropsten.infura.io/ws/v3/" + PROJECT_ID;
+const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
 const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
 
 // Token Details
@@ -1263,7 +1297,6 @@ const KYBER_NETWORK_PROXY_ADDRESS = "0x818e6fecd516ecc3849daf6845e3ec868087b755"
 // Trade Details
 const SRC_QTY = "100";
 const SRC_QTY_WEI = (SRC_QTY * 10 ** SRC_DECIMALS).toString();
-const GAS_LIMIT = '500000';
 
 // User Details
 const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); //exclude 0x prefix
@@ -1348,17 +1381,23 @@ async function trade(
       walletId
     )
     .encodeABI();
-
+  let gasLimit = await getGasLimit(SRC_TOKEN_ADDRESS, DST_TOKEN_ADDRESS, SRC_QTY);
   await broadcastTx(
     USER_ADDRESS,
     KYBER_NETWORK_PROXY_ADDRESS,
     txData,
     0, //Ether value to be included in the tx
-    GAS_LIMIT //gasLimit
+    gasLimit //gasLimit
   );
 }
 
-// Auxiliary function
+// Function to get gas limit for trading
+async function getGasLimit(source, dest, amount) {
+  let gasLimitRequest = await fetch(`https://${NETWORK == "mainnet" ? "" : NETWORK + "-"}api.kyber.network/gas_limit?source=${source}&dest=${dest}&amount=${amount}`);
+  let gasLimit = await gasLimitRequest.json();
+  return gasLimit.data;
+}
+
 // Function to broadcast transactions
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
@@ -1385,7 +1424,7 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
     nonce: txCount
   };
 
-  let tx = new Tx(rawTx);
+  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });;
 
   tx.sign(PRIVATE_KEY);
   const serializedTx = tx.serialize();
@@ -1397,6 +1436,7 @@ async function broadcastTx(from, to, txData, value, gasLimit) {
   return;
 }
 
+// Function to approve KNP contract
 async function approveContract(allowance) {
   console.log("Approving KNP contract to manage my KNC");
   let txData = await SRC_TOKEN_CONTRACT.methods

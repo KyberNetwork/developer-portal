@@ -26,7 +26,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0xE16E257a25e287AF50C5651A4c2728b32D7e5ef7`
 
 ### `ExpectedRate`
-`0xDce692e577002298b3c7ce7E002Ac77244546884`
+`0x74Eefde956514C7c02723332504c16E2319687b1`
 
 ### `FeeBurner`
 `0x06b0fbaba8fba5161f725f2159de1e1d6409c35f`
