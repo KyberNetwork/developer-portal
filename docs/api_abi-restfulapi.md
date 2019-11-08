@@ -5,7 +5,9 @@ title: RESTful API
 [//]: # (tagline)
 ## INTRODUCTION
 
-The RESTful API provide a way for users to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. While the `trade_data` endpoint allows token <-> token trades, the **`/buy_rate` and `/sell_rate` endpoints are restricted to ETH <-> token** to ensure backwards compatibility. Refer to [this section](integrations-restfulapiguide.md#scenario-1-token-to-token-swap) on calculation of rates for token <-> token trades.
+The RESTful API provide a way for users to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. Please note that some of these endpoints have certain limitations as follows:
+1. The `/buy_rate` and `/sell_rate` endpoints are **restricted to ETH <-> token queries only** while the `trade_data` endpoint allows token <-> token trades.
+2. The fields `active`, `custom_proxy` and `original_token` will only appear if certain conditions are met otherwise they will not show up in the API response.
 
 ---
 
@@ -95,6 +97,9 @@ Example:
 | `change_eth_24h` | float | Percentage change in ETH against the past 24 hours |
 | `change_usd_24h` | float | Percentage change in USD against the past 24 hours |
 | `rate_usd_now` | float | Current asset price in USD |
+| `custom_proxy` | bool | Returns true if the address is a proxy address. Note that this field only appears if the token is a proxy token. |
+| `original_token` | string | The address of the original token contract. Note that this field only appears if the token is a proxy token. |
+
 Example:
 
 ```json
@@ -122,6 +127,19 @@ Example:
     "change_usd_24h":-10.129,
     "rate_usd_now":0.8
   },
+  "ETH_SNX":{
+    "timestamp":1573200127195,
+    "token_symbol":"SNX",
+    "token_name":"Synthetix Network",
+    "token_address":"0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+    "token_decimal":18,
+    "rate_eth_now":0.004682812478752438,
+    "change_eth_24h":5.285125197652733,
+    "rate_usd_now":0.8631071531728769,
+    "change_usd_24h":3.3441675583726584,
+    "custom_proxy":true,
+    "original_token":"0x42D03f506c2308ECd06aE81D8fA22352BC7A8F2b"
+  }
   ...
 }
 ```
@@ -152,6 +170,8 @@ Example:
 | `active` | bool | A boolean value to represent if the token is still active on Kyber. Note that this field only appears when you specify a value for the `include_delisted` parameter. |
 | `reserves_src` | string[] | Reserve contract addresses supporting Token to Ether trades |
 | `reserves_dest` | string[] | Reserve contract addresses supporting Ether to Token trades |
+| `custom_proxy` | bool | Returns true if the address is a proxy address. Note that this field only appears if the token is a proxy token. |
+| `original_token` | string | The address of the original token contract. Note that this field only appears if the token is a proxy token. |
 
 **Note:** Ether and tokens that have been deployed permissionlessly do not have the `reserves_src` and `reserves_dest` fields.
 
@@ -195,6 +215,23 @@ Example:
         "0x21433Dec9Cb634A23c6A4BbcCe08c83f5aC2EC18"
       ]
     },
+    {
+      "symbol":"TUSD",
+      "name":"TrueUSD",
+      "address":"0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
+      "decimals":18,
+      "id":"0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
+      "reserves_src":[
+        "0x5D154c145Db2ca90B8aB5e8Fe3E716AfA4AB7Ff0",
+        "0x7a3370075a54B187d7bD5DceBf0ff2B5552d4F7D"
+      ],
+      "reserves_dest":[
+        "0x5D154c145Db2ca90B8aB5e8Fe3E716AfA4AB7Ff0",
+        "0x7a3370075a54B187d7bD5DceBf0ff2B5552d4F7D"
+      ],
+      "custom_proxy":true,
+      "original_token":"0x0000000000085d4780B73119b644AE5ecd22b376"
+    }
     ...
   ]
 }
@@ -215,6 +252,9 @@ Example:
 | `address` | string | Contract address of the asset |
 | `swapGasLimit` | int | Gas limit when swapping between ETH <-> asset |
 | `approveGasLimit` | int | Gas limit when approving KNP to trade the asset on behalf of the user |
+| `custom_proxy` | bool | Returns true if the address is a proxy address. Note that this field only appears if the token is a proxy token. |
+| `original_token` | string | The address of the original token contract. Note that this field only appears if the token is a proxy token. |
+
 Example:
 
 ```json
@@ -246,6 +286,14 @@ Example:
       "swapGasLimit":500000,
       "approveGasLimit":120000
     },
+    {
+      "symbol":"TUSD",
+      "address":"0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
+      "swapGasLimit":600000,
+      "approveGasLimit":120000,
+      "custom_proxy":true,
+      "original_token":"0x0000000000085d4780B73119b644AE5ecd22b376"
+    }
     ...
   ]
 }
@@ -263,7 +311,6 @@ Example:
 | Parameter | Type | Description |
 |:------------------:|:------:|:---------------------------------------------------------:|
 | `timestamp` | int | Server timestamp in UTC. |
-| `pair` | string | Pair name consisting of the quote and base asset symbols. |
 | `quote_symbol` | string | Symbol of the asset used for quoting i.e. ETH. |
 | `quote_name` | string | Name of the asset in its native chain. i.e. Ethereum. |
 | `quote_decimals` | int | Decimals that will be used to round-off the srcQty or dstQty of the asset in other requests. |
@@ -280,6 +327,9 @@ Example:
 | `current_bid` | float | Current (considering some X minute delay) BID price. |
 | `current_ask` | float | Current (considering some X minute delay) ASK price. |
 | `last_traded` | float | Last traded price in the exchange. |
+| `pair` | string | Pair name consisting of the quote and base asset symbols. |
+| `custom_proxy` | bool | Returns true if the address is a proxy address. Note that this field only appears if the token is a proxy token. |
+| `original_token` | string | The address of the original token contract. Note that this field only appears if the token is a proxy token. |
 
 Example:
 
@@ -289,65 +339,87 @@ Example:
   "error":false,
   "data":[
     {
-      "timestamp": 1565676643703,
-      "quote_symbol": "ETH",
-      "quote_name": "Ethereum",
-      "quote_decimals": 18,
-      "quote_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "base_symbol": "WETH",
-      "base_name": "Wrapped Ether",
-      "base_decimals": 18,
-      "base_address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-      "past_24h_high": 1,
-      "past_24h_low": 1,
-      "usd_24h_volume": 55171.31700779925,
-      "eth_24h_volume": 261.98872813093953,
-      "token_24h_volume": 261.98872813093953,
-      "current_bid": 1,
-      "current_ask": 1,
-      "last_traded": 1,
-      "pair": "ETH_WETH"
+      "timestamp":1565676643703,
+      "quote_symbol":"ETH",
+      "quote_name":"Ethereum",
+      "quote_decimals":18,
+      "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "base_symbol":"WETH",
+      "base_name":"Wrapped Ether",
+      "base_decimals":18,
+      "base_address":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "past_24h_high":1,
+      "past_24h_low":1,
+      "usd_24h_volume":55171.31700779925,
+      "eth_24h_volume":261.98872813093953,
+      "token_24h_volume":261.98872813093953,
+      "current_bid":1,
+      "current_ask":1,
+      "last_traded":1,
+      "pair":"ETH_WETH"
     },
     {
-      "timestamp": 1565676643703,
-      "quote_symbol": "ETH",
-      "quote_name": "Ethereum",
-      "quote_decimals": 18,
-      "quote_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "base_symbol": "KNC",
-      "base_name": "KyberNetwork",
-      "base_decimals": 18,
-      "base_address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-      "past_24h_high": 0.000793293929007035,
-      "past_24h_low": 0.000783163456436218,
-      "usd_24h_volume": 5751.223513558892,
-      "eth_24h_volume": 27.365939751337628,
-      "token_24h_volume": 34737.279673311226,
-      "current_bid": 0.000787059792040378,
-      "current_ask": 0.00079253036315891,
-      "last_traded": 0.000788978737325427,
-      "pair": "ETH_KNC"
-      },
-      {
-      "timestamp": 1565676643703,
-      "quote_symbol": "ETH",
-      "quote_name": "Ethereum",
-      "quote_decimals": 18,
-      "quote_address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "base_symbol": "DAI",
-      "base_name": "DAI",
-      "base_decimals": 18,
-      "base_address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "past_24h_high": 0.004764611951928574,
-      "past_24h_low": 0.004672131147540981,
-      "usd_24h_volume": 202729.63505611182,
-      "eth_24h_volume": 963.3434244536832,
-      "token_24h_volume": 203591.66123820562,
-      "current_bid": 0.004743332850081698,
-      "current_ask": 0.004789407404832812,
-      "last_traded": 0.004789355488531787,
-      "pair": "ETH_DAI"
-      },
+      "timestamp":1565676643703,
+      "quote_symbol":"ETH",
+      "quote_name":"Ethereum",
+      "quote_decimals":18,
+      "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "base_symbol":"KNC",
+      "base_name":"KyberNetwork",
+      "base_decimals":18,
+      "base_address":"0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "past_24h_high":0.000793293929007035,
+      "past_24h_low":0.000783163456436218,
+      "usd_24h_volume":5751.223513558892,
+      "eth_24h_volume":27.365939751337628,
+      "token_24h_volume":34737.279673311226,
+      "current_bid":0.000787059792040378,
+      "current_ask":0.00079253036315891,
+      "last_traded":0.000788978737325427,
+      "pair":"ETH_KNC"
+    },
+    {
+      "timestamp":1565676643703,
+      "quote_symbol":"ETH",
+      "quote_name":"Ethereum",
+      "quote_decimals":18,
+      "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "base_symbol":"DAI",
+      "base_name":"DAI",
+      "base_decimals":18,
+      "base_address":"0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "past_24h_high":0.004764611951928574,
+      "past_24h_low":0.004672131147540981,
+      "usd_24h_volume":202729.63505611182,
+      "eth_24h_volume":963.3434244536832,
+      "token_24h_volume":203591.66123820562,
+      "current_bid":0.004743332850081698,
+      "current_ask":0.004789407404832812,
+      "last_traded":0.004789355488531787,
+      "pair":"ETH_DAI"
+    },
+    {
+      "timestamp":1573199827192,
+      "quote_symbol":"ETH",
+      "quote_name":"Ethereum",
+      "quote_decimals":18,
+      "quote_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "base_symbol":"TUSD",
+      "base_name":"TrueUSD",
+      "base_decimals":18,
+      "base_address":"0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
+      "past_24h_high":0.005382922417172212,
+      "past_24h_low":0.005256588523707966,
+      "usd_24h_volume":8437.676524840423,
+      "eth_24h_volume":45.33700723026804,
+      "token_24h_volume":8400.120592248511,
+      "current_bid":0.005366444083242093,
+      "current_ask":0.00543261156727895,
+      "last_traded":0.005345203077303782,
+      "pair":"ETH_TUSD",
+      "custom_proxy":true,
+      "original_token":"0x0000000000085d4780B73119b644AE5ecd22b376"
+    }
     ...
   ]
 }
