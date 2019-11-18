@@ -108,7 +108,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0x41e5560054824ea6b0732e656e3ad64e20e94e45`
 
 ### `DAI (Dai Stablecoin)`
-`0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359`
+`0x6b175474e89094c44da98b954eedeac495271d0f`
 
 ### `DCC (Distributed Credit Chain)`
 `0xFFa93Aacf49297D51E211817452839052FDFB961`
@@ -256,6 +256,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `RLC (RLC)`
 `0x607F4C5BB672230e8672085532f7e901544a7375`
+
+### `SAI (SAI Stablecoin)`
+`0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359`
 
 ### `SALT (Salt)`
 `0x4156d3342d5c385a87d264f90653733592000581`

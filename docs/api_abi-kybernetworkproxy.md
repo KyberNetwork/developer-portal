@@ -195,7 +195,7 @@ Web3 Example:
 // https://t.me/KyberDeveloper.
 
 const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' // ETH
-const dest = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359' // DAI
+const dest = '0x6b175474e89094c44da98b954eedeac495271d0f' // DAI
 const srcQty = new web3.utils.BN('3000000000000000000000')
 
 let result = await kyberNetworkProxyContract.methods.getExpectedRate(

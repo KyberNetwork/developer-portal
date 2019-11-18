@@ -41,7 +41,7 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 `0xad67cB4d63C9da94AcA37fDF2761AaDF780ff4a2`
 
 ### `DAI (Dai)`
-`0xC4375B7De8af5a38a93548eb8453a498222C4fF2`
+`0x1Fe0c4488Fd3f3F70204d5709945bc4b0A99672E`
 
 ### `MANA (Decentraland)`
 `0xcb78b457c1F79a06091EAe744aA81dc75Ecb1183`
@@ -54,6 +54,9 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ### `POLY (Polymath)`
 `0xd92266fd053161115163a7311067F0A4745070b5`
+
+### `SAI (SAI)`
+`0xC4375B7De8af5a38a93548eb8453a498222C4fF2`
 
 ### `SALT (Salt)`
 `0x6fEE5727EE4CdCBD91f3A873ef2966dF31713A04`
