@@ -41,7 +41,7 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 `0xad67cB4d63C9da94AcA37fDF2761AaDF780ff4a2`
 
 ### `DAI (Dai)`
-`0x1Fe0c4488Fd3f3F70204d5709945bc4b0A99672E`
+`0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa`
 
 ### `MANA (Decentraland)`
 `0xcb78b457c1F79a06091EAe744aA81dc75Ecb1183`

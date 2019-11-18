@@ -47,7 +47,7 @@
       "Reserves-ListingProcess"
     ],
     "Setup Tutorials": [
-      "Reserves-FedPriceReserve",
+      "Reserves-PriceFeedReserve",
       "Reserves-AutomatedPriceReserve",
       "Reserves-OrderbookReserve",
       "Reserves-Ganache"
