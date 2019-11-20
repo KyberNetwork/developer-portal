@@ -4,10 +4,10 @@ title: Reserve Types
 ---
 [//]: # (tagline)
 ## Introduction
-There are currently 3 different types of reserve that you can choose from, namely, the Fed Price Reserve, the Automated Price Reserve and the Orderbook Reserve.
+There are currently 3 different types of reserve that you can choose from, namely, the Price Feed Reserve, the Automated Price Reserve and the Orderbook Reserve.
 
-## Fed Price Reserve (FPR)
-A Fed Price Reserve utilises an off-chain component (Eg. a script running on a server) that pulls price
+## Price Feed Reserve (PFR)
+A Price Feed Reserve utilises an off-chain component (e.g. a script running on a server) that pulls price
 feeds and calculates conversion rates. These rates are sent via on-chain transactions and stored in a pricing smart contract. A separate smart contract storing reserve funds will refer to the pricing smart contract for the expected token conversion rate.
 
 It is complex to setup and maintain, and requires Ether for making the periodic price updates on-chain.
@@ -36,6 +36,6 @@ In order to comply with regulatory requirements, services using the Kyber protoc
 | Parties integrated through their own smart contracts | Yes | Yes by default |
 
 ## Setup Your Reserve
-- To learn more about the Fed Price Reserve, [click here](reserves-fedpricereserve.md).
+- To learn more about the Price Feed Reserve, [click here](reserves-pricefeedreserve.md).
 - To learn more about the Automated Price Reserve, [click here](reserves-automatedpricereserve.md).
 - To learn more about the Orderbook Reserve, [click here](reserves-orderbookreserve.md).

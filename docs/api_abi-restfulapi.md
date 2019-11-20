@@ -282,7 +282,7 @@ Example:
     },
     {
       "symbol":"DAI",
-      "address":"0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "address":"0x6b175474e89094c44da98b954eedeac495271d0f",
       "swapGasLimit":500000,
       "approveGasLimit":120000
     },
@@ -387,7 +387,7 @@ Example:
       "base_symbol":"DAI",
       "base_name":"DAI",
       "base_decimals":18,
-      "base_address":"0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "base_address":"0x6b175474e89094c44da98b954eedeac495271d0f",
       "past_24h_high":0.004764611951928574,
       "past_24h_low":0.004672131147540981,
       "usd_24h_volume":202729.63505611182,
@@ -482,7 +482,7 @@ Example:
 Example:
 
 ```json
-> curl "https://api.kyber.network/gas_limit?source=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&amount=10000"
+> curl "https://api.kyber.network/gas_limit?source=0x6b175474e89094c44da98b954eedeac495271d0f&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&amount=10000"
 {
   "data": 880000,
   "error": false
