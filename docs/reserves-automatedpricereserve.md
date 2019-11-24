@@ -182,7 +182,7 @@ However, only authorized accounts have the right to withdraw tokens from the res
 - `admin` can add withdraw/whitelisted address by calling `approveWithdrawAddress` of `KyberReserve.sol`.
 
 ### `Step 4: Depositing the inventory and setting the liquidity parameters`
-The reserve manager needs to decide on the initial liquidity parameters of the automated reserve. The following information are to be considered:
+The reserve manager needs to decide on the initial liquidity parameters of the automated reserve. The following parameters should be configured:
 
 1. Liquidity Rate `r`
 2. Initial Token Price `initialPrice`
@@ -193,7 +193,7 @@ The reserve manager needs to decide on the initial liquidity parameters of the a
 7. Fee Percentage
 
 #### About liquidity rate `r`
-`r` is liquidity the rate in basis points or units of 100 which the price should move each time the ETH/token inventory changes in 1 ETH worth of quantity. For an `r` of 0.007, the price will move 0.7%.
+`r` is liquidity the rate in basis points or units of 100 which the price should move each time the ETH/token inventory changes in 1 ETH worth of quantity. For an `r` of 0.007, the price will move 0.7% when buying / selling 1 Eth.
 
 #### About `pMin` and `pMax`
 With regards to the minimum/maximum supported price factor ratio, it is recommended to start with a ratio of 0.5:2.0. This indicates that the inventory will suffice for up to 100% increase or 50% decrease in token price with respect to ETH.
@@ -219,14 +219,14 @@ Setting the liquidity parameters is done by executing the [`setLiquidityParamete
 
 |  Type  |            Parameter            |                                                        Explanation                                                        |
 | :----: | :-----------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
-| `uint` |            `_rInFp`             |                                     r in formula precision, calculated as r \* InFp.                                      |
-| `uint` |           `_pMinInFp`           | Minimum supported price factor in formula precision, calculated as min price factor \* initial price of your token \* InFp. |
-| `uint` |          `_numFpBits`           |                The formula precision in bits, therefore for formula precision of 2^40, \_numFpBits is 40.                 |
+| `uint` |            `_rInFp`             |                                     r in formula precision, calculated as r \* Fp.                                        |
+| `uint` |           `_pMinInFp`           |      Minimum supported price in formula precision, calculated as min price factor \* initial price of your token \* Fp.   |
+| `uint` |          `_numFpBits`           |                The formula precision in bits, currently only 40 can be used, which gives precision of 2^40                |
 | `uint` |        `_maxCapBuyInWei`        |                                      The allowed quantity for one BUY trade in ETH.                                       |
 | `uint` |       `_maxCapSellInWei`        |                                      The allowed quantity for one SELL trade in ETH.                                      |
-| `uint` |           `_feeInBps`           |                   The fee amount in basis points (1 bp = 0.007%) that should be calculated in the price.                   |
-| `uint` | `_maxTokenToEthRateInPrecision` |       The maximum allowed price taking into consideration the maximum supported price factor and must be in 10^18.        |
-| `uint` | `_minTokenToEthRateInPrecision` |       The minimum allowed price taking into consideration the minimum supported price factor and must be in 10^18.        |
+| `uint` |           `_feeInBps`           |                   The fee amount in basis points (1 bp = 0.007%) that should be calculated in the price.                  |
+| `uint` | `_maxTokenToEthRateInPrecision` |       The maximum allowed price taking into consideration the maximum supported price factor. Units are in 10^18.         |
+| `uint` | `_minTokenToEthRateInPrecision` |       The minimum allowed price taking into consideration the minimum supported price factor. Units are in 10^18.         |
 
 #### Example
 
@@ -272,7 +272,7 @@ A Python script, located in `scripts/get_liquidity_params.py` in the `smart-cont
 }
 ```
 
-Please note that the `formula_precision_bits` refers to `_numFpBits`, which the recommended value is 40.
+Please note that the `formula_precision_bits` refers to `_numFpBits`, 40 should be used.
 
 Afterwards, just execute the Python script, using the following command:
 
