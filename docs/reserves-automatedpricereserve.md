@@ -224,7 +224,7 @@ Setting the liquidity parameters is done by executing the [`setLiquidityParamete
 | `uint` |          `_numFpBits`           |                The formula precision in bits, currently only 40 can be used, which gives precision of 2^40                |
 | `uint` |        `_maxCapBuyInWei`        |                                      The allowed quantity for one BUY trade in ETH.                                       |
 | `uint` |       `_maxCapSellInWei`        |                                      The allowed quantity for one SELL trade in ETH.                                      |
-| `uint` |           `_feeInBps`           |                   The fee amount in basis points (1 bp = 0.007%) that should be calculated in the price.                  |
+| `uint` |           `_feeInBps`           |                   The fee amount in basis points that should be calculated in the price.                                  |
 | `uint` | `_maxTokenToEthRateInPrecision` |       The maximum allowed price taking into consideration the maximum supported price factor. Units are in 10^18.         |
 | `uint` | `_minTokenToEthRateInPrecision` |       The minimum allowed price taking into consideration the minimum supported price factor. Units are in 10^18.         |
 
