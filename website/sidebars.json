@@ -35,6 +35,7 @@
       "Integrations-PriceFeedSecurity"
     ],
     "Miscellaneous": [
+      "Integrations-ContractEvents",
       "Integrations-FeeSharing",
       "Integrations-GettingHelp"
     ]
