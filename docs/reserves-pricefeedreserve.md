@@ -160,11 +160,11 @@ npm install
 Then run the command
 
 ```
-node reserveDeployer.js --config-path ropsten_reserve_input.json --gas-price-gwei 30 ----rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x753fe1914db38ee744e071baadd123f50f9c8e46"
+node reserveDeployer.js --config-path ropsten_reserve_input.json --gas-price-gwei 30 ----rpc-url https://ropsten.infura.io/v3/<infura_id> --print-private-key true --network-address "0x753fe1914db38ee744e071baadd123f50f9c8e46"
 ```
 
 - `--gas-price-gwei`: The gas price in gwei
-- `--rpc-url`: The URL of your geth, parity or infura node. Here we use infura's node, `https://ropsten.infura.io`.
+- `--rpc-url`: The URL of your geth, parity or infura node. Here we use infura's node, `https://ropsten.infura.io./v3/<infura_id>`. You need to modify the command to include your own infura id without the <>.
 - `--print-private-key`: The script generates a random and one-time ETH account that will send transactions to deploy and setup your contracts. The `true` value reveals the private key of this generated account to you (you may want to set it to `false` when deploying onto the mainnet).
 - `--network-address`: `KyberNetwork.sol` contract address (the address above is Ropsten testnet address).
 
