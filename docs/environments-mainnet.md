@@ -14,10 +14,10 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0x818E6FECD516Ecc3849DAf6845e3EC868087B755`
 
 ### `KyberNetwork`
-`0x9ae49C0d7F8F9EF4B864e004FE86Ac8294E20950`
+`0x65bF64Ff5f51272f729BDcD7AcFB00677ced86Cd`
 
 ### `PermissionlessOrderbookReserveLister`
-`0x84afa106fbf9b45e369724024cae14e8c7529c26`
+`0xc19bD6b976abC0AD70394Fbb3EDEe741fce9509e`
 
 ### `KyberReserve`
 `0x63825c174ab367968EC60f061753D3bbD36A0D8F`
@@ -35,7 +35,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0xB87304fBD18e669b932695d77cEFdEE0e8e7a6F1`
 
 ### `FeeBurner`
-`0x52166528FCC12681aF996e409Ee3a421a4e128A3`
+`0x8007aa43792A392b221DC091bdb2191E5fF626d1`
 
 ### `SanityRates`
 `0xdfc85C08d5e5924aB49750E006CF8a826ffb7B13`
