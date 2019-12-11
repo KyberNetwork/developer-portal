@@ -624,7 +624,7 @@ function __setTokenControlInfo__(ERC20 token, uint minimalRecordResolution, uint
 | `minimalRecordResolution` | uint  | minimum denominator in token wei that can be changed                |
 | `maxPerBlockImbalance`    | uint  |  maximum wei amount of net absolute (+/-) change for a token in an ethereum block              |
 | `maxTotalImbalance`       | uint  | wei amount of the maximum net token change allowable that happens between 2 price updates                 |
-Modifiers: [onlyAdmin](API_ABI-permissiongroups.md#onlyadmin)\
+Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)\
 **Returns:**\
 Data comprising minimalRecordResolution, maxPerBlockImbalance, and maxTotalImbalance
 
