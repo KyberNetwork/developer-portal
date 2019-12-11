@@ -81,7 +81,7 @@ As we are creating a reserve of KNC tokens, we will copy the `symbol`, `decimals
 
 | Input field               | Explanation                                                                                                                                                                                                                                                                                                                     | Example                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `minimalRecordResolution` | Per trade imbalance values are recorded and stored in the contract. Since this storage of data is an expensive operation, the data is squeezed into one bytes32 object. To prevent overflow while squeezing data, a resolution unit exists. Recommended value is the token wei equivalent of \$0.001 - \$0.01.                          | Assume 1 OMG = $1.<br>$0.001 = 0.001 OMG<br>Now OMG has 18 decimals, so `0.001*(10**18) = 10000000000000`                                                                                                                                                                                                                                                                                                                                                                              |
+| `minimalRecordResolution` | Per trade imbalance values are recorded and stored in the contract. Since this storage of data is an expensive operation, the data is squeezed into one bytes32 object. To prevent overflow while squeezing data, a resolution unit exists. Recommended value is the token wei equivalent of \$0.001 - \$0.01.                  | Assume 1 OMG = $1.<br>$0.001 = 0.001 OMG<br>Now OMG has 18 decimals, so `0.001*(10**18) = 10000000000000`                                                                                                                                                                                                                                                                                                                                                                                |
 | `maxPerBlockImbalance`    | The maximum wei amount of net absolute (+/-) change for a token in an ethereum block. We recommend this value to be larger than the maximum allowed tradeable token amount for a whitelisted user. Suppose we want the maximum change in 1 block to be 439.79 OMG, then we use `439.79 * (10 ** 18) = 439790000000000000000`    | Suppose we have 2 users Alice and Bob. Alice tries to buy 200 OMG and Bob tries to buy 300 OMG. Assuming both transactions are included in the same block and Alice's transaction gets processed first, Bob's transaction will **fail** because the resulting net change of -500 OMG would exceed the limit of 439.79 OMG. However, if Bob decides to sell instead of buy, then the net change becomes +100 OMG, which means an additional 539.79 OMG can be bought, or 339.79 OMG sold. |
 | `maxTotalImbalance`       | Has to be `>= maxPerBlockImbalance`. Represents the amount in wei for the net token change that happens between 2 price updates. This number is reset everytime `setBaseRate()` is called in `ConversionRates.sol`. This acts as a safeguard measure to prevent reserve depletion from unexpected events between price updates. | If we want the maximum total imbalance to be 922.36 OMG, we will use: `922.36 * (10 ** 18) = 922360000000000000000`                                                                                                                                                                                                                                                                                                                                                                      |
 
@@ -203,15 +203,15 @@ First let's understand how the rate in `ConversionRates.sol` is defined and modi
 Base rate sets the basic rate per token, and is set separately for buy and sell values. Compact data and step functions enable advanced functionality and serve as modifiers of the base rate. To avoid frequent expensive updates of base rates, compact data enables modification to a group of tokens in one on chain storage operation. Each compact data array is squeezed into one bytes32 parameter and holds modifiers for buy / sell prices of 14 tokens. If your reserve supports more than 1-2 tokens, we recommend updating token rates using the `setCompactData` function to save gas costs for your updates. Finally, step functions enable degenerated order book functionality, whereby rates are modified according to imbalance values. Refer to the [step function section](#step-functions) for details. More information regarding the input parameters of the `setBaseRate` function can be found in [API/ABI](api_abi-conversionrates.md#setbaserate).
 
 <!--Here are the input parameters of the `setBaseRate` function.
-| Input field | Explanation | Examples |
-| ------------- | ------------- | ------------- |
-| `ERC20[] tokens`  | Array of token contract addresses you will be supporting  | `["0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6"]` <br> `["0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6","0xa577731515303F0C0D00E236041855A5C4F114dC"]` |
-| `uint[] baseBuy`  | Array of token buy rates in token wei | Suppose we want to set `1 ETH = 500 KNC`.<br>So `500 * (10 ** 18) = 500000000000000000000` |
-| `uint[] baseSell`  | Array of token sell rates in token wei | Suppose we want to set `1 KNC = 0.00182 ETH`<br>So `0.00182 * (10 ** 18) = 1820000000000000`|
-| `bytes14[] buy` | Compact data representation of basis points (bps) with respect to `baseBuy` rates | `[0]`<br>`[0x19302f]` |
-| `bytes14[] sell` | Compact data representation of basis points (bps) with respect to `baseSell` rates | `[0]`<br>`[0xa1503d]` |
-| `uint blockNumber` | Most recent ETH block number (can be obtained on Etherscan) | `3480805` |
-| `uint[] indices` | Index of array to apply the compact data bps rates on | `[0]` |-->
+| Input field        | Explanation                                                                        | Examples                                                                                                                                            |
+| ------------------ | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ERC20[] tokens`   | Array of token contract addresses you will be supporting                           | `["0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6"]` <br> `["0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6","0xa577731515303F0C0D00E236041855A5C4F114dC"]` |
+| `uint[] baseBuy`   | Array of token buy rates in token wei                                              | Suppose we want to set `1 ETH = 500 KNC`.<br>So `500 * (10 ** 18) = 500000000000000000000`                                                          |
+| `uint[] baseSell`  | Array of token sell rates in token wei                                             | Suppose we want to set `1 KNC = 0.00182 ETH`<br>So `0.00182 * (10 ** 18) = 1820000000000000`                                                        |
+| `bytes14[] buy`    | Compact data representation of basis points (bps) with respect to `baseBuy` rates  | `[0]`<br>`[0x19302f]`                                                                                                                               |
+| `bytes14[] sell`   | Compact data representation of basis points (bps) with respect to `baseSell` rates | `[0]`<br>`[0xa1503d]`                                                                                                                               |
+| `uint blockNumber` | Most recent ETH block number (can be obtained on Etherscan)                        | `3480805`                                                                                                                                           |
+| `uint[] indices`   | Index of array to apply the compact data bps rates on                              | `[0]`                                                                                                                                               | --> |
 
 ##### Single token
 
@@ -231,8 +231,9 @@ const CONVERSION_RATES_CONTRACT_ADDRESS =
   "0x69E3D8B2AE1613bEe2De17C5101E58CDae8a59D4";
 const KNC_TOKEN_CONTRACT_ADDRESS = "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6";
 var Web3 = require("web3");
+const INFURA_ID = "YOUR_INFURA_ID"
 const web3 = new Web3(
-  new Web3.providers.HttpProvider("https://ropsten.infura.io")
+  new Web3.providers.HttpProvider(`https://ropsten.infura.io/v3/${INFURA_ID}`)
 );
 const BN = require("bignumber.js");
 
@@ -240,441 +241,7 @@ const BN = require("bignumber.js");
 let PRIVATE_KEY = "YOUR_PRIVATE_KEY"; //Eg. "0x5fba6c1ccf757875f65dca7098318be8d76dc4d7a40ded4deb14ff4e0a1bd083"
 let SENDER_ACCOUNT = web3.eth.accounts.privateKeyToAccount(PRIVATE_KEY);
 
-const ConversionRatesABI = [
-  {
-    constant: false,
-    inputs: [{ name: "alerter", type: "address" }],
-    name: "removeAlerter",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [{ name: "reserve", type: "address" }],
-    name: "setReserveAddress",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [{ name: "token", type: "address" }],
-    name: "disableTokenTrade",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "validRateDurationInBlocks",
-    outputs: [{ name: "", type: "uint256" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      { name: "tokens", type: "address[]" },
-      { name: "baseBuy", type: "uint256[]" },
-      { name: "baseSell", type: "uint256[]" },
-      { name: "buy", type: "bytes14[]" },
-      { name: "sell", type: "bytes14[]" },
-      { name: "blockNumber", type: "uint256" },
-      { name: "indices", type: "uint256[]" }
-    ],
-    name: "setBaseRate",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [{ name: "token", type: "address" }],
-    name: "enableTokenTrade",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "pendingAdmin",
-    outputs: [{ name: "", type: "address" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "getOperators",
-    outputs: [{ name: "", type: "address[]" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "getListedTokens",
-    outputs: [{ name: "", type: "address[]" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      { name: "token", type: "address" },
-      { name: "amount", type: "uint256" },
-      { name: "sendTo", type: "address" }
-    ],
-    name: "withdrawToken",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [{ name: "newAlerter", type: "address" }],
-    name: "addAlerter",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "numTokensInCurrentCompactData",
-    outputs: [{ name: "", type: "uint256" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [
-      { name: "token", type: "address" },
-      { name: "command", type: "uint256" },
-      { name: "param", type: "uint256" }
-    ],
-    name: "getStepFunctionData",
-    outputs: [{ name: "", type: "int256" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      { name: "buy", type: "bytes14[]" },
-      { name: "sell", type: "bytes14[]" },
-      { name: "blockNumber", type: "uint256" },
-      { name: "indices", type: "uint256[]" }
-    ],
-    name: "setCompactData",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [{ name: "duration", type: "uint256" }],
-    name: "setValidRateDurationInBlocks",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [{ name: "token", type: "address" }],
-    name: "getTokenBasicData",
-    outputs: [{ name: "", type: "bool" }, { name: "", type: "bool" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [{ name: "newAdmin", type: "address" }],
-    name: "transferAdmin",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [],
-    name: "claimAdmin",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "getAlerters",
-    outputs: [{ name: "", type: "address[]" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [{ name: "token", type: "address" }],
-    name: "getRateUpdateBlock",
-    outputs: [{ name: "", type: "uint256" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      { name: "token", type: "address" },
-      { name: "xBuy", type: "int256[]" },
-      { name: "yBuy", type: "int256[]" },
-      { name: "xSell", type: "int256[]" },
-      { name: "ySell", type: "int256[]" }
-    ],
-    name: "setQtyStepFunction",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [{ name: "newOperator", type: "address" }],
-    name: "addOperator",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "reserveContract",
-    outputs: [{ name: "", type: "address" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [{ name: "", type: "address" }, { name: "", type: "uint256" }],
-    name: "tokenImbalanceData",
-    outputs: [{ name: "", type: "uint256" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [{ name: "operator", type: "address" }],
-    name: "removeOperator",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [
-      { name: "token", type: "address" },
-      { name: "currentBlockNumber", type: "uint256" },
-      { name: "buy", type: "bool" },
-      { name: "qty", type: "uint256" }
-    ],
-    name: "getRate",
-    outputs: [{ name: "", type: "uint256" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      { name: "token", type: "address" },
-      { name: "xBuy", type: "int256[]" },
-      { name: "yBuy", type: "int256[]" },
-      { name: "xSell", type: "int256[]" },
-      { name: "ySell", type: "int256[]" }
-    ],
-    name: "setImbalanceStepFunction",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      { name: "token", type: "address" },
-      { name: "minimalRecordResolution", type: "uint256" },
-      { name: "maxPerBlockImbalance", type: "uint256" },
-      { name: "maxTotalImbalance", type: "uint256" }
-    ],
-    name: "setTokenControlInfo",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      { name: "token", type: "address" },
-      { name: "buyAmount", type: "int256" },
-      { name: "rateUpdateBlock", type: "uint256" },
-      { name: "currentBlock", type: "uint256" }
-    ],
-    name: "recordImbalance",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      { name: "amount", type: "uint256" },
-      { name: "sendTo", type: "address" }
-    ],
-    name: "withdrawEther",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [{ name: "token", type: "address" }, { name: "buy", type: "bool" }],
-    name: "getBasicRate",
-    outputs: [{ name: "", type: "uint256" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [{ name: "token", type: "address" }],
-    name: "addToken",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [{ name: "token", type: "address" }],
-    name: "getCompactData",
-    outputs: [
-      { name: "", type: "uint256" },
-      { name: "", type: "uint256" },
-      { name: "", type: "bytes1" },
-      { name: "", type: "bytes1" }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [{ name: "token", type: "address" }],
-    name: "getTokenControlInfo",
-    outputs: [
-      { name: "", type: "uint256" },
-      { name: "", type: "uint256" },
-      { name: "", type: "uint256" }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "admin",
-    outputs: [{ name: "", type: "address" }],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [{ name: "_admin", type: "address" }],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "constructor"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: false, name: "token", type: "address" },
-      { indexed: false, name: "amount", type: "uint256" },
-      { indexed: false, name: "sendTo", type: "address" }
-    ],
-    name: "TokenWithdraw",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: false, name: "amount", type: "uint256" },
-      { indexed: false, name: "sendTo", type: "address" }
-    ],
-    name: "EtherWithdraw",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [{ indexed: false, name: "pendingAdmin", type: "address" }],
-    name: "TransferAdminPending",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: false, name: "newAdmin", type: "address" },
-      { indexed: false, name: "previousAdmin", type: "address" }
-    ],
-    name: "AdminClaimed",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: false, name: "newAlerter", type: "address" },
-      { indexed: false, name: "isAdd", type: "bool" }
-    ],
-    name: "AlerterAdded",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: false, name: "newOperator", type: "address" },
-      { indexed: false, name: "isAdd", type: "bool" }
-    ],
-    name: "OperatorAdded",
-    type: "event"
-  }
-];
+const ConversionRatesABI = [{"constant":false,"inputs":[{"name":"alerter","type":"address"}],"name":"removeAlerter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"reserve","type":"address"}],"name":"setReserveAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"}],"name":"disableTokenTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"validRateDurationInBlocks","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"tokens","type":"address[]"},{"name":"baseBuy","type":"uint256[]"},{"name":"baseSell","type":"uint256[]"},{"name":"buy","type":"bytes14[]"},{"name":"sell","type":"bytes14[]"},{"name":"blockNumber","type":"uint256"},{"name":"indices","type":"uint256[]"}],"name":"setBaseRate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"}],"name":"enableTokenTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"pendingAdmin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getOperators","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getListedTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"amount","type":"uint256"},{"name":"sendTo","type":"address"}],"name":"withdrawToken","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newAlerter","type":"address"}],"name":"addAlerter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"numTokensInCurrentCompactData","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"},{"name":"command","type":"uint256"},{"name":"param","type":"uint256"}],"name":"getStepFunctionData","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"buy","type":"bytes14[]"},{"name":"sell","type":"bytes14[]"},{"name":"blockNumber","type":"uint256"},{"name":"indices","type":"uint256[]"}],"name":"setCompactData","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"duration","type":"uint256"}],"name":"setValidRateDurationInBlocks","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"}],"name":"getTokenBasicData","outputs":[{"name":"","type":"bool"},{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newAdmin","type":"address"}],"name":"transferAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"claimAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newAdmin","type":"address"}],"name":"transferAdminQuickly","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getAlerters","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"}],"name":"getRateUpdateBlock","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"xBuy","type":"int256[]"},{"name":"yBuy","type":"int256[]"},{"name":"xSell","type":"int256[]"},{"name":"ySell","type":"int256[]"}],"name":"setQtyStepFunction","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOperator","type":"address"}],"name":"addOperator","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"reserveContract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"tokenImbalanceData","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"operator","type":"address"}],"name":"removeOperator","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"},{"name":"currentBlockNumber","type":"uint256"},{"name":"buy","type":"bool"},{"name":"qty","type":"uint256"}],"name":"getRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"xBuy","type":"int256[]"},{"name":"yBuy","type":"int256[]"},{"name":"xSell","type":"int256[]"},{"name":"ySell","type":"int256[]"}],"name":"setImbalanceStepFunction","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"minimalRecordResolution","type":"uint256"},{"name":"maxPerBlockImbalance","type":"uint256"},{"name":"maxTotalImbalance","type":"uint256"}],"name":"setTokenControlInfo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"buyAmount","type":"int256"},{"name":"rateUpdateBlock","type":"uint256"},{"name":"currentBlock","type":"uint256"}],"name":"recordImbalance","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"},{"name":"sendTo","type":"address"}],"name":"withdrawEther","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"},{"name":"buy","type":"bool"}],"name":"getBasicRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"}],"name":"addToken","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"}],"name":"getCompactData","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"bytes1"},{"name":"","type":"bytes1"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"}],"name":"getTokenControlInfo","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_admin","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"token","type":"address"},{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"sendTo","type":"address"}],"name":"TokenWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"sendTo","type":"address"}],"name":"EtherWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"pendingAdmin","type":"address"}],"name":"TransferAdminPending","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newAdmin","type":"address"},{"indexed":false,"name":"previousAdmin","type":"address"}],"name":"AdminClaimed","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newAlerter","type":"address"},{"indexed":false,"name":"isAdd","type":"bool"}],"name":"AlerterAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newOperator","type":"address"},{"indexed":false,"name":"isAdd","type":"bool"}],"name":"OperatorAdded","type":"event"}];
 
 var ConversionRatesContract = new web3.eth.Contract(
   ConversionRatesABI,
@@ -684,8 +251,8 @@ var ConversionRatesContract = new web3.eth.Contract(
 Do some calculations, add some spread to obtain some desired buy / sell rates for your token(s)
 Example values below are from the table above
 */
-BUY_RATE = [500000000000000000000]; //Eg. [100000000000000000000, 200000000000000000000]
-SELL_RATE = [1820000000000000]; //Eg. [1800000000000000, 1900000000000000]
+BUY_RATE = ["500000000000000000000"]; //Eg. [100000000000000000000, 200000000000000000000]
+SELL_RATE = ["1820000000000000"]; //Eg. [1800000000000000, 1900000000000000]
 
 async function main() {
   const blockNumber = await web3.eth.getBlockNumber();
@@ -694,10 +261,10 @@ async function main() {
       [KNC_TOKEN_CONTRACT_ADDRESS], //ERC20[] tokens
       BUY_RATE, //uint[] baseBuy
       SELL_RATE, //uint[] baseSell
-      [0], //bytes14[] buy
-      [0], //bytes14[] sell
+      ["0x0"], //bytes14[] buy
+      ["0x0"], //bytes14[] sell
       blockNumber, //most recent ropsten ETH block number as time of writing
-      [0] //uint[] indices
+      ["0x0"] //uint[] indices
     )
     .encodeABI();
   var signedTx = await web3.eth.accounts.signTransaction(
@@ -815,13 +382,13 @@ function setQtyStepFunction(
 
 More information regarding the input parameters of the `setQtyStepFunction` function can be found in [API/ABI](api_abi-conversionrates.md#setqtystepfunction).
 
-<!--| Input field | Explanation | Example |
-| ------------- | ------------- | ------------- |
-| `ERC20 token`  |  Token contract address | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6` |
-| `int[] xBuy`  | Buy steps in token wei | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
-| `int[] yBuy`  | Buy impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%`  |  `[0,-30,-60,-80]`<br>**Values should be `<=0`** |
-| `int[] xSell`  | Buy steps in token wei | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
-| `int[] ySell`  | Sell impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%`  |  `[0,-30,-60,-80]`<br>**Values should be `<=0`** |
+| <!--          | Input field                                                                                | Explanation                                                                                  | Example |
+| ------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `ERC20 token` | Token contract address                                                                     | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6`                                                 |
+| `int[] xBuy`  | Buy steps in token wei                                                                     | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
+| `int[] yBuy`  | Buy impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%`  | `[0,-30,-60,-80]`<br>**Values should be `<=0`**                                              |
+| `int[] xSell` | Buy steps in token wei                                                                     | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
+| `int[] ySell` | Sell impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` | `[0,-30,-60,-80]`<br>**Values should be `<=0`**                                              |
 * Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
 * When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory.-->
 
@@ -858,13 +425,13 @@ function setImbalanceStepFunction(
 
 More information regarding the input parameters of the `setImbalanceStepFunction` function can be found in [API/ABI](api_abi-conversionrates.md#setimbalancestepfunction).
 
-<!--| Input field | Explanation | Example |
-| ------------- | ------------- | ------------- |
-| `ERC20 token`  |  Token contract address | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6` |
-| `int[] xBuy`  | Buy steps in token wei  | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]`|
-| `int[] yBuy`  | Impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` |  `[0,-30,-60,-80]`<br>**Values should be `<=0`** |
-| `int[] xSell`  | Sell steps in token wei | `[-300000000000000000000,-200000000000000000000,-100000000000000000000,0]`|
-| `int[] ySell`  | Impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` | `[-70,-50,-25,0]`<br>**Values should be `<=0`** |
+| <!--          | Input field                                                                           | Explanation                                                                                  | Example |
+| ------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `ERC20 token` | Token contract address                                                                | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6`                                                 |
+| `int[] xBuy`  | Buy steps in token wei                                                                | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
+| `int[] yBuy`  | Impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` | `[0,-30,-60,-80]`<br>**Values should be `<=0`**                                              |
+| `int[] xSell` | Sell steps in token wei                                                               | `[-300000000000000000000,-200000000000000000000,-100000000000000000000,0]`                   |
+| `int[] ySell` | Impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` | `[-70,-50,-25,0]`<br>**Values should be `<=0`**                                              |
 * Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
 * `yBuy` and `ySell` numbers should always be non-positive (`<=0`) because the smart contract **reduces** the output amount by the Y-value set in each step.-->
 

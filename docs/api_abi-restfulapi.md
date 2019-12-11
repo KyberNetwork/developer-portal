@@ -26,7 +26,7 @@ The RESTful API provide a way for users to be able to programmatically interact 
 **Arguments:**
 | Parameter | Type | Required | Description |
 |:---------:|:------:|:--------:|:------------------------------------------------:|
-| `id` | string | Yes | The `id` of the asset you want to buy using ETH. |
+| `id` | string | Yes | The `id` represents the token you want to buy using ETH. |
 | `qty` | float | Yes | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to buy. |
 | `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 
@@ -35,10 +35,10 @@ The RESTful API provide a way for users to be able to programmatically interact 
 **Response:**
 | Parameter | Type | Description |
 |:---------:|:-------:|:---------------------------------------------------------------------------------------------:|
-| `src_id` | string | The `id` of the source asset. It should be ETH for this endpoint. |
-| `dst_id` | string | The `id` of the destination asset of the pair you want to get rates for. `id` should match one of the request input parameters specified in `id`. |
-| `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |
-| `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of the destination asset. They should match the request input parameter specified in `qty`. |
+| `src_id` | string | The `id` represents the source token. It should be ETH for this endpoint. |
+| `dst_id` | string | The `id` represents the destination token of the pair you want to get rates for. `id` should match one of the request input parameters specified in `id`. |
+| `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of ETH. |
+| `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` represents the destination token. They should match the request input parameter specified in `qty`. |
 
 Example:
 
@@ -498,7 +498,7 @@ Example:
 **Arguments:**
 | Parameter | Type | Required | Description |
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
-| `id` | string | Yes | The `id` of the assets you want to sell using ETH. |
+| `id` | string | Yes | The `id` represents the token you want to sell using ETH. |
 | `qty` | float | Yes | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to sell. |
 | `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 
@@ -507,10 +507,10 @@ Example:
 **Response:**
 | Parameter | Type | Description |
 |:---------:|:-------:|:----------------------:|
-| `src_id` | string | The `id` of the source asset of the pair you want to get rates for. `id` should match the request input parameters specified in `id`. |
-| `dst_id` | string | The `id` of the destination asset. It should be ETH for this endpoint. |
-| `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of the source asset. They should match the request input parameter specified in `qty`. |
-| `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` of ETH. |
+| `src_id` | string | The `id` represents the source token of the pair you want to get rates for. `id` should match the request input parameters specified in `id`. |
+| `dst_id` | string | The `id` represents the destination token. It should be ETH for this endpoint. |
+| `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` represents the source token. They should match the request input parameter specified in `qty`. |
+| `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of ETH. |
 
 Example:
 
@@ -559,10 +559,10 @@ Example:
 | Parameter | Type | Required | Description |
 |:--------------:|:------:|:--------:|:-----------------------------------------------------------------------------------------------------:|
 | `user_address` | string | Yes | The ETH address that will be executing the swap. |
-| `src_id` | string | Yes | The `id` of the source asset of the pair you want to trade. |
-| `dst_id` | string | Yes | The `id` of the destination asset of the pair you want to trade. |
-| `src_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the source asset. |
-| `min_dst_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` of the destination asset. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
+| `src_id` | string | Yes | The `id` represents the source token of the pair you want to trade. |
+| `dst_id` | string | Yes | The `id` represents the destination token of the pair you want to trade. |
+| `src_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` represents the source token. |
+| `min_dst_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` represents the destination token. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
 | `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
 | `wallet_id` | string | No | The wallet address that is registered for the [fee sharing program](integrations-feesharing.md). |
 | `nonce` | integer | No | Users can specify a nonce to override the default account nonce. |
