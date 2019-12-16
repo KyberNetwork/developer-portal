@@ -121,7 +121,7 @@ event **KyberTrade**(address indexed trader, ERC20 src, ERC20 dest, uint srcAmou
 | `reserve2`    | address | NO      | address of reserve selected for source token to Ether trade |
 | `hint`        | bytes   | NO      | used to determine if permissionless reserves are to be used |
 
-Event Signature: `0xc703a55592b46364d149bd9ee9d59e08774a51cb38b46db03c48c35d609de891`
+Event Signature: `0xd30ca399cb43507ecec6a629a35cf45eb98cda550c27696dcb0d8c4a3873ce6c`
 <br />
 
 ### `ListReservePairs`
@@ -138,7 +138,7 @@ event **ListReservePairs**(address reserve, ERC20 src, ERC20 dest, bool add)
 | `dest`    | ERC20   | NO      | destination ERC20 token contract address          |
 | `add`     | bool    | NO      | `true` if token pair is listed, `false` otherwise |
 
-Event Signature: `0x2dfce48e0e90a69a2044596f70be4cf5e451551a7fd18923e7032698c576a481`
+Event Signature: `0xadb5a4f14d89b3a5ffb3900ac1ea4574d991f93887f6199fabaf25393644e01c`
 <br />
 
 ### `RemoveReserveFromNetwork`
@@ -152,7 +152,7 @@ event **RemoveReserveFromNetwork**(KyberReserveInterface reserve)
 |:---------:|:---------------------:|:-------:|:--------------------------:|
 | `reserve` | KyberReserveInterface | NO      | reserve's contract address |
 
-Event Signature: `0xd55b897e097ceaa20b9ce761af21fcc289b41a6449c116b5852b43dc7a7b1d9e`
+Event Signature: `0x861f07ab6bad95b71c362ed240dc0082c3d9bbfe75e7830be646ef0d61da3117`
 <br />
 
 
@@ -176,7 +176,7 @@ event **DepositToken**(ERC20 token, uint amount)
 | `token`   | ERC20  | NO      | ERC20 token contract address |
 | `amount`  | uint   | NO      | ERC20 token amount in wei    |
 
-Event Signature: `0x4657b0051454ee8dd3ec9b6fe102b331eedeff7bb901973f7c1fce5a063be38d`
+Event Signature: `0x2d0c0a8842b9944ece1495eb61121621b5e36bd6af3bba0318c695f525aef79f`
 <br />
 
 ### `TradeEnabled`
@@ -209,7 +209,7 @@ event **TradeExecute**(address indexed origin, address src, uint srcAmount, addr
 | `destAmount`  | uint    | NO      | wei amount of destination ERC20 tokens         |
 | `destAddress` | address | NO      | recipient address for destination ERC20 tokens |
 
-Event Signature: `0x17c18c623efd0b73eacfa87d8afe39aa7c60b07d9e8bade6a436cd0d2db227bc`
+Event Signature: `0xea9415385bae08fe9f6dc457b02577166790cde83bb18cc340aac6cb81b824de`
 <br />
 
 ### `WithdrawFunds`
@@ -225,7 +225,7 @@ event **WithdrawFunds**(ERC20 token, uint amount, address destination)
 | `amount`      | uint    | NO      | wei amount of tokens that was withdrawn |
 | `destination` | address | NO      | recipient address of withdrawn funds    |
 
-Event Signature: `0x2810ccd05e0b14eda28bdc2f92ed6827c094784658981adfbd24b84a7a1232b6`
+Event Signature: `0xb67719fc33c1f17d31bf3a698690d62066b1e0bae28fcd3c56cf2c015c2863d6`
 <br />
 
 
@@ -251,7 +251,7 @@ event **OrderbookReserveTrade**(ERC20 srcToken, ERC20 dstToken, uint srcAmount, 
 | `srcAmount` | uint  | NO      | source ERC20 token amount in its token decimals      |
 | `dstAmount` | uint  | NO      | destination ERC20 token amount in its token decimals |
 
-Event Signature: `0xcdc27ac99feb78c4be95e090e9630950d315ab88bc119a0b24c3510a4aeed5aa`
+Event Signature: `0x36cfc7e9779b5ccf22f92f2f0d9adf9c74df05ab07de27c8cb508020389f9adc`
 <br />
 
 
@@ -289,7 +289,7 @@ event **OrderCanceled**(address indexed maker, bool isEthToToken, uint32 orderId
 | `srcAmount`    | uint128 | NO      | updated source ERC20 token amount in its token decimals      |
 | `dstAmount`    | uint    | NO      | updated destination ERC20 token amount in its token decimals |
 
-Event Signature: `0x7ae8b8ff3921236245be9b44d05005a86769cb1b8270134644231d0bfcf0e5b4`
+Event Signature: `0x179f16fddc625e40df9cb92cfcea70d64a6262c82b7a769e52996b1ff511ff56`
 <br />
 
 ### `FullOrderTaken`
@@ -349,7 +349,7 @@ event **AssignBurnFees**(address reserve, uint burnFee)
 | `reserve` | address | NO      | reserve's contract address         |
 | `burnFee` | uint    | NO      | amount of fees to be burned in wei |
 
-Event Signature: `0x5c1732643e51749f7e7eaa4a0f69da863bdf73c15f001f6ac949720ca55712f5`
+Event Signature: `0xf838f6ddc89706878e3c3e698e9b5cbfbf2c0e3d3dcd0bd2e00f1ccf313e0185`
 <br />
 
 ### `AssignFeeToWallet`
@@ -365,7 +365,7 @@ event **AssignFeeToWallet**(address reserve, address wallet, uint walletFee)
 | `wallet`    | address | NO      | wallet address to send fees to                  |
 | `walletFee` | uint    | NO      | amount of fees to be assigned to wallet address |
 
-Event Signature: `0xc5b4f804c74a3d9bef06efa07fff2ce3b711db45050767096e163351dec86aab`
+Event Signature: `0x366bc34352215bf0bd3b527cfd6718605e1f5938777e42bcd8ed92f578368f52`
 <br />
 
 ### `BurnAssignedFees`
@@ -381,7 +381,7 @@ event **BurnAssignedFees**(address indexed reserve, address sender, uint quantit
 | `sender`   | address | NO      | sender's address                     |
 | `quantity` | uint    | NO      | amount of assigned fees to be burned |
 
-Event Signature: `0x64d878755be961ce3f351c91a68748ac3d1f4c49829f54e858a05bb84abad1f9`
+Event Signature: `0x2f8d2d194cbe1816411754a2fc9478a11f0707da481b11cff7c69791eb877ee1`
 <br />
 
 ### `SendWalletFees`
