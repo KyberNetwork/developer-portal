@@ -121,7 +121,7 @@ event **KyberTrade**(address indexed trader, ERC20 src, ERC20 dest, uint srcAmou
 | `reserve2`    | address | NO      | address of reserve selected for source token to Ether trade |
 | `hint`        | bytes   | NO      | used to determine if permissionless reserves are to be used |
 
-Event Signature: `0xc703a55592b46364d149bd9ee9d59e08774a51cb38b46db03c48c35d609de891`
+Event Signature: `0xd30ca399cb43507ecec6a629a35cf45eb98cda550c27696dcb0d8c4a3873ce6c`
 <br />
 
 ### `ListReservePairs`
