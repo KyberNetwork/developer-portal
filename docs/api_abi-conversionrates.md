@@ -564,10 +564,10 @@ Set adjustments for tokens' buy and sell rates depending on the size of a buy / 
 
 ---
 
-function **setQtyStepFunction**(ERC20[] tokens, int[] xBuy, int[] yBuy, int[] xSell, int[] ySell) public onlyOperator
+function **setQtyStepFunction**(ERC20 token, int[] xBuy, int[] yBuy, int[] xSell, int[] ySell) public onlyOperator
 | Parameter | Type | Description |
 | -----------------|:------------------------:|:--------------------------------:|
-| `tokens` | ERC20[] | array of token contract addresses to set the base rates for |
+| `token` | ERC20 | token contract address to set the base rates for |
 | `xBuy` | int[] | array of buy steps in wei amount |
 | `yBuy` | int[] | impact on buy rate in basis points (bps). `1 bps = 0.01%` Eg. `-30 = -0.3%` |
 | `xSell` | int[] | array of sell steps in wei amount |
@@ -588,17 +588,11 @@ Web3 Example:
 
 ConversionRates.methods
   .setQtyStepFunction(
-    ["0xdd974D5C2e2928deA5F71b9825b8b646686BD200"][ //ERC20[] tokens: KNC
-      (100000000000000000000,
-      200000000000000000000,
-      300000000000000000000,
-      5000000000000000000000)
-    ][(0, -30, -60, -80)][ //uint[] xBuy //uint[] yBuy
-      (100000000000000000000,
-      200000000000000000000,
-      300000000000000000000,
-      5000000000000000000000)
-    ][(0, -30, -60, -80)] //uint[] xSell //uint[] ySell
+    "0xdd974D5C2e2928deA5F71b9825b8b646686BD200", //KNC
+    [100000000000000000000, 200000000000000000000, 300000000000000000000, 5000000000000000000000], //uint[] xBuy
+    [0, -30, -60, -80], //uint[] yBuy
+    [100000000000000000000, 200000000000000000000, 300000000000000000000, 5000000000000000000000], //uint[] xSell
+    [0, -30, -60, -80] //uint[] ySell
   )
   .send(
     {
@@ -661,17 +655,10 @@ Web3 Example:
 ConversionRates.methods
   .setImbalanceStepFunction(
     "0xdd974D5C2e2928deA5F71b9825b8b646686BD200", //ERC20 token: KNC
-    [
-      100000000000000000000,
-      200000000000000000000,
-      300000000000000000000,
-      5000000000000000000000
-    ][(0, -30, -60, -80)][ //uint[] xBuy //uint[] yBuy
-      (-300000000000000000000,
-      -200000000000000000000,
-      -100000000000000000000,
-      0)
-    ][(-70, -50, -25, 0)] //uint[] xSell //uint[] ySell
+    [100000000000000000000, 200000000000000000000, 300000000000000000000, 5000000000000000000000], //uint[] xBuy
+    [0, -30, -60, -80], //uint[] yBuy
+    [-300000000000000000000, -200000000000000000000, -100000000000000000000, 0], //uint[] xSell
+    [-70, -50, -25, 0] //uint[] ySell
   )
   .send(
     {
