@@ -211,7 +211,7 @@ Base rate sets the basic rate per token, and is set separately for buy and sell 
 | `bytes14[] buy`    | Compact data representation of basis points (bps) with respect to `baseBuy` rates  | `[0]`<br>`[0x19302f]`                                                                                                                               |
 | `bytes14[] sell`   | Compact data representation of basis points (bps) with respect to `baseSell` rates | `[0]`<br>`[0xa1503d]`                                                                                                                               |
 | `uint blockNumber` | Most recent ETH block number (can be obtained on Etherscan)                        | `3480805`                                                                                                                                           |
-| `uint[] indices`   | Index of array to apply the compact data bps rates on                              | `[0]`                                                                                                                                               | --> |
+| `uint[] indices`   | Index of array to apply the compact data bps rates on                              | `[0]`                                                                                                                                               | -->
 
 ##### Single token
 
@@ -382,15 +382,16 @@ function setQtyStepFunction(
 
 More information regarding the input parameters of the `setQtyStepFunction` function can be found in [API/ABI](api_abi-conversionrates.md#setqtystepfunction).
 
-| <!--          | Input field                                                                                | Explanation                                                                                  | Example |
-| ------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| Input field | Explanation | Example |
+| ----------- | ----------- | ------- |
 | `ERC20 token` | Token contract address                                                                     | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6`                                                 |
 | `int[] xBuy`  | Buy steps in token wei                                                                     | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
 | `int[] yBuy`  | Buy impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%`  | `[0,-30,-60,-80]`<br>**Values should be `<=0`**                                              |
 | `int[] xSell` | Buy steps in token wei                                                                     | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
 | `int[] ySell` | Sell impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` | `[0,-30,-60,-80]`<br>**Values should be `<=0`**                                              |
 * Buy steps (`xBuy`) are used to change ASK prices, sell steps (`xSell`) are used to change BID prices
-* When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory.-->
+* When `yBuy` and `ySell` numbers are non-positive (`< 0`) they will modify the rate to be lower, meaning the rate will be **reduced** by the Y-value set in each step. So negative steps mean worse rates for the user. Setting positive step values will give user better rates and could be considered as an advanced method to encourage users to "re balance" the inventory.
+|
 
 Given the example parameters in the API/ABI section, assume the base buy rate is 100 (1 ETH = 100 KNC) and sell rate is 0.01 (1 KNC = 0.01 ETH), different buy and sell quantities will result in different conversion rates as below:
 
@@ -425,10 +426,10 @@ function setImbalanceStepFunction(
 
 More information regarding the input parameters of the `setImbalanceStepFunction` function can be found in [API/ABI](api_abi-conversionrates.md#setimbalancestepfunction).
 
-| <!--          | Input field                                                                           | Explanation                                                                                  | Example |
-| ------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `ERC20 token` | Token contract address                                                                | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6`                                                 |
-| `int[] xBuy`  | Buy steps in token wei                                                                | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
+| Input field | Explanation | Example |
+| ------------- | -------------------------- | ------------------ |
+| `ERC20 token` | Token contract address | `0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6` |
+| `int[] xBuy`  | Buy steps in token wei | `[100000000000000000000,200000000000000000000,300000000000000000000,5000000000000000000000]` |
 | `int[] yBuy`  | Impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` | `[0,-30,-60,-80]`<br>**Values should be `<=0`**                                              |
 | `int[] xSell` | Sell steps in token wei                                                               | `[-300000000000000000000,-200000000000000000000,-100000000000000000000,0]`                   |
 | `int[] ySell` | Impact on conversion rate in basis points (bps). `1 bps = 0.01%`<br>Eg. `-30 = -0.3%` | `[-70,-50,-25,0]`<br>**Values should be `<=0`**                                              |
