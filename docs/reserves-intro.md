@@ -13,5 +13,7 @@ There are currently 3 ways that anyone can help contribute liquidity to the netw
 
 The key benefit reserves provide is *instant liquidity*. Takers such as DApps, vendors and wallets that integrate the protocol are able to immediately convert one token to another because of the liquidity made readily available by reserves.
 
+![Reserves Single Endpoint](/uploads/reservesSingleEndpoint.png "Reserves Single Endpoint")
+
 - [Learn more about the existing reserve types and how they differ from each other](reserves-types.md)
 - [See the requirements for creating a custom reserve type](reserves-requirements.md)
