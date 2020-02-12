@@ -300,3 +300,71 @@ To finalize this step, deposit exact amount of Ether and tokens (in our example 
 Once you have completed the above steps, you can let any network operator know so that they can approve your reserve and list your token to the network. Kyber Network is currently the only network operator.
 
 Once approved, you can test your reserve on [KyberSwap](https://ropsten.kyber.network) Ropsten site! Please note that if there are other reserves listing same swap pair as you, your swap may not get matched with your reserve, because only the reserve that offers best rate will be matched. We can disable other reserves on the testnet to make sure you will swap with your reserve.
+
+## Price Discovery Algorithm
+
+How is the price be set, given a list of trades? Assuming the price (ETH/Token) will be given by *P(E)* which will be a function of the current ETH reserve size. Then assuming we want a change in the price to be proportional to the amount traded we will have:
+
+![AprFormula1](/uploads/apr_1.png "AprFormula1")
+
+where *r* is the proportion factor. When *∆E* is very small we'll have
+
+![AprFormula2](/uploads/apr_2.png "AprFormula2")
+
+integration gives
+
+![AprFormula3](/uploads/apr_3.png "AprFormula3")
+
+Where *e^A* is the minimal price given by *Pmin* , so we have
+
+![AprFormula4](/uploads/apr_4.png "AprFormula4")
+
+The amount of tokens *Tmax* that will be sold until reaching *Pmax* , is related to the maximal price on our platform *P(Emax)* in the following way
+
+![AprFormula5](/uploads/apr_5.png "AprFormula5")
+
+where *Emax* is given from *Pmax* itself,
+
+![AprFormula6](/uploads/apr_6.png "AprFormula6")
+
+carrying out the integration and plugging in *Emax* will give:
+
+![AprFormula7](/uploads/apr_7.png "AprFormula7")
+
+the initial amount of tokens *T0* will be given by calculating *Tmax* at *E0* , which
+finally gives
+
+![AprFormula8](/uploads/apr_8.png "AprFormula8")
+
+similarly, the initial amount of ETH, E 0 , can be deduced from the initial
+price P 0 as
+
+![AprFormula9](/uploads/apr_9.png "AprFormula9")
+
+So given *Pmin*, *Pmax*, *P0*, *r* we can find *E0*, *T0*, *Emax*.
+
+### Trading ∆E Ethers
+
+*∆E* can be positive (increasing the amount of ethers in the reserve and selling
+tokens to the trader), or negative. Solving the following integral
+
+![AprFormula10](/uploads/apr_10.png "AprFormula10")
+
+will give the result for *∆T*
+
+![AprFormula11](/uploads/apr_11.png "AprFormula11")
+
+### Trading ∆T Tokens
+
+*∆T* can be positive (increasing the amount of tokens in the reserve and selling
+ethers to the trader), or negative. Integrating the following
+
+![AprFormula12](/uploads/apr_12.png "AprFormula12")
+
+and solving with respect to *∆E* gives
+
+![AprFormula13](/uploads/apr_13.png "AprFormula13")
+
+![AprChart](/uploads/aprchart.png "AprChart")
+
+The above figure shows the price function, with relevant parameters. *T0* cannot be shown since its the area under *1/P*, not the area under *P*.
