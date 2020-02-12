@@ -283,11 +283,11 @@ Contracts
 | **SwapTokenToToken**                     | 0xB31b6edd85c386C259FB5488dae8Be4ed82C0778 |
 | **Trade**                                | 0x3f21DD3b2Aca23e495290a8dcb9A934984D93a6c |
 
-**NOTE:** The `KyberReserve` and `KyberAutomatedReserve` as well as the `KyberOrderbookReserve` and `OrderbookReserve` are the same contracts. A duplicate was made as a workaround due to a limitation of Truffle where only one instance of a contract can be migrated. Kyber has three types of reserves, the Price Feed Reserve, Automated Price Reserve, and Orderbook Reserve, which you can read more about [here](reserves-types.md).
+**NOTE:** The `KyberReserve` and `KyberAutomatedReserve` as well as the `KyberOrderbookReserve` and `OrderbookReserve` are the same contracts. A duplicate was made as a workaround due to a limitation of Truffle where only one instance of a contract can be migrated. Kyber has three types of reserves, the Fed Price Reserve, Automated Price Reserve, and Orderbook Reserve, which you can read more about [here](reserves-types.md).
 
 ## How to add a new ERC20 token with rates for initial migration
 
-### Price Feed Reserve
+### Fed Price Reserve
 
 #### 1. Create your ERC20 token contract
 
@@ -295,7 +295,7 @@ Create your ERC20 token contract in `contracts/mockTokens`. You can duplicate an
 
 #### 2. Set the minimalRecordResolution, maxPerBlockImbalance, and maxTotalImbalance of each defined token in the tokens.json config file
 
-In `config/tokens.json`, under the `PriceFeedReserve` section, define the `minimalRecordResolution`, `maxPerBlockImbalance` and `maxTotalImbalance` of each defined token (replace NEW with the token symbol).
+In `config/tokens.json`, under the `FedPriceReserve` section, define the `minimalRecordResolution`, `maxPerBlockImbalance` and `maxTotalImbalance` of each defined token (replace NEW with the token symbol).
 
 These 3 fields are explained below:
 
@@ -306,7 +306,7 @@ These 3 fields are explained below:
 | `maxTotalImbalance`       | Has to be `>= maxPerBlockImbalance`. Represents the amount in wei for the net token change that happens between 2 price updates. This number is reset everytime `setBaseRate()` is called in `ConversionRates.sol`.  This acts as a safeguard measure to prevent reserve depletion from unexpected events between price updates. | If we want the maximum total imbalance to be 922.36 OMG, we will use: `922.36 * (10 ** 18) = 922360000000000000000` |
 
 ```json
-"PriceFeedReserve": {
+"FedPriceReserve": {
   "NEW": {
     "minimalRecordResolution" : "1000000000000000",
     "maxPerBlockImbalance" : "9078768104330450960384",
@@ -332,7 +332,7 @@ The range which compact data can handle is from -12.8% to 12.7%.
 This gives us the buy array [25,10,-30]. Encoding this to hex yields [0x190ae2]. But for simplicity sake, we can set this to 0x0000000000000000000000000000.
 
 ```json
-"PriceFeedReserve": {
+"FedPriceReserve": {
   "NEW": {
     "minimalRecordResolution" : "1000000000000000",
     "maxPerBlockImbalance" : "9078768104330450960384",
@@ -350,7 +350,7 @@ Lastly, add the sanity rate for each token you define. The sanity rates defined 
 You should have the final definition of a token below:
 
 ```json
-"PriceFeedReserve": {
+"FedPriceReserve": {
   "NEW": {
     "minimalRecordResolution" : "1000000000000000",
     "maxPerBlockImbalance" : "9078768104330450960384",
@@ -364,7 +364,7 @@ You should have the final definition of a token below:
 }
 ```
 
-You can read more about these fields in the [Price Feed Reserve guide](reserves-pricefeedreserve.md).
+You can read more about these fields in the [Fed Price Reserve guide](reserves-fedpricereserve.md).
 
 #### 3. Run the Truffle migration
 

@@ -1,15 +1,15 @@
 ---
-id: Reserves-PriceFeedReserve
-title: Price Feed Reserve
+id: Reserves-FedPriceReserve
+title: Fed Price Reserve
 ---
 [//]: # (tagline)
 ## Objective
 
-In this guide, we will learn how to configure and deploy a Price Feed Reserve either locally via ganache or to the Ropsten testnet.
+In this guide, we will learn how to configure and deploy a Fed Price Reserve either locally via ganache or to the Ropsten testnet.
 
 ## Introduction
 
-A Price Feed Reserve consists of two main components: an on-chain component of your reserve smart contracts and an off-chain component (normally, an automated system) that manages your on-chain component. The two components are depicted in the diagram below.
+A Fed Price Reserve consists of two main components: an on-chain component of your reserve smart contracts and an off-chain component (normally, an automated system) that manages your on-chain component. The two components are depicted in the diagram below.
 
 ![Kyber Reserve Components](/uploads/kyberreservecomponents.png "Kyber Reserve Components")
 

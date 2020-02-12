@@ -15,7 +15,7 @@ For the different information needed, a link to the relevant event is given.
 * [ExecuteTrade](integrations-contractevents.md#executetrade)
 * [KyberTrade](integrations-contractevents.md#kybertrade)
 
-### Events to track Price Feed Reserve (PFR) and Automated Price Reserve (APR) statistics
+### Events to track Fed Price Reserve (FPR) and Automated Price Reserve (APR) statistics
 * [TradeExecute](integrations-contractevents.md#tradeexecute)
 * [DepositToken](integrations-contractevents.md#deposittoken)
 * [WithdrawFunds](integrations-contractevents.md#withdrawfunds)

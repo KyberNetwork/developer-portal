@@ -8,7 +8,7 @@ title: ConversionRates
 is [ConversionRatesInterface](api_abi-conversionratesinterface.md), VolumeImbalanceRecorder, Utils\
 imports ERC20Interface, VolumeImbalanceRecorder, [ConversionRatesInterface](api_abi-conversionratesinterface.md), Utils
 
-_Source_: [ConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/reserves/pfrConversionRate/ConversionRates.sol)
+_Source_: [ConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/reserves/fprConversionRate/ConversionRates.sol)
 
 The ConversionRates contract's role is to allow reserve operators to make simple on-chain adjustment to the prices and is an optimized cheap (w.r.t gas consumption) interface to enter rate feeds.
 
@@ -466,7 +466,7 @@ function **recordImbalance**(ERC20 token, int buyAmount, uint rateUpdateBlock, u
 ### `setBaseRate`
 
 Set tokens' base buy and sell rates, and optional adjustments to these rates. Only operator can invoke.
-Refer to [this guide](reserves-pricefeedreserve.md#how-to-programmatically-call-setbaserate-setcompactdata) on how to use this function.
+Refer to [this guide](reserves-fedpricereserve.md#how-to-programmatically-call-setbaserate-setcompactdata) on how to use this function.
 
 ---
 
@@ -518,7 +518,7 @@ txReceipt = await web3.eth.sendTransaction({
 ### `setCompactData`
 
 Setting minor adjustments in basis points (bps) to tokens' buy and sell rates. `1bps = 0.01%`. Only operator can invoke.
-Refer to [this guide](reserves-pricefeedreserve.md#how-to-programmatically-call-setbaserate-setcompactdata) on how to use this function.
+Refer to [this guide](reserves-fedpricereserve.md#how-to-programmatically-call-setbaserate-setcompactdata) on how to use this function.
 
 ---
 

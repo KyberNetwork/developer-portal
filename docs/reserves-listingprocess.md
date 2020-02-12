@@ -25,11 +25,11 @@ Below is a complete sequence when listing a new permissioned reserve in Kyber. A
 
 ### TESTING: Deployment on Ropsten testnet
 
-1. Deploy your reserve on Ropsten using the following guides depending no your reserve type choice: [Price Feed Reserve](reserves-pricefeedreserve.md) or [Automated Price Reserve](reserves-automatedpricereserve.md)
+1. Deploy your reserve on Ropsten using the following guides depending no your reserve type choice: [Fed Price Reserve](reserves-fedpricereserve.md) or [Automated Price Reserve](reserves-automatedpricereserve.md)
 
 2. Test ETH and token withdrawals on your reserve. Deposit a small amount of ETH (e.g. 0.001 ETH) and tokens (e.g. 1 token) to the KyberReserve contract, and call `withdrawEther()` and `withdrawToken()` to test withdrawals. Once withdrawals are successful, you can deposit the full inventory amount.
 
-3. Configure the token conversion rates of your reserve by either calling [`setBaseRate()`](api_abi-conversionrates.md#setBaseRate), [`setQtyStepFunction()`](api_abi-conversionrates.md#setQtyStepFunction), and [`setImbalanceStepFunction()`](api_abi-conversionrates.md#setImbalanceStepFunction) if using the PFR or calling [`setLiquidityParams()`](api_abi-liquidityconversionrates.md#setLiquidityParams) if using the APR.
+3. Configure the token conversion rates of your reserve by either calling [`setBaseRate()`](api_abi-conversionrates.md#setBaseRate), [`setQtyStepFunction()`](api_abi-conversionrates.md#setQtyStepFunction), and [`setImbalanceStepFunction()`](api_abi-conversionrates.md#setImbalanceStepFunction) if using the FPR or calling [`setLiquidityParams()`](api_abi-liquidityconversionrates.md#setLiquidityParams) if using the APR.
 
 4. Check that the rates conform to settings by calling [`getConversionRate()`](api_abi-kyberreserve.md#getconversionrate) in the KyberReserve contract.
 
@@ -39,11 +39,11 @@ Below is a complete sequence when listing a new permissioned reserve in Kyber. A
 
 ### STAGING: Deployment on Kyber's staging network in Mainnet
 
-1. Deploy your reserve on Mainnet using the following guides depending no your reserve type choice: [Price Feed Reserve](reserves-pricefeedreserve.md) or [Automated Price Reserve](reserves-automatedpricereserve.md). However, you will need to use the Staging KyberNetwork contract address. Kindly reach out to the Kyber developer team for the contract address for the staging network. This is a controlled private network in the Mainnet meant to do testing with real funds before going live on the production network. Only whitelisted addresses, mainly from the Kyber team, are allowed to trade on this network.
+1. Deploy your reserve on Mainnet using the following guides depending no your reserve type choice: [Fed Price Reserve](reserves-fedpricereserve.md) or [Automated Price Reserve](reserves-automatedpricereserve.md). However, you will need to use the Staging KyberNetwork contract address. Kindly reach out to the Kyber developer team for the contract address for the staging network. This is a controlled private network in the Mainnet meant to do testing with real funds before going live on the production network. Only whitelisted addresses, mainly from the Kyber team, are allowed to trade on this network.
 
 2. Test ETH and token withdrawals on your reserve. Deposit a small amount of ETH (e.g. 0.001 ETH) and tokens (e.g. 1 token) to the KyberReserve contract, and call `withdrawEther()` and `withdrawToken()` to test withdrawals. Once withdrawals are successful, you can deposit the full inventory amount.
 
-3. Configure the token conversion rates of your reserve by either calling [`setBaseRate()`](api_abi-conversionrates.md#setBaseRate), [`setQtyStepFunction()`](api_abi-conversionrates.md#setQtyStepFunction), and [`setImbalanceStepFunction()`](api_abi-conversionrates.md#setImbalanceStepFunction) if using the PFR or calling [`setLiquidityParams()`](api_abi-liquidityconversionrates.md#setLiquidityParams) if using the APR.
+3. Configure the token conversion rates of your reserve by either calling [`setBaseRate()`](api_abi-conversionrates.md#setBaseRate), [`setQtyStepFunction()`](api_abi-conversionrates.md#setQtyStepFunction), and [`setImbalanceStepFunction()`](api_abi-conversionrates.md#setImbalanceStepFunction) if using the FPR or calling [`setLiquidityParams()`](api_abi-liquidityconversionrates.md#setLiquidityParams) if using the APR.
 
 4. Check that the rates conform to settings by calling [`getConversionRate()`](api_abi-kyberreserve.md#getconversionrate) in the KyberReserve contract.
 

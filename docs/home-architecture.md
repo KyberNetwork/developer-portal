@@ -17,21 +17,21 @@ The `KyberReserveInterface.sol` is the interface that all reserve implementation
 
 ![Kyber Reserve Interface Overview](/uploads/kyberreserveinterfaceoverview.png "Kyber Reserve Interface Overview")
 
-Our existing codebase contains 3 types of reserves; Price Feed Reserve, Automated Price Reserve and the Orderbook Reserve. The functions of these reserves are encapsulated within the `KyberReserve.sol` and `OrderbookReserve.sol` contracts. While each reserve type was designed with different features in mind, they share a common goal of contributing liquidity to the network.
+Our existing codebase contains 3 types of reserves; Fed Price Reserve, Automated Price Reserve and the Orderbook Reserve. The functions of these reserves are encapsulated within the `KyberReserve.sol` and `OrderbookReserve.sol` contracts. While each reserve type was designed with different features in mind, they share a common goal of contributing liquidity to the network.
 
-### Price Feed Reserve
-![Price Feed Reserve](/uploads/pricefeedreserve.png "Price Feed Reserve")
+### Fed Price Reserve
+![Fed Price Reserve](/uploads/fedpricereserve.png "Fed Price Reserve")
 
-The Price Feed Reserve (PFR) is our first type of reserve, offering reserve managers full control and flexibility over their pricing algorithm. However, the flexibility of managing a Price Feed Reserve came with a relatively steep learning curve and development costs that arose from having to build, run, and maintain an off-chain server and/or scripts to feed prices on-chain.
+The Fed Price Reserve (FPR) is our first type of reserve, offering reserve managers full control and flexibility over their pricing algorithm. However, the flexibility of managing a Fed Price Reserve came with a relatively steep learning curve and development costs that arose from having to build, run, and maintain an off-chain server and/or scripts to feed prices on-chain.
 
-The PFR and conversion rates are represented by the `KyberReserve.sol` and `ConversionRates.sol` contracts respectively. The token conversion rates are fed to the `ConversionRates.sol` contract by the reserve managers. Furthermore, they also have the option of defining the upper and lower limits on the conversion rates via the `SanityRates.sol` contract.
+The FPR and conversion rates are represented by the `KyberReserve.sol` and `ConversionRates.sol` contracts respectively. The token conversion rates are fed to the `ConversionRates.sol` contract by the reserve managers. Furthermore, they also have the option of defining the upper and lower limits on the conversion rates via the `SanityRates.sol` contract.
 
 ### Automated Price Reserve
 ![Automated Price Reserve](/uploads/automatedpricereserve.png "Automated Price Reserve")
 
-The Automated Price Reserve (APR) is the second type of reserve, which was designed with ease of maintenance as the top consideration. Unlike the Price Feed Reserve (PFR), reserve managers of the APR will delegate the control of their pricing strategy to a predefined algorithm set in the smart contract. But in exchange, they will no longer incur the development costs that arose from having to build, run, and maintain an off-chain server and/or scripts to feed prices on-chain.
+The Automated Price Reserve (APR) is the second type of reserve, which was designed with ease of maintenance as the top consideration. Unlike the Fed Price Reserve (FPR), reserve managers of the APR will delegate the control of their pricing strategy to a predefined algorithm set in the smart contract. But in exchange, they will no longer incur the development costs that arose from having to build, run, and maintain an off-chain server and/or scripts to feed prices on-chain.
 
-Like the PFR, the APR can also be represented by the `KyberReserve.sol` contract. Reserve managers will instead interact with the `LiquidityConversionRates.sol` contract to [set the initial liquidity parameters](api_abi-liquidityconversionrates.md#setliquidityparams).
+Like the FPR, the APR can also be represented by the `KyberReserve.sol` contract. Reserve managers will instead interact with the `LiquidityConversionRates.sol` contract to [set the initial liquidity parameters](api_abi-liquidityconversionrates.md#setliquidityparams).
 
 ### Orderbook Reserve
 ![Orderbook Reserve](/uploads/orderbookreserve.png "Orderbook Reserve")
