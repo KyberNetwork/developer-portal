@@ -24,7 +24,7 @@ Our suggested algorithm is as follows:
 3. Get expected rate of the no. of destination tokens obtained in (2) to the source token
 4. Use the expected rate of (3) to calculate the number of source tokens receivable
 	- If the resulting source token amount is greater than the initial source amount, arbitrage opportunity exists.
-	- Otherwise, the smaller the reuslting source token amount, the higher the spread.
+	- Otherwise, the smaller the resulting source token amount, the higher the spread.
 
 ```
 // DISCLAIMER: The code snippet is just an example and you
