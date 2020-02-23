@@ -113,6 +113,10 @@ const siteConfig = {
       label: 'Trade Debugger',
     },
     {
+      href: 'https://tracker.kyber.network',
+      label: 'Tracker',
+    },
+    {
       href: 'https://github.com/kybernetwork',
       label: 'GitHub',
     },
