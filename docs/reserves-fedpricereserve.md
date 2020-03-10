@@ -235,7 +235,7 @@ const INFURA_ID = "YOUR_INFURA_ID"
 const web3 = new Web3(
   new Web3.providers.HttpProvider(`https://ropsten.infura.io/v3/${INFURA_ID}`)
 );
-const BN = require("bignumber.js");
+const BN = require("bn.js");
 
 //REPLACE WITH YOUR PRIVATE KEY
 let PRIVATE_KEY = "YOUR_PRIVATE_KEY"; //Eg. "0x5fba6c1ccf757875f65dca7098318be8d76dc4d7a40ded4deb14ff4e0a1bd083"
