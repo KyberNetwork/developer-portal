@@ -274,7 +274,7 @@ async function main() {
       value: 0,
       data: txData,
       gas: 300000, //gasLimit
-      gasPrice: new BN (10).mul(new BN (10).pow(new BN (9))), //10 Gwei
+      gasPrice: new BN(10).mul(new BN(10).pow(new BN(9))), //10 Gwei
       chainId: await web3.eth.net.getId()
     },
     SENDER_ACCOUNT.privateKey

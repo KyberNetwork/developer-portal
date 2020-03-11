@@ -163,7 +163,7 @@ async function main() {
 
 async function broadcastTx(txObject) {
   const gasLimit = await txObject.estimateGas();
-  const gasPrice = new BN (50).mul(new BN (10).pow(new BN (9))); // 50 Gwei
+  const gasPrice = new BN(50).mul(new BN(10).pow(new BN(9))); // 50 Gwei
   const nonce = await web3.eth.getTransactionCount(SENDER_ACCOUNT.address);
   const chainId = await web3.eth.net.getId();
   const txTo = txObject._parent.options.address;
@@ -270,7 +270,7 @@ async function main() {
 async function broadcastTx(txObject) {
   const gasLimit = await txObject.estimateGas();
   console.log(gasLimit);
-  const gasPrice = new BN (50).mul(new BN (10).pow(new BN (9))); // 50 Gwei, change to your preferred gas price
+  const gasPrice = new BN(50).mul(new BN(10).pow(new BN(9))); // 50 Gwei, change to your preferred gas price
   const nonce = await web3.eth.getTransactionCount(SENDER_ACCOUNT.address);
   const chainId = await web3.eth.net.getId();
   const txTo = txObject._parent.options.address;

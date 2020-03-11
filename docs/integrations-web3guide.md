@@ -149,7 +149,7 @@ Note that we check that the gas price to be used does not exceed the maximum gas
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN (5).mul(new BN (10).pow(new BN (9))); ; //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); ; //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -409,7 +409,7 @@ async function getGasLimit(source, dest, amount) {
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN (5).mul(new BN (10).pow(new BN (9))); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -573,7 +573,7 @@ Note that we check that the gas price to be used does not exceed the maximum gas
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN (5).mul(new BN (10).pow(new BN (9))); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -897,7 +897,7 @@ async function getGasLimit(source, dest, amount) {
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN (5).mul(new BN (10).pow(new BN (9))); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -1078,7 +1078,7 @@ Note that we check that the gas price to be used does not exceed the maximum gas
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN (5).mul(new BN (10).pow(new BN (9))); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -1402,7 +1402,7 @@ async function getGasLimit(source, dest, amount) {
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN (5).mul(new BN (10).pow(new BN (9))); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
