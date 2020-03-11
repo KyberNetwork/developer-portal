@@ -112,7 +112,7 @@ Congratulations, you are now part of the fee sharing program!
 // https://t.me/KyberDeveloper.
 
 const Web3 = require("web3");
-const BN = require("bignumber.js");
+const BN = require("bn.js");
 const web3 = new Web3(
   new Web3.providers.HttpProvider("https://mainnet.infura.io")
 );
@@ -163,7 +163,7 @@ async function main() {
 
 async function broadcastTx(txObject) {
   const gasLimit = await txObject.estimateGas();
-  const gasPrice = new BN(50).times(10 ** 9); // 50 Gwei
+  const gasPrice = new BN(50).mul(new BN(10).pow(new BN(9))); // 50 Gwei
   const nonce = await web3.eth.getTransactionCount(SENDER_ACCOUNT.address);
   const chainId = await web3.eth.net.getId();
   const txTo = txObject._parent.options.address;
@@ -228,7 +228,7 @@ txReceipt = await web3.eth.sendTransaction({
 
 const Web3 = require("web3");
 var ethers = require("ethers");
-const BN = require("bignumber.js");
+const BN = require("bn.js");
 const web3 = new Web3(
   new Web3.providers.HttpProvider("https://mainnet.infura.io")
 );
@@ -270,7 +270,7 @@ async function main() {
 async function broadcastTx(txObject) {
   const gasLimit = await txObject.estimateGas();
   console.log(gasLimit);
-  const gasPrice = new BN(50).times(10 ** 9); // 50 Gwei, change to your preferred gas price
+  const gasPrice = new BN(50).mul(new BN(10).pow(new BN(9))); // 50 Gwei, change to your preferred gas price
   const nonce = await web3.eth.getTransactionCount(SENDER_ACCOUNT.address);
   const chainId = await web3.eth.net.getId();
   const txTo = txObject._parent.options.address;

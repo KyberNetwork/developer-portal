@@ -36,7 +36,7 @@ Let us assume that we would like to swap 1 Ether for ZIL tokens.
 
 ### Import the relevant packages
 
-We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bignumber.js` library is used to define BigNumber variables. The `node-fetch` library is used to make HTTP requests to the endpoint.
+We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bn.js` library is used to define BigNumber variables. The `node-fetch` library is used to make HTTP requests to the endpoint.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -46,7 +46,7 @@ We will be using the `web3` package for interacting with the Ethereum blockchain
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
-const BN = require("bignumber.js");
+const BN = require("bn.js");
 const fetch = require('node-fetch');
 ```
 
@@ -149,7 +149,7 @@ Note that we check that the gas price to be used does not exceed the maximum gas
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN(5).times(10 ** 9); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); ; //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -296,7 +296,7 @@ Before running this code example, the following fields need to be modified:
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
-const BN = require("bignumber.js");
+const BN = require("bn.js");
 const fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
@@ -409,7 +409,7 @@ async function getGasLimit(source, dest, amount) {
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN(5).times(10 ** 9); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -452,7 +452,7 @@ Let us assume that we would like to swap 100 KNC tokens for Ether. You may obtai
 
 ### Import the relevant packages
 
-We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bignumber.js` library is used to define BigNumber variables. The `node-fetch` library is used to make HTTP requests to the endpoint.
+We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bn.js` library is used to define BigNumber variables. The `node-fetch` library is used to make HTTP requests to the endpoint.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -462,7 +462,7 @@ We will be using the `web3` package for interacting with the Ethereum blockchain
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
-const BN = require("bignumber.js");
+const BN = require("bn.js");
 const fetch = require('node-fetch');
 ```
 
@@ -573,7 +573,7 @@ Note that we check that the gas price to be used does not exceed the maximum gas
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN(5).times(10 ** 9); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -764,7 +764,7 @@ Before running this code example, the following fields need to be modified:
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
-const BN = require("bignumber.js");
+const BN = require("bn.js");
 const fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
@@ -897,7 +897,7 @@ async function getGasLimit(source, dest, amount) {
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN(5).times(10 ** 9); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -957,7 +957,7 @@ Let us assume that we would like to swap 100 KNC tokens for ZIL tokens. You may 
 
 ### Import the relevant packages
 
-We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bignumber.js` library is used to define BigNumber variables. The `node-fetch` library is used to make HTTP requests to the endpoint.
+We will be using the `web3` package for interacting with the Ethereum blockchain. The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted. The `bn.js` library is used to define BigNumber variables. The `node-fetch` library is used to make HTTP requests to the endpoint.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -967,7 +967,7 @@ We will be using the `web3` package for interacting with the Ethereum blockchain
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
-const BN = require("bignumber.js");
+const BN = require("bn.js");
 const fetch = require('node-fetch');
 ```
 
@@ -1078,7 +1078,7 @@ Note that we check that the gas price to be used does not exceed the maximum gas
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN(5).times(10 ** 9); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
@@ -1269,7 +1269,7 @@ Before running this code example, the following fields need to be modified:
 // Importing the relevant packages
 const Web3 = require("web3");
 const Tx = require("ethereumjs-tx").Transaction;
-const BN = require("bignumber.js");
+const BN = require("bn.js");
 const fetch = require('node-fetch');
 
 // Connecting to ropsten infura node
@@ -1402,7 +1402,7 @@ async function getGasLimit(source, dest, amount) {
 async function broadcastTx(from, to, txData, value, gasLimit) {
   let txCount = await web3.eth.getTransactionCount(USER_ADDRESS);
   //Method 1: Use a constant
-  let gasPrice = new BN(5).times(10 ** 9); //5 Gwei
+  let gasPrice = new BN(5).mul(new BN(10).pow(new BN(9))); //5 Gwei
   //Method 2: Use web3 gasPrice
   //let gasPrice = await web3.eth.gasPrice;
   //Method 3: Use KNP Proxy maxGasPrice
