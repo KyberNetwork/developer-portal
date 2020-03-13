@@ -4,11 +4,18 @@ title: Staking APIs
 ---
 [//]: # (tagline)
 # Staking APIs
-This section details the staking APIs for the upcoming Katalyst upgrade. Please note that the APIs are subject to changes. You may read more about how staking works in this [blog post]().
+## Introduction
+In the Katalyst upgrade, anyone is able to stake and withdraw KNC tokens into the KyberStaking contract, and delgate their voting rights to pool masters who will vote on their behalf. This section details the APIs available that enable these actions.
 
-## Actions
-### Depositing KNC
-Users deposits KNC into the staking contract (in token wei). 
+Viewing voting campaigns, voting for them, and claiming rewards is done with the DAO contract, which will be explained soon.
+
+To learn more about staking, kindly refer to [this blog post]().
+
+## Staking Actions
+The APIs in this section require users to send transactions. The general rule of thumb is that any action performed by the user will only take effect in the **next epoch**. The exception to this is when the user withdraws an amount greater than deposits made in the current epoch.
+
+### Deposit
+The first step for any user is to deposit KNC into the staking contract (in token wei).
 
 ---
 function **`deposit`**(uint amount) public
@@ -16,7 +23,7 @@ function **`deposit`**(uint amount) public
 | ---------- |:-------:|:-------------------:|
 | `amount` | uint | KNC twei to be deposited |
 ---
-Note: The user must have given an allowance to the staking contract, ie. called 
+Note: The user must have given an allowance to the staking contract, ie. made the following function call
 `KNC.approve(stakingContractaddress, someAllowance)`
 
 #### Example
@@ -39,8 +46,37 @@ txReceipt = await web3.eth.sendTransaction({
 });
 ```
 
+### Delegate
+Once the user has staked some KNC, he can delegate his **entire** KNC stake to a pool master (with address `dAddr`), who will vote on his behalf. Note that we do not support partial stake delegation. Also, users can only have a maximum of 1 pool master.
+
+---
+function **`delegate`**(address dAddr) public
+| Parameter | Type | Description |
+| ---------- |:-------:|:-------------------:|
+| `dAddr` | address | Pool master's wallet address |
+---
+
+#### Example
+User delegates his stake to a pool master (of address `0x12340000000000000000000000000000deadbeef`) who will vote on the user's behalf.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper
+
+let dAddr = "0x12340000000000000000000000000000deadbeef" //pool master's address
+
+txData = StakingContract.methods.delegate(dAddr).encodeABI();
+
+txReceipt = await web3.eth.sendTransaction({
+  from: USER_WALLET_ADDRESS, //obtained from web3 interface
+  to: STAKING_CONTRACT_ADDRESS,
+  data: txData
+});
+```
+
 ### Withdrawing KNC
-Users withdraws KNC from the staking contract (in token wei). 
+The user can withdraw KNC (in token wei) from the staking contract at any point in time. 
 
 ---
 function **`withdraw`**(uint amount) public
@@ -69,37 +105,8 @@ txReceipt = await web3.eth.sendTransaction({
 });
 ```
 
-### Delegate Stake
-Users delegates **entire** KNC stake to a pool master (with address `dAddr`), who will vote on his behalf. Note that we do not have partial stake delegation. 
-
----
-function **`delegate`**(address dAddr) public
-| Parameter | Type | Description |
-| ---------- |:-------:|:-------------------:|
-| `dAddr` | address | Pool master's wallet address |
----
-
-#### Example
-User delegates his stake to a pool master (of address `0x12340000000000000000000000000000deadbeef`) who will vote on the user's behalf.
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper
-
-let dAddr = "0x12340000000000000000000000000000deadbeef" //pool master's address
-
-txData = StakingContract.methods.delegate(dAddr).encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: USER_WALLET_ADDRESS, //obtained from web3 interface
-  to: STAKING_CONTRACT_ADDRESS,
-  data: txData
-});
-```
-
 ## Getting Current Epoch Number
-Obtain the current epoch number of the DAO and staking contracts
+Obtain the current epoch number of the staking contract
 
 ---
 function **`getCurrentEpochNumber`**() public view returns (uint)
@@ -112,7 +119,7 @@ function **`getCurrentEpochNumber`**() public view returns (uint)
 let currentEpochNum = await StakingContract.getCurrentEpochNumber().call();
 ```
 
-## Reading Staking Info
+## Reading Staking Data
 There are primarily 3 parameters of interest (apart from getting the current epoch number):
 |       Parameter      |                 Description                   |
 | ---------------------|:---------------------------------------------:|
@@ -121,13 +128,13 @@ There are primarily 3 parameters of interest (apart from getting the current epo
 | `delegatedAddress` / `dAddr` | Who the staker delegated his stake to |
 
 We can classify the APIs for reading staking data in 4 broad sections:
-- Reward percentage calculation for the DAO and pool masters
+- Reward percentage calculation for pool masters
 - Getting the above 3 parameters for the past epochs and the current epoch
 - Getting the above 3 parameters for the next epoch
 
-## Section A: Reward percentage calculation for the DAO and pool masters
+## Section 1: Reward calculation for pool masters
 ### Staker Data Of An Epoch
-Obtains a staker's information for a specified epoch. Used for calculating reward percentage by pool masters and the DAO.
+Obtains a staker's information for a specified epoch. Used for calculating reward percentage by pool masters (and the DAO contract).
 
 ---
 function **`getStakerDataForPastEpoch`**(address staker, uint epoch) public view returns (uint _stake, uint _delegatedStake, address _delegatedAddress)
@@ -147,7 +154,6 @@ function **`getStakerDataForPastEpoch`**(address staker, uint epoch) public view
 ---
 **Notes:**
 - Delegated stakes to `staker` are not forwarded to `delegatedAddress`. `staker` is still responsible for voting on behalf of all stakes delegated to him.
-- This function is used by the DAO for calculation the reward percentage and distribution, and should be used by pool masters for the same purpose.
 
 #### Example
 Obtain staker's information (of address `0x12340000000000000000000000000000deadbeef`) at epoch 5.
@@ -163,7 +169,7 @@ let epoch = new BN(5);
 let result = await StakingContract.methods.getStakerDataForPastEpoch(staker, epoch).call();
 ```
 
-## Section B: Getting staking info of past and current epochs
+## Section 2: Staking info of past and current epochs
 ### Staker's KNC stake
 Obtains a staker's KNC stake for a specified epoch (up to the next epoch)
 
@@ -261,7 +267,7 @@ let epoch = new BN(5);
 let result = await StakingContract.methods.getDelegatedAddress(staker, epoch).call();
 ```
 
-## Section C: Getting staking info of the next epoch
+## Section 3: Staking info of the next epoch
 ### Staker's KNC stake
 Obtains a staker's KNC stake for the next epoch
 
