@@ -1,3 +1,7 @@
+# Quicklinks
+- [General FAQs](#frequently-asked-questions-general)
+- [Pool Master FAQs](#frequently-asked-questions-pool-masters)
+- [Pool Member FAQs](#frequently-asked-questions-pool-members)
 
 # Frequently Asked Questions (General)
 
