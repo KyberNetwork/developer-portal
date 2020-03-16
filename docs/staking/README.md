@@ -3,6 +3,8 @@ In the next version of Kyber Network protocol, we introduce the DAO and a stakin
 
 They can also delegate to custodial services or pool masters to help them vote. While the KyberDAO API offers a fully onchain mechanism to allow holders to specify an address to can vote on their behalf, **the role of distributing the rewards lies in the hands of the pool masters**. 
 
+
+## Developers
 While there will be a basic staking, voting and delegating interface provided by Kyber, there are several critical things that developers can build to be part of this process. 
 
 For example:
