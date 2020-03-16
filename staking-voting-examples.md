@@ -32,7 +32,8 @@ For example, in epoch 16, Tom voted while having 15K KNC, then midway through th
 
 <img width="601" alt="Screenshot 2020-03-16 at 2 22 32 PM" src="https://user-images.githubusercontent.com/173707/76728433-a555bd80-6791-11ea-8759-1efcab3e3ea3.png">
 
-If he re-stakes back his 3K KNC to bring his total stake to 15K KNC again, in epoch 17 he will still receive rewards only for 12K KNC. 
+If he re-stakes back his 3K KNC to bring his total stake to 15K KNC again, in epoch 17 he will still receive rewards only for 12K KNC.
+
 <img width="612" alt="Screenshot 2020-03-16 at 2 22 36 PM" src="https://user-images.githubusercontent.com/173707/76728441-a981db00-6791-11ea-9461-23078cff0469.png">
 
 In other words, even after voting in epoch 16, Tom needs to voluntarily keep his 15K KNC staked throughout epoch 16 (without withdrawing any amount), in order to claim his full rewards in epoch 17. 
