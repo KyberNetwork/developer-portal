@@ -169,7 +169,40 @@ Refer to the table below on stake recomputations for various deposit and withdra
   </tr>
 </table>
 
+## Technical FAQs (Pool Masters)
+### 1. How do I obtain the list of pool members who delegated their stakes to me?
+You will have to listen for the `Delegated` event emitted. Kyber will also provide an API for the list of pool members.
 
+### 2. How do I make use of the `getStakerDataForPastEpoch` function to calculate the stake and reward distribution for my pool members?
+Let us look at a simple example of 1 pool master, with 2 pool members who delegated their stakes to him.
+
+#### Epoch 9
+Pool master 0xMASTER, 1000 KNC stake
+Pool member 0xUSER1, 1500 KNC stake
+Pool member 0xUSER2, 2500 KNC stake
+
+#### Epoch 10
+Pool master voted for all campaigns
+
+#### Reward distribution for epoch 10
+- Call `getStakerDataForPastEpoch` for the pool master and each pool member.
+```
+// getStakerDataForPastEpoch(addr, epoch) returns (_stake, _delegatedStake, _delegatedAddres)
+// _stake: stake amount eligible for reward
+// _delegatedStake: stake amount delegated to addr by other stakers
+// _delegatedAddress: Wallet address addr delegated his stake to
+
+getStakerDataForPastEpoch(0xMASTER, 10) = (1000, 4000, 0xMASTER)
+getStakerDataForPastEpoch(0xUSER1, 10) = (1500, 0, 0xMASTER)
+getStakerDataForPastEpoch(0xUSER2, 10) = (2500, 0, 0xMASTER)
+```
+
+- Calculate reward distribution
+  - Assume pool master received 10 ETH in rewards
+  - Total stakes = 1000 + 4000 from 1st call = 5000 KNC
+  - `0xMASTER` reward amt = 1000 / 5000 * 10 = 2 ETH
+  - `0xUSER1` reward amt = 1500 / 5000 * 10 = 3 ETH
+  - `0xUSER2` reward amt = 2500 / 5000 * 10 = 5 ETH
 
 # Frequently Asked Questions (Pool Members)
 ### 1. Can a pool master or other pool members withdraw my KNC stake?
