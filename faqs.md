@@ -30,7 +30,7 @@ Rewards are distributed in Ether, as that is the currency fees are collected in.
 Stakers can claim their rewards of previous epochs whenever they want.
 
 ### 9. How often can I get rewards?
-Every epoch (~2 weeks). If you delegate your vote to someone else, it is up to them to decide how often they want to distribute rewards.
+Every epoch (~2 weeks), assuming you have voted in the previous epochs. If you delegate your vote to someone else, it is up to them to decide how often they want to distribute rewards.
 
 ### 10. If I don't vote, do I get any rewards?
 No. Consider delegating your vote to a pool master who will vote on your behalf so that you will!
