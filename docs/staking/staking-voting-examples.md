@@ -4,9 +4,9 @@ This document explains the basics of staking and voting, staking more KNC, and w
 
 # Basic Staking And Voting
 
-Staking and voting are done in epochs, which sounds scary, but it really just means fixed periods of time, denominated in Ethereum block times. One KyberDAO epoch will be around once every 2 weeks. The exact block number will be determined at a later stage. Y
+Staking and voting are done in epochs, which sounds scary, but it really just means fixed periods of time, denominated in Ethereum block times. One KyberDAO epoch will be around once every 2 weeks. The exact block number will be determined at a later stage. 
 
-*   Epoch 10: Bob stakes 10,000 KNC. He cannot vote with this stake in this epoch.
+*   Epoch 10: Tom stakes 10,000 KNC. He cannot vote with this stake in this epoch.
 *   Epoch 11: He will be able to vote with his 10,000 KNC 
 *   Epoch 12:  He will be able to claim his participation reward from the last epoch. There is no need to restake, he can continue to vote. Any unclaimed rewards can be claimed at any moment. 
 
@@ -14,9 +14,7 @@ Staking and voting are done in epochs, which sounds scary, but it really just me
 
 # Staking More KNC
 
-Assuming Bob loves Kyber and decides to play a bigger role in voting:
-
-
+Assuming Tom loves Kyber and decides to play a bigger role in voting:
 
 *   Epoch 13: He buys 5,000 more KNC and stakes it as well. His voting power for this epoch is still the amount staked at the beginning of the epoch, which is 10,000 KNC. 
 *   Epoch 14: He can claim rewards for the 10,000 KNC voting power in the previous epoch. Starting from this epoch, he will be voting with 15,000 KNC.
@@ -28,9 +26,9 @@ Assuming Bob loves Kyber and decides to play a bigger role in voting:
 
 # Withdrawing Stakes
 
-If Bob withdraws his stake at any point during the epoch, his voting power (and hence rewards) for that epoch will be counted as the** lowest amount he had after voting**.
+If Tom withdraws his stake at any point during the epoch, his voting power (and hence rewards) for that epoch will be counted as the** lowest amount he had after voting**.
 
-For example, in epoch 16, Bob voted while having 15K KNC, then midway through the epoch he withdrew 3K KNC. Although he voted while having 15K KNC, his voting power will only be counted as 12K KNC. So in Epoch 17, he will receive rewards only for 12K KNC. 
+For example, in epoch 16, Tom voted while having 15K KNC, then midway through the epoch he withdrew 3K KNC. Although he voted while having 15K KNC, his voting power will only be counted as 12K KNC. So in Epoch 17, he will receive rewards only for 12K KNC. 
 
 <img width="601" alt="Screenshot 2020-03-16 at 2 22 32 PM" src="https://user-images.githubusercontent.com/173707/76728433-a555bd80-6791-11ea-8759-1efcab3e3ea3.png">
 
