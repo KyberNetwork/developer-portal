@@ -46,8 +46,8 @@ The reward amount given to the pool master is calculated based on the sum of his
 ### 3. Does this mean I have to distribute rewards to my pool members? 
 Yes.
 
-### 4. How do I know how much stake / reward each pool member has?
-Call the [`getStakerDataForPastEpoch`](staking-api.md#section-1-reward-calculation-for-pool-masters) function of the staking contract to determine the staked amount and eligible rewards for each of your pool members.
+### 4. How do I know how much stake / reward each pool member has / is entitled to?
+Kindly take a look at [this example](#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-function-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough. In essence, call the [`getStakerDataForPastEpoch`](staking-api.md#section-1-reward-calculation-for-pool-masters) function of the staking contract to determine the staked amount and eligible rewards for each of your pool members.
 
 ### 5. What happens when a pool member delegates his stake to another pool master?
 As a rule of thumb, all actions performed only take effect in the next epoch. A pool member may perform re-delegation as often as he likes in the current epoch, but the changes will only kick in, in the next epoch. The pool member's stake remains delegated to their current designated pool master in the current epoch.
