@@ -5,7 +5,7 @@ One important feature of our staking model is stake delegation. It allows for KN
 ## Pool Masters And Members
 Stakers can delegate their KNC voting power to a pool master who will vote on their behalf. Stakers who delegate their stake are also known as pool members and can only delegate their stake to one pool. 
 
-The rewards will be given to the pool master. **The pool master needs to track how much each member owns**, **and is responsible for having to record it and have a mechanism for members to get it from him. Kyber do not hold any funds or take on any reward distribution responsibilities. **
+The rewards will be given to the pool master. **The pool master needs to calculate the reward allocated to each of their pool members and have a mechanism for them to claim their rewards.**
 
 ## Stake Re-delegation
 
