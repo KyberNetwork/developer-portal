@@ -1,8 +1,8 @@
-# KyberDAO: Staking, Voting and Delegation Examples
+# Staking, Voting, Withdrawing Examples 
 
-This document explains the basics of staking and voting, staking more KNC, and withdrawing KNC.
+This document explains the basics of staking and voting, staking more KNC, and withdrawing KNC with 3 examples.
 
-# Basic Staking And Voting
+## Basic Staking And Voting
 
 Staking and voting are done in epochs, which sounds scary, but it really just means fixed periods of time, denominated in Ethereum block times. One KyberDAO epoch will be around once every 2 weeks. The exact block number will be determined at a later stage. 
 
@@ -12,7 +12,7 @@ Staking and voting are done in epochs, which sounds scary, but it really just me
 
 <img width="841" alt="Screenshot 2020-03-16 at 2 22 50 PM" src="https://user-images.githubusercontent.com/173707/76728444-ab4b9e80-6791-11ea-906a-caa47c50a021.png">
 
-# Staking More KNC
+## Staking More KNC
 
 Assuming Tom loves Kyber and decides to play a bigger role in voting:
 
@@ -24,7 +24,7 @@ Assuming Tom loves Kyber and decides to play a bigger role in voting:
 <img width="828" alt="Screenshot 2020-03-16 at 2 22 45 PM" src="https://user-images.githubusercontent.com/173707/76728442-aab30800-6791-11ea-8543-2092170ebedb.png">
 
 
-# Withdrawing Stakes
+## Withdrawing Stakes
 
 If Tom withdraws his stake at any point during the epoch, his voting power (and hence rewards) for that epoch will be counted as the** lowest amount he had after voting**.
 
