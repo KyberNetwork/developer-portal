@@ -26,7 +26,6 @@ Docs are in a very early stage of development, so any ideas for improvements wil
 
 
 ## Overview
-
 All operations including staking and voting will be split into continuous epochs. An epoch is a continuous range of 81,000 blocks (~ 2 weeks time). If an epoch ends at block 4,000,000 the next epoch will start at block 4,000,001. 
 
 In every epoch, KNC holders can choose to vote on the ongoing campaigns. However, for their voting power (and rewards) to be considered, they will need to stake their KNC *before an epoch* and keep the staked KNC there for the whole epoch to be accounted to vote and rewards for that epoch. In *the following epoch*, they will be rewarded by the proportion of their share of KNC voting power, which they can claim.
@@ -41,7 +40,6 @@ They can also delegate their KNC to pool masters, who will be in charge of votin
 For details, refer to [Delegating Overview And Example](delegating-example.md).
 
 ## Voting Campaigns
-
 In each epoch, the Kyber team will have to create 1 or more voting campaigns in order for stakers to vote on and help decide on either a network parameter or a consensus in Kyber Network’s community. Only the Kyber team has permission to create voting campaigns. If the Kyber team doesn’t create any voting campaign for an epoch, no one has any reward and all of the fees will be burnt regardless of any configurations.
 
 There are different types of voting campaigns.
@@ -53,10 +51,12 @@ This will be managed by the Kyber team.
 
 
 ## Fees And Rewards
+Whenever a taker does a transaction to trade, the Network contract takes the fee in ETH according to the network_fee config and sends it to the FeeHandler contract. 
 
-Whenever a taker does a transaction to trade, the Network contract takes the fee in ETH according to the network_fee config and sends it to the Fee handler contract. 
-
-Those fees will be split into 3 different parts, one is to buy KNC and burn, one can be obtained by the DAO later to send to stakers as their reward, the last one is to send to reserves as their rebate. 
+Those fees will be split into 3 different parts:
+1) Buy and **burn** KNC
+2) Given to stakers as their **reward** for staking KNC
+3) Given to reserves as their **rebate** for contributing liquidity
 
 A staker can get his reward corresponding to his voting_point in the previous epoch. They can choose not to claim the reward and do it later in the future. There is no expiration of the reward. 
 
