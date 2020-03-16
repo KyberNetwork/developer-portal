@@ -1,15 +1,4 @@
----
-id: Home-Staking
-title: Staking APIs
----
-[//]: # (tagline)
 # Staking APIs
-## Introduction
-In the Katalyst upgrade, anyone is able to stake and withdraw KNC tokens into the KyberStaking contract, and delgate their voting rights to pool masters who will vote on their behalf. This section details the APIs available that enable these actions.
-
-Viewing voting campaigns, voting for them, and claiming rewards is done with the DAO contract, which will be explained soon.
-
-To learn more about staking, kindly refer to [this blog post]().
 
 ## Staking Actions
 The APIs in this section require users to send transactions. The general rule of thumb is that any action performed by the user will only take effect in the **next epoch**. The exception to this is when the user withdraws an amount greater than deposits made in the current epoch.
