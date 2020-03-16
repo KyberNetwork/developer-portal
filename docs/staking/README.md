@@ -18,11 +18,12 @@ Docs are in a very early stage of development, so any ideas for improvements wil
 
 ## Resources
 - [Staking, Voting Examples](staking-voting-examples.md)
+- Testnet Details
 - [Delegating Overview And Example](delegating-example.md)
+- Voting and claiming APIs
 - [Staking and Delegating APIs](staking-api.md)
 - [FAQs](faqs.md)
-- Testnet details (WIP)
-- Voting and claiming APIs (WIP)
+
 
 ## Overview
 
