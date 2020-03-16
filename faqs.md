@@ -69,109 +69,7 @@ Your voting power and reward distribution for the current epoch remains unchange
 #### Case 2: Withdrawal amount > deposit amount made during current epoch
 Your voting power and rewards for pool members (including the pool member who initiated the withdrawal) for the current epoch will be recomputed, even if you have voted prior to a pool member’s withdrawal. 
 
-Refer to the table below on stake recomputations for various deposit and withdrawal scenarios.
-
-
-<table>
-  <tr>
-   <td>Initial stake
-   </td>
-   <td>Current epoch actions
-   </td>
-   <td>Stake in current epoch
-   </td>
-   <td>Stake in subsequent epochs
-   </td>
-  </tr>
-  <tr>
-   <td rowspan="6" >1000 KNC
-   </td>
-   <td>
-<ol>
-
-<li>Deposit 500 KNC
-</li>
-</ol>
-   </td>
-   <td>1000 KNC
-   </td>
-   <td>1500 KNC
-   </td>
-  </tr>
-  <tr>
-   <td>
-<ol>
-
-<li>Withdraw 500 KNC
-</li>
-</ol>
-   </td>
-   <td>500 KNC
-   </td>
-   <td>500 KNC
-   </td>
-  </tr>
-  <tr>
-   <td>
-<ol>
-
-<li>Deposit 500 KNC
-
-<li>Withdraw 200 KNC
-</li>
-</ol>
-   </td>
-   <td>1000 KNC
-   </td>
-   <td>1300 KNC
-   </td>
-  </tr>
-  <tr>
-   <td>
-<ol>
-
-<li>Deposit 500 KNC
-
-<li>Withdraw 600 KNC
-</li>
-</ol>
-   </td>
-   <td>900 KNC
-   </td>
-   <td>900 KNC
-   </td>
-  </tr>
-  <tr>
-   <td>
-<ol>
-
-<li>Withdraw 500 KNC
-
-<li>Deposit 200 KNC
-</li>
-</ol>
-   </td>
-   <td>500 KNC
-   </td>
-   <td>700 KNC
-   </td>
-  </tr>
-  <tr>
-   <td>
-<ol>
-
-<li>Withdraw 1000 KNC
-
-<li>Deposit 2000 KNC
-</li>
-</ol>
-   </td>
-   <td>0 KNC
-   </td>
-   <td>2000 KNC
-   </td>
-  </tr>
-</table>
+You may refer to the [various deposit & withdrawals section] to see how the pool member's stake is affected.
 
 ## Technical FAQs (Pool Masters)
 ### 1. How do I obtain the list of pool members who delegated their stakes to me?
@@ -231,9 +129,9 @@ Your stake (regardless of delegation) for the current epoch remains unchanged. C
 #### Case 2: Withdrawal amount > deposit amount made during current epoch
 You or your pool master’s voting power and your reward amount will be recomputed for the current epoch, even if you or your pool master have voted prior to a pool member’s withdrawal. 
 
-Refer to the table below on stake recomputations for various deposit and withdrawal scenarios.
+You may refer to the [various deposit & withdrawals section] below to see how your stake is affected.
 
-
+## Various Deposit & Withdrawal Scenarios
 <table>
   <tr>
    <td>Initial stake
