@@ -134,101 +134,186 @@ You may refer to the [various deposit & withdrawals section] below to see how yo
 ## Various Deposit & Withdrawal Scenarios
 <table>
   <tr>
-   <td>Initial stake
-   </td>
-   <td>Current epoch actions
-   </td>
-   <td>Stake in current epoch
-   </td>
-   <td>Stake in subsequent epochs
-   </td>
+    <td>
+      Initial stake
+    </td>
+    <td>
+      Scenario
+    </td>
+    <td>
+      Current epoch actions
+    </td>
+    <td>
+      Stake in current epoch
+    </td>
+    <td>
+      Stake in subsequent epochs
+    </td>
   </tr>
+  
   <tr>
-   <td rowspan="6" >1000 KNC
+    <td rowspan="6" >
+      1000 KNC
+    </td>
+    <td>
+      <ul>
+        <li>
+          Deposit only
+        </li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>
+          Deposit 500 KNC
+        </li>
+      </ul>
+    </td>
+    <td>
+      1000 KNC
+    </td>
+    <td>
+      1500 KNC
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <ul>
+        <li>
+          Withdraw only
+        </li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>
+          Withdraw 500 KNC
+        </li>
+      </ul>
+   </td>
+  
+   <td>
+    500 KNC
    </td>
    <td>
-<ol>
-
-<li>Deposit 500 KNC
-</li>
-</ol>
+    500 KNC
    </td>
-   <td>1000 KNC
-   </td>
-   <td>1500 KNC
-   </td>
+ </tr>
+ 
+ <tr>
+    <td>
+      <ul>
+        <li>
+          Deposit, then withdraw
+        </li>
+        <li>
+          depositAmt >= withdrawAmt
+        </li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>
+          Deposit 500 KNC
+        </li>
+        <li>
+          Withdraw 200 KNC
+        </li>
+      </ul>
+    </td>
+    <td>
+      1000 KNC
+    </td>
+    <td>
+      1300 KNC
+    </td>
   </tr>
+  
   <tr>
+    <td>
+      <ul>
+          <li>
+          Deposit, then withdraw
+          </li>
+          <li>
+            depositAmt < withdrawAmt
+          </li>
+        </ul>
+      </td>
+    <td>
+      <ul>
+         <li>
+           Deposit 500 KNC
+         </li>
+         <li>
+           Withdraw 600 KNC
+       </li>
+    </ul>
+   </td>
    <td>
-<ol>
-
-<li>Withdraw 500 KNC
-</li>
-</ol>
+     900 KNC
    </td>
-   <td>500 KNC
-   </td>
-   <td>500 KNC
+   <td>
+     900 KNC
    </td>
   </tr>
+  
   <tr>
+      <td>
+      <ul>
+          <li>
+          Withdraw, then deposit
+          </li>
+          <li>
+            withdrawAmt > depositAmt
+          </li>
+        </ul>
+      </td>
+    <td>
+      <ul>
+        <li>
+          Withdraw 500 KNC
+        </li>
+        <li>
+          Deposit 200 KNC
+        </li>
+      </ul>
+    </td>
+    <td>
+      500 KNC
+    </td>
+    <td>
+      700 KNC
+    </td>
+   </tr>
+  
+ <tr>
+    <td>
+      <ul>
+          <li>
+          Withdraw, then deposit
+          </li>
+          <li>
+            withdrawAmt <= depositAmt
+          </li>
+        </ul>
+      </td>
    <td>
-<ol>
-
-<li>Deposit 500 KNC
-
-<li>Withdraw 200 KNC
-</li>
-</ol>
-   </td>
-   <td>1000 KNC
-   </td>
-   <td>1300 KNC
-   </td>
-  </tr>
-  <tr>
-   <td>
-<ol>
-
-<li>Deposit 500 KNC
-
-<li>Withdraw 600 KNC
-</li>
-</ol>
-   </td>
-   <td>900 KNC
-   </td>
-   <td>900 KNC
-   </td>
-  </tr>
-  <tr>
-   <td>
-<ol>
-
-<li>Withdraw 500 KNC
-
-<li>Deposit 200 KNC
-</li>
-</ol>
-   </td>
-   <td>500 KNC
-   </td>
-   <td>700 KNC
-   </td>
-  </tr>
-  <tr>
-   <td>
-<ol>
-
-<li>Withdraw 1000 KNC
-
-<li>Deposit 2000 KNC
-</li>
-</ol>
-   </td>
-   <td>0 KNC
-   </td>
-   <td>2000 KNC
-   </td>
-  </tr>
+     <ul>
+       <li>
+         Withdraw 1000 KNC
+       </li>
+       <li>
+         Deposit 2000 KNC
+       </li>
+     </ul>
+  </td>
+  <td>
+    0 KNC
+  </td>
+  <td>
+    2000 KNC
+  </td>
+ </tr>
 </table>
