@@ -54,8 +54,9 @@ Yes, vote submission is done on-chain. As such, you have to pay for the cost of 
 Yes. Stakers can delegate their KNC voting power to a pool master (another address) who will vote on their behalf. Stakers who delegate their stake are also known as pool members and can only delegate their stake to one pool.
 
 ### 17. Are there any risks to my staked funds?
-There is always the risk of a potential attack that was not accounted for in our audits but that risk is prevalent across all dapps on Ethereum. You are also exposed to the risk of the price fluctuations in KNC but aside from these, there are no additional risks on your funds and it can only be withdrawn by you.
+Staking KNC on our interface is through a non-custodial method with KNC residing in the smart contract. At no point in time does the Kyber team hold stakers’ KNC ETH rewards. In addition, at launch, the KyberDAO interface would have gone through multiple rounds of security audits. 
 
+However, staking funds will still carry its own set of risks, just like any other decentralized application. Be wary of scammers, phishing attempts, and fake websites. Users should always make sure that they visit https://kyber.org/ if they want to stake and vote on their own. 
 
 # Frequently Asked Questions (Pool Masters)
 
