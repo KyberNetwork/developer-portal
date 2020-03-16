@@ -123,7 +123,7 @@ We can classify the APIs for reading staking data in 4 broad sections:
 
 ## Section 1: Reward calculation for pool masters
 ### Staker Data Of An Epoch
-Obtains a staker's information for a specified epoch. Used for calculating reward percentage by pool masters (and the DAO contract).
+Obtains a staker's information for a specified epoch. Used for calculating reward percentage by pool masters (and the DAO contract). Kindly refer to [this example](faqs.md#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-function-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough on reward calculation.
 
 ---
 function **`getStakerDataForPastEpoch`**(address staker, uint epoch) public view returns (uint _stake, uint _delegatedStake, address _delegatedAddress)
