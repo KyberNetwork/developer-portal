@@ -18,9 +18,9 @@ Assuming Bob loves Kyber and decides to play a bigger role in voting:
 
 
 
-*   Epoch 30: He buys 5,000 more KNC and stakes it as well. His voting power for this epoch is still the amount staked at the beginning of the epoch, which is 10,000 KNC. 
-*   Epoch 31: He can claim rewards for the 10,000 KNC voting power in the previous epoch. Starting from this epoch, he will be voting with 15,000 KNC.
-*   Epoch 32: He can claim rewards for the 15,000 KNC that he voted with in the previous epoch
+*   Epoch 13: He buys 5,000 more KNC and stakes it as well. His voting power for this epoch is still the amount staked at the beginning of the epoch, which is 10,000 KNC. 
+*   Epoch 14: He can claim rewards for the 10,000 KNC voting power in the previous epoch. Starting from this epoch, he will be voting with 15,000 KNC.
+*   Epoch 15: He can claim rewards for the 15,000 KNC that he voted with in the previous epoch
 
 
 <img width="828" alt="Screenshot 2020-03-16 at 2 22 45 PM" src="https://user-images.githubusercontent.com/173707/76728442-aab30800-6791-11ea-8543-2092170ebedb.png">
