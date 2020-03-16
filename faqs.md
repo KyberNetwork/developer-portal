@@ -177,9 +177,9 @@ You will have to listen for the `Delegated` event emitted. Kyber will also provi
 Let us look at a simple example of 1 pool master, with 2 pool members who delegated their stakes to him.
 
 #### Epoch 9
-Pool master 0xMASTER, 1000 KNC stake
-Pool member 0xUSER1, 1500 KNC stake
-Pool member 0xUSER2, 2500 KNC stake
+- Pool master `0xMASTER`, 1000 KNC stake
+- Pool member `0xUSER1`, 1500 KNC stake
+- Pool member `0xUSER2`, 2500 KNC stake
 
 #### Epoch 10
 Pool master voted for all campaigns
