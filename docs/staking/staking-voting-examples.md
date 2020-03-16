@@ -1,6 +1,6 @@
 # KyberDAO: Staking, Voting and Delegation Examples
 
-This document explains the essentials workings of KyberDAO with 3 examples of staking, voting and delegation. 
+This document explains the basics of staking and voting, staking more KNC, and withdrawing KNC.
 
 # Basic Staking And Voting
 
