@@ -14,49 +14,46 @@ No.
 ### 3. How do I stake?
 Simply deposit the amount of KNC you wish to stake into the KyberStaking smart contract. 
 
-### 4. Is there a bonding period?
-When you deposit your KNC to stake, your staked KNC will only be valid from the next epoch onwards. 
-
-### 5. How long is one epoch?
+### 4. How long is one epoch?
 Currently, an epoch is 81,000 blocks (~2 weeks).
 
-### 6. Is there a lockup period for staking?
-There is no minimum lockup period when your KNC is currently being staked. However, withdrawing your staked KNC might affect your stake amount for the current and subsequent epochs.
+### 5. Is there a lockup period for staking?
+There is no minimum lockup period when your KNC is currently being staked. You can withdraw them at any time. However, withdrawing your staked KNC might affect your voting power and rewards claimable for the current and subsequent epochs.
 
-### 7. How can I be eligible for staking rewards?
+### 6. How can I be eligible for staking rewards?
 To be eligible for 100% of your share of the rewards, you need to participate in every DAO vote (or delegate your voting power to someone else) and have your KNC staked for the entire epoch.
 
-### 8. What currency are the rewards distributed in?
+### 7. What currency are the rewards distributed in?
 Rewards are distributed in Ether, as that is the currency fees are collected in.
 
-### 9. When can I claim my rewards?
+### 8. When can I claim my rewards?
 Stakers can claim their rewards of previous epochs whenever they want.
 
-### 10. How often can I get rewards?
+### 9. How often can I get rewards?
 Every epoch (~2 weeks). If you delegate your vote to someone else, it is up to them to decide how often they want to distribute rewards.
 
-### 11. If I don't vote, do I get any rewards?
+### 10. If I don't vote, do I get any rewards?
 No. Consider delegating your vote to a pool master who will vote on your behalf so that you will!
 
-### 12. Can I stake using my crypto wallet? (Ledger, Trezor, MEW, MyCrypto etc.)
+### 11. Can I stake using my crypto wallet? (Ledger, Trezor, MEW, MyCrypto etc.)
 You will have to deposit your KNC tokens from your crypto wallet into the KyberStaking contract. 
 
-### 13. Can I stake within Binance or Coinbase?
+### 12. Can I stake within Binance or Coinbase?
 It is up to 3rd party staking services to decide if they will offer the service. Ask them to! =)
 
-### 14. Any "slashing?"
+### 13. Any "slashing?"
 No. You will always be able to withdraw the full capital deposited.
 
-### 15. Do I need to run a node to stake?
+### 14. Do I need to run a node to stake?
 No. All you have to do is deposit KNC tokens into the KyberStaking contract.
 
-### 16. Do I need ETH / gas to vote?
+### 15. Do I need ETH / gas to vote?
 Yes, vote submission is done on-chain. As such, you have to pay for the cost of making that on-chain tx.
 
-### 17. Can I delegate my voting power to someone else?
+### 16. Can I delegate my voting power to someone else?
 Yes. Stakers can delegate their KNC voting power to a pool master who will vote on their behalf. Stakers who delegate their stake are also known as pool members and can only delegate their stake to one pool.
 
-### 18. Are there any risks to my staked funds?
+### 17. Are there any risks to my staked funds?
 There is always the risk of a potential attack that was not accounted for in our audits but that risk is prevalent across all dapps on Ethereum. You are also exposed to the risk of the price fluctuations in KNC but aside from these, there are no additional risks on your funds and it can only be withdrawn by you.
 
 
