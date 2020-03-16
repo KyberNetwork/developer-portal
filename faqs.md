@@ -221,6 +221,9 @@ Stakers can delegate their stakes to 1 pool master only.
 ### 4. What happens when I delegate my stake to another pool master?
 If the delegated stake is still waiting to take effect, stake re-delegation is immediate. However, if it is currently being staked by a pool then stake re-delegation only takes effect in the next epoch. Your stake remains delegated to your current pool master in the current epoch.
 
+### 5. Is there partial stake delegation?
+No. When you delegate, it is with the full stake amount for the current epoch.
+
 ### 5. What happens when I withdraw my KNC stake?
 #### Case 1: Withdrawal amount &lt;= deposit amount made during current epoch
 Your stake (regardless of delegation) for the current epoch remains unchanged. Changes will only take effect from the next epoch onwards.
