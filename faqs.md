@@ -79,7 +79,7 @@ As a rule of thumb, all actions performed only take effect in the next epoch. A 
 Since stake re-delegation only takes effect in the next epoch, the pool member’s stake is still delegated to you for the current epoch. It is your responsibility to distribute rewards earned for the current epoch to him.
 
 ### 7. What if I delegate my stake to someone else? Does stakes delegated to me pass on to my pool master? 
-There is **no** forwarding of stakes. Only your stake gets delegated to your pool master. You are still responsible for stakes delegated to you.
+There is **no** forwarding of stakes. Only your own stake gets delegated to your pool master. You are still responsible for stakes delegated to you.
 
 ### 8. What happens when a pool member withdraws his stake?
 #### Case 1: Withdrawal amount &lt;= deposit amount made during current epoch
