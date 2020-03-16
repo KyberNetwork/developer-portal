@@ -224,7 +224,7 @@ If the delegated stake is still waiting to take effect, stake re-delegation is i
 ### 5. Is there partial stake delegation?
 No. When you delegate, it is with the full stake amount for the current epoch.
 
-### 5. What happens when I withdraw my KNC stake?
+### 6. What happens when I withdraw my KNC stake?
 #### Case 1: Withdrawal amount &lt;= deposit amount made during current epoch
 Your stake (regardless of delegation) for the current epoch remains unchanged. Changes will only take effect from the next epoch onwards.
 
