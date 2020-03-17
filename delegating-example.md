@@ -2,6 +2,8 @@
 
 One important feature of our staking model is stake delegation. It allows for KNC stakers who are unable or have limited resources to participate in every DAO vote to still receive rewards for staking.
 
+If you are building a custodian staking pool, this section will not be relevant for you, since you will be managing the staking, reward tracking, distribution on your own. 
+
 ## Pool Masters And Members
 Stakers can delegate their KNC voting power to a pool master who will vote on their behalf. Stakers who delegate their stake are also known as pool members and can only delegate their stake to one pool. 
 
