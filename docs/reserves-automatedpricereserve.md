@@ -301,6 +301,22 @@ Once you have completed the above steps, you can let any network operator know s
 
 Once approved, you can test your reserve on [KyberSwap](https://ropsten.kyber.network) Ropsten site! Please note that if there are other reserves listing same swap pair as you, your swap may not get matched with your reserve, because only the reserve that offers best rate will be matched. We can disable other reserves on the testnet to make sure you will swap with your reserve.
 
+## Maintaining your APR
+
+This section walks you through the necessary steps involved in case you want to rebalance the APR , in either of the cases
+- when the reserve is depleted of tokens or ETH.
+- when you want to change any of the liquidity parameters such as maximum buy/sell amount, initial price, etc.,
+
+#### Note : **It is highly recommended to follow the steps documented below to avoid incurring any losses.**
+
+1. Stop trading in the reserve : The alerter can do this by calling `disableTrade()` function of the reserve contract.
+2. Replenish the reserve : Admin can deposit or withdraw Ether/Token to the reserve
+3. Recompute liquidity params : Calculate the new parameters. The admin of the pricing contract can invoke the `setLiquidityParams()`
+4. Enabling trade back : The admin can enable trades back by invoking `enableTrade()` function of the reserve contract.
+
+In the event the reserve is depleted of tokens or ETH, and if you wish to keep the liquidity params as is and only replenish your reserve, then you could skip step 3 : Recompute liquidity params and maintain the initial number of token and ETH value.
+
+
 ## Price Discovery Algorithm
 
 How is the price be set, given a list of trades? Assuming the price (ETH/Token) will be given by *P(E)* which will be a function of the current ETH reserve size. Then assuming we want a change in the price to be proportional to the amount traded we will have:
