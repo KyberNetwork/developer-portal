@@ -50,7 +50,6 @@ The following tasks are actively managed by the Kyber team.
 
 A voting campaign is a campaign for stakers to vote on to form a formal agreement among the DAO. There are 3 types of a voting campaign: Fee, BRR and general. A fee campaign is a campaign that decides the amount of fee in bps will be taken when a trade happens. A BRR campaign decides the percentage in bps of the fee to burn, reward to stakers and rebate to reserves.
 
-
 The DAO maintainer is responsible for reviewing all proposals (a formalized KIP process will be unveiled after the launch), and put up formal proposals for voting accordingly.
 
 ### 2. Cancel a campaign if it is created and not yet started
@@ -66,20 +65,20 @@ However, choosing the time and the amount of ETH to buy KNC can be interpreted a
 
 To remove the possibility for dishonesty, the ability to buy KNC and burn it is given to the public, on the other words, ANYONE that is not a smart contract can do the transaction to buy KNC and burn. The burn operation can only be done once in X blocks in order to avoid skewing KNC price, and maximum of Y eth will be used to buy KNC in order to avoid bad slippage. 
  
-The DAO maintainer will control the Y parameter, and this will only be changed if:
+Kyber team will control the Y parameter, and this will only be changed if:
 
 1. The KNC price toward ETH changes and makes the current ETH amount too little or too much. When it is too little, it is very difficult or impossible to catch up with the total ETH amount to burn. When it is too much, we will buy KNC with a bad slippage.
 2. The ETH price toward USD goes up and makes the reserves change their market making algorithms to provide less KNC liquidity in ETH term.
 
-We believe that this is the simplest model to go with at this point. It is decentralized yet safer than a decentralized model such as auction to calculate on a KNC liquidity measurement. Along with the sanity price contract, it prevents the likelihood of the DAO overpaying for KNC. 
+We believe that this is the simplest model to go with at this point. Along with the sanity price contract, it prevents the likelihood of the DAO overpaying for KNC. 
 
 ### 4. Set KNC sanity price contract
 
 In the burn KNC operation, anyone can do a transaction to buy KNC from the reserves and burn it, if he is a reserve manager, there is an incentive for him to tweak his reserve to sell KNC with a very bad price if other reserves are down (stop selling KNC) or selling KNC with a bad price together.  
 
 To mitigate this possible exploitation, we need to secure the settlement price when KNC is bought to be around a sanity price (difference between settlement and sanity price is less than 10%). That sanity price comes from a KNC sanity price contract. 
- 
-The DAO maintainer will use a multisig as the sanity setter to call a function. In a good condition, the Kyber team will set the sanity contract to a contract that gets the price from a decentralized price oracle like ChainLink. In a bad condition like network congestion or the decentralized oracle got problems, Kyber team will set the sanity contract to a contract that Kyber team feeds the price themselves.
+
+In a good condition, the Kyber team will set the sanity contract to a contract that gets the price from a decentralized price oracle like ChainLink. In a bad condition like network congestion or the decentralized oracle got problems, Kyber team will set the sanity contract to a contract that Kyber team feeds the price themselves.
 
 The maintainer can also stop the burning process by set the sanity KNC rate contract to 0x0 and it will not allow any burn KNC operations anymore.  
 
