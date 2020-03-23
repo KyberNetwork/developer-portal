@@ -103,14 +103,14 @@ The number of blocks for a 2 weeks time frame strictly depends on the block time
 However, making epoch duration varies will complicate the staking algorithm  and introduces more trust or decentralization design. For the sake of simplicity, the epoch block is fixed.
 
 
-**DEFAULT_REWARD_BPS, DEFAULT_REBATE_BPS**
+**2. DEFAULT_REWARD_BPS, DEFAULT_REBATE_BPS**
 
 During the launch of the Katalyst, before any voting has taken place, a set of default bps and brr settings are needed. These will be decided by a soft community voting before the launch of the DAO.
 
 Because it is one time thing, the variables will become irrelevant after a first fee and brr voting campaign is concluded and takes effect.
 
 
-**KNC_SANITY_ALLOWED_DIFF (10%)**
+**3. KNC_SANITY_ALLOWED_DIFF (10%)**
 
 It is the maximum allowed difference between the settlement price (when KNC is bought using ETH to burn) and the sanity price. If the difference is higher than this setting, the whole burn knc operation is reverted.
 
@@ -120,15 +120,15 @@ This sanity check was decided with this assumptions in mind:
 2. If the sanity smart contract is off more than 10%, it means either sanity smart contract or the KNC reserves are abnormal and burn KNC operation is not allowed to advance.
 3. If the reserves exploit the 10% price off and always price to sell KNC 10% more expensively than the sanity rate, they can benefit from the selling by (x + 10%) of the total burn fee at max, where x is the maximum percentage off of the sanity price. The Kyber team will actively monitor the sanity price rate and act if the price is off to the market by more than 5%. Let’s say B is the percentage of burn in network fee, so the maximum benefit of cheating reserves are: _volume * network_fee% * B% * (5% + 10%)_.
 
-**MAX_EPOCH_CAMPS**
+**4. MAX_EPOCH_CAMPS**
 
 This is the maximum number of voting campaigns that can be created in an epoch. We do not expect there to be that many campaigns in an epoch, and even if there are, it should be spread out across multiple epochs to prevent overloading voters. This will also minimize storage abuse.
 
-**MAX_CAMP_OPTIONS**
+**5. MAX_CAMP_OPTIONS**
 
 It is the maximum number of options the Kyber team can create in a campaign. Very few campaigns will need a lot of options, and in those rare cases, more campaigns can be created. This will simplify smart contract code and minimize the storage abuse.
 
-**MIN_CAMP_DURATION_BLOCKS**
+**6. MIN_CAMP_DURATION_BLOCKS**
 
 It is the minimum duration a campaign lasts, essentially the least amount of time in order to have the community participate. It prevents the KyberDAO maintainers from making flash voting campaigns and participating themself to out run other KNC stakers and make it less decentralized.
 
