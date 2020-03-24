@@ -8,20 +8,9 @@ All processes and data will be stored and processed on-chain where feasible - fo
 
 Given Kyber’s role as a key part of the decentralized infrastructure, network stability is crucial for the hundreds of important dapps and reserves that depend on us. In addition, there are certain operations that could result in suboptimal outcomes, like overpaying for the KNC to be burnt. Hence, the Kyber team will be taking on certain key roles, including putting up proposals for voting, set maximum amount of ETH to be sold, as well as the sanity checks.
 
-It is important to note that all the above changes can be monitored by the community since all these operations are fully onchain. 
-
 One important action that the Kyber team can take is the DAO migration, where the key fee handling and DAO contracts are updated. This is a serious operation, and will only be conducted under maximum transparency and disclosure. Possible situations for migration include serious bugs, major flaws in the system or a DAO consensus that an upgrade is necessary.
 
-## Tradeoffs
-
-We take this DAO migration seriously, and this means we need to be as thoughtful as possible about creating meaningful broad representation while making sure the whole decentralized ecosystem trusts us to continue being the key onchain liquidity endpoint. We aim to maintain stability by ensuring gradual change and as well as safety where no large KNC stakeholder or collusion among stakeholders with malicious intent can undermine the security and stability of the network.
-
-If we are not transparent, refuse to take the community opinions into consideration or fail to communicate effectively about decisions being made, we will soon lose legitimacy and our ecosystem and holder participation will continue to drop, rendering the DAO pointless. 
-
-Conversely, if we perform this balance well, our legitimacy will continue to grow, participation will increase, and we can incrementally move more and more operations for DAO votes, including network features, technical upgrades or eventually protocol upgrade decisions as well. 
-
-We believe that this system achieves the main goals of broad representation, network stability and resilience - and we would love to work with the community to continuously improve both the onchain and off chain processes as we continue to evolve. In this document, we outline the key things that we as the initial DAO maintainer, can or cannot perform:
-
+This document outlines the key aspects the Kyber Team can or cannot perform:
 
 ## Kyber Team Cannot:
 
