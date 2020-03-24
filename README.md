@@ -1,5 +1,5 @@
 # KyberDAO Developer Overview
-In the next version of Kyber Network protocol, we introduce the DAO and a staking model where KNC holders can stake KNC to have voting power (called stakers) in order to vote for different voting campaigns on the DAO contract. 
+In the next version of Kyber Network protocol, we introduce the DAO and a staking model where KNC holders can stake KNC to have voting power (called stakers) in order to vote for different voting campaigns on the Dao contract. They will claim rewards from the kyberFeeHandler contract(s).
 
 ## Pool Operators
 Pool operators form an critial part of the overall KyberDAO system, helping to ensure that a wide range of voting interests will be represented while allowing KNC holders to easily stake their tokens and get rewards by choosing a pool operator who aligns with them.
@@ -11,8 +11,9 @@ Read options for operating a pool [here](pool-operator-options.md).
 - Testnet Details
 - [Delegating Overview And Example](delegating-example.md)
 - [Kyber Team as DAO Maintainer](kyber-team-maintainer.md)
-- Voting and claiming APIs
 - [Staking and Delegating APIs](staking-api.md)
+- [Voting APIs](voting-api.md)
+- [Claiming APIs](claiming-api.md)
 - [FAQs](faqs.md)
 
 ## Grants Given 
@@ -47,7 +48,7 @@ This will be managed by the Kyber team.
 
 
 ## Fees And Rewards
-Whenever a taker does a transaction to trade, the Network contract takes the fee in ETH according to the network_fee config and sends it to the FeeHandler contract. 
+Whenever a taker does a transaction to trade, the kyberNetwork contract takes the fee in ETH according to the network_fee config and sends it to the kyberFeeeHandler contract. In the future, the fees may be in stablecoins as well.
 
 Those fees will be split into 3 different parts:
 1) Buy and **burn** KNC
