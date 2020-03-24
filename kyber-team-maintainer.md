@@ -1,8 +1,8 @@
-# Kyber Team As DAO Maintainer 
+# Kyber Team As Current DAO Maintainer 
 
 ## Overview
 
-The KyberDAO is designed for maximum viable transparency, network stability and quick recovery in cases of emergencies. **Kyber team will serve as the maintainer of the KyberDAO**, and we believe it is important to be as transparent and clear about this role as possible.
+The KyberDAO is designed for maximum viable transparency, network stability and quick recovery in cases of emergencies. **Kyber team will serve as the current maintainer of the KyberDAO**, and we believe it is important to be as transparent and clear about this role as possible.
 
 All processes and data will be stored and processed on-chain where feasible - for example, the results of any campaigns to change the network fees and fee allocation ratio will be immediately processed after the voting concludes. Where it is not practical, there will be a set of robust off-chain community and governance processes on multiple channels to ensure maximum debate and understanding. 
 
