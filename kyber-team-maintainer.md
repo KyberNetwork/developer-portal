@@ -10,7 +10,14 @@ Given Kyber’s role as a key part of the decentralized infrastructure, network 
 
 One important action that the Kyber team can take is the DAO migration, where the key fee handling and DAO contracts are updated. This is a serious operation, and will only be conducted under maximum transparency and disclosure. Possible situations for migration include serious bugs, major flaws in the system or a DAO consensus that an upgrade is necessary.
 
-This document outlines the key aspects the Kyber Team can or cannot perform:
+## Evolving Governance
+As the current DAO maintainer, we take the role of facilitating discussions, driving open and transparent decision making, and executing (and following through) the formal DAO processes very seriously.
+
+If we perform this balance well, our legitimacy will continue to grow, participation will increase, and the community’s understanding of the key operations will be sufficient to allow us to gradually move more operations towards DAO votes, including network features, technical upgrades or protocol upgrade decisions.
+
+We believe that this progressive decentralization achieves the main goals of broad representation, transparency, resilience, and network stability — and we would love to work with the community to continuously improve both the on-chain and off-chain processes as we continue to evolve.
+
+This document outlines the key aspects the Kyber Team can or cannot perform at present:
 
 ## Kyber Team Cannot:
 
