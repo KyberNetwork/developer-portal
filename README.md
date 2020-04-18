@@ -26,6 +26,11 @@ Docs are in a very early stage of development, so any ideas for improvements wil
 - [Staking and Delegating APIs](staking-api.md)
 - [FAQs](faqs.md)
 
+## Grants
+We have grants available for talented developers to help extend the KyberDAO.
+- [Tokenized KNC With Rewards (Allocated)](tokenized-knc-grant.md)
+- [Smart Contract Proxy For Poolmasters](smart-contract-proxy-grant.md)
+
 
 ## Overview
 All operations including staking and voting will be split into continuous epochs. An epoch is a continuous range of 81,000 blocks (~ 2 weeks time). If an epoch ends at block 4,000,000 the next epoch will start at block 4,000,001. 
