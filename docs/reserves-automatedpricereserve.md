@@ -303,19 +303,18 @@ Once approved, you can test your reserve on [KyberSwap](https://ropsten.kyber.ne
 
 ## Maintaining your APR
 
-This section walks you through the necessary steps involved in case you want to rebalance the APR , in either of the cases
-- when the reserve is depleted of tokens or ETH.
-- when you want to change any of the liquidity parameters such as maximum buy/sell amount, initial price, etc.,
+This section walks you through the necessary steps involved in case you want to rebalance the APR or withdraw fees collected in order to pay network fees. You will also need to perform the same activities in the event that:
+- the reserve is depleted of tokens or ETH;
+- you want to rebalance your reserve;
+- you want to withdraw fees from the reserve;
+- when you want to change any of the liquidity parameters such as maximum buy/sell amount, initial price, etc.
 
-#### Note : **It is highly recommended to follow the steps documented below to avoid incurring any losses.**
+#### Note : **It is highly recommended to follow the steps documented below to avoid incurring any loss of funds**
 
-1. Stop trading in the reserve : The alerter can do this by calling `disableTrade()` function of the reserve contract.
-2. Replenish the reserve : Admin can deposit or withdraw Ether/Token to the reserve
-3. Recompute liquidity params : Calculate the new parameters. The admin of the pricing contract can invoke the `setLiquidityParams()`
-4. Enabling trade back : The admin can enable trades back by invoking `enableTrade()` function of the reserve contract.
-
-In the event the reserve is depleted of tokens or ETH, and if you wish to keep the liquidity params as is and only replenish your reserve, then you could skip step 3 : Recompute liquidity params and maintain the initial number of token and ETH value.
-
+1. DISABLE trading in the reserve : The alerter can do this by calling `disableTrade()` function in the reserve contract.
+2. Rebalance the reserve : After and only when the reserve is disabled, the reserve manager can deposit or withdraw Ether/Tokens to the reserve.
+3. Recompute liquidity params : Calculate the new parameters by taking note of the new ETH and token inventory and the latest market price. The admin of the pricing contract can then set these new params by invoking `setLiquidityParams()` in the pricing contract.
+4. Enabling trading back : The admin can enable trades back by invoking the `enableTrade()` function in the reserve contract.
 
 ## Price Discovery Algorithm
 

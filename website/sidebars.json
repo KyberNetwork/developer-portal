@@ -56,7 +56,8 @@
     "Miscellaneous": [
       "Reserves-TradingStrategy",
       "Reserves-SanityRates",
-      "Reserves-ReserveFees"
+      "Reserves-ReserveFees",
+      "Reserves-BurningFees"
     ]
   },
   "Environments": {
