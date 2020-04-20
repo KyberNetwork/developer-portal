@@ -7,10 +7,10 @@ The APIs in this section require users to send transactions. The general rule of
 The first step for any user is to deposit KNC into the staking contract (in token wei).
 
 ---
-function **`deposit`**(uint amount) public
+function **`deposit`**(uint256 amount) public
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
-| `amount` | uint | KNC twei to be deposited |
+| `amount` | uint256 | KNC twei to be deposited |
 ---
 Note: The user must have given an allowance to the staking contract, ie. made the following function call
 `KNC.approve(stakingContractaddress, someAllowance)`
@@ -68,10 +68,10 @@ txReceipt = await web3.eth.sendTransaction({
 The user can withdraw KNC (in token wei) from the staking contract at any point in time. 
 
 ---
-function **`withdraw`**(uint amount) public
+function **`withdraw`**(uint256 amount) public
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
-| `amount` | uint | KNC twei to be withdrawn |
+| `amount` | uint256 | KNC twei to be withdrawn |
 ---
 
 #### Example
@@ -94,11 +94,42 @@ txReceipt = await web3.eth.sendTransaction({
 });
 ```
 
-## Getting Current Epoch Number
+## Getting Epoch Information
+This section documents the API related to getting epoch related information, such as the duration of one epoch, or the current epoch number.
+
+### Epoch Duration
+Obtain the duration of 1 epoch.
+
+---
+function **`epochPeriodInSeconds`**() external view returns (uint256)
+
+#### Example
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper
+let epochDuration = await StakingContract.epochPeriodInSeconds().call();
+```
+
+### Timestamp of 1st Epoch
+Obtain the timestamp of the first epoch
+
+---
+function **`firstEpochStartTimestamp`**() public view returns (uint256)
+
+#### Example
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper
+let firstEpochStartTimestamp = await StakingContract.firstEpochStartTimestamp().call();
+```
+
+### Current Epoch Number
 Obtain the current epoch number of the staking contract
 
 ---
-function **`getCurrentEpochNumber`**() public view returns (uint)
+function **`getCurrentEpochNumber`**() public view returns (uint256)
 
 #### Example
 ```js
@@ -126,19 +157,19 @@ We can classify the APIs for reading staking data in 4 broad sections:
 Obtains a staker's information for a specified epoch. Used for calculating reward percentage by pool masters (and the DAO contract). Kindly refer to [this example](faqs.md#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-function-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough on reward calculation.
 
 ---
-function **`getStakerDataForPastEpoch`**(address staker, uint epoch) public view returns (uint _stake, uint _delegatedStake, address _delegatedAddress)
+function **`getStakerDataForPastEpoch`**(address staker, uint256 epoch) public view returns (uint256 _stake, uint256 _delegatedStake, address _delegatedAddress)
 
 **Inputs**
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
 | `staker` | address | Staker's wallet address |
-| `epoch` | uint | epoch number |
+| `epoch` | uint256 | epoch number |
 
 **Returns:**
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
-| `_stake` | uint | `staker` stake amount |
-| `_delegatedStake` | uint | Stake amount delegated to `staker` by other stakers |
+| `_stake` | uint256 | `staker` stake amount |
+| `_delegatedStake` | uint256 | Stake amount delegated to `staker` by other stakers |
 | `_delegatedAddress` | address | Wallet address `staker` delegated his stake to |
 ---
 **Notes:**
@@ -163,13 +194,13 @@ let result = await StakingContract.methods.getStakerDataForPastEpoch(staker, epo
 Obtains a staker's KNC stake for a specified epoch (up to the next epoch)
 
 ---
-function **getStake**(address staker, uint epoch) public view returns (uint)
+function **getStake**(address staker, uint256 epoch) public view returns (uint256)
 
 **Inputs**
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
 | `staker` | address | Staker's wallet address |
-| `epoch` | uint | epoch number |
+| `epoch` | uint256 | epoch number |
 
 **Returns:**\
 `staker` KNC stake at `epoch`
@@ -195,13 +226,13 @@ let result = await StakingContract.methods.getStake(staker, epoch).call();
 Obtains staking amount delegated to an address for a specified epoch (up to the next epoch)
 
 ---
-function **getDelegatedStake**(address staker, uint epoch) public view returns (uint)
+function **getDelegatedStake**(address staker, uint256 epoch) public view returns (uint256)
 
 **Inputs**
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
 | `staker` | address | Staker's wallet address |
-| `epoch` | uint | epoch number |
+| `epoch` | uint256 | epoch number |
 
 **Returns:**\
 Delegated stake amount to `staker` at `epoch`
@@ -227,13 +258,13 @@ let result = await StakingContract.methods.getDelegatedStake(staker, epoch).call
 Obtains the pool master's address of `staker` at a specified epoch (up to the next epoch)
 
 ---
-function **getDelegatedAddress**(address staker, uint epoch) public view returns (address)
+function **getDelegatedAddress**(address staker, uint256 epoch) public view returns (address)
 
 **Inputs**
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
 | `staker` | address | Staker's wallet address |
-| `epoch` | uint | epoch number |
+| `epoch` | uint256 | epoch number |
 
 **Returns:**\
 `staker` pool master address
@@ -261,7 +292,7 @@ let result = await StakingContract.methods.getDelegatedAddress(staker, epoch).ca
 Obtains a staker's KNC stake for the next epoch
 
 ---
-function **getLatestStakeBalance**(address staker) public view returns (uint)
+function **getLatestStakeBalance**(address staker) public view returns (uint256)
 
 **Inputs**
 | Parameter | Type | Description |
@@ -291,7 +322,7 @@ let result = await StakingContract.methods.getLatestStakeBalance(staker).call();
 Obtains staking amount delegated to an address for the next epoch
 
 ---
-function **getDelegatedStake**(address staker) public view returns (uint)
+function **getDelegatedStake**(address staker) public view returns (uint256)
 
 **Inputs**
 | Parameter | Type | Description |
@@ -321,7 +352,7 @@ let result = await StakingContract.methods.getLatestDelegatedStake(staker).call(
 Obtains the pool master's address of `staker` for the next epoch
 
 ---
-function **getLatestDelegatedAddress**(address staker, uint epoch) public view returns (address)
+function **getLatestDelegatedAddress**(address staker, uint256 epoch) public view returns (address)
 
 **Inputs**
 | Parameter | Type | Description |

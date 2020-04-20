@@ -15,7 +15,7 @@ No.
 Simply deposit the amount of KNC you wish to stake into the KyberStaking smart contract. 
 
 ### 4. How long is one epoch?
-Currently, an epoch is 81,000 blocks (~2 weeks).
+2 weeks, or 1209600 seconds.
 
 ### 5. Is there a lockup period for staking?
 There is no minimum lockup period when your KNC is currently being staked. You can withdraw them at any time. However, withdrawing your staked KNC might affect your voting power and rewards claimable for the current and subsequent epochs.
@@ -30,7 +30,7 @@ Rewards are distributed in Ether, as that is the currency fees are collected in.
 Stakers can claim their rewards of previous epochs whenever they want.
 
 ### 9. How often can I get rewards?
-Every epoch (~2 weeks), assuming you have voted in the previous epochs. If you delegate your vote to someone else, it is up to them to decide how often they want to distribute rewards.
+Every epoch (2 weeks), assuming you have voted in the previous epochs. If you delegate your vote to someone else, it is up to them to decide how often they want to distribute rewards.
 
 ### 10. If I don't vote, do I get any rewards?
 No. Consider delegating your vote to a pool master who will vote on your behalf so that you will!

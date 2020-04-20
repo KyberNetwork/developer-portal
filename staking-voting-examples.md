@@ -2,7 +2,7 @@
 This document explains the basics of staking and voting, staking more KNC, and withdrawing KNC with 3 examples.
 
 ## Basic Staking And Voting
-Staking and voting are done in epochs, which sounds scary, but it really just means fixed periods of time, denominated in Ethereum block times. One KyberDAO epoch will be around once every 2 weeks. The exact block number will be determined at a later stage. 
+Staking and voting are done in epochs, which sounds scary, but it really just means fixed periods of time, determined by the timestamps of the mined Ethereum blocks. The durstion of every KyberDAO epoch will be 2 weeks. The timestamp of the first epoch will be decided at a later stage.
 
 *   Epoch 10: Tom stakes 10,000 KNC. He cannot vote with this stake in this epoch.
 *   Epoch 11: He will be able to vote with his 10,000 KNC 

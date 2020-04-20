@@ -33,7 +33,7 @@ We have grants available for talented developers to help extend the KyberDAO.
 
 
 ## Overview
-All operations including staking and voting will be split into continuous epochs. An epoch is a continuous range of 81,000 blocks (~ 2 weeks time). If an epoch ends at block 4,000,000 the next epoch will start at block 4,000,001. 
+All operations including staking and voting will be split into continuous epochs. We use timestamps to define the epoch duration (2 weeks) and the start time of the first epoch. There is no triggering mechanism needed to transit from one epoch to another, as this is done automatically when the Ethereum blockchain mines more blocks.
 
 In every epoch, KNC holders can choose to vote on the ongoing campaigns. However, for their voting power (and rewards) to be considered, they will need to stake their KNC *before an epoch* and keep the staked KNC there for the whole epoch to be accounted to vote and rewards for that epoch. In *the following epoch*, they will be rewarded by the proportion of their share of KNC voting power, which they can claim.
 
