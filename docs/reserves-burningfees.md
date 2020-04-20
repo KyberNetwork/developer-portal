@@ -18,3 +18,10 @@ Obtain the [FeeBurner contract address here](environments-mainnet.md#feeburner).
 
 ### Step 2: Query the `reserveFeesToBurn` variable
 Key in your reserve's contract address in the input field for the `reserveFeesToBurn` variable. The query should return the total fees (burn and share) in KNC.
+
+
+## Withdrawing funds from the reserve:
+
+The operator account could withdraw funds to the whitelisted address of your reserve,
+**Withdraw ETH** : call the `withdrawEther` function of the reserve contract by passing the amount of Ether you would want to withdraw. More information regarding the input parameters of the `withdrawEther` function can be found in [API/ABI](api_abi-withdrawable.md#withdrawEther).
+**Withdraw Token** : call the `withdrawToken` function of the reserve contract by passing the amount of tokens you would want to withdraw. More information regarding the input parameters of the `withdrawToken` function can be found in [API/ABI](api_abi-withdrawable.md#withdrawtoken).
