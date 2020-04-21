@@ -4,6 +4,8 @@ We are looking for talented developers to build an important extension for the K
 
 This proxy should be audited (audit cost excluded from grant) and ready for mainnet deployment.
 
+For the technical overview and API docs of KyberDAO, refer [here](README.md)
+
 ## Description:
 
 Create an KyberDAO proxy that allows pool masters to let pool members claim their designated rewards trustlessly and update fees with sufficient notice times while maintaining full trustlessness.

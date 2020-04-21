@@ -24,7 +24,7 @@ Docs are in a very early stage of development, so any ideas for improvements wil
 - [Kyber Team as DAO Maintainer](kyber-team-maintainer.md)
 - Voting and claiming APIs
 - [Staking and Delegating APIs](staking-api.md)
-- Options For Staking Partners
+- [Options For Staking Partners](staking-partners-options.md)
 - [FAQs](faqs.md)
 
 ## Grants (WIP)
