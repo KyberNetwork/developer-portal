@@ -22,10 +22,11 @@ This smart contract proxy will allow pool masters to settle the above in a trust
 
 ## Additional Information:
 
-- See the more detailed [specification doc](https://docs.google.com/document/d/1kKH2RXZDffyLrqORynMNAJ3TJb9Yb2fNYKaNkybZ9E4/edit) for a full 
+- See the detailed [specification doc](https://docs.google.com/document/d/1kKH2RXZDffyLrqORynMNAJ3TJb9Yb2fNYKaNkybZ9E4/edit) for a full list of the required functionalities and APIs. 
+- The grantee can choose to develop his own APIs, but this specification doc serves a guideline. 
 - The author of this document is [StakeWith.Us](https://stakewith.us/), who will also be advising on the development of this proxy contract. 
 
 ## Grant Amount:
 
 - $15K USD in KNC
-- Kyber will collaborate with the grantee for the auditing
+- Kyber will collaborate with the grantee for the auditinga
