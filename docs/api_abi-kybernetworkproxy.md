@@ -165,13 +165,13 @@ The expected exchange rate and slippage rate.<br>
 #### Understanding the returned values
 
 To understand what this rate means, divide the obtained value by 10\*\*18. Let us look at an example.
-Suppose calling `getExpectedRate(KNC_TOKEN,ZIL_TOKEN,1000000000000000000)` returns the following values:
+Suppose calling `getExpectedRate(KNC_TOKEN,WBTC_TOKEN,1000000000000000000)` returns the following values:
 
-- `expectedRate: 8364817722526000000`
-- `slippageRate: 8113873190850220000`
+- `expectedRate: 64760000000000`
+- `slippageRate: 62817200000000`
 
-`8364817722526000000 / (10**18) = 8.364817722526`
-Hence, 1 KNC token can be converted to 8.365 ZIL tokens.
+`64760000000000 / (10**18) = 0.0000648098`
+Hence, 1 KNC token can be converted to 0.000065 WBTC token.
 
 #### `0` expected and slippage rates
 
