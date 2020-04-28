@@ -1,4 +1,4 @@
-## Smart Contract Proxy For Pool Master
+# Smart Contract Proxy For Pool Master
 
 Developer: [Protofire.io](https://protofire.io/)
 
