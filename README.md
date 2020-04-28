@@ -24,12 +24,11 @@ Docs are in a very early stage of development, so any ideas for improvements wil
 - [Kyber Team as DAO Maintainer](kyber-team-maintainer.md)
 - Voting and claiming APIs
 - [Staking and Delegating APIs](staking-api.md)
-- [Options For Staking Partners](staking-partners-options.md)
 - [FAQs](faqs.md)
 
-## Grants (WIP)
-We have grants available for talented developers to help extend the KyberDAO.
-- Tokenized KNC With Rewards (Allocated)(tokenized-knc-grant.md)
+## Grants Given 
+We have given out 2 grants to talented developers to build out important extensions of KyberDAO
+- [Tokenized KNC With Rewards](tokenized-knc-grant.md)
 - [Smart Contract Proxy For Poolmasters](smart-contract-proxy-grant.md)
 
 
