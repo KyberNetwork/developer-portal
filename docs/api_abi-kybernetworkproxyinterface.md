@@ -43,13 +43,11 @@ The expected exchange rate and slippage rate.<br>
 
 #### Understanding the returned values
 To understand what this rate means, divide the obtained value by 10**18. Let us look at an example.
-Suppose calling `getExpectedRate(KNC_TOKEN,ZIL_TOKEN,1000000000000000000)` returns the following values:
-* `expectedRate: 8364817722526000000`
-* `slippageRate: 8113873190850220000`
-
-` 8364817722526000000 / (10**18) = 8.364817722526`
-Hence, 1 KNC token can be converted to 8.365 ZIL tokens.
-
+Suppose calling `getExpectedRate(KNC_TOKEN,WBTC_TOKEN,1000000000000000000)` returns the following values:
+* `expectedRate: 64760000000000`
+* `slippageRate: 62817200000000`
+`64760000000000 / (10**18) = 0.0000648098`
+Hence, 1 KNC token can be converted to 0.000065 WBTC token.
 #### `0` expected and slippage rates
 A returned rate of `0` signifies that a trade from the requested source token amount to the destination token is not possible at the moment. It could be due to the following reasons:
 * No reserve is supporting either `src` or `dest` token, or both
