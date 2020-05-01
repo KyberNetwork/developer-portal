@@ -1,8 +1,6 @@
 # KyberDAO Developer Overview
 In the next version of Kyber Network protocol, we introduce the DAO and a staking model where KNC holders can stake KNC to have voting power (called stakers) in order to vote for different voting campaigns on the DAO contract. 
 
-They can also delegate to custodial services or pool masters to help them vote. While the KyberDAO API offers a fully onchain mechanism to allow holders to specify an address to can vote on their behalf, **the role of distributing the rewards lies in the hands of the pool masters**. 
-
 ## Pool Operators
 Pool operators form an critial part of the overall KyberDAO system, helping to ensure that a wide range of voting interests will be represented while allowing KNC holders to easily stake their tokens and get rewards by choosing a pool operator who aligns with them.
 
