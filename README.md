@@ -3,18 +3,10 @@ In the next version of Kyber Network protocol, we introduce the DAO and a stakin
 
 They can also delegate to custodial services or pool masters to help them vote. While the KyberDAO API offers a fully onchain mechanism to allow holders to specify an address to can vote on their behalf, **the role of distributing the rewards lies in the hands of the pool masters**. 
 
+## Pool Operators
+Pool operators form an critial part of the overall KyberDAO system, helping to ensure that a wide range of voting interests will be represented while allowing KNC holders to easily stake their tokens and get rewards by choosing a pool operator who aligns with them.
 
-## Developers
-While there will be a basic staking, voting and delegating interface provided by Kyber, there are several critical things that developers can build to be part of this process. 
-
-For example:
-- Interfaces to help KNC holders stake, vote and claim their rewards.
-- Custodial platforms that accept KNC, vote on their behalf and distribute the rewards.
-- Smart contract based platforms that allow the users to delegate their vote and get their rewards trustlessly.
-
-Developers who are interested in building for KyberDAO can review the overview below for a quick idea of the concepts, run through the examples in detail for an understanding of the exact flow.
-
-Docs are in a very early stage of development, so any ideas for improvements will be much appreciated.
+Read options for operating a pool [here](pool-operator-options.md).
 
 ## Resources
 - [Staking, Voting Examples](staking-voting-examples.md)
