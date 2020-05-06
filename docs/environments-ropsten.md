@@ -78,7 +78,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 `0x27db28a6C4ac3D82a08D490cfb746E6F02bC467C`
 
 ### `KNC (Kyber Network)`
-`0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6`
+`0x7b2810576aa1cce68f2b118cef1f36467c648f92`
 
 ### `LINK (Chain Link)`
 `0xb4f7332ed719Eb4839f091EDDB2A3bA309739521`
