@@ -1050,10 +1050,11 @@ These amounts should be in the source and destination token decimals respectivel
 #### `maxDestAmount`
 
 This parameter should never be zero. Set to an arbitarily large amount for all source tokens to be converted.
+When using `maxDestAmount`, we recommend using `slippageRate` or add a buffer to `expectedRate` rather than using the exact rate from getExpectedRate. Otherwise, it is likely that the trade will revert.
 
 #### `minConversionRate`
 
-This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though ZIL has 12 token decimals, if we want the minimum conversion rate to be `1 ZIL = 0.00017 ETH`, then `minConversionRate = 0.00017 * (10 ** 18)`.
+This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though WBTC has 8 token decimals, if we want the minimum conversion rate to be `1 ETH = 0.023 WBTC`, then `minConversionRate = 0.023 * (10 ** 18)`.
 
 #### `walletId`
 
