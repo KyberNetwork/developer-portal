@@ -1,4 +1,4 @@
-s---
+---
 id: Reserves-Types
 title: Reserve Types
 ---
