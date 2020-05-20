@@ -147,14 +147,14 @@ There are primarily 3 parameters of interest (apart from getting the current epo
 | `delegatedStake` | KNC amount delegated to a staker |
 | `delegatedAddress` / `dAddr` | Who the staker delegated his stake to |
 
-We can classify the APIs for reading staking data in 4 broad sections:
+We can classify the APIs for reading staking data in 3 broad sections:
 - Reward percentage calculation for pool masters
 - Getting the above 3 parameters for the past epochs and the current epoch
 - Getting the above 3 parameters for the next epoch
 
 ## Section 1: Reward calculation for pool masters
 ### Staker Data Of An Epoch
-Obtains a staker's information for a specified epoch. Used for calculating reward percentage by pool masters (and the DAO contract). Kindly refer to [this example](faqs.md#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-function-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough on reward calculation.
+Obtains a staker's information for a specified epoch. Used in conjunction with (getStake)[#stakers-knc-stake] for calculating reward percentage by pool masters (and the DAO contract). Kindly refer to [this example](faqs.md#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-function-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough on reward calculation.
 
 ---
 function **`getStakerDataForPastEpoch`**(address staker, uint256 epoch) public view returns (uint256 _stake, uint256 _delegatedStake, address _delegatedAddress)
@@ -174,19 +174,20 @@ function **`getStakerDataForPastEpoch`**(address staker, uint256 epoch) public v
 ---
 **Notes:**
 - Delegated stakes to `staker` are not forwarded to `delegatedAddress`. `staker` is still responsible for voting on behalf of all stakes delegated to him.
+- To accurately get the stakes of pool members for reward calculation, use the (getStake)[#stakers-knc-stake] function.
 
 #### Example
-Obtain staker's information (of address `0x12340000000000000000000000000000deadbeef`) at epoch 5.
+Obtain pool master's information (of address `0x12340000000000000000000000000000deadbeef`) at epoch 5.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let poolMaster = "0x12340000000000000000000000000000deadbeef" //staker's address
 let epoch = new BN(5);
 
-let result = await StakingContract.methods.getStakerDataForPastEpoch(staker, epoch).call();
+let result = await StakingContract.methods.getStakerDataForPastEpoch(poolMaster, epoch).call();
 ```
 
 ## Section 2: Staking info of past and current epochs

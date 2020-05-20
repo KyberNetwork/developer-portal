@@ -70,7 +70,7 @@ The reward amount given to the pool master is calculated based on the sum of his
 Yes.
 
 ### 4. How do I know how much stake / reward each pool member has / is entitled to?
-Kindly take a look at [this example](#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-function-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough. In essence, call the [`getStakerDataForPastEpoch`](staking-api.md#section-1-reward-calculation-for-pool-masters) function of the staking contract to determine the staked amount and eligible rewards for each of your pool members.
+Kindly take a look at [this example](#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-function-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough. In essence, call the [`getStakerDataForPastEpoch`](staking-api.md#staker-data-of-an-epoch) and [`getStake`](staking-api.md#stakers-knc-stake) functions of the staking contract to determine the staked amount and eligible rewards for each of your pool members.
 
 ### 5. What happens when a pool member delegates his stake to another pool master?
 As a rule of thumb, all actions performed only take effect in the next epoch. A pool member may perform re-delegation as often as he likes in the current epoch, but the changes will only kick in, in the next epoch. The pool member's stake remains delegated to their current designated pool master in the current epoch.
@@ -88,13 +88,13 @@ Your voting power and reward distribution for the current epoch remains unchange
 #### Case 2: Withdrawal amount > deposit amount made during current epoch
 Your voting power and rewards for pool members (including the pool member who initiated the withdrawal) for the current epoch will be recomputed, even if you have voted prior to a pool member’s withdrawal. 
 
-You may refer to the [various deposit & withdrawals section] to see how the pool member's stake is affected.
+You may refer to the [various deposit & withdrawals section](#various-deposit--withdrawal-scenarios) to see how the pool member's stake is affected.
 
 ## Technical FAQs (Pool Masters)
 ### 1. How do I obtain the list of pool members who delegated their stakes to me?
 You will have to listen for the `Delegated` event emitted. Kyber will also provide an API for the list of pool members.
 
-### 2. How do I make use of the `getStakerDataForPastEpoch` function to calculate the stake and reward distribution for my pool members?
+### 2. How do I make use of the `getStakerDataForPastEpoch` and `getStake` functions to calculate the stake and reward distribution for my pool members?
 Let us look at a simple example of 1 pool master, with 2 pool members who delegated their stakes to him.
 
 #### Epoch 9
@@ -106,7 +106,8 @@ Let us look at a simple example of 1 pool master, with 2 pool members who delega
 Pool master voted for all campaigns
 
 #### Reward distribution for epoch 10
-- Call `getStakerDataForPastEpoch` for the pool master and each pool member.
+- Call `getStakerDataForPastEpoch` for the pool master.
+- Call `getStake` for each pool member.
 ```
 // getStakerDataForPastEpoch(addr, epoch) returns (_stake, _delegatedStake, _delegatedAddres)
 // _stake: stake amount eligible for reward
@@ -114,8 +115,8 @@ Pool master voted for all campaigns
 // _delegatedAddress: Wallet address addr delegated his stake to
 
 getStakerDataForPastEpoch(0xMASTER, 10) = (1000, 4000, 0xMASTER)
-getStakerDataForPastEpoch(0xUSER1, 10) = (1500, 0, 0xMASTER)
-getStakerDataForPastEpoch(0xUSER2, 10) = (2500, 0, 0xMASTER)
+getStake(0xUSER1, 10) = 1500
+getStake(0xUSER2, 10) = 2500
 ```
 
 - Calculate reward distribution
@@ -148,7 +149,7 @@ Your stake (regardless of delegation) for the current epoch remains unchanged. C
 #### Case 2: Withdrawal amount > deposit amount made during current epoch
 You or your pool master’s voting power and your reward amount will be recomputed for the current epoch, even if you or your pool master have voted prior to a pool member’s withdrawal. 
 
-You may refer to the [various deposit & withdrawals section] below to see how your stake is affected.
+You may refer to the section below to see how your stake is affected.
 
 ## Various Deposit & Withdrawal Scenarios
 <table>
