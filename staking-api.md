@@ -250,6 +250,7 @@ function **getStake**(address staker, uint256 epoch) external view returns (uint
 
 **Returns:**
 `staker` KNC stake at `epoch`
+
 ---
 **Notes:**
 - `getStake(staker, N+1) == getLatestStakeBalance(staker)` where `N` is the current epoch only when staker data has been initialised due to a staker action
@@ -283,6 +284,7 @@ function **getDelegatedStake**(address staker, uint256 epoch) external view retu
 
 **Returns:**
 Delegated stake amount to `staker` at `epoch`
+
 ---
 **Notes:**
 - `getDelegatedStake(staker, N+1) == getLatestDelegatedStake(staker)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
@@ -316,6 +318,7 @@ function **getRepresentative**(address staker, uint256 epoch) external view retu
 
 **Returns:**
 `staker` representative address
+
 ---
 **Notes:**
 - If user is not a staker, null address is returned
@@ -394,6 +397,7 @@ function **getLatestStakeBalance**(address staker) external view returns (uint25
 
 **Returns:**
 `staker` KNC stake for the next epoch.
+
 ---
 **Note:**
 `getLatestStakeBalance(staker) == getStake(staker, N+1)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
@@ -424,6 +428,7 @@ function **getLatestDelegatedStake**(address staker) external view returns (uint
 
 **Returns:**
 Delegated stake amount to `staker` for the next epoch.
+
 ---
 **Note:**
 `getLatestDelegatedStake(staker) == getDelegatedStake(staker, N+1)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
@@ -454,6 +459,7 @@ function **getLatestRepresentative**(address staker, uint256 epoch) external vie
 
 **Returns:**
 `staker` representative address
+
 ---
 **Notes:**
 - `getLatestRepresentative(staker) == getRepresentative(staker, N+1)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
