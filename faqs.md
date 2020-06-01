@@ -33,7 +33,7 @@ Stakers can claim their rewards of previous epochs whenever they want.
 Every epoch (2 weeks), assuming you have voted in the previous epochs. If you delegate your vote to someone else, it is up to them to decide how often they want to distribute rewards.
 
 ### 10. If I don't vote, do I get any rewards?
-No. Consider delegating your vote to a pool master who will vote on your behalf so that you will!
+No. Consider delegating your vote to a pool operator who will vote on your behalf so that you will!
 
 ### 11. Can I stake using my crypto wallet? (Ledger, Trezor, MEW, MyCrypto etc.)
 You will have to deposit your KNC tokens from your crypto wallet into the KyberStaking contract. 
@@ -51,20 +51,20 @@ No. All you have to do is deposit KNC tokens into the KyberStaking contract.
 Yes, vote submission is done on-chain. As such, you have to pay for the cost of making that on-chain tx.
 
 ### 16. Can I delegate my voting power to someone else?
-Yes. Stakers can delegate their KNC voting power to a pool master (another address) who will vote on their behalf. Stakers who delegate their stake are also known as pool members and can only delegate their stake to one pool.
+Yes. Stakers can delegate their KNC voting power to a pool operator (representative) who will vote on their behalf. Stakers who delegate their stake are also known as pool members and can only delegate their stake to one pool.
 
 ### 17. Are there any risks to my staked funds?
 Staking KNC on our interface is through a non-custodial method with KNC residing in the smart contract. At no point in time does the Kyber team hold stakers’ KNC ETH rewards. In addition, at launch, the KyberDAO interface would have gone through multiple rounds of security audits. 
 
 However, staking funds will still carry its own set of risks, just like any other decentralized application. Be wary of scammers, phishing attempts, and fake websites. Users should always make sure that they visit https://kyber.org/ if they want to stake and vote on their own. 
 
-# Frequently Asked Questions (Pool Masters)
+# Frequently Asked Questions (Pool Operators)
 
 ### 1. Can I withdraw a pool member’s KNC stake?
-No, pool members have sole control of their own stakes. However, staking rewards of your pool are distributed to you, the pool master. 
+No, pool members have sole control of their own stakes. However, staking rewards of your pool are distributed to you, the pool operator. 
 
 ### 2. How much reward do I receive?
-The reward amount given to the pool master is calculated based on the sum of his stake, and all stakes that were delegated to him.
+The reward amount given to the pool operator is calculated based on the sum of his stake, and all stakes that were delegated to him.
 
 ### 3. Does this mean I have to distribute rewards to my pool members? 
 Yes.
@@ -72,14 +72,14 @@ Yes.
 ### 4. How do I know how much stake / reward each pool member has / is entitled to?
 Kindly take a look at [this example](#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-and-getstake-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough. In essence, call the [`getRawStakerData`](staking-api.md#staker-data-of-an-epoch) and [`getStakerData`](staking-api.md#stakers-knc-stake) functions of the staking contract to determine the staked amount and eligible rewards for each of your pool members.
 
-### 5. What happens when a pool member delegates his stake to another pool master?
-As a rule of thumb, all actions performed only take effect in the next epoch. A pool member may perform re-delegation as often as he likes in the current epoch, but the changes will only kick in, in the next epoch. The pool member's stake remains delegated to their current designated pool master in the current epoch.
+### 5. What happens when a pool member delegates his stake to another pool operator?
+As a rule of thumb, all actions performed only take effect in the next epoch. A pool member may perform re-delegation as often as he likes in the current epoch, but the changes will only kick in, in the next epoch. The pool member's stake remains delegated to their current designated pool operator in the current epoch.
 
 ### 6. What happens to a pool member’s rewards if he re-delegates his stake to someone else?
 Since stake re-delegation only takes effect in the next epoch, the pool member’s stake is still delegated to you for the current epoch. It is your responsibility to distribute rewards earned for the current epoch to him.
 
-### 7. What if I delegate my stake to someone else? Does stakes delegated to me pass on to my pool master? 
-There is **no** forwarding of stakes. Only your own stake gets delegated to your pool master. You are still responsible for stakes delegated to you.
+### 7. What if I delegate my stake to someone else? Does stakes delegated to me pass on to my pool operator? 
+There is **no** forwarding of stakes. Only your own stake gets delegated to your pool operator. You are still responsible for stakes delegated to you.
 
 ### 8. What happens when a pool member withdraws his stake?
 #### Case 1: Withdrawal amount &lt;= deposit amount made during current epoch
@@ -90,23 +90,23 @@ Your voting power and rewards for pool members (including the pool member who in
 
 You may refer to the [various deposit & withdrawals section](#various-deposit--withdrawal-scenarios) to see how the pool member's stake is affected.
 
-## Technical FAQs (Pool Masters)
+## Technical FAQs (Pool Operators / Representatives)
 ### 1. How do I obtain the list of pool members who delegated their stakes to me?
 You will have to listen for the `Delegated` event emitted. Kyber will also provide an API for the list of pool members.
 
 ### 2. How do I make use of the `getRawStakerData` and `getStakerData` functions to calculate the stake and reward distribution for my pool members?
-Let us look at a simple example of 1 pool master, with 2 pool members who delegated their stakes to him.
+Let us look at a simple example of 1 pool operator, with 2 pool members who delegated their stakes to him.
 
 #### Epoch 9
-- Pool master `0xMASTER`, 1000 KNC stake
+- Pool operator `0xOPERATOR`, 1000 KNC stake
 - Pool member `0xUSER1`, 1500 KNC stake
 - Pool member `0xUSER2`, 2500 KNC stake
 
 #### Epoch 10
-Pool master voted for all campaigns
+Pool operator voted for all campaigns
 
 #### Reward distribution for epoch 10
-- Call `getRawStakerData` for the pool master.
+- Call `getRawStakerData` for the pool operator.
 - Call `getStakerData` for each pool member.
 ```
 // getRawStakerData(staker, epoch) and getStakerData(staker, epoch)
@@ -115,32 +115,32 @@ Pool master voted for all campaigns
 // delegatedStake: stake amount delegated to addr by other stakers
 // representative: Wallet address staker delegated his stake to
 
-getRawStakerData(0xMASTER, 10) = (1000, 4000, 0xMASTER)
-getStakerData(0xUSER1, 10) = (1500, 0, 0xMASTER)
-getStakerData(0xUSER2, 10) = (2500, 0 , 0xMASTER)
+getRawStakerData(0xMASTER, 10) = (1000, 4000, 0xOPERATOR)
+getStakerData(0xUSER1, 10) = (1500, 0, 0xOPERATOR)
+getStakerData(0xUSER2, 10) = (2500, 0 , 0xOPERATOR)
 ```
 
 - Calculate reward distribution
-  - Assume pool master received 10 ETH in rewards
+  - Assume pool operator received 10 ETH in rewards
   - Total stakes = 1000 + 4000 from 1st call = 5000 KNC
   - `0xMASTER` reward amt = 1000 / 5000 * 10 = 2 ETH
   - `0xUSER1` reward amt = 1500 / 5000 * 10 = 3 ETH
   - `0xUSER2` reward amt = 2500 / 5000 * 10 = 5 ETH
 
-- We recommended that the `representative` for each pool member is verified to be the pool master's address.
+- We recommend that the `representative` for each pool member is verified to be the pool operator's address.
   
 # Frequently Asked Questions (Pool Members)
-### 1. Can a pool master or other pool members withdraw my KNC stake?
-No, you have sole control of your staked funds. However, your staking rewards are distributed to your pool master.
+### 1. Can a pool operator or other pool members withdraw my KNC stake?
+No, you have sole control of your staked funds. However, your staking rewards are distributed to your pool operator.
 
-### 2. How do I claim my rewards if I have delegated my stake to a pool master?
-The onus is on the pool master to distribute the rewards to his pool members.
+### 2. How do I claim my rewards if I have delegated my stake to a pool operator?
+The onus is on the pool operator to distribute the rewards to his pool members.
 
 ### 3. How many people can I delegate my stake to?
-Stakers can delegate their stakes to 1 pool master only.
+Stakers can delegate their stakes to 1 pool operator only.
 
-### 4. What happens when I delegate my stake to another pool master?
-If the delegated stake is still waiting to take effect, stake re-delegation is immediate. However, if it is currently being staked by a pool then stake re-delegation only takes effect in the next epoch. Your stake remains delegated to your current pool master in the current epoch.
+### 4. What happens when I delegate my stake to another pool operator?
+If the delegated stake is still waiting to take effect, stake re-delegation is immediate. However, if it is currently being staked by a pool then stake re-delegation only takes effect in the next epoch. Your stake remains delegated to your current pool operator in the current epoch.
 
 ### 5. Is there partial stake delegation?
 No. When you delegate, it is with the full stake amount for the current epoch.
@@ -150,7 +150,7 @@ No. When you delegate, it is with the full stake amount for the current epoch.
 Your stake (regardless of delegation) for the current epoch remains unchanged. Changes will only take effect from the next epoch onwards.
 
 #### Case 2: Withdrawal amount > deposit amount made during current epoch
-You or your pool master’s voting power and your reward amount will be recomputed for the current epoch, even if you or your pool master have voted prior to a pool member’s withdrawal. 
+You or your pool operator’s voting power and your reward amount will be recomputed for the current epoch, even if you or your pool operator have voted prior to a pool member’s withdrawal. 
 
 You may refer to the section below to see how your stake is affected.
 

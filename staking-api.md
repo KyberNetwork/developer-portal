@@ -154,7 +154,7 @@ We can classify the APIs for reading staking data in 3 broad sections:
 
 ## Section 1: Reward calculation for pool operators
 ### Staker Data Of An Epoch
-Obtains a staker's information for a specified epoch. Used in conjunction with [getStakerData](#stakers-knc-stake) for calculating reward percentage by pool operators (and the DAO contract). Kindly refer to [this example](faqs.md#) for a walkthrough on reward calculation.
+Obtains a staker's information for a specified epoch. Used in conjunction with [getStakerData](#all-staker-information) for calculating reward percentage by pool operators (and the DAO contract). Kindly refer to [this example](faqs.md#2-how-do-i-make-use-of-the-getrawstakerdata-and-getstakerdata-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough on reward calculation.
 
 ---
 function **`getStakerRawData`**(address staker, uint256 epoch) external view returns (uint256 stake, uint256 delegatedStake, address representative)
@@ -174,7 +174,8 @@ function **`getStakerRawData`**(address staker, uint256 epoch) external view ret
 ---
 **Notes:**
 - Delegated stakes to `staker` are not forwarded to `representative`. `staker` is still responsible for voting on behalf of all stakes delegated to him.
-- To accurately get the stakes of pool members for reward calculation, use the (getStake)[#stakers-knc-stake] function.
+- To accurately get the stakes of pool members for reward calculation, use the (getStakerData)[#all-staker-information] function.
+- It is recommended to verify that the `representative` for each pool member is the pool operator's address
 
 #### Example
 Obtain representative's information (of address `0x12340000000000000000000000000000deadbeef`) at epoch 5.
@@ -193,11 +194,11 @@ let result = await stakingContract.methods.getStakerRawData(poolMaster, epoch).c
 ## Section 2: Staking info of past and current epochs
 There are 2 options for getting the information of a staker for a specified epoch (up to the next epoch):
   - Option A: Get all parameters in 1 function call
-    - [`getStakerData`]()
+    - [`getStakerData`](#all-staker-information)
   - Option B: Get each parameter individually
-    - [`getStake`]()
-    - [`getDelegatedStake`]()
-    - [`getRepresentative`]()
+    - [`getStake`](#stakers-knc-stake)
+    - [`getDelegatedStake`](#stakers-delegated-stake)
+    - [`getRepresentative`](#stakers-delegated-address)
 
 ### All staker information
 Obtain the `stake`, `delegatedStake` and `representative` of a staker for a specified epoch (up to the next epoch)
@@ -247,7 +248,7 @@ function **getStake**(address staker, uint256 epoch) external view returns (uint
 | `staker` | address | Staker's wallet address |
 | `epoch` | uint256 | epoch number |
 
-**Returns:**\
+**Returns:**
 `staker` KNC stake at `epoch`
 ---
 **Notes:**
@@ -280,7 +281,7 @@ function **getDelegatedStake**(address staker, uint256 epoch) external view retu
 | `staker` | address | Staker's wallet address |
 | `epoch` | uint256 | epoch number |
 
-**Returns:**\
+**Returns:**
 Delegated stake amount to `staker` at `epoch`
 ---
 **Notes:**
@@ -313,7 +314,7 @@ function **getRepresentative**(address staker, uint256 epoch) external view retu
 | `staker` | address | Staker's wallet address |
 | `epoch` | uint256 | epoch number |
 
-**Returns:**\
+**Returns:**
 `staker` representative address
 ---
 **Notes:**
@@ -338,11 +339,11 @@ let result = await stakingContract.methods.getRepresentative(staker, epoch).call
 ## Section 3: Staking info of the next epoch
 There are 2 options for getting the information of a staker for the next epoch:
   - Option A: Get all parameters in 1 function call
-    - [`getLatestStakerData`]()
+    - [`getLatestStakerData`](#all-staker-information-1)
   - Option B: Get each parameter individually
-    - [`getLatestStake`]()
-    - [`getLatestDelegatedStake`]()
-    - [`getLatestRepresentative`]()
+    - [`getLatestStake`](#stakers-knc-stake-1)
+    - [`getLatestDelegatedStake`](#stakers-delegated-stake-1)
+    - [`getLatestRepresentative`](#stakers-delegated-address-1)
   
 ### All staker information
 Obtain the `stake`, `delegatedStake` and `representative` of a staker for the next epoch
@@ -391,7 +392,7 @@ function **getLatestStakeBalance**(address staker) external view returns (uint25
 | ---------- |:-------:|:-------------------:|
 | `staker` | address | Staker's wallet address |
 
-**Returns:**\
+**Returns:**
 `staker` KNC stake for the next epoch.
 ---
 **Note:**
@@ -421,7 +422,7 @@ function **getLatestDelegatedStake**(address staker) external view returns (uint
 | ---------- |:-------:|:-------------------:|
 | `staker` | address | Staker's wallet address |
 
-**Returns:**\
+**Returns:**
 Delegated stake amount to `staker` for the next epoch.
 ---
 **Note:**
@@ -451,7 +452,7 @@ function **getLatestRepresentative**(address staker, uint256 epoch) external vie
 | ---------- |:-------:|:-------------------:|
 | `staker` | address | Staker's wallet address |
 
-**Returns:**\
+**Returns:**
 `staker` representative address
 ---
 **Notes:**
