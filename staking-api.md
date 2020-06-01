@@ -7,7 +7,7 @@ The APIs in this section require users to send transactions. The general rule of
 The first step for any user is to deposit KNC into the staking contract (in token wei).
 
 ---
-function **`deposit`**(uint256 amount) public
+function **`deposit`**(uint256 amount) external
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
 | `amount` | uint256 | KNC twei to be deposited |
@@ -26,7 +26,7 @@ Deposit 1000 KNC
 const BN = web3.utils.BN;
 let tokenAmount = new BN(10).pow(new BN(21)); // 1000 KNC in twei
 
-txData = StakingContract.methods.deposit(tokenAmount).encodeABI();
+txData = stakingContract.methods.deposit(tokenAmount).encodeABI();
 
 txReceipt = await web3.eth.sendTransaction({
   from: USER_WALLET_ADDRESS, //obtained from web3 interface
@@ -36,26 +36,26 @@ txReceipt = await web3.eth.sendTransaction({
 ```
 
 ### Delegate
-Once the user has staked some KNC, he can delegate his **entire** KNC stake to a pool master (with address `dAddr`), who will vote on his behalf. Note that we do not support partial stake delegation. Also, users can only have a maximum of 1 pool master.
+Once the user has staked some KNC, he can delegate his **entire** KNC stake to a pool operator (with address `newRepresentative`), who will vote on his behalf. Note that we do not support partial stake delegation. Also, users can only have a maximum of 1 pool operator.
 
 ---
-function **`delegate`**(address dAddr) public
+function **`delegate`**(address newRepresentative) external
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
-| `dAddr` | address | Pool master's wallet address |
+| `newRepresentative` | address | Representative's wallet address |
 ---
 
 #### Example
-User delegates his stake to a pool master (of address `0x12340000000000000000000000000000deadbeef`) who will vote on the user's behalf.
+User delegates his stake to a pool operator (of address `0x12340000000000000000000000000000deadbeef`) who will vote on the user's behalf.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let dAddr = "0x12340000000000000000000000000000deadbeef" //pool master's address
+let poolOperator = "0x12340000000000000000000000000000deadbeef" //pool operator's address
 
-txData = StakingContract.methods.delegate(dAddr).encodeABI();
+txData = stakingContract.methods.delegate(poolOperator).encodeABI();
 
 txReceipt = await web3.eth.sendTransaction({
   from: USER_WALLET_ADDRESS, //obtained from web3 interface
@@ -68,7 +68,7 @@ txReceipt = await web3.eth.sendTransaction({
 The user can withdraw KNC (in token wei) from the staking contract at any point in time. 
 
 ---
-function **`withdraw`**(uint256 amount) public
+function **`withdraw`**(uint256 amount) external
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
 | `amount` | uint256 | KNC twei to be withdrawn |
@@ -85,7 +85,7 @@ Withdraw 1000 KNC
 const BN = web3.utils.BN;
 let tokenAmount = new BN(10).pow(new BN(21)); // 1000 KNC in twei
 
-txData = StakingContract.methods.withdraw(tokenAmount).encodeABI();
+txData = stakingContract.methods.withdraw(tokenAmount).encodeABI();
 
 txReceipt = await web3.eth.sendTransaction({
   from: USER_WALLET_ADDRESS, //obtained from web3 interface
@@ -108,35 +108,35 @@ function **`epochPeriodInSeconds`**() external view returns (uint256)
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
-let epochDuration = await StakingContract.epochPeriodInSeconds().call();
+let epochDuration = await stakingContract.epochPeriodInSeconds().call();
 ```
 
 ### Timestamp of 1st Epoch
 Obtain the timestamp of the first epoch
 
 ---
-function **`firstEpochStartTimestamp`**() public view returns (uint256)
+function **`firstEpochStartTimestamp`**() external view returns (uint256)
 
 #### Example
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
-let firstEpochStartTimestamp = await StakingContract.firstEpochStartTimestamp().call();
+let firstEpochStartTimestamp = await stakingContract.firstEpochStartTimestamp().call();
 ```
 
 ### Current Epoch Number
 Obtain the current epoch number of the staking contract
 
 ---
-function **`getCurrentEpochNumber`**() public view returns (uint256)
+function **`getCurrentEpochNumber`**() external view returns (uint256)
 
 #### Example
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
-let currentEpochNum = await StakingContract.getCurrentEpochNumber().call();
+let currentEpochNum = await stakingContract.getCurrentEpochNumber().call();
 ```
 
 ## Reading Staking Data
@@ -145,19 +145,19 @@ There are primarily 3 parameters of interest (apart from getting the current epo
 | ---------------------|:---------------------------------------------:|
 | `stake` | KNC amount staked by a staker |
 | `delegatedStake` | KNC amount delegated to a staker |
-| `delegatedAddress` / `dAddr` | Who the staker delegated his stake to |
+| `representative` | Who the staker delegated his stake to |
 
 We can classify the APIs for reading staking data in 3 broad sections:
-- Reward percentage calculation for pool masters
+- Reward percentage calculation for pool operators
 - Getting the above 3 parameters for the past epochs and the current epoch
 - Getting the above 3 parameters for the next epoch
 
-## Section 1: Reward calculation for pool masters
+## Section 1: Reward calculation for pool operators
 ### Staker Data Of An Epoch
-Obtains a staker's information for a specified epoch. Used in conjunction with (getStake)[#stakers-knc-stake] for calculating reward percentage by pool masters (and the DAO contract). Kindly refer to [this example](faqs.md#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-function-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough on reward calculation.
+Obtains a staker's information for a specified epoch. Used in conjunction with [getStakerData](#stakers-knc-stake) for calculating reward percentage by pool operators (and the DAO contract). Kindly refer to [this example](faqs.md#) for a walkthrough on reward calculation.
 
 ---
-function **`getStakerDataForPastEpoch`**(address staker, uint256 epoch) public view returns (uint256 _stake, uint256 _delegatedStake, address _delegatedAddress)
+function **`getStakerRawData`**(address staker, uint256 epoch) external view returns (uint256 stake, uint256 delegatedStake, address representative)
 
 **Inputs**
 | Parameter | Type | Description |
@@ -168,16 +168,16 @@ function **`getStakerDataForPastEpoch`**(address staker, uint256 epoch) public v
 **Returns:**
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
-| `_stake` | uint256 | `staker` stake amount |
-| `_delegatedStake` | uint256 | Stake amount delegated to `staker` by other stakers |
-| `_delegatedAddress` | address | Wallet address `staker` delegated his stake to |
+| `stake` | uint256 | `staker` stake amount |
+| `delegatedStake` | uint256 | Stake amount delegated to `staker` by other stakers |
+| `representative` | address | Wallet address `staker` delegated his stake to |
 ---
 **Notes:**
-- Delegated stakes to `staker` are not forwarded to `delegatedAddress`. `staker` is still responsible for voting on behalf of all stakes delegated to him.
+- Delegated stakes to `staker` are not forwarded to `representative`. `staker` is still responsible for voting on behalf of all stakes delegated to him.
 - To accurately get the stakes of pool members for reward calculation, use the (getStake)[#stakers-knc-stake] function.
 
 #### Example
-Obtain pool master's information (of address `0x12340000000000000000000000000000deadbeef`) at epoch 5.
+Obtain representative's information (of address `0x12340000000000000000000000000000deadbeef`) at epoch 5.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -187,15 +187,59 @@ Obtain pool master's information (of address `0x12340000000000000000000000000000
 let poolMaster = "0x12340000000000000000000000000000deadbeef" //staker's address
 let epoch = new BN(5);
 
-let result = await StakingContract.methods.getStakerDataForPastEpoch(poolMaster, epoch).call();
+let result = await stakingContract.methods.getStakerRawData(poolMaster, epoch).call();
 ```
 
 ## Section 2: Staking info of past and current epochs
+There are 2 options for getting the information of a staker for a specified epoch (up to the next epoch):
+  - Option A: Get all parameters in 1 function call
+    - [`getStakerData`]()
+  - Option B: Get each parameter individually
+    - [`getStake`]()
+    - [`getDelegatedStake`]()
+    - [`getRepresentative`]()
+
+### All staker information
+Obtain the `stake`, `delegatedStake` and `representative` of a staker for a specified epoch (up to the next epoch)
+
+---
+function **`getStakerData`**(address staker, uint256 epoch) external view returns (uint256 stake, uint256 delegatedStake, address representative)
+
+**Inputs**
+| Parameter | Type | Description |
+| ---------- |:-------:|:-------------------:|
+| `staker` | address | Staker's wallet address |
+| `epoch` | uint256 | epoch number |
+
+**Returns:**
+| Parameter | Type | Description |
+| ---------- |:-------:|:-------------------:|
+| `stake` | uint256 | `staker` stake amount |
+| `delegatedStake` | uint256 | Stake amount delegated to `staker` by other stakers |
+| `representative` | address | Wallet address `staker` delegated his stake to |
+---
+**Note:**
+`getStakerData(staker, N+1) == getLatestStakerData(staker)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
+
+#### Example
+Obtain staker's information (of address `0x12340000000000000000000000000000deadbeef`) at epoch 5.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper
+
+let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let epoch = new BN(5);
+
+let result = await stakingContract.methods.getStakerData(staker, epoch).call();
+```
+
 ### Staker's KNC stake
 Obtains a staker's KNC stake for a specified epoch (up to the next epoch)
 
 ---
-function **getStake**(address staker, uint256 epoch) public view returns (uint256)
+function **getStake**(address staker, uint256 epoch) external view returns (uint256)
 
 **Inputs**
 | Parameter | Type | Description |
@@ -206,8 +250,9 @@ function **getStake**(address staker, uint256 epoch) public view returns (uint25
 **Returns:**\
 `staker` KNC stake at `epoch`
 ---
-**Note:**
-`getStake(staker, N+1) == getLatestStakeBalance(staker)` where `N` is the current epoch number
+**Notes:**
+- `getStake(staker, N+1) == getLatestStakeBalance(staker)` where `N` is the current epoch only when staker data has been initialised due to a staker action
+- `getStake(staker, N) == getStakerData(staker, N).stake`
 
 #### Example
 Obtain staker's KNC stake (of address `0x12340000000000000000000000000000deadbeef`) at epoch 5.
@@ -220,14 +265,14 @@ Obtain staker's KNC stake (of address `0x12340000000000000000000000000000deadbee
 let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
 let epoch = new BN(5);
 
-let result = await StakingContract.methods.getStake(staker, epoch).call();
+let result = await stakingContract.methods.getStake(staker, epoch).call();
 ```
 
 ### Staker's delegated stake
 Obtains staking amount delegated to an address for a specified epoch (up to the next epoch)
 
 ---
-function **getDelegatedStake**(address staker, uint256 epoch) public view returns (uint256)
+function **getDelegatedStake**(address staker, uint256 epoch) external view returns (uint256)
 
 **Inputs**
 | Parameter | Type | Description |
@@ -238,8 +283,9 @@ function **getDelegatedStake**(address staker, uint256 epoch) public view return
 **Returns:**\
 Delegated stake amount to `staker` at `epoch`
 ---
-**Note:**
-`getDelegatedStake(staker, N+1) == getLatestDelegatedStake(staker)` where `N` is the current epoch number
+**Notes:**
+- `getDelegatedStake(staker, N+1) == getLatestDelegatedStake(staker)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
+- `getDelegatedStake(staker, N) == getStakerData(staker, N).delegatedStake`
 
 #### Example
 Obtain stake amount delegated to address `0x12340000000000000000000000000000deadbeef` at epoch 5.
@@ -252,14 +298,14 @@ Obtain stake amount delegated to address `0x12340000000000000000000000000000dead
 let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
 let epoch = new BN(5);
 
-let result = await StakingContract.methods.getDelegatedStake(staker, epoch).call();
+let result = await stakingContract.methods.getDelegatedStake(staker, epoch).call();
 ```
 
 ### Staker's delegated address
-Obtains the pool master's address of `staker` at a specified epoch (up to the next epoch)
+Obtains the representative's address of `staker` at a specified epoch (up to the next epoch)
 
 ---
-function **getDelegatedAddress**(address staker, uint256 epoch) public view returns (address)
+function **getRepresentative**(address staker, uint256 epoch) external view returns (address)
 
 **Inputs**
 | Parameter | Type | Description |
@@ -268,15 +314,16 @@ function **getDelegatedAddress**(address staker, uint256 epoch) public view retu
 | `epoch` | uint256 | epoch number |
 
 **Returns:**\
-`staker` pool master address
+`staker` representative address
 ---
 **Notes:**
-- `getDelegatedAddress(staker, N+1) == getLatestDelegatedAddress(staker)` where `N` is the current epoch number
 - If user is not a staker, null address is returned
 - If user did not delegate to anyone, `staker` address is returned
+- `getRepresentative(staker, N+1) == getLatestRepresentative(staker)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
+- `getRepresentative(staker, N) == getStakerData(staker, N).representative`
 
 #### Example
-Get `0x12340000000000000000000000000000deadbeef` pool master's address at epoch 5.
+Get `0x12340000000000000000000000000000deadbeef` representative's address at epoch 5.
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
@@ -285,15 +332,59 @@ Get `0x12340000000000000000000000000000deadbeef` pool master's address at epoch 
 let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
 let epoch = new BN(5);
 
-let result = await StakingContract.methods.getDelegatedAddress(staker, epoch).call();
+let result = await stakingContract.methods.getRepresentative(staker, epoch).call();
 ```
 
 ## Section 3: Staking info of the next epoch
+There are 2 options for getting the information of a staker for the next epoch:
+  - Option A: Get all parameters in 1 function call
+    - [`getLatestStakerData`]()
+  - Option B: Get each parameter individually
+    - [`getLatestStake`]()
+    - [`getLatestDelegatedStake`]()
+    - [`getLatestRepresentative`]()
+  
+### All staker information
+Obtain the `stake`, `delegatedStake` and `representative` of a staker for the next epoch
+
+---
+function **`getLatestStakerData`**(address staker, uint256 epoch) external view returns (uint256 stake, uint256 delegatedStake, address representative)
+
+**Inputs**
+| Parameter | Type | Description |
+| ---------- |:-------:|:-------------------:|
+| `staker` | address | Staker's wallet address |
+| `epoch` | uint256 | epoch number |
+
+**Returns:**
+| Parameter | Type | Description |
+| ---------- |:-------:|:-------------------:|
+| `stake` | uint256 | `staker` stake amount |
+| `delegatedStake` | uint256 | Stake amount delegated to `staker` by other stakers |
+| `representative` | address | Wallet address `staker` delegated his stake to |
+---
+**Note:**
+`getLatestStakerData(staker) == getStakerData(staker, N+1)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
+
+#### Example
+Obtain staker's information (of address `0x12340000000000000000000000000000deadbeef`) at epoch 5.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper
+
+let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let epoch = new BN(5);
+
+let result = await stakingContract.methods.getLatestStakerData(staker, epoch).call();
+```
+
 ### Staker's KNC stake
 Obtains a staker's KNC stake for the next epoch
 
 ---
-function **getLatestStakeBalance**(address staker) public view returns (uint256)
+function **getLatestStakeBalance**(address staker) external view returns (uint256)
 
 **Inputs**
 | Parameter | Type | Description |
@@ -304,7 +395,7 @@ function **getLatestStakeBalance**(address staker) public view returns (uint256)
 `staker` KNC stake for the next epoch.
 ---
 **Note:**
-`getLatestStakeBalance(staker) == getStake(staker, N+1)` where `N` is the current epoch number
+`getLatestStakeBalance(staker) == getStake(staker, N+1)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
 
 #### Example
 Obtain staker's KNC stake (of address `0x12340000000000000000000000000000deadbeef`) for the next epoch.
@@ -316,14 +407,14 @@ Obtain staker's KNC stake (of address `0x12340000000000000000000000000000deadbee
 
 let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
 
-let result = await StakingContract.methods.getLatestStakeBalance(staker).call();
+let result = await stakingContract.methods.getLatestStakeBalance(staker).call();
 ```
 
 ### Staker's delegated stake
 Obtains staking amount delegated to an address for the next epoch
 
 ---
-function **getDelegatedStake**(address staker) public view returns (uint256)
+function **getLatestDelegatedStake**(address staker) external view returns (uint256)
 
 **Inputs**
 | Parameter | Type | Description |
@@ -334,7 +425,7 @@ function **getDelegatedStake**(address staker) public view returns (uint256)
 Delegated stake amount to `staker` for the next epoch.
 ---
 **Note:**
-`getLatestDelegatedStake(staker) == getDelegatedStake(staker, N+1)` where `N` is the current epoch number
+`getLatestDelegatedStake(staker) == getDelegatedStake(staker, N+1)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
 
 #### Example
 Obtain stake amount delegated to address `0x12340000000000000000000000000000deadbeef` for the next epoch.
@@ -346,14 +437,14 @@ Obtain stake amount delegated to address `0x12340000000000000000000000000000dead
 
 let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
 
-let result = await StakingContract.methods.getLatestDelegatedStake(staker).call();
+let result = await stakingContract.methods.getLatestDelegatedStake(staker).call();
 ```
 
 ### Staker's delegated address
-Obtains the pool master's address of `staker` for the next epoch
+Obtains the representative's address of `staker` for the next epoch only when staker data has been initialised due to a staker action
 
 ---
-function **getLatestDelegatedAddress**(address staker, uint256 epoch) public view returns (address)
+function **getLatestRepresentative**(address staker, uint256 epoch) external view returns (address)
 
 **Inputs**
 | Parameter | Type | Description |
@@ -361,15 +452,15 @@ function **getLatestDelegatedAddress**(address staker, uint256 epoch) public vie
 | `staker` | address | Staker's wallet address |
 
 **Returns:**\
-`staker` pool master address
+`staker` representative address
 ---
 **Notes:**
-- `getLatestDelegatedAddress(staker) == getDelegatedAddress(staker, N+1)` where `N` is the current epoch number
+- `getLatestRepresentative(staker) == getRepresentative(staker, N+1)` where `N` is the current epoch number only when staker data has been initialised due to a staker action
 - If user is not a staker, null address is returned
 - If user did not delegate to anyone, `staker` address is returned
 
 #### Example
-Get `0x12340000000000000000000000000000deadbeef` pool master's address for the next epoch.
+Get `0x12340000000000000000000000000000deadbeef` representative's address for the next epoch.
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
@@ -377,5 +468,5 @@ Get `0x12340000000000000000000000000000deadbeef` pool master's address for the n
 
 let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
 
-let result = await StakingContract.methods.getLatestDelegatedAddress(staker).call();
+let result = await stakingContract.methods.getLatestRepresentative(staker).call();
 ```

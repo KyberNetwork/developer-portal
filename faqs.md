@@ -1,6 +1,6 @@
 # Quicklinks
 - [General FAQs](#frequently-asked-questions-general)
-- [Pool Master FAQs](#frequently-asked-questions-pool-masters)
+- [Pool Operator / Representative FAQs](#frequently-asked-questions-pool-masters)
 - [Pool Member FAQs](#frequently-asked-questions-pool-members)
 
 # Frequently Asked Questions (General)
@@ -70,7 +70,7 @@ The reward amount given to the pool master is calculated based on the sum of his
 Yes.
 
 ### 4. How do I know how much stake / reward each pool member has / is entitled to?
-Kindly take a look at [this example](#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-and-getstake-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough. In essence, call the [`getStakerDataForPastEpoch`](staking-api.md#staker-data-of-an-epoch) and [`getStake`](staking-api.md#stakers-knc-stake) functions of the staking contract to determine the staked amount and eligible rewards for each of your pool members.
+Kindly take a look at [this example](#2-how-do-i-make-use-of-the-getstakerdataforpastepoch-and-getstake-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough. In essence, call the [`getRawStakerData`](staking-api.md#staker-data-of-an-epoch) and [`getStakerData`](staking-api.md#stakers-knc-stake) functions of the staking contract to determine the staked amount and eligible rewards for each of your pool members.
 
 ### 5. What happens when a pool member delegates his stake to another pool master?
 As a rule of thumb, all actions performed only take effect in the next epoch. A pool member may perform re-delegation as often as he likes in the current epoch, but the changes will only kick in, in the next epoch. The pool member's stake remains delegated to their current designated pool master in the current epoch.
@@ -94,7 +94,7 @@ You may refer to the [various deposit & withdrawals section](#various-deposit--w
 ### 1. How do I obtain the list of pool members who delegated their stakes to me?
 You will have to listen for the `Delegated` event emitted. Kyber will also provide an API for the list of pool members.
 
-### 2. How do I make use of the `getStakerDataForPastEpoch` and `getStake` functions to calculate the stake and reward distribution for my pool members?
+### 2. How do I make use of the `getRawStakerData` and `getStakerData` functions to calculate the stake and reward distribution for my pool members?
 Let us look at a simple example of 1 pool master, with 2 pool members who delegated their stakes to him.
 
 #### Epoch 9
@@ -106,17 +106,18 @@ Let us look at a simple example of 1 pool master, with 2 pool members who delega
 Pool master voted for all campaigns
 
 #### Reward distribution for epoch 10
-- Call `getStakerDataForPastEpoch` for the pool master.
-- Call `getStake` for each pool member.
+- Call `getRawStakerData` for the pool master.
+- Call `getStakerData` for each pool member.
 ```
-// getStakerDataForPastEpoch(addr, epoch) returns (_stake, _delegatedStake, _delegatedAddres)
-// _stake: stake amount eligible for reward
-// _delegatedStake: stake amount delegated to addr by other stakers
-// _delegatedAddress: Wallet address addr delegated his stake to
+// getRawStakerData(staker, epoch) and getStakerData(staker, epoch)
+// returns (stake, delegatedStake, representative)
+// stake: stake amount eligible for reward
+// delegatedStake: stake amount delegated to addr by other stakers
+// representative: Wallet address staker delegated his stake to
 
-getStakerDataForPastEpoch(0xMASTER, 10) = (1000, 4000, 0xMASTER)
-getStake(0xUSER1, 10) = 1500
-getStake(0xUSER2, 10) = 2500
+getRawStakerData(0xMASTER, 10) = (1000, 4000, 0xMASTER)
+getStakerData(0xUSER1, 10) = (1500, 0, 0xMASTER)
+getStakerData(0xUSER2, 10) = (2500, 0 , 0xMASTER)
 ```
 
 - Calculate reward distribution
@@ -126,6 +127,8 @@ getStake(0xUSER2, 10) = 2500
   - `0xUSER1` reward amt = 1500 / 5000 * 10 = 3 ETH
   - `0xUSER2` reward amt = 2500 / 5000 * 10 = 5 ETH
 
+- We recommended that the `representative` for each pool member is verified to be the pool master's address.
+  
 # Frequently Asked Questions (Pool Members)
 ### 1. Can a pool master or other pool members withdraw my KNC stake?
 No, you have sole control of your staked funds. However, your staking rewards are distributed to your pool master.

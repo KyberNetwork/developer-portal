@@ -31,7 +31,7 @@ KNC holders can choose to withdraw from the staking contract whenever they like.
 For a detailed understanding of this, refer to [Staking, Voting Examples](staking-voting-examples.md).
 
 ## Delegation
-They can also delegate their KNC to pool masters, who will be in charge of voting and distributing the rewards. 
+They can also delegate their KNC to pool operators, who will be in charge of voting and distributing the rewards. 
 
 For details, refer to [Delegating Overview And Example](delegating-example.md).
 
@@ -56,6 +56,6 @@ Those fees will be split into 3 different parts:
 
 A staker can get his reward corresponding to his voting_point in the previous epoch. They can choose not to claim the reward and do it later in the future. There is no expiration of the reward. 
 
-An end-user can also delegate ALL of his stakes to someone else (we call him the pool master). A pool master can vote on behalf of all of the stake he was delegated and will be able to claim the full amount of reward.
+An end-user can also delegate ALL of his stakes to someone else (we call him the pool operator, or representative). A pool operator can vote on behalf of all of the stake he was delegated and will be able to claim the full amount of reward.
 
-The staker needs to go after his pool master to ask for his reward. A pool master can also delegate his stake (not including the stakes that others delegated to him) to another pool master, in this case, he will only vote for other people and not for himself.
+The staker needs to go after his pool operator to ask for his reward. A pool operator can also delegate his stake (not including the stakes that others delegated to him) to another pool operator, in this case, he will only vote for other people and not for himself.
