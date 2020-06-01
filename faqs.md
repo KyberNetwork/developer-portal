@@ -115,7 +115,7 @@ Pool operator voted for all campaigns
 // delegatedStake: stake amount delegated to addr by other stakers
 // representative: Wallet address staker delegated his stake to
 
-getRawStakerData(0xMASTER, 10) = (1000, 4000, 0xOPERATOR)
+getRawStakerData(0xOPERATOR, 10) = (1000, 4000, 0xOPERATOR)
 getStakerData(0xUSER1, 10) = (1500, 0, 0xOPERATOR)
 getStakerData(0xUSER2, 10) = (2500, 0 , 0xOPERATOR)
 ```
@@ -123,7 +123,7 @@ getStakerData(0xUSER2, 10) = (2500, 0 , 0xOPERATOR)
 - Calculate reward distribution
   - Assume pool operator received 10 ETH in rewards
   - Total stakes = 1000 + 4000 from 1st call = 5000 KNC
-  - `0xMASTER` reward amt = 1000 / 5000 * 10 = 2 ETH
+  - `0xOPERATOR` reward amt = 1000 / 5000 * 10 = 2 ETH
   - `0xUSER1` reward amt = 1500 / 5000 * 10 = 3 ETH
   - `0xUSER2` reward amt = 2500 / 5000 * 10 = 5 ETH
 
