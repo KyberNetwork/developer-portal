@@ -110,7 +110,7 @@ Pool operator voted for all campaigns
 - Call `getStakerData` for each pool member.
 ```
 // getRawStakerData(staker, epoch) and getStakerData(staker, epoch)
-// returns (stake, delegatedStake, representative)
+//    returns (stake, delegatedStake, representative)
 // stake: stake amount eligible for reward
 // delegatedStake: stake amount delegated to addr by other stakers
 // representative: Wallet address staker delegated his stake to
