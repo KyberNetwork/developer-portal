@@ -130,9 +130,9 @@ getStakerData(0xUSER2, 10) = (2500, 0 , 0xOPERATOR)
 - We recommend that the `representative` for each pool member is verified to be the pool operator's address.
 
 ### What APIs should I look at for staking, voting and claiming rewards?
-- Staking information can be found [here]()
-- Campaign details and voting information can be found [here]()
-- Claiming staker rewards can be found [here]()
+- Staking information can be found [here](staking-api.md)
+- Campaign details and voting information can be found [here](voting-api.md)
+- Claiming staker rewards can be found [here](claiming-api.md)
 
 # Frequently Asked Questions (Pool Members)
 ### 1. Can a pool operator or other pool members withdraw my KNC stake?
