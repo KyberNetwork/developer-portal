@@ -98,7 +98,7 @@ let result = await kyberDao.methods.networkFeeCampaigns(epochNum).call();
 Gets the network fee (in basis points) charged for trades, and the timestamp for which it expires.
 
 ---
-function **getLatestNetworkFeeData`**() public view returns(uint feeInBps, uint expiryTimestamp)
+function **getLatestNetworkFeeData**() public view returns(uint feeInBps, uint expiryTimestamp)
 
 **Returns:**
 | Parameter | Type | Description |
@@ -405,13 +405,13 @@ let result = await kyberDao.methods.stakerVotedOption(staker, campaignID).call()
 Vote for a campaign.
 
 ---
-function **vote**(uint campID, uint option) public
+function **vote**(uint campaignID, uint256 option) public
 
 **Inputs**
 | Parameter | Type | Description |
 | ---------- |:-------:|:-------------------:|
-| `campID` | `uint` | Campaign ID voting on |
-| `option` | `uint` | Option ID |
+| `campaignID` | `uint` | Campaign ID voting on |
+| `option` | `uint` | Option number |
 
 #### Example
 Vote for option `3` for campaign ID `5`.
@@ -422,8 +422,8 @@ Vote for option `3` for campaign ID `5`.
 // https://t.me/KyberDeveloper
 
 let campaignID = new BN(5);
-let optionID = new BN(3);
-let txData = kyberDao.methods.vote(campaignID, optionID).encodeABI();
+let option = new BN(3);
+let txData = kyberDao.methods.vote(campaignID, option).encodeABI();
 
 let txReceipt = await web3.eth.sendTransaction({
   from: VOTING_WALLET_ADDRESS,
