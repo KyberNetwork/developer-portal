@@ -1,21 +1,22 @@
-# Dao APIs
+# Voting APIs
 
 ## Introduction
 The kyberDao contract primarily provides the following functionalities:
 - Creation and cancellation of campaigns by authorized personnel (namely, the `daoOperator`)
 - Voting for campaigns
-  
-<!-- 
-The kyberFeeHandler contract provides the following functionalities:
--  Converting fees to KNC for burning
--  Claiming staker rewards for participation in voting for campaigns
--  Claiming rebate reserves -->
 
 For stakers and pool operators, the actions you will be interested in are:
 1. [Viewing Campaign Details](#reading-campaign-information)
 2. [Voting for a campaign](#voting-for-campaigns)
 
  The [voting formula](#voting-formula) used for deciding the winning options of a campaign may also be of interest.
+
+### kyberDao Interface
+[IKyberDao.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/IKyberDao.sol)
+
+### kyberDao Contract
+[KyberDao.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/Dao/KyberDao.sol)
+
 
 ## Creation and cancellation of campaigns
 These actions can only be carried out by the `daoOperator`.
@@ -70,7 +71,7 @@ function **`getCurrentEpochNumber`**() public view returns (uint)
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
-let currentEpochNum = await DaoContract.getCurrentEpochNumber().call();
+let currentEpochNum = await daoContract.getCurrentEpochNumber().call();
 ```
 
 
@@ -89,7 +90,7 @@ Get the `NETWORK_FEE` campaign ID number for epoch `5`.
 // https://t.me/KyberDeveloper
 
 let epochNum = new BN(5);
-let result = await DaoContract.methods.networkFeeCampaigns(epochNum).call();
+let result = await daoContract.methods.networkFeeCampaigns(epochNum).call();
 ```
 
 ### `getLatestNetworkFeeData`
@@ -112,7 +113,7 @@ function **getLatestNetworkFeeData`**() public view returns(uint feeInBps, uint 
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
-let result = await DaoContract.methods.getLatestNetworkFeeData().call();
+let result = await daoContract.methods.getLatestNetworkFeeData().call();
 ```
 
 ### `getLatestNetworkFeeDataWithCache`
@@ -135,11 +136,11 @@ function **getLatestNetworkFeeDataWithCache`**() public returns(uint feeInBps, u
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
-txData = DaoContract.methods.getLatestNetworkFeeDataWithCache().encodeABI();
+let txData = daoContract.methods.getLatestNetworkFeeDataWithCache().encodeABI();
 
-txReceipt = await web3.eth.sendTransaction({
-  from: USER_WALLET_ADDRESS, //obtained from web3 interface
-  to: Dao_CONTRACT_ADDRESS,
+let txReceipt = await web3.eth.sendTransaction({
+  from: USER_WALLET_ADDRESS, // obtained from web3 interface
+  to: daoContract.address,
   data: txData
 });
 ```
@@ -160,7 +161,7 @@ Get the `FEE_HANDLER_BRR` campaign ID number for epoch `5`.
 // https://t.me/KyberDeveloper
 
 let epochNum = new BN(5);
-let result = await DaoContract.methods.brrCampaigns(epochNum).call();
+let result = await daoContract.methods.brrCampaigns(epochNum).call();
 ```
 
 ### `getLatestBRRData`
@@ -187,7 +188,7 @@ function **getLatestBRRData()** public returns (uint burnInBps, uint rewardInBps
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
-let result = await DaoContract.methods.getLatestBRRData().call();
+let result = await daoContract.methods.getLatestBRRData().call();
 ```
 
 ### `getLatestBRRDataWithCache`
@@ -214,11 +215,11 @@ function **getLatestBRRDataWithCache()** public returns (uint burnInBps, uint re
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
-txData = DaoContract.methods.getLatestBRRDataWithCache().encodeABI();
+let txData = daoContract.methods.getLatestBRRDataWithCache().encodeABI();
 
-txReceipt = await web3.eth.sendTransaction({
-  from: USER_WALLET_ADDRESS, //obtained from web3 interface
-  to: Dao_CONTRACT_ADDRESS,
+let txReceipt = await web3.eth.sendTransaction({
+  from: USER_WALLET_ADDRESS, // obtained from web3 interface
+  to: daoContract.address,
   data: txData
 });
 ```
@@ -249,8 +250,8 @@ Get the list of campaign IDs for current epoch.
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let currentEpoch = await DaoContract.methods.getCurrentEpochNumber().call();
-let result = await DaoContract.methods.campaignIDs(currentEpoch).call();
+let currentEpoch = await daoContract.methods.getCurrentEpochNumber().call();
+let result = await daoContract.methods.campaignIDs(currentEpoch).call();
 ```
 
 ### `getCampaignDetails`
@@ -292,7 +293,7 @@ Get the details of campaign number `5`.
 // https://t.me/KyberDeveloper
 
 let campaignNum = new BN(5);
-let result = await DaoContract.methods.getCampaignDetails(campaignNum).call();
+let result = await daoContract.methods.getCampaignDetails(campaignNum).call();
 ```
 
 ### `getCampaignVoteCountData`
@@ -321,7 +322,7 @@ Get the campaign vote count data of campaign number `5`.
 // https://t.me/KyberDeveloper
 
 let campaignNum = new BN(5);
-let result = await DaoContract.methods.getCampaignVoteCountData(campaignNum).call();
+let result = await daoContract.methods.getCampaignVoteCountData(campaignNum).call();
 ```
 
 ### `getCampaignWinningOptionAndValue`
@@ -356,7 +357,7 @@ Get the winning option and value of campaign number `5`.
 // https://t.me/KyberDeveloper
 
 let campaignNum = new BN(5);
-let result = await DaoContract.methods.getCampaignWinningOptionAndValue(campaignNum).call();
+let result = await daoContract.methods.getCampaignWinningOptionAndValue(campaignNum).call();
 ```
 
 ## Voting for Campaigns
@@ -374,9 +375,9 @@ Get number of campaigns staker has voted for in epoch `5`.
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 let epochNum = new BN(5);
-let result = await DaoContract.methods.numberVotes(staker, epochNum).call();
+let result = await daoContract.methods.numberVotes(staker, epochNum).call();
 ```
 
 ### `stakerVotedOption`
@@ -391,9 +392,9 @@ See which option staker has voted on, for campaign ID `5`.
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 let campaignID = new BN(5);
-let result = await DaoContract.methods.stakerVotedOption(staker, campaignID).call();
+let result = await daoContract.methods.stakerVotedOption(staker, campaignID).call();
 ```
 
 ### `vote`
@@ -418,11 +419,11 @@ Vote for option `3` for campaign ID `5`.
 
 let campaignID = new BN(5);
 let optionID = new BN(3);
-txData = DaoContract.methods.vote(campaignID, optionID).encodeABI();
+let txData = daoContract.methods.vote(campaignID, optionID).encodeABI();
 
-txReceipt = await web3.eth.sendTransaction({
+let txReceipt = await web3.eth.sendTransaction({
   from: VOTING_WALLET_ADDRESS,
-  to: Dao_CONTRACT_ADDRESS,
+  to: daoContract.address,
   data: txData
 });
 ```
