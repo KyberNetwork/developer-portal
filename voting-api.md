@@ -80,6 +80,7 @@ While this section is specific to the `NETWORK_FEE` campaign type, the other sec
 
 ### `networkFeeCampaigns`
 `networkFeeCampaigns[epoch] = uint`
+
 `NETWORK_FEE` campaign ID number for a given epoch. Note that there can only be a maximum of 1 `NETWORK_FEE` campaign per epoch.
 
 #### Example
@@ -151,6 +152,7 @@ While this section is specific to the `FEE_HANDLER_BRR` campaign type, the other
 
 ### `brrCampaigns`
 `brrCampaigns[epoch] = uint`
+
 `FEE_HANDLER_BRR` campaign ID number for a given epoch. Note that there can only be a maximum of 1 `FEE_HANDLER_BRR` campaign per epoch.
 
 #### Example
@@ -365,6 +367,7 @@ This section details all the APIs related to voting for a campaign, and staker-c
 
 ### `numberVotes`
 `numberVotes[stakerAddress][epoch] = uint`
+
 To determine the number of campaigns that a staker has voted for at a given epoch number.
 
 #### Example
@@ -382,6 +385,7 @@ let result = await daoContract.methods.numberVotes(staker, epochNum).call();
 
 ### `stakerVotedOption`
 `stakerVotedOption[stakerAddress][campID] = uint`
+
 To obtain the option number a staker voted on, for a campaign.
 
 #### Example

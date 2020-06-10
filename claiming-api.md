@@ -44,10 +44,12 @@ let weiAmount = rewards.mul(percentageInPrecision).div(PRECISION);
 
 ---
 `rewardsPerEpoch[epoch] = uint`
+
 To get the reward amount entitled to all stakers for a given epoch number. Example as shown above.
 
 ### Viewing if rewards have been claimed
 `hasClaimedReward[staker][epoch] = bool`
+
 Returns `true` if staker has claimed his reward for a given epoch, false otherwise.
 
 #### Example
@@ -99,6 +101,7 @@ let txReceipt = await web3.eth.sendTransaction({
 
 ### Viewing Rewards Claimable
 `rebatePerWallet[rebateWallet] = uint`
+
 To get the reward amount entitled to the rebate wallet tagged to a reserve.
 **Note:**
 To save on gas costs, 1 wei is kept in the feeHandler contract, so the reward claimable has to be subtracted by 1.
@@ -149,6 +152,7 @@ let txReceipt = await web3.eth.sendTransaction({
 
 ### Viewing Rewards Claimable
 `feePerPlatformWallet[platformWallet] = uint`
+
 To get the reward amount entitled to the taker platform wallet.
 **Note:**
 To save on gas costs, 1 wei is kept in the feeHandler contract, so the reward claimable has to be subtracted by 1.
