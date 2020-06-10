@@ -23,9 +23,9 @@ To view the amount (in wei) claimable for an epoch, you will have to call APIs f
 #### Example
 Let us assume as a pool operator (address `0xOPERATOR`), you would like to view the staker rewards entitled to you and your pool members for epoch `5`.
 
-1. Call `kyberDao.getPastEpochRewardPercentageInPrecision(staker, epoch)` to get the percentage entitled in precision, where `(100% = 10**18)`.
-2. Call `kyberFeeHandler.rewardsPerEpoch(epoch)` to get the rewards entitled to all stakers for that epoch.
-3. Calculate the `amountWei` entitled = `rewardsPerEpoch(epoch).mul(percentageInPrecision).div(PRECISION)`
+1. `percentageInPrecision = kyberDao.getPastEpochRewardPercentageInPrecision(staker, epoch)`, which is the reward percentage entitled to you and your pool members in precision `(100% = 10**18)`.
+2. `rewardsEntitled = kyberFeeHandler.rewardsPerEpoch(epoch)` to get the rewards entitled to all stakers for that epoch.
+3. The reward amount entitled is `amountWei = rewardsEntitled.mul(percentageInPrecision).div(PRECISION)`
 4. To then calculate the reward distribution to pool members, please visit [this section](#2-how-do-i-make-use-of-the-getrawstakerdata-and-getstakerdata-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members).
    
 ```js
