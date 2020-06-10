@@ -6,7 +6,7 @@ The kyberFeeHandler contract primarily provides the following functionalities:
 -  Claiming staker rewards for participation in voting for campaigns
 -  Claiming reserve reserves
 
-For stakers and pool operators, the action you will be interested in are [claiming staker rewards]().
+For stakers and pool operators, the action you will be interested in are [claiming staker rewards](#section-1-claiming-staker-rewards).
 
 ### kyberFeeHandler Interface
 [IKyberFeeHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/IKyberFeeHandler.sol)
@@ -26,7 +26,7 @@ Let us assume as a pool operator (address `0xOPERATOR`), you would like to view 
 1. Call `kyberDao.getPastEpochRewardPercentageInPrecision(staker, epoch)` to get the percentage entitled in precision, where `(100% = 10**18)`.
 2. Call `kyberFeeHandler.rewardsPerEpoch[epoch]` to get the rewards entitled to all stakers for that epoch.
 3. Calculate the `amountWei` entitled = `rewardsPerEpoch[epoch].mul(percentageInPrecision).div(PRECISION)`
-4. To then calculate the reward distribution to pool members, please visit [this section]().
+4. To then calculate the reward distribution to pool members, please visit [this section](#2-how-do-i-make-use-of-the-getrawstakerdata-and-getstakerdata-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members).
    
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
