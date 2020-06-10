@@ -38,7 +38,7 @@ let poolOperator = "0x12340000000000000000000000000000deadbeef" // pool operator
 let epoch = new BN(5);
 
 let percentageInPrecision = await daoContract.methods.getPastEpochRewardPercentageInPrecision(poolOperator, epoch).call();
-let rewards = await feeHandlerContract.methods.rewardsPerEpoch(epoch).call();
+let rewards = await kyberFeeHandler.methods.rewardsPerEpoch(epoch).call();
 let weiAmount = rewards.mul(percentageInPrecision).div(PRECISION);
 ```
 
@@ -63,7 +63,7 @@ Check if staker has claimed reward for epoch `5`.
 let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 let epoch = new BN(5);
 
-let result = await feeHandlerContract.methods.hasClaimedReward(staker, epoch).call();
+let result = await kyberFeeHandler.methods.hasClaimedReward(staker, epoch).call();
 ```
 
 ### Claim Rewards
@@ -88,11 +88,11 @@ Claim staker rewards for epoch `5`.
 
 let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 let epoch = new BN(5);
-let txData = feeHandlerContract.methods.claimStakerReward(staker, epoch).encodeABI();
+let txData = kyberFeeHandler.methods.claimStakerReward(staker, epoch).encodeABI();
 
 let txReceipt = await web3.eth.sendTransaction({
   from: USER_WALLET_ADDRESS, // can be any address
-  to: feeHandlerContract.address,
+  to: kyberFeeHandler.address,
   data: txData
 });
 ```
@@ -116,7 +116,7 @@ Get rebate amount claimable for rebate wallet `0x1234000000000000000000000000000
 
 let rebateWallet = "0x12340000000000000000000000000000deadbeef" // rebate wallet's address
 
-let result = await feeHandlerContract.methods.rebatePerWallet(rebateWallet).call();
+let result = await kyberFeeHandler.methods.rebatePerWallet(rebateWallet).call();
 let rebateAmt = result.sub(new BN(1));
 ```
 
@@ -138,11 +138,11 @@ Amount (in wei) sent to rebate wallet.
 
 let rebateWallet = "0x12340000000000000000000000000000deadbeef" // rebateWallet's address
 let epoch = new BN(5);
-let txData = feeHandlerContract.methods.claimReserveRebate(rebateWallet).encodeABI();
+let txData = kyberFeeHandler.methods.claimReserveRebate(rebateWallet).encodeABI();
 
 let txReceipt = await web3.eth.sendTransaction({
   from: USER_WALLET_ADDRESS, // can be any address
-  to: feeHandlerContract.address,
+  to: kyberFeeHandler.address,
   data: txData
 });
 ```
@@ -167,7 +167,7 @@ Get rebate amount claimable for platform wallet `0x12340000000000000000000000000
 
 let platformWallet = "0x12340000000000000000000000000000deadbeef" // rebate wallet's address
 
-let result = await feeHandlerContract.methods.feePerPlatformWallet(platformWallet).call();
+let result = await kyberFeeHandler.methods.feePerPlatformWallet(platformWallet).call();
 let platformFee = result.sub(new BN(1));
 ```
 
@@ -189,11 +189,11 @@ Amount (in wei) sent to platform wallet.
 
 let platformWallet = "0x12340000000000000000000000000000deadbeef" // platformWallet's address
 let epoch = new BN(5);
-let txData = feeHandlerContract.methods.claimPlatformFee(platformWallet).encodeABI();
+let txData = kyberFeeHandler.methods.claimPlatformFee(platformWallet).encodeABI();
 
 let txReceipt = await web3.eth.sendTransaction({
   from: USER_WALLET_ADDRESS, // can be any address
-  to: feeHandlerContract.address,
+  to: kyberFeeHandler.address,
   data: txData
 });
 ```
