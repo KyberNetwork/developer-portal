@@ -1,5 +1,17 @@
 # Staking APIs
 
+## Introduction
+The kyberStaking contract primarily provides the following functionalities:
+- Deposit, delegation and withdrawal of stakes
+- Getting staker information
+
+### kyberStaking Interface
+[IKyberStaking.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/Dao/IKyberStaking.sol)
+
+### kyberStaking Contract
+[KyberStaking.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/Dao/KyberStaking.sol)
+
+
 ## Staking Actions
 The APIs in this section require users to send transactions. The general rule of thumb is that any action performed by the user will only take effect in the **next epoch**. The exception to this is when the user withdraws an amount greater than deposits made in the current epoch.
 
@@ -26,11 +38,11 @@ Deposit 1000 KNC
 const BN = web3.utils.BN;
 let tokenAmount = new BN(10).pow(new BN(21)); // 1000 KNC in twei
 
-txData = stakingContract.methods.deposit(tokenAmount).encodeABI();
+let txData = stakingContract.methods.deposit(tokenAmount).encodeABI();
 
-txReceipt = await web3.eth.sendTransaction({
-  from: USER_WALLET_ADDRESS, //obtained from web3 interface
-  to: STAKING_CONTRACT_ADDRESS,
+let txReceipt = await web3.eth.sendTransaction({
+  from: USER_WALLET_ADDRESS, // obtained from web3 interface
+  to: stakingContract.address,
   data: txData
 });
 ```
@@ -55,11 +67,11 @@ User delegates his stake to a pool operator (of address `0x123400000000000000000
 
 let poolOperator = "0x12340000000000000000000000000000deadbeef" //pool operator's address
 
-txData = stakingContract.methods.delegate(poolOperator).encodeABI();
+let txData = stakingContract.methods.delegate(poolOperator).encodeABI();
 
-txReceipt = await web3.eth.sendTransaction({
-  from: USER_WALLET_ADDRESS, //obtained from web3 interface
-  to: STAKING_CONTRACT_ADDRESS,
+let txReceipt = await web3.eth.sendTransaction({
+  from: USER_WALLET_ADDRESS, // obtained from web3 interface
+  to: stakingContract.address,
   data: txData
 });
 ```
@@ -85,14 +97,15 @@ Withdraw 1000 KNC
 const BN = web3.utils.BN;
 let tokenAmount = new BN(10).pow(new BN(21)); // 1000 KNC in twei
 
-txData = stakingContract.methods.withdraw(tokenAmount).encodeABI();
+let txData = stakingContract.methods.withdraw(tokenAmount).encodeABI();
 
-txReceipt = await web3.eth.sendTransaction({
-  from: USER_WALLET_ADDRESS, //obtained from web3 interface
-  to: STAKING_CONTRACT_ADDRESS,
+let txReceipt = await web3.eth.sendTransaction({
+  from: USER_WALLET_ADDRESS, // obtained from web3 interface
+  to: stakingContract.address,
   data: txData
 });
 ```
+
 
 ## Getting Epoch Information
 This section documents the API related to getting epoch related information, such as the duration of one epoch, or the current epoch number.
@@ -152,6 +165,7 @@ We can classify the APIs for reading staking data in 3 broad sections:
 - Getting the above 3 parameters for the past epochs and the current epoch
 - Getting the above 3 parameters for the next epoch
 
+
 ## Section 1: Reward calculation for pool operators
 ### Staker Data Of An Epoch
 Obtains a staker's information for a specified epoch. Used in conjunction with [getStakerData](#all-staker-information) for calculating reward percentage by pool operators (and the DAO contract). Kindly refer to [this example](faqs.md#2-how-do-i-make-use-of-the-getrawstakerdata-and-getstakerdata-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough on reward calculation.
@@ -185,11 +199,12 @@ Obtain representative's information (of address `0x12340000000000000000000000000
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let poolMaster = "0x12340000000000000000000000000000deadbeef" //staker's address
+let poolOperator = "0x12340000000000000000000000000000deadbeef" // staker's address
 let epoch = new BN(5);
 
-let result = await stakingContract.methods.getStakerRawData(poolMaster, epoch).call();
+let result = await stakingContract.methods.getStakerRawData(poolOperator, epoch).call();
 ```
+
 
 ## Section 2: Staking info of past and current epochs
 There are 2 options for getting the information of a staker for a specified epoch (up to the next epoch):
@@ -231,7 +246,7 @@ Obtain staker's information (of address `0x12340000000000000000000000000000deadb
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 let epoch = new BN(5);
 
 let result = await stakingContract.methods.getStakerData(staker, epoch).call();
@@ -265,7 +280,7 @@ Obtain staker's KNC stake (of address `0x12340000000000000000000000000000deadbee
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 let epoch = new BN(5);
 
 let result = await stakingContract.methods.getStake(staker, epoch).call();
@@ -299,7 +314,7 @@ Obtain stake amount delegated to address `0x12340000000000000000000000000000dead
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 let epoch = new BN(5);
 
 let result = await stakingContract.methods.getDelegatedStake(staker, epoch).call();
@@ -334,11 +349,12 @@ Get `0x12340000000000000000000000000000deadbeef` representative's address at epo
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 let epoch = new BN(5);
 
 let result = await stakingContract.methods.getRepresentative(staker, epoch).call();
 ```
+
 
 ## Section 3: Staking info of the next epoch
 There are 2 options for getting the information of a staker for the next epoch:
@@ -379,7 +395,7 @@ Obtain staker's information (of address `0x12340000000000000000000000000000deadb
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 let epoch = new BN(5);
 
 let result = await stakingContract.methods.getLatestStakerData(staker, epoch).call();
@@ -411,7 +427,7 @@ Obtain staker's KNC stake (of address `0x12340000000000000000000000000000deadbee
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 
 let result = await stakingContract.methods.getLatestStakeBalance(staker).call();
 ```
@@ -442,7 +458,7 @@ Obtain stake amount delegated to address `0x12340000000000000000000000000000dead
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 
 let result = await stakingContract.methods.getLatestDelegatedStake(staker).call();
 ```
@@ -474,7 +490,7 @@ Get `0x12340000000000000000000000000000deadbeef` representative's address for th
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
-let staker = "0x12340000000000000000000000000000deadbeef" //staker's address
+let staker = "0x12340000000000000000000000000000deadbeef" // staker's address
 
 let result = await stakingContract.methods.getLatestRepresentative(staker).call();
 ```
