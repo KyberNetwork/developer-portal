@@ -195,7 +195,8 @@ let result = await stakingContract.methods.getStakerRawData(poolMaster, epoch).c
 There are 2 options for getting the information of a staker for a specified epoch (up to the next epoch):
   - Option A: Get all parameters in 1 function call
     - [`getStakerData`](#all-staker-information)
-  - Option B: Get each parameter individually
+  - Option B: Get each parameter individually. While these functions are in the staking contract, they are not in the interface. As such, you will have to extend the interface in order to access these functions.
+
     - [`getStake`](#stakers-knc-stake)
     - [`getDelegatedStake`](#stakers-delegated-stake)
     - [`getRepresentative`](#stakers-delegated-address)
@@ -343,7 +344,7 @@ let result = await stakingContract.methods.getRepresentative(staker, epoch).call
 There are 2 options for getting the information of a staker for the next epoch:
   - Option A: Get all parameters in 1 function call
     - [`getLatestStakerData`](#all-staker-information-1)
-  - Option B: Get each parameter individually
+  - Option B: Get each parameter individually. While these functions are in the staking contract, they are not in the interface. As such, you will have to extend the interface in order to access these functions.
     - [`getLatestStake`](#stakers-knc-stake-1)
     - [`getLatestDelegatedStake`](#stakers-delegated-stake-1)
     - [`getLatestRepresentative`](#stakers-delegated-address-1)

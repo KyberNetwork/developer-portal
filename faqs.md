@@ -24,7 +24,7 @@ There is no minimum lockup period when your KNC is currently being staked. You c
 To be eligible for 100% of your share of the rewards, you need to participate in every DAO vote (or delegate your voting power to someone else) and have your KNC staked for the entire epoch.
 
 ### 7. What currency are the rewards distributed in?
-Rewards are distributed in Ether, as that is the currency fees are collected in.
+Rewards are distributed in Ether, as that is the currency fees are collected in. There are plans for these rewards to be in stablecoins as well, after the Katalyst upgrade.
 
 ### 8. When can I claim my rewards?
 Stakers can claim their rewards of previous epochs whenever they want.
@@ -41,7 +41,7 @@ You will have to deposit your KNC tokens from your crypto wallet into the KyberS
 ### 12. Can I stake within Binance or Coinbase?
 It is up to 3rd party staking services to decide if they will offer the service. Ask them to! =)
 
-### 13. Any "slashing?"
+### 13. Is there any "slashing?"
 No. You will always be able to withdraw the full capital deposited.
 
 ### 14. Do I need to run a node to stake?
@@ -128,7 +128,12 @@ getStakerData(0xUSER2, 10) = (2500, 0 , 0xOPERATOR)
   - `0xUSER2` reward amt = 2500 / 5000 * 10 = 5 ETH
 
 - We recommend that the `representative` for each pool member is verified to be the pool operator's address.
-  
+
+### What APIs should I look at for staking, voting and claiming rewards?
+- Staking information can be found [here](staking-api.md)
+- Campaign details and voting information can be found [here](voting-api.md)
+- Claiming staker rewards can be found [here](claiming-api.md)
+
 # Frequently Asked Questions (Pool Members)
 ### 1. Can a pool operator or other pool members withdraw my KNC stake?
 No, you have sole control of your staked funds. However, your staking rewards are distributed to your pool operator.
