@@ -70,7 +70,7 @@ The reward amount given to the pool operator is calculated based on the sum of h
 Yes.
 
 ### 4. How do I know how much stake / reward each pool member has / is entitled to?
-Kindly take a look at [this example](#2-how-do-i-make-use-of-the-getrawstakerdata-and-getstakerdata-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough. In essence, call the [`getRawStakerData`](staking-api.md#staker-data-of-an-epoch) and [`getStakerData`](staking-api.md#stakers-knc-stake) functions of the staking contract to determine the staked amount and eligible rewards for each of your pool members.
+Kindly take a look at [this section](claiming-api.md#claiming-staker-rewards) on calculating staker rewards. 
 
 ### 5. What happens when a pool member delegates his stake to another pool operator?
 As a rule of thumb, all actions performed only take effect in the next epoch. A pool member may perform re-delegation as often as he likes in the current epoch, but the changes will only kick in, in the next epoch. The pool member's stake remains delegated to their current designated pool operator in the current epoch.
@@ -94,40 +94,8 @@ You may refer to the [various deposit & withdrawals section](#various-deposit--w
 ### 1. How do I obtain the list of pool members who delegated their stakes to me?
 You will have to listen for the `Delegated` event emitted. Kyber will also provide an API for the list of pool members.
 
-### 2. How do I make use of the `getRawStakerData` and `getStakerData` functions to calculate the stake and reward distribution for my pool members?
-Let us look at a simple example of 1 pool operator, with 2 pool members who delegated their stakes to him.
-
-#### Epoch 9
-- Pool operator `0xOPERATOR`, 1000 KNC stake
-- Pool member `0xUSER1`, 1500 KNC stake
-- Pool member `0xUSER2`, 2500 KNC stake
-
-#### Epoch 10
-Pool operator voted for all campaigns
-
-#### Reward distribution for epoch 10
-- Call `getRawStakerData` for the pool operator.
-- Call `getStakerData` for each pool member.
-```
-// getRawStakerData(staker, epoch) and getStakerData(staker, epoch)
-//    returns (stake, delegatedStake, representative)
-// stake: stake amount eligible for reward
-// delegatedStake: stake amount delegated to addr by other stakers
-// representative: Wallet address staker delegated his stake to
-
-getRawStakerData(0xOPERATOR, 10) = (1000, 4000, 0xOPERATOR)
-getStakerData(0xUSER1, 10) = (1500, 0, 0xOPERATOR)
-getStakerData(0xUSER2, 10) = (2500, 0 , 0xOPERATOR)
-```
-
-- Calculate reward distribution
-  - Assume pool operator received 10 ETH in rewards
-  - Total stakes = 1000 + 4000 from 1st call = 5000 KNC
-  - `0xOPERATOR` reward amt = 1000 / 5000 * 10 = 2 ETH
-  - `0xUSER1` reward amt = 1500 / 5000 * 10 = 3 ETH
-  - `0xUSER2` reward amt = 2500 / 5000 * 10 = 5 ETH
-
-- We recommend that the `representative` for each pool member is verified to be the pool operator's address.
+### 2. How do I calculate the stake and reward distribution for my pool members?
+Kindly refer to [this section](claiming-api.md#claiming-staker-rewards) on calculating staker rewards.
 
 ### What APIs should I look at for staking, voting and claiming rewards?
 - Staking information can be found [here](staking-api.md)

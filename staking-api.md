@@ -168,7 +168,7 @@ We can classify the APIs for reading staking data in 3 broad sections:
 
 ## Section 1: Reward calculation for pool operators
 ### Staker Data Of An Epoch
-Obtains a staker's information for a specified epoch. Used in conjunction with [getStakerData](#all-staker-information) for calculating reward percentage by pool operators (and the DAO contract). Kindly refer to [this example](faqs.md#2-how-do-i-make-use-of-the-getrawstakerdata-and-getstakerdata-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members) for a walkthrough on reward calculation.
+Obtains a staker's information for a specified epoch. Used in conjunction with [getStakerData](#all-staker-information) for calculating reward percentage by pool operators (and the DAO contract). Kindly refer to [this example](claiming-api.md#claiming-staker-rewards) for a walkthrough on reward calculation.
 
 ---
 function **`getStakerRawData`**(address staker, uint256 epoch) external view returns (uint256 stake, uint256 delegatedStake, address representative)

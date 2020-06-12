@@ -6,7 +6,7 @@ The kyberFeeHandler contract primarily provides the following functionalities:
 -  Claiming staker rewards for participation in voting for campaigns
 -  Claiming reserve reserves
 
-For stakers and pool operators, the action you will be interested in are [claiming staker rewards](#section-1-claiming-staker-rewards).
+For stakers and pool operators, the action you will be interested in are [claiming staker rewards](#claiming-staker-rewards).
 
 ### kyberFeeHandler Interface
 [IKyberFeeHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/IKyberFeeHandler.sol)
@@ -15,31 +15,78 @@ For stakers and pool operators, the action you will be interested in are [claimi
 [KyberFeeHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/Dao/KyberFeeHandler.sol)
 
 
-## Section 1: Claiming Staker Rewards
+## Claiming Staker Rewards
+For pool operators, you are responsible for the reward calculation and distribution to your pool members. We first list the process, then illustrate with an example. It will require making calls to the kyberStaking, kyberDao and the kyberFeeHandler contracts.
 
-### Viewing Rewards Claimable Per Epoch
-To view the amount (in wei) claimable for an epoch, you will have to call APIs from both the kyberFeeHandler and dao contracts. We illustrate with an example.
+### Rewards in multiple tokens
+In the future, we foresee supporting different quote tokens (Eg. stablecoins like DAI or USDC) instead of just ether. This means that network fees collected (and therefore staker rewards) will potentially be in these quote tokens as well. There may also be multiple feeHandlers to claim staker rewards from.
 
-#### Example
-Let us assume as a pool operator (address `0xOPERATOR`), you would like to view the staker rewards entitled to you and your pool members for epoch `5`.
-
+### Step A: Calculate rewards claimable 
 1. `percentageInPrecision = kyberDao.getPastEpochRewardPercentageInPrecision(staker, epoch)`, which is the reward percentage entitled to you and your pool members in precision `(100% = 10**18)`.
 2. `rewardsEntitled = kyberFeeHandler.rewardsPerEpoch(epoch)`, which is the rewards entitled to all stakers for that epoch.
-3. The reward amount is `amountWei = rewardsEntitled.mul(percentageInPrecision).div(PRECISION)`
-4. To then calculate the reward distribution to pool members, please visit [this section](#2-how-do-i-make-use-of-the-getrawstakerdata-and-getstakerdata-functions-to-calculate-the-stake-and-reward-distribution-for-my-pool-members).
-   
+3. The reward amount is `totalRewardAmt = rewardsEntitled.mul(percentageInPrecision).div(PRECISION)`
+
+### Step B: Calculate rewards per epoch member
+1. Call `kyberDao.getRawStakerData(poolOperatorAddress, epoch)` for the pool operator.
+2. Call `kyberDao.getStakerData(poolMemberAddress, epoch)` for each pool member.
+3. Reward allocated for the whole pool is the sum of the stake and delegated stake in step B1.
+4. Calculate the reward amount for each entity using `totalRewardAmt` in step A3 and the information from the previous steps.
+
+We recommend verifying that each pool member delegated to the operator for the reward claim epoch.
+
+### Example
+Let us look at an example of 1 pool operator, with 2 pool members who delegated their stakes to him. We assume that these 3 people are the only participants in the Kyber DAO. 
+
+#### Epoch 9
+- Pool operator `0xOPERATOR` deposits 1000 KNC stake
+- Pool member `0xUSER1` deposits and delegates 1500 KNC stake
+- Pool member `0xUSER2` deposits and delegates 2500 KNC stake
+
+#### Epoch 10
+Pool operator voted for all campaigns
+
+#### Reward calculation and distribution
+Assume that the total rewards allocated is 10 ETH.
+
+**Note:**
+- Addresses used in the code snippet below are for illustration purposes, and should be replaced with valid ethereum wallet addresses
+- Comments are the expected values
+
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper
 
+let epoch = new BN(10); // calculating rewards from epoch 10
 let PRECISION = new BN(10).pow(new BN(18)); // 10 ** 18
-let poolOperator = "0x12340000000000000000000000000000deadbeef" // pool operator's address
-let epoch = new BN(5);
 
-let percentageInPrecision = await daoContract.methods.getPastEpochRewardPercentageInPrecision(poolOperator, epoch).call();
-let rewards = await kyberFeeHandler.methods.rewardsPerEpoch(epoch).call();
-let weiAmount = rewards.mul(percentageInPrecision).div(PRECISION);
+/////////////////////////////////////////
+// Step A: Calculate rewards claimable //
+/////////////////////////////////////////
+percentageInPrecision = await kyberDao.methods.getPastEpochRewardPercentageInPrecision(0xOPERATOR, epoch).call(); // 10**18 = 100%
+rewardsEntitled = await kyberFeeHandler.methods.rewardsPerEpoch(epoch).call(); // 10 ETH
+totalRewardAmt = rewardsEntitled.mul(percentageInPrecision).div(PRECISION); // 10 ETH
+
+////////////////////////////////////////////////
+// Step B: Calculate rewards per epoch member //
+////////////////////////////////////////////////
+// getRawStakerData(staker, epoch) and getStakerData(staker, epoch)
+//    returns (stake, delegatedStake, representative)
+// stake: stake amount eligible for reward
+// delegatedStake: stake amount delegated to addr by other stakers
+// representative: Wallet address staker delegated his stake to
+operatorStakerData = await kyberStaking.getRawStakerData(0xOPERATOR, epoch).call() // (1000, 4000, 0xOPERATOR)
+user1StakerData = await kyberStaking.getStakerData(0xUSER1, epoch).call() // (1500, 0, 0xOPERATOR)
+user2StakerData = await kyberStaking.getStakerData(0xUSER2, epoch).call() // (2500, 0 , 0xOPERATOR)
+
+totalStakes = operatorStakerData.stake.add(operatorStakerData.delegatedStake) // 1000 + 4000 = 5000 KNC
+operatorRewardAmt = operatorStakerData.stake.div(totalStakes).mul(totalRewardAmt); // 1000 / 5000 * 10 = 2 ETH
+user1RewardAmt = user1StakerData.stake.div(totalStakes).mul(totalRewardAmt); // 1500 / 5000 * 10 = 3 ETH
+user2RewardAmt = user2StakerData.stake.div(totalStakes).mul(totalRewardAmt); // 2500 / 5000 * 10 = 5 ETH
+
+// Example of verification that pool members did delegate to operator for epoch 10
+assert.equal(user1StakerData.representative, 0xOPERATOR, "user1 did not delegate to operator");
+assert.equal(user2StakerData.representative, 0xOPERATOR, "user2 did not delegate to operator");
 ```
 
 ---
@@ -97,7 +144,7 @@ let txReceipt = await web3.eth.sendTransaction({
 });
 ```
 
-## Section 2: Claiming Reserve Rebates
+## Claiming Reserve Rebates
 
 ### Viewing Rewards Claimable
 `rebatePerWallet[rebateWallet] = uint`
@@ -148,7 +195,7 @@ let txReceipt = await web3.eth.sendTransaction({
 ```
 
 
-## Section 3: Claiming Platform Fees
+## Claiming Platform Fees
 
 ### Viewing Rewards Claimable
 `feePerPlatformWallet[platformWallet] = uint`
