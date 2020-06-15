@@ -18,7 +18,7 @@ For stakers and pool operators, the action you will be interested in are [claimi
 ## Claiming Staker Rewards
 For pool operators, you are responsible for the reward calculation and distribution to your pool members. We first list the process, then illustrate with an example. It will require making calls to the kyberStaking, kyberDao and the kyberFeeHandler contracts.
 
-### Rewards in multiple tokens
+### Rewards in multiple tokens and feeHandlers
 In the future, we foresee supporting different quote tokens (Eg. stablecoins like DAI or USDC) instead of just ether. This means that network fees collected (and therefore staker rewards) will potentially be in these quote tokens as well. There may also be multiple feeHandlers to claim staker rewards from.
 
 ### Step A: Calculate rewards claimable 
