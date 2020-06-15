@@ -73,7 +73,7 @@ totalRewardAmt = rewardsEntitled.mul(percentageInPrecision).div(PRECISION); // 1
 // getRawStakerData(staker, epoch) and getStakerData(staker, epoch)
 //    returns (stake, delegatedStake, representative)
 // stake: stake amount eligible for reward
-// delegatedStake: stake amount delegated to addr by other stakers
+// delegatedStake: stake amount delegated to staker by other stakers
 // representative: Wallet address staker delegated his stake to
 operatorStakerData = await kyberStaking.getRawStakerData(0xOPERATOR, epoch).call() // (1000, 4000, 0xOPERATOR)
 user1StakerData = await kyberStaking.getStakerData(0xUSER1, epoch).call() // (1500, 0, 0xOPERATOR)
