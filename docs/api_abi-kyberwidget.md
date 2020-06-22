@@ -4,9 +4,9 @@ title: KyberWidget
 ---
 [//]: # (tagline)
 ## Overview
-The KyberWidget can be implemented via HTML/JS or iOS. The HTML / JS option has a [widget generator](integrations-widgetgenerator.md) that provides a user interface for configuration of the parameters described below.
+The KyberWidget can be implemented via HTML/JS. There is a [widget generator](integrations-widgetgenerator.md) that provides a user interface for configuration of the parameters described below.
 
-## KyberWidget (HTML/JS)
+## KyberWidget
 ### Widget URL Components
 #### Base URL
 `https://widget.kyber.network/`
@@ -88,105 +88,8 @@ If you don’t provide the CSS selector, it defaults to ‘kyber-widget-button�
 **Answer:**
 Kindly refer to [this monitoring PHP library](https://github.com/KyberNetwork/widget-monitor-php). More monitoring tools may be built by Kyber and the community in the future. Alternatively, vendors can choose to implement and run their own monitoring logic to get the payment status from the Ethereum network.
 
-## KyberWidget (iOS)
-### Valid use cases
-
-#### Pay Widget
-- **receiveAddr** - **required**: must be a valid ETH address with 0x prefix
-- **receiveToken** - **required**: must be a supported token symbol by KyberNetwork
-
-#### Swap Widget
-- **receiveAddr**, **receiveToken** and **receiveAmount** are all ignored
-
-#### Buy Widget
-- **receiveToken** - **required**:  must be a supported token symbol by KyberNetwork
-
-Other parameters are optional.
-
-NOTE:
-  - In any cases, **receiveAmount** will be ignored if **receiveToken** is empty.
-  - `func coordinatorDidFailed(with error: KWError)` will be immediately called after you `start` the coordinator if any parameters are invalid.
-
-### Supported tokens
-See all supported tokens [here](https://api.kyber.network/currencies)
-
-### KWCoordinator Sub-classes Parameters
-Note that if any of the parameters are invalid, an error will be thrown via delegation.
-
-***Parameter details:***
-
-- ***baseViewController*** (UIViewController) - **required** - This is the base view controller, used to present the navigation controller of the widget.
-
-- ***receiveAddr*** (String) - **required** - For _payment_ use case, this is the vendor's Ethereum wallet address with 0x prefix which user's payment will be sent there. **_Must double check this param very carefully_**. For _swap_ or _buy_, please don't set this parameter.
-
-- ***receiveToken*** (String) - **required** for _payment_, it is the token that you (vendor) want to receive, for _swap_ or _buy_, it is the token that you want to receive/buy. It can be one of supported tokens (such as ETH, DAI, KNC...).
-
-- ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`. To make a transaction, amount must *NOT* be less than (equivalent) 0.001ETH.
-
-- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select tokens.
-
-- ***defaultPair*** (string) - default: "ETH_KNC". This param only take effect for *Swap*, it indicates default token pair will show in swap layout.
-
-- ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible value: `mainnet, production, test, ropsten, rinkeby`. `test` and `ropsten` will run on Ropsten network, `rinkeby` will run on Rinkeby network, `production`, `mainnet` will run on Mainnet ethereum. Be carefull for this param!
-
-- ***signer*** (String) - concatenation of a list of Ethereum address by underscore `_`, eg. 0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20 - If you pass this param, the user will be forced to pay from one of those addresses. If you ignore or pass `nil` value, all addresses are accepted.
-
-- ***commissionId*** - (String - Ethereum address) - your Ethereum wallet to get commission of the fees for the transaction. Your wallet must be whitelisted by KyberNetwork (the permissionless registration will be available soon) in order to get the commission, otherwise it will be ignored.
-
-- ***productName*** - (String?) - your product name you want to display (only for _pay_ widget).
-
-- ***productQty*** - (Int?) - your product quantity you want to buy (only for pay widget).
-
-- ***productAvatar*** - (String?) - url string to your product avatar (only for _pay_ widget).
-
-- ***productAvatarImage*** - (UIImage?) - image for your product avatar (only for _pay_ widget). You should either provide `productAvatar` or `productAvatarImage` (prefer `productAvatarImage` for faster displaying). If you provide both, `productAvatar` will be ignored.
-
-- ***paymentData*** - (String) - A piece of additional information attached to the payment after broadcasted on the blockchain (*Note*: This param only takes effect when type=pay)
-
-### Error cases to be handled
-These are some error / edge cases that should be handled in the **coordinatorDidFailed** function.
-
-- `unsupportedToken`: the token you set is not supported by Kyber, or you are performing _payment_ but not set the `receiveToken` value.
-- `invalidAddress(errorMessage: String)`: the receive address is not set as `self` or a valid ETH address, check `errorMessage` for more details.
-- `invalidToken(errorMessage: String)`: the receive token symbol is not set for *Pay* or *Buy*. Or receive token is not supported by Kyber. Check `errorMessage` for more information.
-- `invalidPinnedToken(errorMessage: String)`: One of pinned token symbol is invalid (not supported by Kyber Network), or `pinnedTokens` is not in a correct format TOKEN_TOKEN_TOKEN. Check `errorMessage` for more information.
-- `invalidAmount(errorMessage: String)`: the receive amount is not valid (negative, zero, ...), or if you are performing _swap_, the receive amount must be empty.
-- `invalidDefaultPair(errorMessage: String)`: `defaultPair` param for *Swap* is not set correctly. It should contain exactly 2 supported token symbols by Kyber Network with format A_B in uppercased. E.g: ETH_KNC. Check `errorMessage` for more information.
-- `invalidSignerAddress(errorMessage: String)`: Invalid signer address. Either it is not in a correct format address_address.. or address is not a valid ETH address. Check `errorMessage` for more information.
-- `invalidCommisionAddress(errrorMessage: String)`: Invalid commission ID address: Not a correct ETH address.
-- `invalidProductAvatarURL(errorMessage: String)`: Invalid product avatar (for *Pay* use case). It is not a correct URL format.
-- `failedToLoadSupportedToken(errorMessage: String)`: something went wrong and we could not load supported tokens by Kyber.
-- `failedToSendTransaction(errorMessage: String)`: Could not send the transaction request. Check `errorMessage` for more information.
-
-In most cases, we will provide a meaningful error message for you to either display it to user directly, or use the message to test/debug.
-
-## Acknowledgement
-The KyberWidget iOS uses the following open source software:
-
-- [Moya](https://github.com/Moya/Moya)
-- [BigInt](https://github.com/attaswift/BigInt)
-- [APIKit](https://github.com/ishkawa/APIKit)
-- [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
-- [TrustKeystore](https://github.com/TrustWallet/trust-keystore)
-- [TrustCore](https://github.com/TrustWallet/trust-core)
-- [JSONRPCKit](https://github.com/bricklife/JSONRPCKit.git)
-- [IQKeyboardManager](https://github.com/hackiftekhar/IQKeyboardManager)
-- [KeychainSwift](https://github.com/evgenyneu/keychain-swift)
-- [QRCodeReaderViewController](https://github.com/yannickl/QRCodeReaderViewController.git)
-- [JavaScriptKit](https://github.com/alexaubry/JavaScriptKit)
-
-Special thanks to [TrustWallet](https://github.com/TrustWallet) team for their awesome work!
-
 ## License
 KyberWidget is available under MIT License, see [LICENSE](https://github.com/KyberNetwork/widget-swift/blob/master/LICENSE)  file for more information.
 
 ## Bugs/Features report
 Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a [Github issue here](https://github.com/KyberNetwork/widget-swift/issues).
-
-## Swift 4.2, Xcode 10
-Please upgrade your pod by using commands:
-
-```swift
-pod repo update
-pod install
-```
