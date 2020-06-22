@@ -1,35 +1,50 @@
 ---
-id: Integrations-FeeSharing
-title: Fee Sharing Program
+id: Integrations-PlatformFees
+title: Platform Fees
 ---
 [//]: # (tagline)
-## What is the Fee Sharing Program?
+## What is this platform fee?
 
-It’s an opportunity to be an integrated part of Kyber Network and receive commission for each conversion that originates from your DApp, wallet or payment gateway.
+For each trade that originates from your DApp, wallet or payment gateway, you are able to specify a percentage that can taken as commission. It is collected in ETH (and stablecoins in the future).
 
-## How do I join the program?
+## How do I specify the platform fee percentage and wallet address?
 
-Anyone can join the program by calling the [`registerWallet`](https://etherscan.io/address/0xECa04bB23612857650D727B8ed008f80952654ee#writeContract) function of [`KyberRegisterWallet`](https://etherscan.io/address/0xECa04bB23612857650D727B8ed008f80952654ee) contract! You may do so using [MyEtherWallet](#myetherwallet), [MyCrypto](#mycrypto) or programmatically via [web3](#web3).
+The platform fee is defined in basis points (bps). 1 basis point = 0.01%. As an example, a platform fee of 25 basis points would thus mean 0.25% charged. The fee amount is calculated by `platformFeeBps * srcQty / 10000`. Kindly refer to the [example]() below. 
 
-## How do I earn fees?
+- If you are integrating via Kyber's API, check out [this guide]().
+- If you are directly interacting with Kyber's smart contracts, you will have to use the new APIs `getExpectedRateAfterFee` and `tradeWithHintAndFee` of the new proxy contract.
+  - For web3 integrations, check out [this guide]().
+  - For smart contract integrations, check out [this guide]().
 
-Send your registered wallet address as part of the trade transaction data. More information regarding the input parameters of the `trade` function can be found in [API/ABI](api_abi-kybernetworkproxy.md#trade).</br>
+## Is there a max cap to the platform fee?
 
-## Fee Example
+While there is no strict upper bound to the platform fee, there are checks in place to ensure that the total fees (platform and network fees) charged to the user do not exceed 100% of the trade amount.
 
-Suppose a user has successfully made a trade transaction of 10 ETH in value. 0.25% of the transaction value is to be paid by reserves in KNC. 30% of this fee paid by the reserves will be given to the registered party.
+## Do the fees go automatically to the fee wallet I specified?
+
+No. You will have to claim manually through the KyberFeeHandler contract(s).
+
+## How do I view the fee amount claimable?
+
+Call the `feePerPlatformWallet` method of the KyberFeeHandler contract(s). Note that for gas optimizations, 1 ether wei is kept inside the contract, so the claimable amount has to be subtract by 1.
+
+Kindly refer to the example below.
+
+## How do I claim fees?
+
+Call the `claimPlatformFee` method of the KyberFeeHandler contract(s), with your platform wallet address as the input.
+
+Kindly refer to the example below.
+
+## Example
+
+Suppose a user has successfully made a KNC -> WBTC trade transaction of 10 ETH in value (ie. `X KNC -> 10 ETH -> Y WBTC`). A platform fee of 0.25% (25 bps) is specified.
 
 | Description                    | Amount              | Calculation            | % of Transaction Value |
 | ------------------------------ | ------------------- | ---------------------- | ---------------------- |
 | Trasaction Value               | 10 ETH              | na                     | 100%                   |
-| Fee Paid by Reserves           | 0.025 ETH (in KNC)  | `0.025 = 10 * 0.25%`   | 0.25%                  |
-| Fee Shared to Registered Party | 0.0075 ETH (in KNC) | `0.0075 = 0.025 * 30%` | 0.075%                 |
+| Platform Fee                   | 0.025 ETH           | `0.025 = 10 * 0.25%`   | 0.25%                  |
 
-## How do I claim fees?
-
-Call the `sendFeeToWallet` function of the [fee burner contract](https://etherscan.io/address/0x52166528FCC12681aF996e409Ee3a421a4e128A3). This function **will have to be called for each reserve**. In other words, you would have to iterate through every reserve and call this function for your wallet address. At the moment, our server has a [script](https://github.com/KyberNetwork/smart-contracts/blob/master/scripts/feeHandler.js) to call this function for all wallets once every week.
-
-You may refer to this [code example](#claiming-fees-with-sendfeetowallet) on how you may go about calling the function. This script can be called once every few days, or whenever a reasonable amount has accumulated in your account. More information regarding the input parameters of the `sendFeeToWallet` function can be found in [API/ABI](api_abi-feeburner.md#sendfeetowallet).</br>
 
 ## Code Examples
 

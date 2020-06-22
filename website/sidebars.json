@@ -36,7 +36,7 @@
     ],
     "Miscellaneous": [
       "Integrations-ContractEvents",
-      "Integrations-FeeSharing",
+      "Integrations-PlatformFees",
       "Integrations-GettingHelp"
     ]
   },
@@ -56,19 +56,18 @@
     "Miscellaneous": [
       "Reserves-TradingStrategy",
       "Reserves-SanityRates",
-      "Reserves-ReserveFees",
-      "Reserves-BurningFees"
+      "Reserves-Rebates"
     ]
   },
-  "Environments": {
+  "Addresses": {
     "Getting Started": [
-      "Environments-Intro"
+      "Addresses-Intro"
     ],
-    "Environments": [
-      "Environments-Mainnet",
-      "Environments-Ropsten",
-      "Environments-Rinkeby",
-      "Environments-Kovan"
+    "Addresses": [
+      "Addresses-Mainnet",
+      "Addresses-Ropsten",
+      "Addresses-Rinkeby",
+      "Addresses-Kovan"
     ]
   },
   "References": {

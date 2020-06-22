@@ -101,8 +101,8 @@ const siteConfig = {
       label: 'Reserves',
     },
     {
-      doc: 'Environments-Intro',
-      label: 'Environments',
+      doc: 'Addresses-Intro',
+      label: 'Addresses',
     },
     {
       doc: 'API_ABI-Intro',
