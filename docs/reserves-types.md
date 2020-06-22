@@ -4,7 +4,7 @@ title: Reserve Types
 ---
 [//]: # (tagline)
 ## Introduction
-There are currently 3 different types of reserve that you can choose from, namely, the Fed Price Reserve, the Automated Price Reserve and the Orderbook Reserve.
+There are currently 2 different types of reserve that you can choose from, namely, the Fed Price Reserve and the Automated Price Reserve. The Orderbook Reserve is temporarily disabled as we will update it to be compatible with the Katalyst upgrade.
 
 ## Fed Price Reserve (FPR)
 A Fed Price Reserve utilises an off-chain component (e.g. a script running on a server) that pulls price
@@ -18,7 +18,9 @@ This reserve type relies on a predefined algorithm written in a smart contract t
 The ease of maintenance and low development cost of this reserve comes at the expense of high financial liquidity requirements. You can read more about the APR in our [blog post](https://blog.kyber.network/introducing-the-automated-price-reserve-77d41ed1aa70).
 
 ## Orderbook Reserve (OR)
-As its name suggests, this fully on-chain reserve type allows anyone to provide liquidity to the ecosystem for any token of their choice through the placement of limit orders. It is also the first reserve type that can be listed permissionlessly, where no action is required from Kyber (such as the network administrator or operators). A caveat that comes with the trustless setup is that the KNC fees that is to be burnt will be locked up in advance when the order is made and subsequently burnt when the order is taken from.
+As its name suggests, this fully on-chain reserve type allows anyone to provide liquidity to the ecosystem for any token of their choice through the placement of limit orders. It is also the first reserve type that can be listed permissionlessly, where no action is required from Kyber (such as the network administrator or operators).
+
+Deployment and operation of this reserve type has been temporarily halted, as we update it to be compatible with the Katalyst upgrade.
 
 ## Reserve Type Comparison
 ![Reserve Type](/uploads/reservetype.png "Reserve Type")
