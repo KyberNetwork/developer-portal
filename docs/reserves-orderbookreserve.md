@@ -3,7 +3,10 @@ id: Reserves-OrderbookReserve
 title: Orderbook Reserve
 ---
 [//]: # (tagline)
-## Objective
+## Notice
+The deployment and operation of the Orderbook Reserve has been temporarily halted, as we update it to be compatible with the Katalyst upgrade.
+
+<!-- ## Objective
 
 In this guide, we will learn how to configure and deploy a Orderbook Reserve either locally via ganache or to the Ropsten testnet. Subsequently, we will also learn how to make, view, update and cancel orders.
 
@@ -301,4 +304,4 @@ transactionData = OrderbookReserve.methods.addOrderBatch(
 [`updateOrderBatch`](api_abi-orderbookreserve.md#updateorderbatch)
 
 ## Local testnet deployment
-You may refer to [this section](reserves-ganache.md) on how to deploy and test the reserve locally using [Truffle's Ganache](https://truffleframework.com/ganache).
+You may refer to [this section](reserves-ganache.md) on how to deploy and test the reserve locally using [Truffle's Ganache](https://truffleframework.com/ganache). -->
