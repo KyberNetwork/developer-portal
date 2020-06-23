@@ -1,5 +1,5 @@
 ---
-id: Environments-Rinkeby
+id: Addresses-Rinkeby
 title: Rinkeby
 ---
 [//]: # (tagline)
@@ -7,28 +7,30 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
-`0xF77eC7Ed5f5B9a5aee4cfa6FFCaC6A4C315BaC76`
+- Main endpoint for trades <br>
+- ``
+
+### `KyberStorage`
+- Obtain reserve IDs that support a token trade <br>
+- ``
+
+### `KyberHintHandler (KyberMatchingEngine)`
+- Build / parse hints <br>
+- ``
+
+### `KyberFeeHandler (ETH)`
+- Claim reserve rebates, platform fees and staker rewards <br>
+- ``
 
 ### `KyberNetwork`
-`0x037d8c47d75D76950C2Eb738D1F7403b99208ECd`
+- Core network contract
+- ``
 
 ### `KyberReserve`
-`0xa452875276104B97BD5eaCfd22c929D8fC7Cc1f6`
+`0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a`
 
 ### `ConversionRates`
-`0xCDD8099f86FdDDf1c5E7c2DD17F7b09438eeEEf9`
-
-### `ExpectedRate`
-`0x576228245dfAEecB0CE84A55E390E136DEc5B669`
-
-### `FeeBurner`
-`0x48c153F48Ddf45D09a6e10EA6887DFf79f955b7a`
-
-### `SanityRates`
-`0x1d9d4e3d881c4Ec1B53cDBCa82021Bb23Faca426`
-
-### `WhiteList`
-`0x822d209CCE45a4977cf8107B80a788d01020C73C`
+`0xE16E257a25e287AF50C5651A4c2728b32D7e5ef7`
 
 ## Token Addresses
 ### `ETH (Ether)`

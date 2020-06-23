@@ -1,5 +1,5 @@
 ---
-id: Environments-Ropsten
+id: Addresses-Ropsten
 title: Ropsten
 ---
 [//]: # (tagline)
@@ -11,28 +11,30 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
-`0x818E6FECD516Ecc3849DAf6845e3EC868087B755`
+- Main endpoint for trades <br>
+- `0xa16Fc6e9b5D359797999adA576F7f4a4d57E8F75`
+
+### `KyberStorage`
+- Obtain reserve IDs that support a token trade <br>
+- `0xa4eaD31a6c8e047E01cE1128E268c101AD391959`
+
+### `KyberHintHandler (KyberMatchingEngine)`
+- Build / parse hints <br>
+- `0x313f35c11050BDd0578b801e5b5CF35D0779E7a8`
+
+### `KyberFeeHandler (ETH)`
+- Claim reserve rebates, platform fees and staker rewards <br>
+- `0xe57B2c3b4E44730805358131a6Fc244C57178Da7`
 
 ### `KyberNetwork`
-`0x753fe1914db38ee744e071baadd123f50f9c8e46`
+- Core network contract
+- `0x9EC49C41Fdc4C79fDb042AF37659f2E3220ad0a4`
 
 ### `KyberReserve`
 `0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a`
 
-### `PermissionlessOrderbookReserveLister`
-`0xB62041bf19a89298554C5F1B301C1c526741557f`
-
 ### `ConversionRates`
 `0xE16E257a25e287AF50C5651A4c2728b32D7e5ef7`
-
-### `ExpectedRate`
-`0x74Eefde956514C7c02723332504c16E2319687b1`
-
-### `FeeBurner`
-`0x06b0fbaba8fba5161f725f2159de1e1d6409c35f`
-
-### `WhiteList`
-`0x0f69eA3FA0F1766f91cAca1962e2E85d6a7c20A6`
 
 ## Token Addresses
 ### `ETH (Ether)`

@@ -1,5 +1,5 @@
 ---
-id: Environments-Kovan
+id: Addresses-Kovan
 title: Kovan
 ---
 [//]: # (tagline)
