@@ -54,9 +54,10 @@
       "Reserves-Ganache"
     ],
     "Miscellaneous": [
+      "Reserves-Ids",
+      "Reserves-Rebates",
       "Reserves-TradingStrategy",
-      "Reserves-SanityRates",
-      "Reserves-Rebates"
+      "Reserves-SanityRates"
     ]
   },
   "Addresses": {
