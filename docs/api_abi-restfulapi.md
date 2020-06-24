@@ -239,6 +239,70 @@ Example:
 
 <br />
 
+### `/expected_rate`
+
+(GET) Return the expected rate for a token pair, with behavior similar to getExpectedRate from the proxy contract.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:---------:|:------:|:--------:|:----------------------------------------------------------:|
+| `source` | string | Yes | The source token contract address. |
+| `dest` | string | Yes | The destination token contract address. |
+| `sourceAMount` | number | The amount of source tokens. |
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:---------:|:-------:|:----------------------:|
+| `expectedRate` | string | The conversion rate of the token pair in 10^18. |
+| `slippageRate` | string | 97% of the expected rate, meant to provide a 3% buffer in case the market moves against you. |
+| `timestamp` | int | Server timestamp in UTC. |
+| `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
+
+Example:
+
+```json
+> curl "https://api.kyber.network/gas_limit?source=0x6b175474e89094c44da98b954eedeac495271d0f&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&amount=10000"
+{
+  "data": 880000,
+  "error": false
+}
+```
+
+<br />
+
+### `/gas_limit`
+
+(GET) Return the estimated Gas Limit used for a transaction based on source token amount.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:---------:|:------:|:--------:|:----------------------------------------------------------:|
+| `source` | string | Yes | The source token contract address. |
+| `dest` | string | Yes | The destination token contract address. |
+| `amount` | number | The amount of source tokens. |
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:---------:|:-------:|:----------------------:|
+| `data` | string | The estimated gas limit to be used for a transaction based on the parameters. |
+| `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
+
+Example:
+
+```json
+> curl "https://api.kyber.network/gas_limit?source=0x6b175474e89094c44da98b954eedeac495271d0f&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&amount=10000"
+{
+  "data": 880000,
+  "error": false
+}
+```
+
+<br />
+
 ### `/gasLimitConfig`
 
 (GET) Returns the gas limit for approving token and swapping between ETH <-> ERC20 token. To calculate the gas limit for swapping between token A <-> token B, take the sum of the gas limit for swapping from token A -> ETH and for swapping from ETH -> Token B. Note that some tokens may require higher gas limits than others e.g. DAI, TUSD, MKR, DGX.
@@ -296,6 +360,40 @@ Example:
     }
     ...
   ]
+}
+```
+
+<br />
+
+### `/hint`
+
+(GET) Returns the encoded hint based on the input parameters.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:---------:|:------:|:--------:|:----------------------------------------------------------:|
+| `type` | string | Yes | Must be `e2t`, `t2e`, or `t2t`. |
+| `trade_type` | string | Yes | Must be `BestOfAll`, `MaskIn`, `MaskOut`, or `Split`. |
+| `reserveId` | string | ID of the reserve. |
+| `split` | string | Respective split for the reserveId. |
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:---------:|:-------:|:----------------------:|
+| `data` | string | The encoded hint. |
+
+Rules:
+
+For a list of rules on hint building, please visit the []().
+
+Example:
+
+```json
+> curl "/hint?type=t2e&trade_type=Split&reserveId=0xff1234567a334f7d000000000000000000000000000000000000000000000000&reserveId=0xaa12aa56bbfff000000000000000000000000000000000000000000000000000&split=3000&split=7000"
+{
+  "data": "0x0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000002aa12aa56bbfff000000000000000000000000000000000000000000000000000ff1234567a334f7d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000001b580000000000000000000000000000000000000000000000000000000000000bb8"
 }
 ```
 
@@ -460,32 +558,41 @@ Example:
 
 <br />
 
-### `/gas_limit`
+### `/reserves`
 
-(GET) Return the estimated Gas Limit used for a transaction based on source token amount.
+(GET) Returns a list of reserves that supports a token pair.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
-|:---------:|:------:|:--------:|:----------------------------------------------------------:|
-| `source` | string | Yes | The source token contract address. |
-| `dest` | string | Yes | The destination token contract address. |
-| `amount` | number | The amount of source tokens. |
+|:--------------:|:-------:|:--------:|:------------------------------------------------------:|
+| `token` | string | Yes | Address of the asset. |
+| `type` | string | Yes | Accepts `buy` or `sell` as arguments. `buy` will return a list of reserves which support the ETH-Token pair, otherwise `sell` returns reserves which support the Token-ETH pair. |
 
 ---
 
 **Response:**
 | Parameter | Type | Description |
-|:---------:|:-------:|:----------------------:|
-| `data` | string | The estimated gas limit to be used for a transaction based on the parameters. |
-| `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
-
-Example:
+|:----------:|:------:|:--------------------------------------------------------------------------------------------:|
+| `address` | string | The address of the asset in its native chain. |
+| `id` | string | A unique ID used by Kyber Network to identify between different symbols. |
+| `type` | bool | An integer describing the type of reserve, i.e. 1 = . |
 
 ```json
-> curl "https://api.kyber.network/gas_limit?source=0x6b175474e89094c44da98b954eedeac495271d0f&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&amount=10000"
+> curl "https://api.kyber.network/reserves?token=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&type=buy
 {
-  "data": 880000,
-  "error": false
+  "data":[
+    {
+      "address": "0x43bC6b5fa717cf3d663C722F6520b39D24CD6AE1",
+      "id": "0xff53706561726f53000000000000000000000000000000000000000000000000",
+      "type":1
+    },
+    {
+      "address": "0x199570b965a446abf284731873dbbf6b09269338 ",
+      "id": "0xff53706561726f53000000000000000000000000000000000000000000000000",
+      "type":2
+    }
+    ...
+  ]
 }
 ```
 
@@ -565,6 +672,8 @@ Example:
 | `min_dst_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` represents the destination token. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
 | `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
 | `wallet_id` | string | No | The wallet address that is registered for the [fee sharing program](integrations-feesharing.md). |
+| `wallet_fee` | string | No | The wallet fee in BPS that is shared to the wallet_id, only usable after Katalyst upgrade. |
+| `hint` | string | No | The trade hint, specifying the trade type, reserve IDs and splits, only usable after Katalyst upgrade. |
 | `nonce` | integer | No | Users can specify a nonce to override the default account nonce. |
 | `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 
