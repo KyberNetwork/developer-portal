@@ -100,7 +100,7 @@ The full contract ABIs are also given below the interface section.
 
 ## Full Contract ABIs
 
-### `KyberNetworkProxy (Katalyst)`
+### `KyberNetworkProxy V2 (Katalyst)`
 
 [Smart Contract URL](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/KyberNetworkProxy.sol)
 

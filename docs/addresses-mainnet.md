@@ -39,6 +39,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `LiquidityConversionRates`
 `0x97D7126b6FF7C4D95601912f4Cdf790a3Cd1edaB`
 
+### `KyberNetworkProxy (V1)`
+`0x818E6FECD516Ecc3849DAf6845e3EC868087B755`
+
 ### `KyberNetworkENSResolver`
 `0x1982131C7D6959ff7768EE39c023Ad002d8c9759`
 
