@@ -1,12 +1,12 @@
 ---
 id: Reserves-Rebates
-title: Guide to Reserve Rebates
+title: Reserve Rebates
 ---
 [//]: # (tagline)
 
 ## What are reserve rebates?
 
-A network fee may be charged for a Kyber trade, depending on the reserve type. The network fee percentage is determined on the KyberDAO, and may change over time.
+A network fee may be charged for a Kyber trade (dependent on reserve type). The network fee percentage is determined on the KyberDAO, and may change over time.
 
 The KyberDAO also gets to determine what happens to the network fee. It is split 3 ways:
 1. Burning of KNC
@@ -16,9 +16,165 @@ The KyberDAO also gets to determine what happens to the network fee. It is split
 The motivation for reserve rebates is to reward selected reserves based on their performance (i.e. amount of trade volume they facilitate). This incentivizes reserves to provide better liquidity and tighter spreads, thereby driving greater volume, value, and network fees.
 
 ## How do I specify the reserve rebate wallet for these rebates?
+
 Whenever a reserve is added to the network, the rebate wallet must also be specified as well.
 
 ## What if I need to change the rebate wallet address?
+
 Notify the Kyber team / network maintainers!
 
 ## Do the rebates go automatically to the rebate wallet I specified?
+
+No. You will have to claim them manually through the KyberFeeHandler contract(s).
+
+## How do I view the rebate amount claimable?
+
+Call the `rebatePerWallet` method of the KyberFeeHandler contract(s). Note that for gas optimizations, 1 ether wei is kept inside the contract, so the claimable amount has to be subtract by 1.
+
+Kindly refer to the example below.
+
+## How do I claim reserve rebates?
+
+Call the `claimReserveRebate` method of the KyberFeeHandler contract(s).
+
+Kindly refer to the example below.
+
+## Example
+
+### Checking Rebates Claimable
+
+#### Etherscan
+
+1. Navigate to the "Read Contract" tab of the Kyber Fee Handler contract in Etherscan. Example: https://ropsten.etherscan.io/address/0xe57B2c3b4E44730805358131a6Fc244C57178Da7#readContract
+
+![Get Rebates Step 1](/uploads/getFeesClaimable.jpg "Get Rebates Step 1")
+
+1. Go to the `rebatePerWallet` function, input your rebate wallet address, then click on the "Query" button.
+
+![Get Rebates Step 2](/uploads/getRebates-1.jpg "Get Rebates Step 2")
+
+1. You should be able to see the amount claimable. This is in ETH wei. Note that you have to subtract this amount by 1 wei. Example: In the image below, the amount claimable is `9288172147833692 - 1` ~=  0.00928 ETH - 1 ether wei. 
+
+![Get Rebates Step 3](/uploads/getRebates-2.jpg "Get Rebates Step 3")
+
+#### Web3
+
+1. Change the `REBATE_WALLET_ADDRESS` to be the desired wallet address for which you would like to check the rebates claimable.
+2. Change the `FEE_HANDLER_ADDRESS` to the KyberFeeHandler contract address.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+const Web3 = require("web3");
+const BN = require("bn.js");
+const web3 = new Web3(
+  new Web3.providers.HttpProvider("https://ropsten.infura.io")
+);
+
+// Replace the addresses below
+const REBATE_WALLET_ADDRESS = "YOUR_WALLET_ADDRESS"; // Eg. "0x8640d5a5c11782ea9cc63833843a7b8f8911d568"
+const FEE_HANDLER_ADDRESS = "FEE_HANDLER_ADDRESS"; // Eg. "0xe57B2c3b4E44730805358131a6Fc244C57178Da7"
+
+const KyberFeeHandlerABI = [{"inputs":[{"internalType":"address","name":"_daoSetter","type":"address"},{"internalType":"contract IKyberProxy","name":"_kyberProxy","type":"address"},{"internalType":"address","name":"_kyberNetwork","type":"address"},{"internalType":"contract IERC20","name":"_knc","type":"address"},{"internalType":"uint256","name":"_burnBlockInterval","type":"uint256"},{"internalType":"address","name":"_daoOperator","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"rewardBps","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rebateBps","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"burnBps","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"expiryTimestamp","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"epoch","type":"uint256"}],"name":"BRRUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"contract ISanityRate","name":"sanityRate","type":"address"},{"indexed":false,"internalType":"uint256","name":"weiToBurn","type":"uint256"}],"name":"BurnConfigSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"EthReceived","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"platformWallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"platformFeeWei","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rewardWei","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rebateWei","type":"uint256"},{"indexed":false,"internalType":"address[]","name":"rebateWallets","type":"address[]"},{"indexed":false,"internalType":"uint256[]","name":"rebatePercentBpsPerWallet","type":"uint256[]"},{"indexed":false,"internalType":"uint256","name":"burnAmtWei","type":"uint256"}],"name":"FeeDistributed","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"kncTWei","type":"uint256"},{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"KncBurned","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"contract IKyberDao","name":"kyberDao","type":"address"}],"name":"KyberDaoAddressSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"kyberNetwork","type":"address"}],"name":"KyberNetworkUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"contract IKyberProxy","name":"kyberProxy","type":"address"}],"name":"KyberProxyUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"platformWallet","type":"address"},{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"PlatformFeePaid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"rebateWallet","type":"address"},{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RebatePaid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"staker","type":"address"},{"indexed":true,"internalType":"uint256","name":"epoch","type":"uint256"},{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RewardPaid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"epoch","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rewardsWei","type":"uint256"}],"name":"RewardsRemovedToBurn","type":"event"},{"inputs":[],"name":"brrAndEpochData","outputs":[{"internalType":"uint64","name":"expiryTimestamp","type":"uint64"},{"internalType":"uint32","name":"epoch","type":"uint32"},{"internalType":"uint16","name":"rewardBps","type":"uint16"},{"internalType":"uint16","name":"rebateBps","type":"uint16"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"burnBlockInterval","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"burnKnc","outputs":[{"internalType":"uint256","name":"kncBurnAmount","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"platformWallet","type":"address"}],"name":"claimPlatformFee","outputs":[{"internalType":"uint256","name":"amountWei","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"rebateWallet","type":"address"}],"name":"claimReserveRebate","outputs":[{"internalType":"uint256","name":"amountWei","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"staker","type":"address"},{"internalType":"uint256","name":"epoch","type":"uint256"}],"name":"claimStakerReward","outputs":[{"internalType":"uint256","name":"amountWei","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"daoOperator","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"daoSetter","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"feePerPlatformWallet","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getBRR","outputs":[{"internalType":"uint256","name":"rewardBps","type":"uint256"},{"internalType":"uint256","name":"rebateBps","type":"uint256"},{"internalType":"uint256","name":"epoch","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getLatestSanityRate","outputs":[{"internalType":"uint256","name":"kncToEthSanityRate","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSanityRateContracts","outputs":[{"internalType":"contract ISanityRate[]","name":"sanityRates","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"contract IERC20","name":"token","type":"address"},{"internalType":"address[]","name":"rebateWallets","type":"address[]"},{"internalType":"uint256[]","name":"rebateBpsPerWallet","type":"uint256[]"},{"internalType":"address","name":"platformWallet","type":"address"},{"internalType":"uint256","name":"platformFee","type":"uint256"},{"internalType":"uint256","name":"networkFee","type":"uint256"}],"name":"handleFees","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"hasClaimedReward","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"knc","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"kyberDao","outputs":[{"internalType":"contract IKyberDao","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"kyberNetwork","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"kyberProxy","outputs":[{"internalType":"contract IKyberProxy","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"lastBurnBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"epoch","type":"uint256"}],"name":"makeEpochRewardBurnable","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"readBRRData","outputs":[{"internalType":"uint256","name":"rewardBps","type":"uint256"},{"internalType":"uint256","name":"rebateBps","type":"uint256"},{"internalType":"uint256","name":"expiryTimestamp","type":"uint256"},{"internalType":"uint256","name":"epoch","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"rebatePerWallet","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"rewardsPaidPerEpoch","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"rewardsPerEpoch","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"contract ISanityRate","name":"_sanityRate","type":"address"},{"internalType":"uint256","name":"_weiToBurn","type":"uint256"}],"name":"setBurnConfigParams","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"contract IKyberDao","name":"_kyberDao","type":"address"}],"name":"setDaoContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"contract IKyberProxy","name":"_newProxy","type":"address"}],"name":"setKyberProxy","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_kyberNetwork","type":"address"}],"name":"setNetworkContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"totalPayoutBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"weiToBurn","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"stateMutability":"payable","type":"receive"}];
+
+async function main() {
+  KyberFeeHandlerContract = new web3.eth.Contract(
+    KyberFeeHandlerABI,
+    FEE_HANDLER_ADDRESS
+  );
+
+  let rebatesClaimable = await KyberFeeHandlerContract.methods.rebatePerWallet(REBATE_WALLET_ADDRESS).call();
+  rebatesClaimable = rebatesClaimable.sub(new BN(1));
+}
+
+main();
+```
+
+### Claiming Rebates
+
+#### Etherscan
+
+**Note:** This method requires your wallet address to be imported into Metamask. You will have to use other methods (Eg. MyCrypto / MyEtherWallet) otherwise.
+
+1. Navigate to the "Write Contract" tab of the Kyber Fee Handler contract in Etherscan. Example: https://ropsten.etherscan.io/address/0xe57B2c3b4E44730805358131a6Fc244C57178Da7#writeContract
+
+![Claim Rebates Step 1](/uploads/claimFees-1.jpg "Claim Rebates Step 1")
+
+2. Click on the "Connect to Web3" button.
+
+![Claim Rebates Step 2](/uploads/claimFees-2.jpg "Claim Rebates Step 2")
+
+3. Go to the `claimReserveRebate` function, input your rebate wallet address, then click on the "Write" button. Confirm the transaction details in Metamask.
+
+![Claim Rebates Step 3](/uploads/claimReserveRebate.jpg "Claim Rebates Step 3")
+
+#### Web3
+
+1. Change the `REBATE_WALLET_ADDRESS` to be the desired wallet address for which rebates can be claimed from.
+2. Change the `FEE_HANDLER_ADDRESS` to the KyberFeeHandler contract address.
+3. Change `SENDER_ADDRESS_PRIVATE_KEY` to the private key of an ETH address to send the transaction. This can be any wallet address (ie. does not necessarily have to be `REBATE_WALLET_ADDRESS`). Kindly ensure that this address **has sufficient funds** to send the transaction.
+
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+const Web3 = require("web3");
+var ethers = require("ethers");
+const BN = require("bn.js");
+const web3 = new Web3(
+  new Web3.providers.HttpProvider("https://mainnet.infura.io")
+);
+
+// Replace the addresses below
+const REBATE_WALLET_ADDRESS = "YOUR_WALLET_ADDRESS"; // Eg. "0x8640d5a5c11782ea9cc63833843a7b8f8911d568"
+const FEE_HANDLER_ADDRESS = "FEE_HANDLER_ADDRESS"; // Eg. "0xe57B2c3b4E44730805358131a6Fc244C57178Da7"
+const SENDER_ADDRESS_PRIVATE_KEY = "YOUR_SENDER_ADDRESS_PRIVATE_KEY";
+
+SENDER_ACCOUNT = web3.eth.accounts.privateKeyToAccount(
+  SENDER_ADDRESS_PRIVATE_KEY
+);
+
+const KyberFeeHandlerABI = [{"inputs":[{"internalType":"address","name":"_daoSetter","type":"address"},{"internalType":"contract IKyberProxy","name":"_kyberProxy","type":"address"},{"internalType":"address","name":"_kyberNetwork","type":"address"},{"internalType":"contract IERC20","name":"_knc","type":"address"},{"internalType":"uint256","name":"_burnBlockInterval","type":"uint256"},{"internalType":"address","name":"_daoOperator","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"rewardBps","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rebateBps","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"burnBps","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"expiryTimestamp","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"epoch","type":"uint256"}],"name":"BRRUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"contract ISanityRate","name":"sanityRate","type":"address"},{"indexed":false,"internalType":"uint256","name":"weiToBurn","type":"uint256"}],"name":"BurnConfigSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"EthReceived","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":true,"internalType":"address","name":"platformWallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"platformFeeWei","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rewardWei","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rebateWei","type":"uint256"},{"indexed":false,"internalType":"address[]","name":"rebateWallets","type":"address[]"},{"indexed":false,"internalType":"uint256[]","name":"rebatePercentBpsPerWallet","type":"uint256[]"},{"indexed":false,"internalType":"uint256","name":"burnAmtWei","type":"uint256"}],"name":"FeeDistributed","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"kncTWei","type":"uint256"},{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"KncBurned","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"contract IKyberDao","name":"kyberDao","type":"address"}],"name":"KyberDaoAddressSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"kyberNetwork","type":"address"}],"name":"KyberNetworkUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"contract IKyberProxy","name":"kyberProxy","type":"address"}],"name":"KyberProxyUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"platformWallet","type":"address"},{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"PlatformFeePaid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"rebateWallet","type":"address"},{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RebatePaid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"staker","type":"address"},{"indexed":true,"internalType":"uint256","name":"epoch","type":"uint256"},{"indexed":true,"internalType":"contract IERC20","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RewardPaid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"epoch","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rewardsWei","type":"uint256"}],"name":"RewardsRemovedToBurn","type":"event"},{"inputs":[],"name":"brrAndEpochData","outputs":[{"internalType":"uint64","name":"expiryTimestamp","type":"uint64"},{"internalType":"uint32","name":"epoch","type":"uint32"},{"internalType":"uint16","name":"rewardBps","type":"uint16"},{"internalType":"uint16","name":"rebateBps","type":"uint16"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"burnBlockInterval","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"burnKnc","outputs":[{"internalType":"uint256","name":"kncBurnAmount","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"platformWallet","type":"address"}],"name":"claimPlatformFee","outputs":[{"internalType":"uint256","name":"amountWei","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"rebateWallet","type":"address"}],"name":"claimReserveRebate","outputs":[{"internalType":"uint256","name":"amountWei","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"staker","type":"address"},{"internalType":"uint256","name":"epoch","type":"uint256"}],"name":"claimStakerReward","outputs":[{"internalType":"uint256","name":"amountWei","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"daoOperator","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"daoSetter","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"feePerPlatformWallet","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getBRR","outputs":[{"internalType":"uint256","name":"rewardBps","type":"uint256"},{"internalType":"uint256","name":"rebateBps","type":"uint256"},{"internalType":"uint256","name":"epoch","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getLatestSanityRate","outputs":[{"internalType":"uint256","name":"kncToEthSanityRate","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSanityRateContracts","outputs":[{"internalType":"contract ISanityRate[]","name":"sanityRates","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"contract IERC20","name":"token","type":"address"},{"internalType":"address[]","name":"rebateWallets","type":"address[]"},{"internalType":"uint256[]","name":"rebateBpsPerWallet","type":"uint256[]"},{"internalType":"address","name":"platformWallet","type":"address"},{"internalType":"uint256","name":"platformFee","type":"uint256"},{"internalType":"uint256","name":"networkFee","type":"uint256"}],"name":"handleFees","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"hasClaimedReward","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"knc","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"kyberDao","outputs":[{"internalType":"contract IKyberDao","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"kyberNetwork","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"kyberProxy","outputs":[{"internalType":"contract IKyberProxy","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"lastBurnBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"epoch","type":"uint256"}],"name":"makeEpochRewardBurnable","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"readBRRData","outputs":[{"internalType":"uint256","name":"rewardBps","type":"uint256"},{"internalType":"uint256","name":"rebateBps","type":"uint256"},{"internalType":"uint256","name":"expiryTimestamp","type":"uint256"},{"internalType":"uint256","name":"epoch","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"rebatePerWallet","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"rewardsPaidPerEpoch","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"rewardsPerEpoch","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"contract ISanityRate","name":"_sanityRate","type":"address"},{"internalType":"uint256","name":"_weiToBurn","type":"uint256"}],"name":"setBurnConfigParams","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"contract IKyberDao","name":"_kyberDao","type":"address"}],"name":"setDaoContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"contract IKyberProxy","name":"_newProxy","type":"address"}],"name":"setKyberProxy","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_kyberNetwork","type":"address"}],"name":"setNetworkContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"totalPayoutBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"weiToBurn","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"stateMutability":"payable","type":"receive"}];
+
+async function main() {
+  KyberFeeHandlerContract = new web3.eth.Contract(
+    KyberFeeHandlerABI,
+    FEE_HANDLER_ADDRESS
+  );
+
+  await broadcastTx(
+    KyberFeeHandlerContract.methods.claimReserveRebate(REBATE_WALLET_ADDRESS)
+  );
+}
+
+async function broadcastTx(txObject) {
+  const gasLimit = await txObject.estimateGas();
+  const gasPrice = new BN(50).mul(new BN(10).pow(new BN(9))); // 50 Gwei, change to your preferred gas price
+  const nonce = await web3.eth.getTransactionCount(SENDER_ACCOUNT.address);
+  const chainId = await web3.eth.net.getId();
+  const txTo = txObject._parent.options.address;
+  const txData = txObject.encodeABI();
+  const txFrom = SENDER_ACCOUNT.address;
+  const txKey = SENDER_ACCOUNT.privateKey;
+
+  const tx = {
+    from: txFrom,
+    to: txTo,
+    nonce: nonce,
+    data: txData,
+    gas: gasLimit,
+    chainId: chainId,
+    gasPrice: gasPrice
+  };
+
+  console.log(tx);
+  const signedTx = await web3.eth.accounts.signTransaction(tx, txKey);
+  txHash = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+}
+
+main();
+```

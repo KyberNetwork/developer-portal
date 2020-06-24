@@ -11,24 +11,24 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
-- Main endpoint for trades <br>
-- ``
+- Core contract for fetching rates and executing trades <br>
+- `TBD`
 
 ### `KyberStorage`
 - Obtain reserve IDs that support a token trade <br>
-- ``
+- `TBD`
 
 ### `KyberHintHandler (KyberMatchingEngine)`
 - Build / parse hints <br>
-- ``
+- `TBD`
 
 ### `KyberFeeHandler (ETH)`
 - Claim reserve rebates, platform fees and staker rewards <br>
-- ``
+- `TBD`
 
 ### `KyberNetwork`
 - Core network contract
-- ``
+- `TBD`
 
 ### `KyberReserve`
 `0x63825c174ab367968EC60f061753D3bbD36A0D8F`

@@ -3,13 +3,13 @@ id: Integrations-PlatformFees
 title: Platform Fees
 ---
 [//]: # (tagline)
-## What is this platform fee?
+## What is the platform fee?
 
 For each trade that originates from your DApp, wallet or payment gateway, you are able to specify a percentage that can taken as commission. It is collected in ETH (and stablecoins in the future).
 
 ## How do I specify the platform fee percentage and wallet address?
 
-The platform fee is defined in basis points (bps). 1 basis point = 0.01%. As an example, a platform fee of 25 basis points would thus mean 0.25% charged. The fee amount is calculated by `platformFeeBps * srcQty / 10000`. Kindly refer to the [example]() below. 
+The platform fee is defined in basis points (bps). 1 basis point = 0.01%. As an example, a platform fee of 25 basis points would mean 0.25% is to be charged. The fee amount is calculated by `platformFeeBps * srcQty / 10000`. Kindly refer to the [example](#example) below. 
 
 - If you are integrating via Kyber's API, check out [this guide]().
 - If you are directly interacting with Kyber's smart contracts, you will have to use the new APIs `getExpectedRateAfterFee` and `tradeWithHintAndFee` of the new proxy contract.
@@ -22,7 +22,7 @@ While there is no strict upper bound to the platform fee, there are checks in pl
 
 ## Do the fees go automatically to the fee wallet I specified?
 
-No. You will have to claim manually through the KyberFeeHandler contract(s).
+No. You will have to claim them manually through the KyberFeeHandler contract(s).
 
 ## How do I view the fee amount claimable?
 
@@ -32,9 +32,12 @@ Kindly refer to the example below.
 
 ## How do I claim fees?
 
-Call the `claimPlatformFee` method of the KyberFeeHandler contract(s), with your platform wallet address as the input.
+Call the `claimPlatformFee` method of the KyberFeeHandler contract(s).
 
 Kindly refer to the example below.
+
+## What about the fee sharing program prior to Katalyst?
+The Fee Sharing Program has been **deprecated**. The new APIs will have to be used in order to get commissions for trades.
 
 ## Example
 
@@ -51,15 +54,15 @@ Suppose a user has successfully made a KNC -> WBTC trade transaction of 10 ETH i
 
 1. Navigate to the "Read Contract" tab of the Kyber Fee Handler contract in Etherscan. Example: https://ropsten.etherscan.io/address/0xe57B2c3b4E44730805358131a6Fc244C57178Da7#readContract
 
-![GetPlatformFeesClaimable Step 1](/uploads/getFeesClaimable-1.jpg "GetPlatformFeesClaimable Step 1")
+![Get Platform Fees Step 1](/uploads/getFeesClaimable.jpg "Get Platform Fees Step 1")
 
 2. Go to the `feePerPlatformWallet` function, input your platform wallet address, then click on the "Query" button.
 
-![GetPlatformFeesClaimable Step 2](/uploads/getFeesClaimable-2.jpg "GetPlatformFeesClaimable Step 2")
+![Get Platform Fees Step 2](/uploads/getPlatformFees-1.jpg "Get Platform Fees Step 2")
 
 1. You should be able to see the amount claimable. This is in ETH wei. Note that you have to subtract this amount by 1 wei. Example: In the image below, the amount claimable is `50000000000000000 - 1` = 0.05 ETH - 1 ether wei. 
 
-![GetPlatformFeesClaimable Step 3](/uploads/getFeesClaimable-3.jpg "GetPlatformFeesClaimable Step 3")
+![Get Platform Fees Step 3](/uploads/getPlatformFees-2.jpg "Get Platform Fees Step 3")
 
 #### Web3
 
@@ -104,15 +107,15 @@ main();
 
 1. Navigate to the "Write Contract" tab of the Kyber Fee Handler contract in Etherscan. Example: https://ropsten.etherscan.io/address/0xe57B2c3b4E44730805358131a6Fc244C57178Da7#writeContract
 
-![Claim Fees Step 1](/uploads/claimFees-1.jpg "Claim Fees Step 1")
+![Claim Platform Fees Step 1](/uploads/claimFees-1.jpg "Claim Platform Fees Step 1")
 
 2. Click on the "Connect to Web3" button.
 
-![Claim Fees Step 2](/uploads/claimFees-2.jpg "Claim Fees Step 2")
+![Claim Platform Fees Step 2](/uploads/claimFees-2.jpg "Claim Platform Fees Step 2")
 
-3. Go to the `claimPlatformFee` function, enter your platform wallet address, then click on the "Write" button. Confirm the transaction details in Metamask.
+3. Go to the `claimPlatformFee` function, input your platform wallet address, then click on the "Write" button. Confirm the transaction details in Metamask.
 
-![Claim Fees Step 3](/uploads/claimFees-2.jpg "Claim Fees Step 3")
+![Claim Platform Fees Step 3](/uploads/claimPlatformFees.jpg "Claim Platform Fees Step 3")
 
 #### Web3
 

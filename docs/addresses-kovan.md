@@ -7,31 +7,30 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
-`0x692f391bCc85cefCe8C237C01e1f636BbD70EA4D`
+- Main endpoint for trades <br>
+- `TBD`
+
+### `KyberStorage`
+- Obtain reserve IDs that support a token trade <br>
+- `TBD`
+
+### `KyberHintHandler (KyberMatchingEngine)`
+- Build / parse hints <br>
+- `TBD`
+
+### `KyberFeeHandler (ETH)`
+- Claim reserve rebates, platform fees and staker rewards <br>
+- `TBD`
 
 ### `KyberNetwork`
-`0xb5034418f6cc1fd494535f2d38f770c9827f88a1`
-
-### `PermissionlessOrderbookReserveLister`
-`0x7dE123798f649c9937A75a0f6668E4d06bFf5993`
+- Core network contract
+- `TBD`
 
 ### `KyberReserve`
 `0x45460BD0f9a68b98Bf1f5c478B7584E057e32eF5`
 
 ### `ConversionRates`
 `0x6B2e614977F893baddf3AA704698BD71BEf9CeFF`
-
-### `ExpectedRate`
-`0xa7d021dCe210D05cD239D57e36b5758D3E0dC00B`
-
-### `FeeBurner`
-`0x4c54ce422ab6b725dfb4cb317f8347e364bd37d9`
-
-### `SanityRates`
-`0x152506cD5Ae485c65eC5551c77591fcE2A4bC482`
-
-### `WhiteList`
-`0x9C36F317849529b6DA5758f538467F326f8f62B7`
 
 ## Token Addresses
 ### `ETH (Ether)`

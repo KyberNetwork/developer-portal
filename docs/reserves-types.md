@@ -4,7 +4,9 @@ title: Reserve Types
 ---
 [//]: # (tagline)
 ## Introduction
-There are currently 2 different types of reserve that you can choose from, namely, the Fed Price Reserve and the Automated Price Reserve. The Orderbook Reserve is temporarily disabled as we will update it to be compatible with the Katalyst upgrade.
+There are currently 2 different reserve types that liquidity providers can choose for deployment and operate, namely, the Fed Price Reserve and the Automated Price Reserve. The Orderbook Reserve is temporarily disabled as we will update it to be compatible with the Katalyst upgrade.
+
+There are also other reserve types that serve various functions to the ecosystem.
 
 ## Fed Price Reserve (FPR)
 A Fed Price Reserve utilises an off-chain component (e.g. a script running on a server) that pulls price
@@ -22,22 +24,18 @@ As its name suggests, this fully on-chain reserve type allows anyone to provide 
 
 Deployment and operation of this reserve type has been temporarily halted, as we update it to be compatible with the Katalyst upgrade.
 
+## Bridge Reserves
+Bridge reserves pull liquidity from 3rd party sources that are shared by other DApps. Examples of this reserve type are OasisDEX and Uniswap.
+
+## Utility Reserves
+These reserves simply mints/burns tokens without any capital risk at any points, such as the WETH reserve. Kyber never intends to charge a fee on top of trades through these reserves, nor include their trade volume in reports or trackers.
+
+## Custom Reserves
+These reserves are generic and do not fall in the other categories. It it open to any innovative ways for liquidity provision to the network. For example, it may be a reserve that uses the price of other tokens to trade, such as the Promo Token (PT) reserve (a reserve that pegs PT price to DAI).
+
 ## Reserve Type Comparison
 ![Reserve Type](/uploads/reservetype.png "Reserve Type")
-
-## Permissionless vs Permissioned
-A reserve can be added to the network and have their tokens listed either by a network operator (Eg. someone from the Kyber team), or automatically by a smart contract (Eg. the PermissionlessOrderbookReserveLister contract). The former involves KYC and legal processes while the latter does not.
-
-In order to comply with regulatory requirements, services using the Kyber protocol implementation may choose to only use permissioned reserves, such as KyberSwap. The table below highlights what services are supported for both permissioned and permissionless reserves.
-
-| Area of Comparison | Permissioned | Permissionless |
-| ------------------ |:---------------------:|:---------------------:|
-| KYC requirement | Yes | No |
-| RESTful API | Yes | Yes |
-| KyberWidget | Yes | No |
-| Parties integrated through their own smart contracts | Yes | Yes by default |
 
 ## Setup Your Reserve
 - To learn more about the Fed Price Reserve, [click here](reserves-fedpricereserve.md).
 - To learn more about the Automated Price Reserve, [click here](reserves-automatedpricereserve.md).
-- To learn more about the Orderbook Reserve, [click here](reserves-orderbookreserve.md).
