@@ -29,7 +29,7 @@ The widget version to be used.
 | `network` | string | ETH network that widget will run in | `ropsten` | 1 of the following values:<br>`test`<br>`ropsten`<br>`production`<br>`mainnet`|
 | `paramForwarding` | boolean | If `true`, all params that were passed to the widget will be submitted via the `callback`. Can be used to prevent malicious behaviour by giving your customer a OTP secret token and validating it in the `callback` | - | - |
 |`commissionId` | address | Wallet address that to get fees from the trade. Read more about platform fees [here](integrations-platformfees.md) | - | `0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
-|`commissionFee` | uint256 | Platform fee to be charged (in basis points). Read more about platform fees [here](integrations-platformfees.md) | - | `25` (0.25%) |
+|`commissionFee` | integer | Platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md) | - | `25` (0.25%) |
 |`pinnedTokens` | string | Tokens that are pinned at the top of your token selector. Tokens are separated by an underscore. | `ETH_KNC_DAI` | `ETH_KNC_DAI` |
 |`defaultPair ` | string | This param only takes effect when type=swap, it indicates default token pair will show in swap layout. | `ETHKNC` | `ETHKNC` |
 | `signer` | string | Concatenated list of Ethereum addresses which the user must make the payment from, separated by underscore. | N.A | `0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20` |

@@ -689,7 +689,7 @@ Get sell rates for 300 and 150 KNC, and 10.1, 20 and 30 OMG.
 
 <br />
 
-### `/trade_data` (TO UPDATE)
+### `/trade_data`
 
 (GET) Returns the transaction payload for the user to sign and broadcast in order to trade or convert an asset pair from token A to token B.
 
@@ -699,14 +699,14 @@ Get sell rates for 300 and 150 KNC, and 10.1, 20 and 30 OMG.
 | `user_address` | string | Yes | The ETH address that will be executing the swap. |
 | `src_id` | string | Yes | The `id` represents the source token of the pair you want to trade. |
 | `dst_id` | string | Yes | The `id` represents the destination token of the pair you want to trade. |
-| `src_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` represents the source token. |
-| `min_dst_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` represents the destination token. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
+| `src_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the source token `id`. |
+| `min_dst_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the destination token `id`. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
 | `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
-| `wallet_id` | string | No | The wallet address that is registered for the [fee sharing program](integrations-feesharing.md). |
-| `wallet_fee` | string | No | The wallet fee in BPS that is shared to the wallet_id, only usable after Katalyst upgrade. |
-| `hint` | string | No | The trade hint, specifying the trade type, reserve IDs and splits, only usable after Katalyst upgrade. |
+| `wallet_id` | string | No | Wallet address that to get fees from the trade. Read more about platform fees [here](integrations-platformfees.md). |
+| `wallet_fee` | integer | No | Platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md). |
+| `hint` | string | No | The trade hint, specifying the trade type, reserve IDs and splits. Read more about building and parsing hints [here](). |
 | `nonce` | integer | No | Users can specify a nonce to override the default account nonce. |
-| `only_official_reserve` | bool | No | Deprecated |
+| `only_official_reserve` | bool | No | Deprecated. |
 
 ---
 
@@ -723,8 +723,10 @@ Get sell rates for 300 and 150 KNC, and 10.1, 20 and 30 OMG.
 
 #### Example
 
+User `0x8fa07f46353a2b17e92645592a94a0fc1ceb783f` to swap 0.05 ETH to KNC (minimally receive 5.5 KNC) at medium gas price, with a nonce of 200. 0.025% of the trade will be allocated to `0x0859A7958E254234FdC1d200b941fFdfCAb02fC1`.
+
 ```json
-> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1&nonce=200"
+> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.05&min_dst_qty=5.5&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1&wallet_fee=25&nonce=200"
 {
   "error":false,
   "data":[
