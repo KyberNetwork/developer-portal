@@ -382,9 +382,9 @@ Get the gas limit for exchanging 10000 DAI to OMG.
 | Parameter | Type | Required | Description |
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
 | `type` | string | Yes | Must be `e2t`, `t2e`, or `t2t`. |
-| `trade_type` | string | Yes | Must be `BestOfAll`, `MaskIn`, `MaskOut`, or `Split`. |
-| `reserveId` | string | ID of the reserve. |
-| `split` | string | Respective split for the reserveId. |
+| `trade_type` | string | Yes | Must be `bestofall`, `maskin`, `maskout`, or `split`. |
+| `reserve_id` | string | ID of the reserve. |
+| `split_value` | string | Respective split for the reserveId. |
 
 ---
 
@@ -404,7 +404,7 @@ Build a token to ETH split trade among 2 reserves:
 - Reserve `0xaa12aa56bbfff000000000000000000000000000000000000000000000000000`: 70%
 
 ```json
-> curl "/hint?type=t2e&trade_type=Split&reserveId=0xff1234567a334f7d000000000000000000000000000000000000000000000000&reserveId=0xaa12aa56bbfff000000000000000000000000000000000000000000000000000&split=3000&split=7000"
+> curl "/hint?type=t2e&trade_type=split&reserve_id=0xff1234567a334f7d000000000000000000000000000000000000000000000000&reserve_id=0xaa12aa56bbfff000000000000000000000000000000000000000000000000000&split_value=3000&split_value=7000"
 {
   "data": "0x0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000002aa12aa56bbfff000000000000000000000000000000000000000000000000000ff1234567a334f7d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000001b580000000000000000000000000000000000000000000000000000000000000bb8"
 }
@@ -591,7 +591,7 @@ Build a token to ETH split trade among 2 reserves:
 | Parameter | Type | Required | Description |
 |:--------------:|:-------:|:--------:|:------------------------------------------------------:|
 | `token` | string | Yes | Address of the asset. |
-| `type` | string | Yes | Accepts `buy` or `sell` as arguments. `buy` will return a list of reserves which support the ETH-Token pair, otherwise `sell` returns reserves which support the Token-ETH pair. |
+| `type` | string | Yes | Accepts `buy` or `sell` as arguments. `buy` will return a list of reserves which support the eth -> token pair, otherwise `sell` returns reserves which support the token -> eth pair. |
 
 ---
 
@@ -599,8 +599,20 @@ Build a token to ETH split trade among 2 reserves:
 | Parameter | Type | Description |
 |:----------:|:------:|:--------------------------------------------------------------------------------------------:|
 | `address` | string | The address of the asset in its native chain. |
-| `id` | string | A unique ID used by Kyber Network to identify between different symbols. |
-| `type` | bool | An integer describing the type of reserve, i.e. 1 = . |
+| `id` | string | Reserve ID. Refer to [this section](reserves-resIDs.md) for more information. |
+| `type` | integer | Reserve Type. Refer below. |
+| `rebate_wallet` | string | Reserve rebate wallet address |
+
+#### Reserve Types
+
+Refer to [this section](reserves-types.md) for more information on reserve types.
+
+- `1` = Fed Price Reserve (FPR)
+- `2` = Automated Price Reserve (APR)
+- `3` = Bridge Reserve (BRIDGE)
+- `4` = Utility Reserve (UTILITY)
+- `5` = Custom Reserve (CUSTOM)
+- `6` = Orderbook Reserve (ORDERBOOK)
 
 #### Example
 
@@ -609,17 +621,19 @@ Get list of reserves that support ETH -> KNC trades.
 ```json
 > curl "https://api.kyber.network/reserves?token=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&type=buy
 {
-  "data":[
+  "data": [
     {
-      "address": "0x43bC6b5fa717cf3d663C722F6520b39D24CD6AE1",
-      "id": "0xff53706561726f53000000000000000000000000000000000000000000000000",
-      "type":1
+      "address": "0x39C30B03799DB870e9C01747f68e24D2b38A30C9",
+      "id": "0xff00004b79626572000000000000000000000000000000000000000000000000",
+      "type": 1,
+      "rebate_wallet": "0xDd102CeDa27a2283dC85028f9bF7d022d8a640d2"
     },
     {
-      "address": "0x199570b965a446abf284731873dbbf6b09269338 ",
-      "id": "0xff53706561726f53000000000000000000000000000000000000000000000000",
-      "type":2
-    }
+      "address": "0xc4684f4FbfC3db0A24CFFe35821b12e55BeaEF7A",
+      "id": "0xaa4b4e4320415052000000000000000000000000000000000000000000000000",
+      "type": 2,
+      "rebate_wallet": "0x7de9bC2cDfa6B7Ee7088a4f5848A86A26Cd5aFD1"
+    },
     ...
   ]
 }
@@ -855,7 +869,7 @@ Find what tokens the wallet `0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F` has app
 
 ### `/users/:user_address/currencies/:currency_id/enable_data`
 
-(GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to sell as mentioned in #trading-getinfo.
+(GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to be sold.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
