@@ -54,13 +54,13 @@ Event is emitted when a trade is executed.
 ---
 
 event **ExecuteTrade**(address indexed trader, IERC20 src, IERC20 dest, address destAddress, uint256 actualSrcAmount, uint256 actualDestAmount, address platformWallet, uint256 platformFeeBps)
-| Parameter          | Type    | Indexed | Description                              |
-|:------------------:|:-------:|:-------:|:----------------------------------------:|
+| Parameter          | Type    | Indexed | Description                                        |
+|:------------------:|:-------:|:-------:|:--------------------------------------------------:|
 | `trader`           | address | YES     | trader's address                                   |
 | `src`              | IERC20  | NO      | source ERC20 token contract address                |
 | `dest`             | IERC20  | NO      | destination ERC20 token contract address           |
-| `destAddress`      | address | NO      | destination address for receiving `dest`           |
-| `actualSrcAmount`  | uint256 | NO      | source ERC20 token amount in token wei             |
+| `destAddress`      | address | NO      | destination address for receiving `dest` tokens    |
+| `actualSrcAmount`  | uint256 | NO      | `src` token wei amount                             |
 | `platformWallet`   | address | NO      | wallet address receiving trade fees                |
 | `platformFeeBps`   | uint256 | NO      | platform fee percentage (in basis points) of trade |
 
@@ -106,14 +106,14 @@ event **KyberTrade**(IERC20 indexed src, ERC20 indexed dest, uint256 ethWeiValue
 |:-------------:|:-------:|:-------:|:-----------------------------------------------------------:|
 | `src`         | ERC20     | YES     | source ERC20 token contract address                       |
 | `dest`        | ERC20     | YES     | destination ERC20 token contract address                  |
-| `ethWeiValue` | uint256   | NO      | Ether wei value of the trade                              |
-| `networkFeeWei` | uint256 | NO      | Network fee in ether wei                                  |
-| `customPlatformFeeWei` | uint256 | NO | Platform fee in ether wei                               |
-| `t2eIds`      | bytes32[] | NO      | Token to ether reserve IDs used for the trade             |
+| `ethWeiValue` | uint256   | NO      | ether wei value of the trade                              |
+| `networkFeeWei` | uint256 | NO      | network fee in ether wei                                  |
+| `customPlatformFeeWei` | uint256 | NO | platform fee in ether wei                               |
+| `t2eIds`      | bytes32[] | NO      | token -> ether reserve IDs used for the trade             |
 | `e2tIds`      | bytes32[] | NO      | Ether to token reserve IDs used for the trade             |
-| `t2eSrcAmounts` | uint256[] | NO    | Token to ether source amounts in source token wei         |
+| `t2eSrcAmounts` | uint256[] | NO    | token -> ether source amounts in source token wei         |
 | `e2tSrcAmounts` | uint256[] | NO    | Ether to token source amounts in destination token wei    |
-| `t2eRates`    | uint256[] | NO      | Token to ether rates used for the trade                   |
+| `t2eRates`    | uint256[] | NO      | token -> ether rates used for the trade                   |
 | `e2tRates`    | uint256[] | NO      | Ether to token rates used for the trade                   |
 
 Event Signature: `0xc6efb0df0b5d684cd6482e00270d068229ca5833634798e25f85b79eee5183f9`
@@ -292,8 +292,8 @@ event **KyberTrade**(address indexed trader, ERC20 src, ERC20 dest, uint srcAmou
 | `dstAmount`   | uint    | NO      | destination ERC20 token amount                              |
 | `destAddress` | ERC20   | NO      | recipient address for destination ERC20 token               |
 | `ethWeiValue` | uint    | NO      | Ether wei value of the trade                                |
-| `reserve1`    | address | NO      | address of reserve selected for source token to Ether trade |
-| `reserve2`    | address | NO      | address of reserve selected for source token to Ether trade |
+| `reserve1`    | address | NO      | address of reserve selected for source token -> ether trade |
+| `reserve2`    | address | NO      | address of reserve selected for source ether -> token trade |
 | `hint`        | bytes   | NO      | used to determine if permissionless reserves are to be used |
 
 Event Signature: `0xd30ca399cb43507ecec6a629a35cf45eb98cda550c27696dcb0d8c4a3873ce6c`
