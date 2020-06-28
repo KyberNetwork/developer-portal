@@ -8,8 +8,8 @@ title: Smart Contract
 This guide will walk you through on how you can interact with our protocol implementation at a smart contract level. The most common group of users that can benefit from this guide are Dapps.
 
 We break the guide into 2 sections:
-1. [Core](#core-section-fetching-rates-and-performing-trades) - The section covers what contract interfaces to import, and functions to call to fetch rates and perform a simple trade.
-2. [Advanced](#advaned-section-reserve-routing) - This section covers the reserve routing feature to include / exclude reserves, or to split trades amongst multiple reserves.
+1. [Trading Tokens](#trading-tokens) - The section covers what contract interfaces to import, and functions to call to fetch rates and perform a simple trade.
+2. [Reserve Routing](#reserve-routing) - This section covers the reserve routing feature to include / exclude reserves, or to split trades amongst multiple reserves.
 
 ## Risk Mitigation
 
@@ -26,10 +26,10 @@ There are some risks when utilising Kyber. To safeguard users, we kindly ask tha
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-let maxGasPrice = await KyberNetworkProxyContract.methods.maxGasPrice().call();
+let maxGasPrice = await KyberNetworkProxyContract.maxGasPrice();
 ```
 
-## Core Section: Fetching rates and performing trades
+## Trading Tokens
 
 ### File Import
 
@@ -118,7 +118,8 @@ Convert 1 ETH to KNC, specifying 0.25% platform fee.
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-uint256 actualDestAmount = kyberNetworkProxyContract.tradeWithHintAndFee(
+// Note: msg.value should be the srcQty if src == ETH, 0 otherwise
+uint256 actualDestAmount = kyberNetworkProxyContract.tradeWithHintAndFee{value: msg.value}(
     0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, // ETH address
     1000000000000000000, // 1 ETH
     0xdd974d5c2e2928dea5f71b9825b8b646686bd200, // KNC address
@@ -185,9 +186,7 @@ contract MyContract {
         address payable destAddress,
         uint256 maxDestAmount
     ) external payable {
-        if (srcToken == ETH_TOKEN_ADDRESS) {
-            require(srcQty == msg.value, "bad eth qty");
-        } else {
+        if (srcToken != ETH_TOKEN_ADDRESS) {
             // check that the token transferFrom has succeeded
             // we recommend using OpenZeppelin's SafeERC20 contract instead
             // NOTE: msg.sender must have called srcToken.approve(thisContractAddress, srcQty)
@@ -210,8 +209,8 @@ contract MyContract {
             '' // empty hint
         );
 
-        // Swap the ERC20 token and send to destAddress
-        kyberProxy.tradeWithHintAndFee(
+        // Execute the trade and send to destAddress
+        kyberProxy.tradeWithHintAndFee{value: msg.value}(
             srcToken,
             srcQty,
             destToken,
@@ -226,7 +225,7 @@ contract MyContract {
 }
 ```
 
-## Advaned Section: Reserve Routing
+## Reserve Routing
 
 ### Overview
 

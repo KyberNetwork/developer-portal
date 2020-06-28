@@ -20,8 +20,17 @@ We break this guide into 3 sections:
 
 ## Things to note
 
-1) If the source token is not ETH, the user is **first required** to call the [`/enabled_data`](api_abi-restfulapi.md) endpoint to give an allowance to the smart contract executing the trade.
-2) Refer to the [API overview](api_abi-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
+1. If the source token is not ETH (ie. an ERC20 token), the user is **first required** to call the [`/enabled_data`](api_abi-restfulapi.md) endpoint to give an allowance to the smart contract executing the trade.
+2. Refer to the [API overview](api_abi-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
+3. To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+let maxGasPrice = await KyberNetworkProxyContract.maxGasPrice();
+```
 
 ## Trading Tokens
 
@@ -29,7 +38,7 @@ Suppose we want to convert 100 KNC to DAI tokens on Ropsten, which is a token to
 
 ### Import Relevant Packages
 
-* We use `web3` for broadcasting transactions to the blockchain
+* We use `ethers` for connecting to the Ethereum blockchain
 * The `node-fetch` module is used for making API queries
 
 ```js
@@ -38,24 +47,23 @@ Suppose we want to convert 100 KNC to DAI tokens on Ropsten, which is a token to
 // https://t.me/KyberDeveloper.
 
 // Importing the relevant packages
-const Web3 = require("web3");
+const ethers = require('ethers');
 const fetch = require('node-fetch');
 ```
 
 ### Connect to an Ethereum node
 
-In this example, we will connect to Infura's ropsten node.
+`ethers` provides a very simple method `getDefaultProvider` to easily connect to the Ethereum blockchain. While not necessary, it is recommended to provide an API key for the various providers offered (Eg. Alchemy, Infura and Etherscan).
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-// Connecting to infura node
+// Connecting to a provider
 const NETWORK = "ropsten"
-const PROJECT_ID = "ENTER_PROJECT_ID" // Replace this with your own Project ID
-const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
-const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
+const PROJECT_ID = "INFURA_PROJECT_ID" // Replace this with your own Project ID
+const provider = new ethers.getDefaultProvider(NETWORK, {'infura': PROJECT_ID});
 ```
 
 ### Define Constants
@@ -80,11 +88,12 @@ Next, we will define the constants that we will be using for this guide. This in
 const NETWORK_URL = `https://${NETWORK == "main" ? "" : NETWORK + "-"}api.kyber.network`;
 
 // User Details
-const PRIVATE_KEY = "ENTER_YOUR_PRIVATE_KEY"; // Eg. 0x40ddbce3c7df9ab8d507d6b4af3861d224711b35299470ab7a217f780fe696cd
-const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount(PRIVATE_KEY).address;
+const PRIVATE_KEY = "PRIVATE_KEY"; // Eg. 0x40ddbce3c7df9ab8d507d6b4af3861d224711b35299470ab7a217f780fe696cd
+const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+const USER_ADDRESS = wallet.address;
 
 // Wallet Address for platform fees
-const PLATFORM_WALLET = "ENTER_YOUR_PLATFORM_WALLET"; // Eg. 0x483C5100C3E544Aef546f72dF4022c8934a6945E
+const PLATFORM_WALLET = "PLATFORM_WALLET"; // Eg. 0x483C5100C3E544Aef546f72dF4022c8934a6945E
 const PLATFORM_FEE = 25; // 0.25%
 
 // Token Addresses
@@ -96,22 +105,6 @@ const SRC_QTY = 100; // 100 KNC tokens to swap from
 
 // Gas amount affecting speed of tx
 const GAS_PRICE = "medium";
-```
-
-### Define Broadcast Tx Function
-
-We write a function for broadcasting transactions.
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-async function broadcastTx(tx) {
-  const signedTx = await web3.eth.accounts.signTransaction(tx, PRIVATE_KEY);
-  // don't wait for confirmation
-  web3.eth.sendSignedTransaction(signedTx.rawTransaction, {from: USER_ADDRESS});
-}
 ```
 
 ### Check Token Support
@@ -194,7 +187,7 @@ async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
     `${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`
     );
   let enableTokenDetails = await enableTokenDetailsRequest.json();
-  await broadcastTx(enableTokenDetails.data);
+  await wallet.sendTransaction(enableTokenDetails.data);
 }
 ```
 
@@ -239,7 +232,7 @@ async function executeTrade(userAddress, srcToken, destToken, srcQty, minDstQty,
     );
 
   let tradeDetails = await tradeDetailsRequest.json();
-  await broadcastTx(tradeDetails.data[0]);
+  await wallet.sendTransaction(tradeDetails.data[0]);
 }
 ```
 
@@ -254,7 +247,7 @@ The main function will combine the different functions together to obtain the co
 
 async function main() {
   // Step 1: If either token is not supported, quit
-  if (!await isTokenSupported(SRC_TOKEN_ADDRESS, 'sell') || !await isTokenSupported(DEST_TOKEN_ADDRESS, 'buy')) {
+  if (!await isTokenSupported(SRC_TOKEN_ADDRESS) || !await isTokenSupported(DEST_TOKEN_ADDRESS)) {
     // Quit the program
     process.exit(0);
   }
@@ -275,34 +268,30 @@ async function main() {
 
 ### Full Code Example
 Before running this code example, the following fields need to be modified:
-1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
-2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether.
-3. Change `ENTER_YOUR_PLATFORM_WALLET` to a wallet address for platform fees.
+1. Change `INFURA_PROJECT_ID` to your Infura Project ID.
+2. Change `PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether.
+3. Change `PLATFORM_WALLET` to a wallet address for platform fees.
 
 ```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const Web3 = require("web3");
+const ethers = require('ethers');
 const fetch = require('node-fetch');
 
-// Connecting to infura node
+// Connecting to a provider
 const NETWORK = "ropsten"
-const PROJECT_ID = "ENTER_PROJECT_ID" // Replace this with your own Project ID
-const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
-const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
+const PROJECT_ID = "INFURA_PROJECT_ID" // Replace this with your own Project ID
+const provider = new ethers.getDefaultProvider(NETWORK, {'infura': PROJECT_ID});
 
 // Base URL for API queries
 // Refer to API/ABI >> RESTFul API Overview >> Network URL section
 const NETWORK_URL = `https://${NETWORK == "main" ? "" : NETWORK + "-"}api.kyber.network`;
 
 // User Details
-const PRIVATE_KEY = "ENTER_YOUR_PRIVATE_KEY"; // Eg. 0x40ddbce3c7df9ab8d507d6b4af3861d224711b35299470ab7a217f780fe696cd
-const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount(PRIVATE_KEY).address;
+const PRIVATE_KEY = "PRIVATE_KEY"; // Eg. 0x40ddbce3c7df9ab8d507d6b4af3861d224711b35299470ab7a217f780fe696cd
+const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+const USER_ADDRESS = wallet.address;
 
 // Wallet Address for platform fees
-const PLATFORM_WALLET = "ENTER_YOUR_PLATFORM_WALLET"; // Eg. 0x483C5100C3E544Aef546f72dF4022c8934a6945E
+const PLATFORM_WALLET = "PLATFORM_WALLET"; // Eg. 0x483C5100C3E544Aef546f72dF4022c8934a6945E
 const PLATFORM_FEE = 25; // 0.25%
 
 // Token Addresses
@@ -392,7 +381,7 @@ async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
     `${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`
     );
   let enableTokenDetails = await enableTokenDetailsRequest.json();
-  await broadcastTx(enableTokenDetails.data);
+  await wallet.sendTransaction(enableTokenDetails.data);
 }
 
 async function getQuoteAmount(srcToken, destToken, srcQty) {
@@ -414,13 +403,7 @@ async function executeTrade(userAddress, srcToken, destToken, srcQty, minDstQty,
     );
 
   let tradeDetails = await tradeDetailsRequest.json();
-  await broadcastTx(tradeDetails.data[0]);
-}
-
-async function broadcastTx(tx) {
-  const signedTx = await web3.eth.accounts.signTransaction(tx, PRIVATE_KEY);
-  // don't wait for confirmation
-  web3.eth.sendSignedTransaction(signedTx.rawTransaction, {from: USER_ADDRESS});
+  await wallet.sendTransaction(tradeDetails.data[0]);
 }
 
 main();
