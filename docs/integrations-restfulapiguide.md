@@ -519,10 +519,10 @@ let tradeType = 'maskout';
 let hint = await fetch(`${NETWORK_URL}/hint?type=${type}&trade_type=${tradeType}&reserve_id${reserveId}`);
 ```
 
-Build a WBTC -> KNC hint with the following routes:
-- WBTC -> ETH: `Split` trade among 2 reserves:
+Build a KNC -> WBTC hint with the following routes:
+- KNC -> ETH: `Split` trade among 2 reserves:
   - 1st reserve trades 70%, 2nd reserves trades 30%
-- ETH -> KNC: `BestOfAll` trade
+- ETH -> WBTC: `BestOfAll` trade
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -531,8 +531,8 @@ Build a WBTC -> KNC hint with the following routes:
 
 const fetch = require('node-fetch');
 
-// Fetch reserves for WBTC -> ETH trade, select 2 reserves
-let token = '0x3dff0dce5fc4b367ec91d31de3837cf3840c8284'; // Ropsten WBTC address
+// Fetch reserves for KNC -> ETH trade, select 2 reserves
+let token = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
 let type = 'sell'; // token -> ether
 let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
 let reserveInfo = await reserveInfoRequest.json();

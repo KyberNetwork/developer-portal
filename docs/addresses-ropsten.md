@@ -11,24 +11,19 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
-- Main endpoint for trades <br>
-- `0xa16Fc6e9b5D359797999adA576F7f4a4d57E8F75`
+`0xd719c34261e099Fdb33030ac8909d5788D3039C4`
 
 ### `KyberStorage`
-- Obtain reserve IDs that support a token trade <br>
-- `0xa4eaD31a6c8e047E01cE1128E268c101AD391959`
+`0x688bf5EeC43E0799c5B9c1612F625F7b93FE5434`
 
 ### `KyberHintHandler (KyberMatchingEngine)`
-- Build / parse hints <br>
-- `0xeB4DBDEC268bC9818669E9926e62004317d84b54`
+`0x63f773c026093eEf988e803BdD5772DD235a8E71`
 
 ### `KyberFeeHandler (ETH)`
-- Claim reserve rebates, platform fees and staker rewards <br>
-- `0xe57B2c3b4E44730805358131a6Fc244C57178Da7`
+`0xfF456D9A8cbB5352eF77dEc2337bAC8dEC63bEAC`
 
 ### `KyberNetwork`
-- Core network contract
-- `0x9EC49C41Fdc4C79fDb042AF37659f2E3220ad0a4`
+`0x920B322D4B8BAB34fb6233646F5c87F87e79952b`
 
 ### `KyberReserve`
 `0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a`
