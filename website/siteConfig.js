@@ -89,7 +89,7 @@ const siteConfig = {
   // URL links on header
   headerLinks: [
     {
-      doc: 'Start',
+      doc: 'Katalyst-Intro',
       label: 'Home',
     },
     {
