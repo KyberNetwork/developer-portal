@@ -44,7 +44,7 @@ event __BRRUpdated__(uint256 rewardBps, uint256 rebateBps, uint256 burnBps, uint
 | Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
 | `rewardBps` | uint256 | reward settings in BPS |
-| `rebateBps` | uint256 |  settings in BPS |
+| `rebateBps` | uint256 | rebate settings in BPS |
 | `burnBps` | uint256 | burn settings in BPS |
 | `expiryTimestamp` | uint256 | timestamp when the settings will expire |
 | `epoch` | uint256 | epoch when the settings was set |
@@ -136,261 +136,109 @@ ___
 function __handleFees__(IERC20 token, address[] rebateWallets, uint256[] rebateBpsPerWallet, address platformWallet, uint256 platformFee, uint256 networkFee) external payable override onlyKyberNetwork nonReentrant
 | Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
-| `token` | contract IERC20 | //TODO:    |
-| `rebateWallets` | address[] | //TODO:    |
-| `rebateBpsPerWallet` | uint256[] | //TODO:    |
-| `platformWallet` | address | //TODO:    |
-| `platformFee` | uint256 | //TODO:    |
-| `networkFee` | uint256 | //TODO:    |
- 
-
-- `token`: Token currency of fees
-
-- `rebateWallets`: a list of rebate wallets that will get rebate for this trade.
-
-- `rebateBpsPerWallet`: percentage of rebate for each wallet, out of total rebate.
-
-- `platformWallet`: Wallet address that will receive the platfrom fee.
-
-- `platformFee`: Fee amount (in wei) the platfrom wallet is entitled to.
-
-- `networkFee`: Fee amount (in wei) to be allocated for BRR
- 
-
----
+| `token` | IERC20 | ERC20 token address  |
+| `rebateWallets` | address[] | list of rebate wallets that will get rebate for this trade    |
+| `rebateBpsPerWallet` | uint256[] | percentage of rebate for each wallet address out of total rebate   |
+| `platformWallet` | address | wallet address receiving the platform fee   |
+| `platformFee` | uint256 | fee amount in wei the platfrom wallet is entitled to    |
+| `networkFee` | uint256 | fee amount in wei to be allocated for BRR    |
 
 <br />
  
 ### `claimStakerReward`
-//TODO: not revert if already claimed or reward percentage is 0
-allow writing a wrapper to claim for multiple epochs
-
+Claim the staking rewards from KyberFeeHandler.
 ___
 function __claimStakerReward__(address staker, uint256 epoch) external returns (uint256 amountWei)
 | Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
-| `staker` | address | //TODO:    |
-| `epoch` | uint256 | //TODO:    |
- 
-
-- `staker`: address.
-
-- `epoch`: for which epoch the staker is claiming the reward
+| `staker`  | address | staker's address                              |
+| `epoch`   | uin256  | which epoch is the staker claiming the reward |
 **Returns:**\
-uint256 amountWei
- 
-
----
+amountWei - The staking reward amount claimed in wei.
 
 <br />
  
 ### `claimReserveRebate`
-//TODO: claim rebate per reserve wallet. called by any address
-
+Claim the rebates for the rebate wallet from KyberFeeHandler.
 ___
 function __claimReserveRebate__(address rebateWallet) external returns (uint256 amountWei)
 | Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
-| `rebateWallet` | address | //TODO:    |
- 
-
-- `rebateWallet`: the wallet to claim rebates for. Total accumulated rebate sent to this wallet.
-
+| `rebateWallet` | address | address receiving the rebate |
 **Returns:**\
-uint256 amountWei
-- amountWei amount of rebate claimed
- 
-
----
+amountWei - The rebate amount claimed in wei.
 
 <br />
  
 ### `claimPlatformFee`
-//TODO: claim accumulated fee per platform wallet. Called by any address
-
+Claim the platform fees for the platform wallet from KyberFeeHandler.
 ___
 function __claimPlatformFee__(address platformWallet) external returns (uint256 amountWei)
 | Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
-| `platformWallet` | address | //TODO:    |
- 
-
-- `platformWallet`: the wallet to claim fee for. Total accumulated fee sent to this wallet.
-
+| `platformWallet` | address | address receiving the platform fee |
 **Returns:**\
-uint256 amountWei
-- amountWei amount of fee claimed
- 
-
----
-
-<br />
- 
-### `setDaoContract`
-//TODO: set kyberDao contract address once and set setter address to zero.
-
-___
-function __setDaoContract__(contract IKyberDao _kyberDao) external
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
-| `_kyberDao` | contract IKyberDao | //TODO:    |
- 
-
-- `_kyberDao`: kyberDao address.
- 
-
----
-
-<br />
- 
-### `setNetworkContract`
-//TODO: set new kyberNetwork address by daoOperator
-
-___
-function __setNetworkContract__(address _kyberNetwork) external
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
-| `_kyberNetwork` | address | //TODO:    |
- 
-
-- `_kyberNetwork`: new kyberNetwork contract
- 
-
----
-
-<br />
- 
-### `setKyberProxy`
-//TODO: Allow to set kyberNetworkProxy address by daoOperator
-
-___
-function __setKyberProxy__(contract IKyberProxy _newProxy) external
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
-| `_newProxy` | contract IKyberProxy | //TODO:    |
- 
-
-- `_newProxy`: new kyberNetworkProxy contract
- 
-
----
-
-<br />
- 
-### `setBurnConfigParams`
-//TODO: set knc sanity rate contract and amount wei to burn
-
-___
-function __setBurnConfigParams__(contract ISanityRate _sanityRate, uint256 _weiToBurn) external
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
-| `_sanityRate` | contract ISanityRate | //TODO:    |
-| `_weiToBurn` | uint256 | //TODO:    |
- 
-
-- `_sanityRate`: new sanity rate contract
-
-- `_weiToBurn`: new amount of wei to burn
- 
-
----
+amountWei - The platform fee amount claimed in wei.
 
 <br />
  
 ### `burnKnc`
-//TODO: Burn knc. The burn amount is limited. Forces block delay between burn calls.
-only none ontract can call this function
-
+Burns KNC. The burn amount is limited. Forces block delay between burn calls.
+only externall owned accounts can call this function.
 ___
-function __burnKnc__() external returns (uint256 kncBurnAmount)
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
- 
-
+function __burnKnc__() external onlyNonContract returns (uint256 kncBurnAmount)
 **Returns:**\
-uint256 kncBurnAmount
-- kncBurnAmount amount of knc burned
- 
-
----
+kncBurnAmount - Amount of knc burned
 
 <br />
  
 ### `makeEpochRewardBurnable`
-//TODO: if no one voted for an epoch (like epoch 0), no one gets rewards - should burn it.
-Will move the epoch reward amount to burn amount. So can later be burned.
-calls kyberDao contract to check if there were any votes for this epoch.
-
+If no one voted for an epoch, no one will receive rewards, and the rewards instead will be marked for burning.
 ___
 function __makeEpochRewardBurnable__(uint256 epoch) external
 | Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
-| `epoch` | uint256 | //TODO:    |
- 
-
-- `epoch`: epoch number to check.
- 
-
----
+| `epoch` | uint256 | epoch number to check   |
 
 <br />
  
 ### `getSanityRateContracts`
-//TODO: returns list of sanity rate contracts
-index 0 is currently used contract address, indexes > 0 are older versions
+Returns a list of sanity rate contracts, where index 0 is the currently used contract address, and indexes > 0 are older versions.
 ___
-function __getSanityRateContracts__() external returns (contract ISanityRate[] sanityRates)
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
- 
-
+function __getSanityRateContracts__() external view returns (ISanityRate[] sanityRates)
 **Returns:**\
-contract ISanityRate[] sanityRates
- 
-
----
+sanityRates - SanityRates contract address
 
 <br />
  
 ### `getLatestSanityRate`
-//TODO: return latest knc/eth rate from sanity rate contract
+Return latest KNC/ETH rate from the SanityRates contract.
 ___
-function __getLatestSanityRate__() external returns (uint256 kncToEthSanityRate)
+function __getLatestSanityRate__() external view returns (uint256 kncToEthSanityRate)
 | Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
- 
-
 **Returns:**\
-uint256 kncToEthSanityRate
- 
-
----
+kncToEthSanityRate - the KNC/ETH rate from SanityRates
 
 <br />
  
 ### `getBRR`
-//TODO: 
+Gets the Burn, Rewards, Rebates values from the KyberDao and updates the FeeHandler BRR data. The burnBps value can be extrapolated since the rewardBps and rebateBps is known and the total BPS is 10000.
 ___
 function __getBRR__() public returns (uint256 rewardBps, uint256 rebateBps, uint256 epoch)
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
- 
-
 **Returns:**\
-uint256 rewardBps, uint256 rebateBps, uint256 epoch
- 
-
----
+rewardBps - reward settings in BPS
+rebateBps - rebate settings in BPS
+epoch - epoch when the settings was set
 
 <br />
  
 ### `readBRRData`
-//TODO: 
+Returns the the Burn, Rewards, Rebates values in BPS. The burnBps value can be extrapolated since the rewardBps and rebateBps is known and the total BPS is 10000.
 ___
-function __readBRRData__() public returns (uint256 rewardBps, uint256 rebateBps, uint256 expiryTimestamp, uint256 epoch)
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
- 
-
+function __readBRRData__() public view returns (uint256 rewardBps, uint256 rebateBps, uint256 expiryTimestamp, uint256 epoch)
 **Returns:**\
-uint256 rewardBps, uint256 rebateBps, uint256 expiryTimestamp, uint256 epoch
+rewardBps, uint256 rebateBps, uint256 expiryTimestamp, uint256 epoch
+rewardBps - reward settings in BPS
+rebateBps - rebate settings in BPS
+expiryTimestamp - expiry timestamp in epoch time
+epoch - epoch when the settings was set
