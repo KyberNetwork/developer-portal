@@ -9,7 +9,7 @@ We give a brief summary on the technical changes regarding the Katalyst upgrade 
 
 ## Backwards Compatibility
 
-The Katalyst upgrade is **backwards-compatibile** with the previous network proxy contract. Existing implementations of `getExpectedRate()`, `trade()`, `tradeWithHint()`, etc. should not be affected by this upgrade, and should work normally.
+The Katalyst upgrade is **backwards-compatible** with the previous network proxy contract. Existing implementations of `getExpectedRate()`, `trade()`, `tradeWithHint()`, etc. should not be affected by this upgrade, and should work normally.
 
 ### Current Proxy
 
