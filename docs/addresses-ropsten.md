@@ -20,7 +20,7 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ### `KyberHintHandler (KyberMatchingEngine)`
 - Build / parse hints <br>
-- `0x313f35c11050BDd0578b801e5b5CF35D0779E7a8`
+- `0xeB4DBDEC268bC9818669E9926e62004317d84b54`
 
 ### `KyberFeeHandler (ETH)`
 - Claim reserve rebates, platform fees and staker rewards <br>

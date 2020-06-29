@@ -20,7 +20,7 @@
     "Guides": [
       "Integrations-IntegrationTypes",
       "Integrations-SmartContractGuide",
-      "Integrations-Web3Guide",
+      "Integrations-EthersGuide",
       "Integrations-RESTfulAPIGuide"
     ],
     "Widgets & Plugins": [

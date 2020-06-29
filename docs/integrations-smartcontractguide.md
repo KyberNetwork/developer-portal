@@ -18,7 +18,7 @@ There are some risks when utilising Kyber. To safeguard users, we kindly ask tha
 ## Things To Note
 
 1. If possible, minimise the use of `msg.sender` within your smart contract. If you were to call a function within the wrapper contract, `msg.sender` [is the wrapper contract address](https://ethereum.stackexchange.com/questions/28972/who-is-msg-sender-when-calling-a-contract-from-a-contract) instead of your wallet address.
-2. When converting from Token to ETH/Token, the user is required to **first call the `approve` function** to give an allowance to the smart contract executing the `transferFrom` function.
+2. If the source token is not ETH (ie. an ERC20 token), the user is required to **first call the ERC20 `approve` function** to give an allowance to the smart contract executing the `transferFrom` function.
 3. To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
 
 ```js
@@ -241,7 +241,7 @@ For token -> token trades, you can specify a routing rule for each half. For exa
 
 ### Recommendation
 
-We strongly recommend for the building of hints to be performed off-chain to save gas costs, and we have not discovered a use case for it to be done on-chain yet. You can do so via [web3]() or the [`/hint` RESTful API](). Nevertheless, this guide explains how you may do the building of hints on-chain.
+We strongly recommend for the building of hints to be performed off-chain to save gas costs, and we have not discovered a use case for it to be done on-chain yet. You can do so using [ethers]() or the [`/hint` RESTful API](integrations-restfulapiguide.md#building-hints). Nevertheless, this guide explains how you may do the building of hints on-chain.
 
 ### File Import
 

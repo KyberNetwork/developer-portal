@@ -59,7 +59,7 @@ Suppose a user has successfully made a KNC -> WBTC trade transaction of 10 ETH i
 
 ![Get Platform Fees Step 3](/uploads/getPlatformFees-2.jpg "Get Platform Fees Step 3")
 
-#### ethers.js (Web3)
+#### ethers.js
 
 1. Change `PLATFORM_WALLET_ADDRESS` to be the desired wallet address for which you would like to check the fees claimable.
 2. Change `FEE_HANDLER_ADDRESS` to the KyberFeeHandler contract address.
@@ -114,7 +114,7 @@ main();
 
 ![Claim Platform Fees Step 3](/uploads/claimPlatformFees.jpg "Claim Platform Fees Step 3")
 
-#### ethers.js (Web3)
+#### ethers.js
 
 1. Change `PLATFORM_WALLET_ADDRESS` to be the desired wallet address for which fees can be claimed from.
 2. Change `FEE_HANDLER_ADDRESS` to the KyberFeeHandler contract address.

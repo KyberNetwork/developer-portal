@@ -14,4 +14,4 @@ Popular wallets like MyEtherWallet, imToken and EnjinWallet are already using Ky
 Wallets also have the opportunity to incorporate their own commission fee into each swap originating from them. Learn more about platform fees [here](integrations-platformfees.md)! 
 
 ## Integrate Your Wallet
-The common methods existing vendors use to integrate with our protocol implementation are through **Web3** and  **RESTful API**. Explore the [Web3](integrations-web3guide.md) and [RESTful API](integrations-restfulapiguide.md) guides to learn more!
+The common methods existing vendors use to integrate with our protocol implementation are through the **ethers.js** or web3.js libraries, and  **RESTful API**. Explore the [ethers.js](integrations-ethersguide.md) and [RESTful API](integrations-restfulapiguide.md) guides to learn more!

@@ -14,4 +14,4 @@ With Kyber, financial DApps like ETHLend allows instant liquidation of assets in
 DApps also have the opportunity to incorporate a own commission fee into trades. Learn more about platform fees [here](integrations-platformfees.md)!
 
 ## Integrate Your DApp
-The common methods existing DApps use to integrate with our protocol implementation are through their own **smart contracts** and **Web3**. Explore the [smart contract](integrations-smartcontractguide.md) and [Web3](integrations-web3guide.md) guides to learn more!
+The common methods existing DApps use to integrate with our protocol implementation are through their own **smart contracts** and the **ethers.js** or web3.js libraries. Explore the [smart contract](integrations-smartcontractguide.md) and [ethers.js](integrations-ethersguide.md) guides to learn more!

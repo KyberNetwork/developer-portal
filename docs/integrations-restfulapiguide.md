@@ -36,6 +36,8 @@ let maxGasPrice = await KyberNetworkProxyContract.maxGasPrice();
 
 Suppose we want to convert 100 KNC to DAI tokens on Ropsten, which is a token to token conversion. In addition, we want to charge a platform fee of 0.25%. Note that ETH is used as the base pair i.e. KNC -> ETH -> DAI.
 
+The code example will also work for token -> ether and ether -> token conversions, by using `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` as the token address for ETH.
+
 ### Import Relevant Packages
 
 * We use `ethers` for connecting to the Ethereum blockchain
@@ -51,7 +53,7 @@ const ethers = require('ethers');
 const fetch = require('node-fetch');
 ```
 
-### Connect to an Ethereum node
+### Connect to an Ethereum Node
 
 `ethers` provides a very simple method `getDefaultProvider` to easily connect to the Ethereum blockchain. While not necessary, it is recommended to provide an API key for the various providers offered (Eg. Alchemy, Infura and Etherscan).
 
@@ -150,7 +152,7 @@ If the source token is not enabled for trading, querying the `users/<user_addres
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
+async function checkAndApproveTokenForTrade(tokenAddress, userAddress, gasPrice) {
   let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);      
   let enabledStatuses = await enabledStatusesRequest.json();
   let txsRequired = 0;
@@ -253,7 +255,7 @@ async function main() {
   }
 
   // Step 2: Check if KNC token is enabled. If not, enable.
-  await checkAndApproveTokenContract(SRC_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
+  await checkAndApproveTokenForTrade(SRC_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
 
   // Step 3: Get expected DAI qty from selling 100 KNC tokens
   let minDstQty = await getQuoteAmount(SRC_TOKEN_ADDRESS, DEST_TOKEN_ADDRESS, SRC_QTY);
@@ -269,7 +271,7 @@ async function main() {
 ### Full Code Example
 Before running this code example, the following fields need to be modified:
 1. Change `INFURA_PROJECT_ID` to your Infura Project ID.
-2. Change `PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether.
+2. Change `PRIVATE_KEY` to the private key (with `0x` prefix) of the Ethereum wallet holding Ether.
 3. Change `PLATFORM_WALLET` to a wallet address for platform fees.
 
 ```js
@@ -294,7 +296,7 @@ const USER_ADDRESS = wallet.address;
 const PLATFORM_WALLET = "PLATFORM_WALLET"; // Eg. 0x483C5100C3E544Aef546f72dF4022c8934a6945E
 const PLATFORM_FEE = 25; // 0.25%
 
-// Token Addresses
+// Token Addresses: Use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH
 const SRC_TOKEN_ADDRESS = "0x7b2810576aa1cce68f2b118cef1f36467c648f92"; // Ropsten KNC token address
 const DEST_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; // Ropsten DAI token address
 
@@ -312,7 +314,7 @@ async function main() {
   }
 
   // Step 2: Check if KNC token is enabled. If not, enable.
-  await checkAndApproveTokenContract(SRC_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
+  await checkAndApproveTokenForTrade(SRC_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
 
   // Step 3: Get expected DAI qty from selling 100 KNC tokens
   let minDstQty = await getQuoteAmount(SRC_TOKEN_ADDRESS, DEST_TOKEN_ADDRESS, SRC_QTY);
@@ -344,7 +346,7 @@ function caseInsensitiveEquals(a, b) {
     a === b;
 }
 
-async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
+async function checkAndApproveTokenForTrade(tokenAddress, userAddress, gasPrice) {
   let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);      
   let enabledStatuses = await enabledStatusesRequest.json();
   let txsRequired = 0;
