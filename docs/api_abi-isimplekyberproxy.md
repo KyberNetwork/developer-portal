@@ -17,8 +17,8 @@ ___
 
 ### Functions
 
-### `swapEtherToToken`
-Execute a simple ETH -> ERC20 token trade
+### `swapTokenToEther`
+Execute a simple ETH -> ERC20 token trade.
 ___
 function __swapTokenToEther__(IERC20 token, uint256 srcAmount, uint256 minConversionRate) external returns (uint256 destAmount)
 | Parameter           | Type    | Description                                                         |
@@ -27,12 +27,12 @@ function __swapTokenToEther__(IERC20 token, uint256 srcAmount, uint256 minConver
 | `srcAmount`         | uint256 | source ERC20 token amount in its token decimals                     |
 | `minConversionRate` | uint256 | minimum conversion rate; trade is canceled if actual rate is lower |
 **Returns:**\
-destAmount - Amount of actual destination tokens
+destAmount - Amount of actual destination ETH wei
 
 <br />
 
-### `swapTokenToEther`
-Execute a simple ERC20 token -> ETH trade
+### `swapEtherToToken`
+Execute a simple ERC20 token -> ETH trade.
 ___
 function __swapEtherToToken__(IERC20 token, uint256 minConversionRate) external returns (uint256 destAmount)
 | Parameter           | Type    | Description                                   |
@@ -40,12 +40,12 @@ function __swapEtherToToken__(IERC20 token, uint256 minConversionRate) external 
 | `token`               | IERC20   | destination ERC20 token contract address                                  |
 | `minConversionRate` | uint256    | minimum conversion rate; trade is canceled if actual rate is lower |
 **Returns:**\
-destAmount - Amount of actual ETH wei
+destAmount - Amount of actual destination tokens in twei
 
 <br />
 
 ### `swapTokenToToken`
-Makes a simple ERC20 -> ERC20 token trade
+Makes a simple ERC20 -> ERC20 token trade.
 ___
 function __swapTokenToToken__(IERC20 src, uint256 srcAmount, IERC20 dest, uint256 minConversionRate) external returns (uint256 destAmount)
 | Parameter           | Type    | Description                                   |
@@ -55,4 +55,4 @@ function __swapTokenToToken__(IERC20 src, uint256 srcAmount, IERC20 dest, uint25
 | `dest`              | IERC20   | destination ERC20 token contract address                             |
 | `minConversionRate` | uint256    | minimum conversion rate;  trade is canceled if actual rate is lower |
 **Returns:**\
-destAmount - Amount of actual destination tokens
+destAmount - Amount of actual destination tokens in twei
