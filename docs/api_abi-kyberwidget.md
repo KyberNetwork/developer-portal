@@ -14,8 +14,8 @@ The KyberWidget can be implemented via HTML/JS. There is a [widget generator](in
 #### Path
 The widget version to be used.
 #### Examples
-`v0.3/?`<br>
-`v0.6/?`
+`v0.6.5/?`<br>
+`v0.8.0/?`
 
 #### Path Parameters
 | Parameter  | Type | Description   | Default | Example |
@@ -58,17 +58,17 @@ Test out the links below by copying, pasting and opening them in a new tab!
 
 #### Pay Mode with Multiple Products
 ```
-https://widget.kyber.network/v0.6/?type=pay&mode=tab&receiveAddr=0x63B42a7662538A1dA732488c252433313396eade&receiveToken=KNC&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&receiveAmount=0.5&theme=theme-emerald&productName=A%20Cat%20Picture&productQty=7&productImage=https://images.unsplash.com/photo-1518791841217-8f162f1e1131&productName=Falling%20Autumn%20Leaves&productQty=24&productImage=https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/fabdf38b-1811-49e8-8eeb-4c5632076c3e/dczgthc-076fcdf7-4932-4672-8d94-f3b6ed07d100.png&commissionId=0x90A21dbB74D7684B7AF747963D7ac7A8086b82B6
+https://widget.kyber.network/v0.8.0/?type=pay&mode=tab&receiveAddr=0x63B42a7662538A1dA732488c252433313396eade&receiveToken=KNC&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&receiveAmount=50&theme=theme-emerald&productName=A%20Cat%20Picture&productQty=7&productImage=https://images.unsplash.com/photo-1518791841217-8f162f1e1131&productName=Falling%20Autumn%20Leaves&productQty=24&productImage=https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/fabdf38b-1811-49e8-8eeb-4c5632076c3e/dczgthc-076fcdf7-4932-4672-8d94-f3b6ed07d100.png&commissionId=0x90A21dbB74D7684B7AF747963D7ac7A8086b82B6&commissionFee=25
 ```
 
 #### Swap Mode with Sunset Theme
 ```
-https://widget.kyber.network/v0.6/?type=swap&mode=tab&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-sunset
+https://widget.kyber.network/v0.8.0/?type=swap&mode=tab&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-sunset
 ```
 
 #### Buy Mode
 ```
-https://widget.kyber.network/v0.6/?type=buy&mode=tab&receiveToken=ETH&receiveAmount=0.001&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-emerald`
+https://widget.kyber.network/v0.8.0/?type=buy&mode=tab&receiveToken=ETH&receiveAmount=0.1&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-emerald`
 ```
 
 ### FAQ
