@@ -71,7 +71,8 @@ function paymentStatus(txhash, expectedPayment) -> return status {
     case failed:
       return "failed"
     case success:
-      // TODO
+      // insert success logic
+      return "success"
     case not_found:
       if time.Now() - startTime > 15 mins {
         // if the txhash is not found for more than 15 mins
