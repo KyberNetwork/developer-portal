@@ -50,7 +50,7 @@ Maintainers are entities within the ecosystem that have access to the functions 
 ## Exchange Overview
 The liquidity network allows takers to convert one type of token (e.g. KNC) and receive a different token in return (e.g. DAI) according to the best rates provided by the reserves. The entire process happens in a single atomic transaction, so we can be assured that there is no partial execution of a trade. A conversion between KNC to DAI is depicted in the diagram below:
 
-![KNC to DAI](/uploads/knctodai.png "KNC to DAI")
+![KNC to DAI](/uploads/tradeSequence.png "KNC to DAI")
 
 * A taker (e.g. end user wallets, smart contracts, trading bots) initiates the trade function from `KyberNetworkProxy.sol`.
 * `KyberNetworkProxy.sol` forwards the trade request to `KyberNetwork.sol`.
