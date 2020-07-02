@@ -441,12 +441,17 @@ Get reserves information for a WBTC -> ETH trade.
 // https://t.me/KyberDeveloper.
 
 const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
 
-let token = '0x3dff0dce5fc4b367ec91d31de3837cf3840c8284'; // Ropsten WBTC address
-let type = 'sell'; // token -> ether
+async function fetchReservesInformation() {
+  let token = '0x3dff0dce5fc4b367ec91d31de3837cf3840c8284'; // Ropsten WBTC address
+  let type = 'sell'; // token -> ether
 
-let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
-let reserveInfo = await reserveInfoRequest.json();
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
+  let reserveInfo = (await reserveInfoRequest.json()).data;
+}
+
+await fetchReservesInformation();
 ```
 
 Get reserves information for a ETH -> KNC trade.
@@ -457,19 +462,24 @@ Get reserves information for a ETH -> KNC trade.
 // https://t.me/KyberDeveloper.
 
 const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
 
-let token = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
-let type = 'buy'; // ether -> token
+async function fetchReservesInformation() {
+  let token = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
+  let type = 'buy'; // ether -> token
 
-let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
-let reserveInfo = await reserveInfoRequest.json();
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
+  let reserveInfo = (await reserveInfoRequest.json()).data;
+}
+
+await fetchReservesInformation();
 ```
 
 ### Building Hints
 
 Querying the `/hint` endpoint will return data needed for the `hint` input parameter for the `/trade_data` endpoint. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#hint).
 
-#### Examples (TODO)
+#### Examples
 
 Build a KNC -> ETH `MaskIn` hint selecting the first reserve.
 
@@ -479,20 +489,26 @@ Build a KNC -> ETH `MaskIn` hint selecting the first reserve.
 // https://t.me/KyberDeveloper.
 
 const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
 
-// Fetch reserves for KNC -> ETH trade, select the first reserve
-let token = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
-let type = 'sell'; // token -> ether
-let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
-let reserveInfo = await reserveInfoRequest.json();
-// Choose first reserve
-let reserveId = reserveInfo.data[0].id;
+async function buildHint() {
+  // Fetch reserves for KNC -> ETH trade, select the first reserve
+  let srcToken = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
+  let type = 'sell'; // token -> ether
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${srcToken}&type=${type}`);
+  let reserveInfo = await reserveInfoRequest.json();
+  // Choose first reserve
+  let reserveId = reserveInfo.data[0].id;
 
-// Other /hint endpoint parameters
-type = 't2e'; // token -> ether
-let tradeType = 'maskin';
+  // Other /hint endpoint parameters
+  type = 't2e'; // token -> ether
+  let tradeType = 'maskin';
 
-let hint = await fetch(`${NETWORK_URL}/hint?type=${type}&trade_type=${tradeType}&reserve_id${reserveId}`);
+  let hintRequest = await fetch(`${NETWORK_URL}/hint?type=${type}&token_src=${srcToken}&trade_type=${tradeType}&reserve_id=${reserveId}`);
+  let hint = (await hintRequest.json()).data;
+}
+
+await buildHint();
 ```
 
 Build a ETH -> WBTC `MaskOut` hint excluding the first reserve.
@@ -503,20 +519,26 @@ Build a ETH -> WBTC `MaskOut` hint excluding the first reserve.
 // https://t.me/KyberDeveloper.
 
 const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
 
-// Fetch reserves for KNC -> ETH trade, select the first reserve
-let token = '0x3dff0dce5fc4b367ec91d31de3837cf3840c8284'; // Ropsten WBTC address
-let type = 'buy'; // ether -> token
-let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
-let reserveInfo = await reserveInfoRequest.json();
-// Choose first reserve to be excluded
-let reserveId = reserveInfo.data[0].id;
+async function buildHint() {
+  // Fetch reserves for ETH -> WBTC trade, select the first reserve
+  let destToken = '0x3dff0dce5fc4b367ec91d31de3837cf3840c8284'; // Ropsten WBTC address
+  let type = 'buy'; // ether -> token
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${destToken}&type=${type}`);
+  let reserveInfo = await reserveInfoRequest.json();
+  // Choose first reserve to be excluded
+  let reserveId = reserveInfo.data[0].id;
 
-// Other /hint endpoint parameters
-type = 'e2t'; // ether -> token
-let tradeType = 'maskout';
+  // Other /hint endpoint parameters
+  type = 'e2t'; // ether -> token
+  let tradeType = 'maskout';
 
-let hint = await fetch(`${NETWORK_URL}/hint?type=${type}&trade_type=${tradeType}&reserve_id${reserveId}`);
+  let hintRequest = await fetch(`${NETWORK_URL}/hint?type=${type}&token_dest=${destToken}&trade_type=${tradeType}&reserve_id=${reserveId}`);
+  let hint = (await hintRequest.json()).data;
+}
+
+await buildHint();
 ```
 
 Build a KNC -> WBTC hint with the following routes:
@@ -530,22 +552,30 @@ Build a KNC -> WBTC hint with the following routes:
 // https://t.me/KyberDeveloper.
 
 const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
 
-// Fetch reserves for KNC -> ETH trade, select 2 reserves
-let token = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
-let type = 'sell'; // token -> ether
-let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
-let reserveInfo = await reserveInfoRequest.json();
-let firstReserve = reserveInfo.data[0].id;
-let secondReserve = reserveInfo.data[1].id;
+async function buildHint() {
+  // Fetch reserves for KNC -> ETH trade, select 2 reserves
+  let srcToken = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
+  let type = 'sell'; // token -> ether
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${srcToken}&type=${type}`);
+  let reserveInfo = await reserveInfoRequest.json();
+  let firstReserve = reserveInfo.data[0].id;
+  let secondReserve = reserveInfo.data[1].id;
 
-// Other /hint endpoint parameters
-type = 't2t'; // token -> token
-let firstTradeType = 'maskout';
-let firstSplit = '7000';
-let secondSplit = '3000';
+  // Other /hint endpoint parameters
+  type = 't2t'; // token -> token
+  let firstTradeType = 'split';
+  let secondTradeType = 'bestofall';
+  let destToken = '0x3dff0dce5fc4b367ec91d31de3837cf3840c8284'; // Ropsten WBTC address
+  let firstSplit = '7000';
+  let secondSplit = '3000';
 
-let hint = await fetch(`${NETWORK_URL}/hint?type=${type}&trade_type=${tradeType}&reserve_id${reserveId}`);
+  let hintRequest = await fetch(`${NETWORK_URL}/hint?type=${type}&trade_type=${firstTradeType}&token_src=${srcToken}&reserve_id=${firstReserve},${secondReserve}&split_value=${firstSplit},${secondSplit}&trade_type=${secondTradeType}&token_dest=${destToken}`);
+  let hint = (await hintRequest.json()).data;
+}
+
+await buildHint();
 ```
 
 ### Using Hints
@@ -554,7 +584,7 @@ Pass in the built hint into the `/trade_data` endpoint.
 
 #### Example
 
-Execute a 100 KNC -> DAI trade with `MaskIn` reserve routing for KNC -> ETH.
+Get the parameters needed for a 100 KNC -> DAI trade with `MaskIn` reserve routing for KNC -> ETH.
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
@@ -562,31 +592,37 @@ Execute a 100 KNC -> DAI trade with `MaskIn` reserve routing for KNC -> ETH.
 // https://t.me/KyberDeveloper.
 
 const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
 
-// Building hint
-let type = 't2e';
-let tradeType = 'maskin';
-let reserveId = '0xff1234567a334f7d000000000000000000000000000000000000000000000000';
+async function getTradeParams() {
+  // Building hint
+  let type = 't2e';
+  let srcToken = "0x7b2810576aa1cce68f2b118cef1f36467c648f92"; // Ropsten KNC token address
+  let tradeType = 'maskin';
+  let reserveId = '0xff00004b79626572000000000000000000000000000000000000000000000000';
 
-let hint = await fetch(`${NETWORK_URL}/hint?type=${type}&trade_type=${tradeType}&reserve_id${reserveId}`);
+  let hintRequest = await fetch(`${NETWORK_URL}/hint?type=${type}&token_src=${srcToken}&trade_type=${tradeType}&reserve_id=${reserveId}`);
+  let hint = (await hintRequest.json()).data;
+  
 
-// Trade Parameters
-let userAddress = '0x483C5100C3E544Aef546f72dF4022c8934a6945E';
-let srcToken = "0x7b2810576aa1cce68f2b118cef1f36467c648f92"; // Ropsten KNC token address
-let destToken = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; // Ropsten DAI token address
-let srcQty = 100;
-let minDstQty = 0;
-let gasPrice = 'medium';
-let platformWallet = '0x483C5100C3E544Aef546f72dF4022c8934a6945E';
-let platformFee = 25; // 0.25%
+  // Trade Parameters
+  let userAddress = '0x483C5100C3E544Aef546f72dF4022c8934a6945E';
+  let destToken = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; // Ropsten DAI token address
+  let srcQty = 100;
+  let minDstQty = 1;
+  let gasPrice = 'medium';
+  let platformWallet = '0x483C5100C3E544Aef546f72dF4022c8934a6945E';
+  let platformFee = 25; // 0.25%
 
-
-let tradeDetailsRequest = await fetch(
-    `${NETWORK_URL}/trade_data?user_address=${userAddress}&src_id=${srcToken}` + 
-    `&dst_id=${destToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}` + 
-    `&gas_price=${gasPrice}&wallet_id=${platformWallet}&wallet_fee=${platformFee}` + 
-    `&hint=${hint}`
-    );
+  let tradeDetailsRequest = await fetch(
+      `${NETWORK_URL}/trade_data?user_address=${userAddress}&src_id=${srcToken}` + 
+      `&dst_id=${destToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}` + 
+      `&gas_price=${gasPrice}&wallet_id=${platformWallet}&wallet_fee=${platformFee}` + 
+      `&hint=${hint}`
+      );
+  
+  let tradeDetails = (await tradeDetailsRequest.json()).data;
+}
 ```
 
 ## Obtaining Token and Market Info
@@ -612,6 +648,7 @@ async function getSupportedTokens() {
 
 await getSupportedTokens()
 ```
+
 #### Output
 ```json
 {  

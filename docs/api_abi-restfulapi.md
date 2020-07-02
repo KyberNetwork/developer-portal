@@ -382,29 +382,27 @@ Get the gas limit for exchanging 10000 DAI to OMG.
 | Parameter | Type | Required | Description |
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
 | `type` | string | Yes | Must be `e2t`, `t2e`, or `t2t`. |
-| `trade_type` | string | Yes | Must be `bestofall`, `maskin`, `maskout`, or `split`. |
-| `reserve_id` | string | ID of the reserve. |
-| `split_value` | string | Respective split for the reserveId. |
+| `token_src` | string | Dependent on route | source token address |
+| `token_dest` | string | Dependent on route | destination token address |
+| `trade_type` | string | Yes | Must be `bestofall`, `maskin`, `maskout`, or `split` |
+| `reserve_id` | string | ID(s) of the reserve, comma-separated |
+| `split_value` | string | Respective split for the reserveId, comma-separated |
 
 ---
 
 **Response:**
 | Parameter | Type | Description |
 |:---------:|:-------:|:----------------------:|
-| `data` | string | The encoded hint. |
-
-Rules:
-
-For a list of rules on hint building, please visit the []().
+| `data` | string | The encoded hint |
 
 #### Example
 
-Build a token to ETH split trade among 2 reserves:
-- Reserve `0xff1234567a334f7d000000000000000000000000000000000000000000000000`: 30%
-- Reserve `0xaa12aa56bbfff000000000000000000000000000000000000000000000000000`: 70%
+Build a KNC to ETH split trade among 2 reserves:
+- Reserve `0xff00004b79626572000000000000000000000000000000000000000000000000`: 70%
+- Reserve `0xff53706561726f53000000000000000000000000000000000000000000000000`: 30%
 
 ```json
-> curl "/hint?type=t2e&trade_type=split&reserve_id=0xff1234567a334f7d000000000000000000000000000000000000000000000000&reserve_id=0xaa12aa56bbfff000000000000000000000000000000000000000000000000000&split_value=3000&split_value=7000"
+> curl "https://api.kyber.network/hint?type=t2e&trade_type=split&token_src=0x7b2810576aa1cce68f2b118cef1f36467c648f92&reserve_id=0xff00004b79626572000000000000000000000000000000000000000000000000,0xff53706561726f53000000000000000000000000000000000000000000000000&split_value=7000,3000"
 {
   "data": "0x0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000002aa12aa56bbfff000000000000000000000000000000000000000000000000000ff1234567a334f7d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000001b580000000000000000000000000000000000000000000000000000000000000bb8"
 }
