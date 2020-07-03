@@ -31,6 +31,9 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `ConversionRates`
 `0xE16E257a25e287AF50C5651A4c2728b32D7e5ef7`
 
+### `KyberNetworkProxy (V1)`
+`0x818e6fecd516ecc3849daf6845e3ec868087b755`
+
 ## Token Addresses
 ### `ETH (Ether)`
 `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`

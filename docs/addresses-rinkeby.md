@@ -7,24 +7,19 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
-- Main endpoint for trades <br>
-- `TBD`
+`0x0d5371e5EE23dec7DF251A8957279629aa79E9C5`
 
 ### `KyberStorage`
-- Obtain reserve IDs that support a token trade <br>
-- `TBD`
+`0xcE81c833DCc8f2Bf975159e04b8Ca496441D2188`
 
 ### `KyberHintHandler (KyberMatchingEngine)`
-- Build / parse hints <br>
-- `TBD`
+`0xe923dbC3211A441778c38C8709cc8E83a943d1CB`
 
 ### `KyberFeeHandler (ETH)`
-- Claim reserve rebates, platform fees and staker rewards <br>
-- `TBD`
+`0xFAbB5d5D56B6f076C04834de6C382Fa55a602CA0`
 
 ### `KyberNetwork`
-- Core network contract
-- `TBD`
+`0x72910183AfFe53C3f57a7D010C730C2F90AB3bFA`
 
 ### `KyberReserve`
 `0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a`
@@ -32,9 +27,15 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 ### `ConversionRates`
 `0xE16E257a25e287AF50C5651A4c2728b32D7e5ef7`
 
+### `KyberNetworkProxy (V1)`
+`0xF77eC7Ed5f5B9a5aee4cfa6FFCaC6A4C315BaC76`
+
 ## Token Addresses
 ### `ETH (Ether)`
 `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+
+### `DAI (DAI Stablecoin)`
+`0x5592ec0cfb4dbc12d3ab100b257153436a1f0fea`
 
 ### `KNC (Kyber Network)`
 `0x6FA355a7b6bD2D6bD8b927C489221BFBb6f1D7B2`
@@ -56,3 +57,6 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ### `ZIL (Zilliqa)`
 `0x405A656Dc1b672800D21a15eF5539D4776F6654c`
+
+### `WETH (Wrapped Ether)`
+`0xc778417e063141139fce010982780140aa0cd5ab`

@@ -7,30 +7,28 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
-- Main endpoint for trades <br>
-- `TBD`
+`TBD`
 
 ### `KyberStorage`
-- Obtain reserve IDs that support a token trade <br>
-- `TBD`
+`TBD`
 
 ### `KyberHintHandler (KyberMatchingEngine)`
-- Build / parse hints <br>
-- `TBD`
+`TBD`
 
 ### `KyberFeeHandler (ETH)`
-- Claim reserve rebates, platform fees and staker rewards <br>
-- `TBD`
+`TBD`
 
 ### `KyberNetwork`
-- Core network contract
-- `TBD`
+`TBD`
 
 ### `KyberReserve`
 `0x45460BD0f9a68b98Bf1f5c478B7584E057e32eF5`
 
 ### `ConversionRates`
 `0x6B2e614977F893baddf3AA704698BD71BEf9CeFF`
+
+### `KyberNetworkProxy (V1)`
+`0x692f391bCc85cefCe8C237C01e1f636BbD70EA4D`
 
 ## Token Addresses
 ### `ETH (Ether)`
