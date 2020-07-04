@@ -59,20 +59,6 @@ event __Withdraw__(uint256 curEpoch, address staker, uint256 amount)
 <br />
 
 ### Functions
-
-### `initAndReturnStakerDataForCurrentEpoch`
-Initialize data for staker if needed, then return staker's data for current epoch.
-___
-function __initAndReturnStakerDataForCurrentEpoch__(address staker) external returns (uint256 stake, uint256 delegatedStake, address representative)
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
-| `staker` | address | staker's address    |
- **Returns:**\
-stake - total amount of KNC staked in twei
-delegatedStake - amount of KNC delegated to the staker's address in twei 
-representative - if the staker is delegating, this shows the address he is delegating to
-
-<br />
  
 ### `deposit`
 Deposit and stake KNC.
