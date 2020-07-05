@@ -716,7 +716,7 @@ Get sell rates for 300 and 150 KNC, and 10.1, 20 and 30 OMG.
 | `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
 | `wallet_id` | string | No | Wallet address that to get fees from the trade. Read more about platform fees [here](integrations-platformfees.md). |
 | `wallet_fee` | integer | No | Platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md). |
-| `hint` | string | No | The trade hint, specifying the trade type, reserve IDs and splits. Read more about building and parsing hints [here](). |
+| `hint` | string | No | The trade hint, specifying the trade type, reserve IDs and splits. Read more about building and parsing hints [here](integrations-restfulapiguide.md#building-hints). |
 | `nonce` | integer | No | Users can specify a nonce to override the default account nonce. |
 | `only_official_reserve` | bool | No | Deprecated. |
 

@@ -62,7 +62,7 @@ Call the `getExpectedRateAfterFee` function of the network proxy contract. The i
 | `dest`             | IERC20  | destination ERC20 token contract address |
 | `srcQty`           | uint256 | `src` token wei amount                   |
 | `platformFeeBps`   | uint256 | platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md) |
-| `hint`             | bytes   | hint for reserve routing. Refer to the [advanced section]() |
+| `hint`             | bytes   | hint for reserve routing. hint for reserve routing. Refer to [this section](#reserve-routing) |
 
 **Returns**
 Expected rate for a trade after deducting network and platform fees. To get a 'readable' rate, divide it by 10\*\*18. Refer to the example below.
@@ -104,7 +104,7 @@ Call the `tradeWithHintAndFee` function of the network proxy contract. The input
 | `minConversionRate` | uint256 | minimal conversion rate. If actual rate is lower, trade reverts |
 | `platformWallet`    | address | wallet address for receiving platform fees. Read more about platform fees [here](integrations-platformfees.md)  |
 | `platformFeeBps`    | uint256 | platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md)  |
-| `hint`             | bytes    | hint for reserve routing. Refer to the [advanced section]() |
+| `hint`             | bytes    | hint for reserve routing. Refer to [this section](#reserve-routing) |
 
 **Returns**
 Actual `dest` token wei amount sent to `destAddress`
@@ -241,7 +241,7 @@ For token -> token trades, you can specify a routing rule for each half. For exa
 
 ### Recommendation
 
-We strongly recommend for the building of hints to be performed off-chain to save gas costs, and we have not discovered a use case for it to be done on-chain yet. You can do so using [ethers]() or the [`/hint` RESTful API](integrations-restfulapiguide.md#building-hints). Nevertheless, this guide explains how you may do the building of hints on-chain.
+We strongly recommend for the building of hints to be performed off-chain to save gas costs, and we have not discovered a use case for it to be done on-chain yet. You can do so using [ethers](integrations-smartcontractguide.md#building-hints) or the [`/hint` RESTful API](integrations-restfulapiguide.md#building-hints). Nevertheless, this guide explains how you may do the building of hints on-chain.
 
 ### File Import
 
