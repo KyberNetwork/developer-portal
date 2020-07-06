@@ -8,7 +8,7 @@ Read options for operating a pool [here](pool-operator-options.md).
 
 ## Resources
 - [Staking, Voting Examples](staking-voting-examples.md)
-- [Testnet Details and Changelog](testnet.md)
+- [Contract Addresses & Changelog](changelog.md)
 - [Delegating Overview And Example](delegating-example.md)
 - [Kyber Team as DAO Maintainer](kyber-team-maintainer.md)
 - [Staking and Delegating APIs](staking-api.md)

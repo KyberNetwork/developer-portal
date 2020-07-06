@@ -1,3 +1,16 @@
+# Mainnet Contract Addresses
+## `kyberStaking`
+`0xECf0bdB7B3F349AbfD68C3563678124c5e8aaea3`
+
+## `kyberDao`
+`0x49bdd8854481005bBa4aCEbaBF6e06cD5F6312e9`
+
+## `kyberFeeHandler`
+`0xd3d2b5643e506c6d9B7099E9116D7aAa941114fe`
+
+## `kyberProxy`
+`0x9AAb3f75489902f3a48495025729a0AF77d4b11e`
+
 # Ropsten Contract Addresses
 ## `kyberStaking`
 `0x9A73c6217cd595bc449bA6fEF6efF53f29014f42`
@@ -13,6 +26,9 @@
 
 
 # Technical Changes
+
+## 6/7/2020
+### Added Mainnet Contracts
 
 ## 29/6/2020
 ### (Hopefully) Final Version
