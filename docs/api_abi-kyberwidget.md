@@ -14,8 +14,8 @@ The KyberWidget can be implemented via HTML/JS. There is a [widget generator](in
 #### Path
 The widget version to be used.
 #### Examples
-`v0.3/?`<br>
-`v0.6/?`
+`v0.6.5/?`<br>
+`v0.8.0/?`
 
 #### Path Parameters
 | Parameter  | Type | Description   | Default | Example |
@@ -28,7 +28,8 @@ The widget version to be used.
 | `callback` | string | Callback URL that will be called after the tx has been broadcasted to the blockchain. It includes tx hash as a param and must return HTTP status code of 200 for the success. If not, the callback will be fired another 5 times at most | - | https://yourwebsite.com/kybercallback |
 | `network` | string | ETH network that widget will run in | `ropsten` | 1 of the following values:<br>`test`<br>`ropsten`<br>`production`<br>`mainnet`|
 | `paramForwarding` | boolean | If `true`, all params that were passed to the widget will be submitted via the `callback`. Can be used to prevent malicious behaviour by giving your customer a OTP secret token and validating it in the `callback` | - | - |
-|`commissionId` | address | Registered ETH address that is part of the [fee sharing program](integrations-feesharing.md) | - | `0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
+|`commissionId` | address | Wallet address that gets fees from the trade. Read more about platform fees [here](integrations-platformfees.md) | - | `0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
+|`commissionFee` | integer | Platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md) | - | `25` (0.25%) |
 |`pinnedTokens` | string | Tokens that are pinned at the top of your token selector. Tokens are separated by an underscore. | `ETH_KNC_DAI` | `ETH_KNC_DAI` |
 |`defaultPair ` | string | This param only takes effect when type=swap, it indicates default token pair will show in swap layout. | `ETHKNC` | `ETHKNC` |
 | `signer` | string | Concatenated list of Ethereum addresses which the user must make the payment from, separated by underscore. | N.A | `0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20` |
@@ -57,17 +58,17 @@ Test out the links below by copying, pasting and opening them in a new tab!
 
 #### Pay Mode with Multiple Products
 ```
-https://widget.kyber.network/v0.6/?type=pay&mode=tab&receiveAddr=0x63B42a7662538A1dA732488c252433313396eade&receiveToken=KNC&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&receiveAmount=0.5&theme=theme-emerald&productName=A%20Cat%20Picture&productQty=7&productImage=https://images.unsplash.com/photo-1518791841217-8f162f1e1131&productName=Falling%20Autumn%20Leaves&productQty=24&productImage=https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/fabdf38b-1811-49e8-8eeb-4c5632076c3e/dczgthc-076fcdf7-4932-4672-8d94-f3b6ed07d100.png&commissionId=0x90A21dbB74D7684B7AF747963D7ac7A8086b82B6
+https://widget.kyber.network/v0.8.0/?type=pay&mode=tab&receiveAddr=0x63B42a7662538A1dA732488c252433313396eade&receiveToken=KNC&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&receiveAmount=50&theme=theme-emerald&productName=A%20Cat%20Picture&productQty=7&productImage=https://images.unsplash.com/photo-1518791841217-8f162f1e1131&productName=Falling%20Autumn%20Leaves&productQty=24&productImage=https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/fabdf38b-1811-49e8-8eeb-4c5632076c3e/dczgthc-076fcdf7-4932-4672-8d94-f3b6ed07d100.png&commissionId=0x90A21dbB74D7684B7AF747963D7ac7A8086b82B6&commissionFee=25
 ```
 
 #### Swap Mode with Sunset Theme
 ```
-https://widget.kyber.network/v0.6/?type=swap&mode=tab&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-sunset
+https://widget.kyber.network/v0.8.0/?type=swap&mode=tab&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-sunset
 ```
 
 #### Buy Mode
 ```
-https://widget.kyber.network/v0.6/?type=buy&mode=tab&receiveToken=ETH&receiveAmount=0.001&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-emerald`
+https://widget.kyber.network/v0.8.0/?type=buy&mode=tab&receiveToken=ETH&receiveAmount=0.1&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&pinnedTokens=KNC_DAI&theme=theme-emerald`
 ```
 
 ### FAQ

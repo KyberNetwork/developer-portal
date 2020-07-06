@@ -1,6 +1,7 @@
 {
   "Home": {
     "Getting Started": [
+      "Katalyst-Intro",
       "Start",
       "Home-DesignPrinciples",
       "Home-ProtocolOverview",
@@ -20,7 +21,7 @@
     "Guides": [
       "Integrations-IntegrationTypes",
       "Integrations-SmartContractGuide",
-      "Integrations-Web3Guide",
+      "Integrations-EthersGuide",
       "Integrations-RESTfulAPIGuide"
     ],
     "Widgets & Plugins": [
@@ -36,7 +37,7 @@
     ],
     "Miscellaneous": [
       "Integrations-ContractEvents",
-      "Integrations-FeeSharing",
+      "Integrations-PlatformFees",
       "Integrations-GettingHelp"
     ]
   },
@@ -54,21 +55,21 @@
       "Reserves-Ganache"
     ],
     "Miscellaneous": [
+      "Reserves-Ids",
+      "Reserves-Rebates",
       "Reserves-TradingStrategy",
-      "Reserves-SanityRates",
-      "Reserves-ReserveFees",
-      "Reserves-BurningFees"
+      "Reserves-SanityRates"
     ]
   },
-  "Environments": {
+  "Addresses": {
     "Getting Started": [
-      "Environments-Intro"
+      "Addresses-Intro"
     ],
-    "Environments": [
-      "Environments-Mainnet",
-      "Environments-Ropsten",
-      "Environments-Rinkeby",
-      "Environments-Kovan"
+    "Addresses": [
+      "Addresses-Mainnet",
+      "Addresses-Ropsten",
+      "Addresses-Rinkeby",
+      "Addresses-Kovan"
     ]
   },
   "References": {
@@ -76,15 +77,23 @@
       "API_ABI-Intro"
     ],
     "Core Smart Contracts": [
+      "API_ABI-IKyberNetworkProxy",
       "API_ABI-KyberNetworkProxy",
-      "API_ABI-KyberNetworkProxyInterface",
+      "API_ABI-ISimpleKyberProxy",
+      "API_ABI-IKyberMatchingEngine",
+      "API_ABI-KyberMatchingEngine",
+      "API_ABI-IKyberHint",
+      "API_ABI-KyberHintHandler",
+      "API_ABI-IKyberFeeHandler",
+      "API_ABI-KyberFeeHandler",
+      "API_ABI-IKyberStaking",
+      "API_ABI-KyberStaking",
       "API_ABI-KyberReserve",
       "API_ABI-KyberReserveInterface",
       "API_ABI-ConversionRates",
-      "API_ABI-FeeBurner",
       "API_ABI-LiquidityConversionRates",
-      "API_ABI-OrderbookReserve",
-      "API_ABI-PermissionlessOrderbookReserveLister"
+      "API_ABI-IEpochUtils",
+      "API_ABI-EpochUtils"
     ],
     "RESTful API": [
       "API_ABI-RESTfulAPIOverview",
@@ -103,7 +112,6 @@
       "API_ABI-WooCommercePlugin"
     ],
     "Code Snippets": [
-      "API_ABI-Web3",
       "API_ABI-TokenQuantityConversion"
     ],
     "Misc Contracts": [

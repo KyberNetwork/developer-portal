@@ -43,13 +43,12 @@ class Footer extends React.Component {
                 <a className="kyber-link__text" href={this.docUrl('Integrations-DappsUseCase', '')}>DApps</a>
                 <a className="kyber-link__text" href={this.docUrl('Integrations-VendorsUseCase', '')}>Vendors</a>
                 <a className="kyber-link__text" href={this.docUrl('Integrations-WalletsUseCase', '')}>Wallets</a>
-                <a className="kyber-link__text" href={this.docUrl('Integrations-FeeSharing', '')}>Fee Sharing</a>
+                <a className="kyber-link__text" href={this.docUrl('Integrations-PlatformFees', '')}>Platform Fees</a>
               </div>
               <div className="kyber-link">
                 <span className="kyber-link__text semi-b">Reserves</span>
                 <a className="kyber-link__text" href={this.docUrl('Reserves-FedPriceReserve', '')}>Fed Price</a>
                 <a className="kyber-link__text" href={this.docUrl('Reserves-AutomatedPriceReserve', '')}>Automated Price</a>
-                <a className="kyber-link__text" href={this.docUrl('Reserves-OrderbookReserve', '')}>Orderbook</a>
               </div>
             </div>
           </div>

@@ -7,7 +7,8 @@ title: RESTful API
 
 The RESTful API provide a way for users to be able to programmatically interact with the KyberNetwork contract without in depth understanding of blockchain and smart contracts. Please note that some of these endpoints have certain limitations as follows:
 1. The `/buy_rate` and `/sell_rate` endpoints are **restricted to ETH <-> token queries only** while the `trade_data` endpoint allows token <-> token trades.
-2. The fields `active`, `custom_proxy` and `original_token` will only appear if certain conditions are met otherwise they will not show up in the API response.
+2. The fields `active`, `custom_proxy` and `original_token` will only appear if certain conditions are met. Otherwise, they will not show up in the API response.
+3. The `only_official_reserve` parameter has been **deprecated**.
 
 ---
 
@@ -21,14 +22,14 @@ The RESTful API provide a way for users to be able to programmatically interact 
 
 ### `/buy_rate`
 
-(GET) Returns the latest BUY conversion rate in ETH. For example, if you want to know how much ETH do you need to buy 1 DAI, you can use this function.
+(GET) Returns the latest BUY conversion rate in ETH. For example, if you want to know how much ETH is needed to buy 1 DAI, you can use this function.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
 |:---------:|:------:|:--------:|:------------------------------------------------:|
 | `id` | string | Yes | The `id` represents the token you want to buy using ETH. |
 | `qty` | float | Yes | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to buy. |
-| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | Deprecated |
 
 ---
 
@@ -40,7 +41,9 @@ The RESTful API provide a way for users to be able to programmatically interact 
 | `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of ETH. |
 | `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` represents the destination token. They should match the request input parameter specified in `qty`. |
 
-Example:
+#### Example
+
+Get buy rates for 300 KNC and 10.1 OMG.
 
 ```json
 > curl "https://api.kyber.network/buy_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1"
@@ -81,7 +84,7 @@ Example:
 **Arguments:**
 | Parameter | Type | Required | Description |
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
-| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | Deprecated |
 
 ---
 
@@ -100,7 +103,7 @@ Example:
 | `custom_proxy` | bool | Returns true if the address is a proxy address. Note that this field only appears if the token is a proxy token. |
 | `original_token` | string | The address of the original token contract. Note that this field only appears if the token is a proxy token. |
 
-Example:
+#### Example
 
 ```json
 > curl "https://api.kyber.network/change24h"
@@ -153,9 +156,9 @@ Example:
 **Arguments:**
 | Parameter | Type | Required | Description |
 |:--------------:|:-------:|:--------:|:------------------------------------------------------:|
-| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 | `include_delisted` | bool | No | Accepts `true` or `false` as arguments. If no value is specified, it will default to false. If true, the API will also return tokens that have been delisted. |
 | `page` | int | No | The page index of the response data, starts from `0`. If no value is specified, it will default to 0. Each page includes maximum 1000 records. |
+| `only_official_reserve` | bool | No | Deprecated |
 
 ---
 
@@ -174,6 +177,8 @@ Example:
 | `original_token` | string | The address of the original token contract. Note that this field only appears if the token is a proxy token. |
 
 **Note:** Ether and tokens that have been deployed permissionlessly do not have the `reserves_src` and `reserves_dest` fields.
+
+#### Example
 
 ```json
 > curl "https://api.kyber.network/currencies"
@@ -239,6 +244,74 @@ Example:
 
 <br />
 
+### `/expected_rate`
+
+(GET) Return the expected rate for a token pair, with behavior similar to getExpectedRate from the proxy contract.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:---------:|:------:|:--------:|:----------------------------------------------------------:|
+| `source` | string | Yes | The source token contract address. |
+| `dest` | string | Yes | The destination token contract address. |
+| `sourceAMount` | number | The amount of source tokens. |
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:---------:|:-------:|:----------------------:|
+| `expectedRate` | string | The conversion rate of the token pair in 10^18. |
+| `slippageRate` | string | 97% of the expected rate, meant to provide a 3% buffer in case the market moves against you. |
+| `timestamp` | int | Server timestamp in UTC. |
+| `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
+
+#### Example
+
+Get rates for 10000 DAI to OMG.
+
+```json
+> curl "https://api.kyber.network/gas_limit?source=0x6b175474e89094c44da98b954eedeac495271d0f&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&amount=10000"
+{
+  "data": 880000,
+  "error": false
+}
+```
+
+<br />
+
+### `/gas_limit`
+
+(GET) Return the estimated Gas Limit used for a transaction based on source token amount.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:---------:|:------:|:--------:|:----------------------------------------------------------:|
+| `source` | string | Yes | The source token contract address. |
+| `dest` | string | Yes | The destination token contract address. |
+| `amount` | number | The amount of source tokens. |
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:---------:|:-------:|:----------------------:|
+| `data` | string | The estimated gas limit to be used for a transaction based on the parameters. |
+| `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
+
+#### Example
+
+Get the gas limit for exchanging 10000 DAI to OMG.
+
+```json
+> curl "https://api.kyber.network/gas_limit?source=0x6b175474e89094c44da98b954eedeac495271d0f&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&amount=10000"
+{
+  "data": 880000,
+  "error": false
+}
+```
+
+<br />
+
 ### `/gasLimitConfig`
 
 (GET) Returns the gas limit for approving token and swapping between ETH <-> ERC20 token. To calculate the gas limit for swapping between token A <-> token B, take the sum of the gas limit for swapping from token A -> ETH and for swapping from ETH -> Token B. Note that some tokens may require higher gas limits than others e.g. DAI, TUSD, MKR, DGX.
@@ -255,7 +328,7 @@ Example:
 | `custom_proxy` | bool | Returns true if the address is a proxy address. Note that this field only appears if the token is a proxy token. |
 | `original_token` | string | The address of the original token contract. Note that this field only appears if the token is a proxy token. |
 
-Example:
+#### Example
 
 ```json
 > curl "https://api.kyber.network/gasLimitConfig"
@@ -301,6 +374,42 @@ Example:
 
 <br />
 
+### `/hint`
+
+(GET) Returns the encoded hint based on the input parameters.
+
+**Arguments:**
+| Parameter | Type | Required | Description |
+|:---------:|:------:|:--------:|:----------------------------------------------------------:|
+| `type` | string | Yes | Must be `e2t`, `t2e`, or `t2t`. |
+| `token_src` | string | Dependent on route | source token address |
+| `token_dest` | string | Dependent on route | destination token address |
+| `trade_type` | string | Yes | Must be `bestofall`, `maskin`, `maskout`, or `split` |
+| `reserve_id` | string | ID(s) of the reserve, comma-separated |
+| `split_value` | string | Respective split for the reserveId, comma-separated |
+
+---
+
+**Response:**
+| Parameter | Type | Description |
+|:---------:|:-------:|:----------------------:|
+| `data` | string | The encoded hint |
+
+#### Example
+
+Build a KNC to ETH split trade among 2 reserves:
+- Reserve `0xff00004b79626572000000000000000000000000000000000000000000000000`: 70%
+- Reserve `0xff53706561726f53000000000000000000000000000000000000000000000000`: 30%
+
+```json
+> curl "https://api.kyber.network/hint?type=t2e&trade_type=split&token_src=0x7b2810576aa1cce68f2b118cef1f36467c648f92&reserve_id=0xff00004b79626572000000000000000000000000000000000000000000000000,0xff53706561726f53000000000000000000000000000000000000000000000000&split_value=7000,3000"
+{
+  "data": "0x0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000002aa12aa56bbfff000000000000000000000000000000000000000000000000000ff1234567a334f7d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000001b580000000000000000000000000000000000000000000000000000000000000bb8"
+}
+```
+
+<br />
+
 ### `/market`
 
 (GET) Retrieve in-depth information about price and other information about assets.
@@ -331,7 +440,7 @@ Example:
 | `custom_proxy` | bool | Returns true if the address is a proxy address. Note that this field only appears if the token is a proxy token. |
 | `original_token` | string | The address of the original token contract. Note that this field only appears if the token is a proxy token. |
 
-Example:
+#### Example
 
 ```json
 > curl "https://api.kyber.network/market"
@@ -448,44 +557,83 @@ Example:
 | `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
 | `data` | string | The amount of `quote` token needed to buy / received when selling `base_amount` worth of `base` tokens. |
 
-Example:
+#### Examples
+
+1. Get WETH amount receivable for selling 10 KNC. (10 KNC -> ? WETH)
 
 ```json
 > curl "https://api.kyber.network/quote_amount?base=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&quote=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&base_amount=10&type=sell"
 {
   "error":false,
-  "data":"0.010369400116360328"
+  "data":"0.048480"
+}
+```
+
+2. Get WETH amount needed to purchase 10 KNC. (? WETH -> 10 KNC)
+
+```json
+> curl "https://api.kyber.network/quote_amount?base=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&quote=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&base_amount=10&type=sell"
+{
+  "error":false,
+  "data":"0.048817"
 }
 ```
 
 <br />
 
-### `/gas_limit`
+### `/reserves`
 
-(GET) Return the estimated Gas Limit used for a transaction based on source token amount.
+(GET) Returns a list of reserves that supports a token pair.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
-|:---------:|:------:|:--------:|:----------------------------------------------------------:|
-| `source` | string | Yes | The source token contract address. |
-| `dest` | string | Yes | The destination token contract address. |
-| `amount` | number | The amount of source tokens. |
+|:--------------:|:-------:|:--------:|:------------------------------------------------------:|
+| `token` | string | Yes | Address of the asset. |
+| `type` | string | Yes | Accepts `buy` or `sell` as arguments. `buy` will return a list of reserves which support the eth -> token pair, otherwise `sell` returns reserves which support the token -> eth pair. |
 
 ---
 
 **Response:**
 | Parameter | Type | Description |
-|:---------:|:-------:|:----------------------:|
-| `data` | string | The estimated gas limit to be used for a transaction based on the parameters. |
-| `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
+|:----------:|:------:|:--------------------------------------------------------------------------------------------:|
+| `address` | string | The address of the asset in its native chain. |
+| `id` | string | Reserve ID. Refer to [this section](reserves-resIDs.md) for more information. |
+| `type` | integer | Reserve Type. Refer below. |
+| `rebate_wallet` | string | Reserve rebate wallet address |
 
-Example:
+#### Reserve Types
+
+Refer to [this section](reserves-types.md) for more information on reserve types.
+
+- `1` = Fed Price Reserve (FPR)
+- `2` = Automated Price Reserve (APR)
+- `3` = Bridge Reserve (BRIDGE)
+- `4` = Utility Reserve (UTILITY)
+- `5` = Custom Reserve (CUSTOM)
+- `6` = Orderbook Reserve (ORDERBOOK)
+
+#### Example
+
+Get list of reserves that support ETH -> KNC trades.
 
 ```json
-> curl "https://api.kyber.network/gas_limit?source=0x6b175474e89094c44da98b954eedeac495271d0f&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&amount=10000"
+> curl "https://api.kyber.network/reserves?token=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&type=buy
 {
-  "data": 880000,
-  "error": false
+  "data": [
+    {
+      "address": "0x39C30B03799DB870e9C01747f68e24D2b38A30C9",
+      "id": "0xff00004b79626572000000000000000000000000000000000000000000000000",
+      "type": 1,
+      "rebate_wallet": "0xDd102CeDa27a2283dC85028f9bF7d022d8a640d2"
+    },
+    {
+      "address": "0xc4684f4FbfC3db0A24CFFe35821b12e55BeaEF7A",
+      "id": "0xaa4b4e4320415052000000000000000000000000000000000000000000000000",
+      "type": 2,
+      "rebate_wallet": "0x7de9bC2cDfa6B7Ee7088a4f5848A86A26Cd5aFD1"
+    },
+    ...
+  ]
 }
 ```
 
@@ -493,14 +641,14 @@ Example:
 
 ### `/sell_rate`
 
-(GET) Returns the latest SELL conversion rate in ETH. For example, if you want to know how much ETH you will get by SELLing 1 DAI, you can use this function.
+(GET) Returns the latest SELL conversion rate in ETH. For example, if you want to know how much ETH you will get by selling 1 DAI, you can use this function.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
 | `id` | string | Yes | The `id` represents the token you want to sell using ETH. |
 | `qty` | float | Yes | A floating point number which will be rounded off to the decimals of the asset specified. The quantity is the amount of units of the asset you want to sell. |
-| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | Deprecated |
 
 ---
 
@@ -512,7 +660,9 @@ Example:
 | `src_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of the `id` represents the source token. They should match the request input parameter specified in `qty`. |
 | `dst_qty` | float[] | Array of floating point numbers which will be rounded off to the decimals of ETH. |
 
-Example:
+#### Example
+
+Get sell rates for 300 and 150 KNC, and 10.1, 20 and 30 OMG.
 
 ```json
 > curl "https://api.kyber.network/sell_rate?id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&qty=300&qty=150&id=0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&qty=10.1&qty=20.2&qty=30"
@@ -561,12 +711,14 @@ Example:
 | `user_address` | string | Yes | The ETH address that will be executing the swap. |
 | `src_id` | string | Yes | The `id` represents the source token of the pair you want to trade. |
 | `dst_id` | string | Yes | The `id` represents the destination token of the pair you want to trade. |
-| `src_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` represents the source token. |
-| `min_dst_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the `id` represents the destination token. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
+| `src_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the source token `id`. |
+| `min_dst_qty` | float | Yes | A floating point number representing the source amount in the conversion which will be rounded off to the decimals of the destination token `id`. It is the minimum destination asset amount that is acceptable to the user. A guideline would be to set it at 3% less the destination quantity in `getPair`, which indicates a 3% slippage. |
 | `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
-| `wallet_id` | string | No | The wallet address that is registered for the [fee sharing program](integrations-feesharing.md). |
+| `wallet_id` | string | No | Wallet address that to get fees from the trade. Read more about platform fees [here](integrations-platformfees.md). |
+| `wallet_fee` | integer | No | Platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md). |
+| `hint` | string | No | The trade hint, specifying the trade type, reserve IDs and splits. Read more about building and parsing hints [here](integrations-restfulapiguide.md#building-hints). |
 | `nonce` | integer | No | Users can specify a nonce to override the default account nonce. |
-| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | Deprecated. |
 
 ---
 
@@ -581,10 +733,12 @@ Example:
 | `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
 | `gasLimit` | string | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |
 
-Example:
+#### Example
+
+User `0x8fa07f46353a2b17e92645592a94a0fc1ceb783f` to swap 0.05 ETH to KNC (minimally receive 5.5 KNC) at medium gas price, with a nonce of 200. 0.025% of the trade will be allocated to `0x0859A7958E254234FdC1d200b941fFdfCAb02fC1`.
 
 ```json
-> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.0012&min_dst_qty=0.6&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1&nonce=200"
+> curl "https://api.kyber.network/trade_data?user_address=0x8fa07f46353a2b17e92645592a94a0fc1ceb783f&src_id=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&dst_id=0xdd974D5C2e2928deA5F71b9825b8b646686BD200&src_qty=0.05&min_dst_qty=5.5&gas_price=medium&wallet_id=0x0859A7958E254234FdC1d200b941fFdfCAb02fC1&wallet_fee=25&nonce=200"
 {
   "error":false,
   "data":[
@@ -612,7 +766,7 @@ Example:
 | `from` | string | Yes | The Ethereum address of the sender. |
 | `to` | string | Yes | The Ethereum address of the receiver. |
 | `token` | string | No | The contract address of token. If no argument is provided, it will default to ETH. |
-| `value` | float | Yes | The number of token / ETH you want to send. For example, if you want to send 1.35 Zil (12 decimals), it would be 1.35. |
+| `value` | float | Yes | The number of token / ETH you want to send. For example, if you want to send 1.35 ZIL (12 decimals), it would be 1.35. |
 | `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
 | `gas_limit` | integer | No | The limit of gas required for your transaction. |
 | `nonce` | integer | No | Users can specify a nonce to override the default account nonce. |
@@ -630,10 +784,12 @@ Example:
 | `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
 | `gasLimit` | string | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |
 
-Example:
+#### Example
+
+Wallet `0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1` to transfer 20.5 KNC to `0x723f12209b9C71f17A7b27FCDF16CA5883b7BBB0` with medium gas price and tx nonce of 123.
 
 ```json
-> curl "https://api.kyber.network/transfer_data?from=0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1&to=0x723f12209b9C71f17A7b27FCDF16CA5883b7BBB0&token=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&value=1.5&gas_price=medium&gas_limit=200000&nonce=123"
+> curl "https://api.kyber.network/transfer_data?from=0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1&to=0x723f12209b9C71f17A7b27FCDF16CA5883b7BBB0&token=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&value=20.5&gas_price=medium&gas_limit=200000&nonce=123"
 {
   "error":false,
   "data":[
@@ -661,8 +817,8 @@ Example:
 | Parameter | Type | Required | Description |
 |:--------------:|:-------:|:--------:|:------------------------------------------------------:|
 | `user_address` | string | Yes | The ETH address to get information from. |
-| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
 | `page` | int | No | The page index of the response data, starts from `0`. If no value is specified, it will default to 0. Each page includes maximum 1000 records. |
+| `only_official_reserve` | bool | No | Deprecated |
 
 ---
 
@@ -673,7 +829,9 @@ Example:
 | `enabled` | bool | Whether the user address has approved Kyber Network to spend the asset on their behalf. Applicable only to ERC20 tokens. See ‘allowance’ on the ERC20 standard. |
 | `txs_required` | int | Number of transactions required until the ID is enabled for trading. When `enabled` is True, `txs_required` is 0. When `enabled` is False, majority of the time `tx_required` is 1. |
 
-Example response:
+#### Example
+
+Find what tokens the wallet `0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F` has approved for trading.
 
 ```json
 > curl "https://api.kyber.network/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies"
@@ -709,7 +867,7 @@ Example response:
 
 ### `/users/:user_address/currencies/:currency_id/enable_data`
 
-(GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to sell as mentioned in #trading-getinfo.
+(GET) Returns all needed information for a user to sign and do a transaction, and to enable a token to be able to be sold.
 
 **Arguments:**
 | Parameter | Type | Required | Description |
@@ -718,7 +876,7 @@ Example response:
 | `currency_id` | string | Yes | The unique ID of the destination asset. |
 | `gas_price` | string | Yes | One of the following 3: `low`, `medium`, `high`. Priority will be set according to the level defined. |
 | `nonce` | int | No | You can manually specify a nonce to override the default account nonce. |
-| `only_official_reserve` | bool | No | If no value is specified, it will default to `true`. If `true`, the API will only return tokens from the permissioned reserves. If `false`, the API will return both permissioned reserve tokens and also tokens that have been deployed permissionlessly. |
+| `only_official_reserve` | bool | No | Deprecated |
 
 ---
 
@@ -733,21 +891,23 @@ Example response:
 | `nonce` | string | The nonce of the account. If multiple conversions are requested at the same time, each request will have the same nonce as the API will return the nonce of the account's last mined transaction. |
 | `gasLimit` | string | The gas limit required for the transaction. This value should not be altered unless for specific reasons. |
 
-Example:
+#### Example
+
+Get transaction input parameters for user `0xfD65739DA3280dC976DDAf1937D37dA6Db98cb65` to approve KNC for trades at high gas price.
 
 ```json
-> curl "https://api.kyber.network/users/0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=medium"
+> curl "https://api.kyber.network/users/0xfD65739DA3280dC976DDAf1937D37dA6Db98cb65/currencies/0xdd974D5C2e2928deA5F71b9825b8b646686BD200/enable_data?gas_price=high"
 {
   "error":false,
   "data":[
     {
-      "from":"0x8fA07F46353A2B17E92645592a94a0Fc1CEb783F",
+      "from":"0xfD65739DA3280dC976DDAf1937D37dA6Db98cb65",
       "to":"0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
       "data":"0x095ea7b3000000000000000000000000818e6fecd516ecc3849daf6845e3ec868087b7558000000000000000000000000000000000000000000000000000000000000000",
       "value":"0x0",
-      "gasPrice":"0x6",
-      "nonce":"0x3de",
-      "gasLimit":"0x186a0"
+      "gasPrice":"0xa02ffee00",
+      "nonce":"0x0",
+      "gasLimit":"0x11229"
     }
   ]
 }

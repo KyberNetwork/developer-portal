@@ -4,24 +4,43 @@ title: RESTful API
 ---
 [//]: # (tagline)
 ## Introduction
+
 This guide will walk you through on how you can interact with our protocol implementation using our RESTful APIs. The most common group of users that can benefit from this guide are developers who have minimal smart contract experience, traders and wallets.
 
 ## Risk Mitigation
+
 There are some risks when utilising Kyber. To safeguard users, we kindly ask that you refer to the [Slippage Rates Protection](integrations-slippagerateprotection.md) and [Price Feed Security](integrations-pricefeedsecurity.md) sections on what these risks are, and how to mitigate them.
 
 ## Overview
-In this guide, we will be going through 2 scenarios. The first scenario covers how to perform a token to token swap using the RESTful apis and the second is about how one can obtain token information and historical price data.
+
+We break this guide into 3 sections:
+1. [Trading Tokens](#trading-tokens) - This section will show the steps taken to execute a KNC -> DAI trade on Ropsten, as well as incorporating platform fees. The steps for performing token -> ether and ether -> token conversions are the same.
+2. [Reserve Routing](#reserve-routing) - This advanced section covers the reserve routing feature to include / exclude reserves, or to split trades amongst multiple reserves.
+3. [Token Info & Price Data](#obtaining-token-and-market-info) - This section covers how one can obtain token information and historical price data.
 
 ## Things to note
-1) When converting from Token to ETH/Token, the user is required to call the `/enabled_data` endpoint **first** to give an allowance to the smart contract executing the `trade` function i.e. the `KyberNetworkProxy.sol` contract.
-2) Refer to the [API overview](api_abi-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
 
-## Scenario 1: Token to Token Swap
-Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conversion. Note that ETH is used as the base pair i.e. BAT -> ETH -> DAI.
+1. If the source token is not ETH (ie. an ERC20 token), the user is **first required** to call the [`/enabled_data`](api_abi-restfulapi.md) endpoint to give an allowance to the smart contract executing the trade.
+2. Refer to the [API overview](api_abi-restfulapioverview.md#network-url) for the test and mainnet network URLs to use.
+3. To prevent front running, the contract limits the gas price trade transactions can have. The transaction will be reverted if the limit is exceeded. To query for the maximum gas limit, check the public variable `maxGasPrice`.
 
-### Import relevant packages
-* We use `web3` for broadcasting transactions to the blockchain
-* The `ethereumjs-tx` library is used to sign and serialize a raw transaction to be broadcasted
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+let maxGasPrice = await KyberNetworkProxyContract.maxGasPrice();
+```
+
+## Trading Tokens
+
+Suppose we want to convert 100 KNC to DAI tokens on Ropsten, which is a token to token conversion. In addition, we want to charge a platform fee of 0.25%. Note that ETH is used as the base pair i.e. KNC -> ETH -> DAI.
+
+The code example will also work for token -> ether and ether -> token conversions, by using `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` as the token address for ETH.
+
+### Import Relevant Packages
+
+* We use `ethers` for connecting to the Ethereum blockchain
 * The `node-fetch` module is used for making API queries
 
 ```js
@@ -30,78 +49,69 @@ Suppose we want to convert 100 BAT to DAI tokens, which is a token to token conv
 // https://t.me/KyberDeveloper.
 
 // Importing the relevant packages
-const Web3 = require("web3");
-const Tx = require("ethereumjs-tx").Transaction;
+const ethers = require('ethers');
 const fetch = require('node-fetch');
 ```
 
-### Connect to an Ethereum node
-In this example, we will connect to Infura's ropsten node.
+### Connect to an Ethereum Node
+
+`ethers` provides a very simple method `getDefaultProvider` to easily connect to the Ethereum blockchain. While not necessary, it is recommended to provide an API key for the various providers offered (Eg. Alchemy, Infura and Etherscan).
 
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-// Connecting to ropsten infura node
+// Connecting to a provider
 const NETWORK = "ropsten"
-const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
-const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
+const PROJECT_ID = "INFURA_PROJECT_ID" // Replace this with your own Project ID
+const provider = new ethers.getDefaultProvider(NETWORK, {'infura': PROJECT_ID});
 ```
 
-### Define constants
-Next, we will define the constants that we will be using for this guide.
+### Define Constants
+
+Next, we will define the constants that we will be using for this guide. This includes the following:
+- `NETWORK_URL`: Kyber's API Base URL
+- `PRIVATE_KEY`: The private key which we will be sending transactions from
+- `PLATFORM_WALLET`: The wallet address for which we can get commission fees from. Read more about platform fees [here](integrations-platformfees.md)
+- `PLATFORM_FEE`: Platform fee amount to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md)
+- `SRC_TOKEN_ADDRESS`: Ropsten KNC address
+- `DEST_TOKEN_ADDRESS`: Ropsten DAI address
+- `SRC_QTY`: 100 KNC tokens
+- `GAS_PRICE`: The gas price to use (affects the tx speed)
+
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-//Base URL for API queries
-//Refer to API/ABI >> RESTFul API Overview >> Network URL section
-const NETWORK_URL = `https://${NETWORK == "mainnet" ? "" : NETWORK + "-"}api.kyber.network`;
+// Base URL for API queries
+// Refer to API/ABI >> RESTFul API Overview >> Network URL section
+const NETWORK_URL = `https://${NETWORK == "main" ? "" : NETWORK + "-"}api.kyber.network`;
 
-//User Details
-const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); // Remove the 0x prefix
-const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address;
+// User Details
+const PRIVATE_KEY = "PRIVATE_KEY"; // Eg. 0x40ddbce3c7df9ab8d507d6b4af3861d224711b35299470ab7a217f780fe696cd
+const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+const USER_ADDRESS = wallet.address;
 
-// Wallet Address for Fee Sharing Program
-const REF_ADDRESS = "0x483C5100C3E544Aef546f72dF4022c8934a6945E";
+// Wallet Address for platform fees
+const PLATFORM_WALLET = "PLATFORM_WALLET"; // Eg. 0x483C5100C3E544Aef546f72dF4022c8934a6945E
+const PLATFORM_FEE = 25; // 0.25%
 
-//Token Addresses
-const BAT_TOKEN_ADDRESS = "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6"; //Ropsten BAT token address
-const DAI_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; //Ropsten DAI token address
+// Token Addresses
+const SRC_TOKEN_ADDRESS = "0x7b2810576aa1cce68f2b118cef1f36467c648f92"; // Ropsten KNC token address
+const DEST_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; // Ropsten DAI token address
 
-//Token Quantity
-const BAT_QTY = 100; //100 BAT tokens to swap from
+// Src Token Quantity
+const SRC_QTY = 100; // 100 KNC tokens to swap from
 
-//Gas amount affecting speed of tx
+// Gas amount affecting speed of tx
 const GAS_PRICE = "medium";
 ```
 
-### Define function for broadcasting transactions
-We will refactor the broadcast transaction functionality into its own function.
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
+### Check Token Support
 
-async function broadcastTx(rawTx) {
-  // Extract raw tx details, create a new Tx
-  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });
-  // Sign the transaction
-  tx.sign(PRIVATE_KEY);
-  // Serialize the transaction (RLP Encoding)
-  const serializedTx = tx.serialize();
-  // Broadcast the tx
-  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error));
-  // Log the tx receipt
-  console.log(txReceipt);
-}
-```
-
-### Check if BAT and DAI tokens are supported
-Create a function to check whether a token is supported on Kyber. We make use of the `/currencies` endpoint, which returns basic information about all tokens supported on Kyber. Details about possible path parameters and output fields can be [found here](api_abi-restfulapi.md#currencies).
+We first have to check if the traded tokens are supported on Kyber. We make use of the `/currencies` endpoint, which returns basic information about all tokens supported on Kyber. Details about possible path parameters and output fields can be [found here](api_abi-restfulapi.md#currencies).
 
 It is recommended to use the token contract address as the identifier instead of the token symbol, as multiple tokens may share the same symbol.
 
@@ -110,206 +120,6 @@ It is recommended to use the token contract address as the identifier instead of
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-function caseInsensitiveEquals(a, b) {
-  return typeof a === 'string' && typeof b === 'string' ?
-    a.localeCompare(b, undefined, {
-      sensitivity: 'accent'
-    }) === 0 :
-    a === b;
-}
-
-async function isTokenSupported(tokenAddress) {
-  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies`);
-  let tokensBasicInfo = await tokensBasicInfoRequest.json();
-  let tokenSupported = tokensBasicInfo.data.some(token => {
-    return caseInsensitiveEquals(tokenAddress, token.id)
-  });
-  if (!tokenSupported) {
-    console.log('Token is not supported');
-  }
-  return tokenSupported;
-}
-```
-
-### Check and Approve Bat token contract
-We use the `/users/<user_address>/currencies` endpoint to check whether the KyberNetwork contract has been approved for selling BAT tokens on behalf of the user. This endpoints returns a JSON of enabled statuses of ERC20 tokens for the given walletAddress. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#users-user-address-currencies).
-
-If the BAT token is not enabled for trading, querying the `users/<user_address>/currencies/<currency_id>/enable_data?gas_price=<gas_price>` endpoint returns a transaction payload needed to be signed and broadcasted by the user to enable the KyberNetwork contract to trade BAT tokens on his behalf. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#users-user-address-currencies-currency-id-enable-data).
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
-  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);
-  let enabledStatuses = await enabledStatusesRequest.json();
-  let txsRequired = 0;
-  for (let token of enabledStatuses.data) {
-    if (caseInsensitiveEquals(tokenAddress, token.id)) {
-      txsRequired = token.txs_required;
-      break;
-    }
-  }
-  switch (txsRequired) {
-    case 1:
-      console.log("Approving to max amount");
-      // No allowance so approve to maximum amount (2^255)
-      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
-      break;
-    case 2:
-      // Allowance has been given but is insufficient.
-      // Have to approve to 0 first to avoid this issue https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-      // Approve to 0
-      console.log("Approving to 0");
-      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
-      // Approve to maximum amount (2^255)
-      console.log("Approving to max amount");
-      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
-      break;
-    default:
-      // Shouldn't need to do anything else in other scenarios.
-      break;
-  }
-}
-
-async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
-  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`);
-  let enableTokenDetails = await enableTokenDetailsRequest.json();
-  let rawTx = enableTokenDetails.data;
-  await broadcastTx(rawTx);
-}
-```
-
-### Get DAI token amount receivable
-Create a function to get an approximate of the destination token amount for the specified amount of source token. We will use the `/quote_amount` endpoint in this function. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#quote_amount).
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-async function getQuoteAmount(srcToken, destToken, srcQty) {
-  let quoteAmountRequest = await fetch(`${NETWORK_URL}/quote_amount?base=${srcToken}&quote=${destToken}&base_amount=${srcQty}&type=sell`)
-  let quoteAmount = await quoteAmountRequest.json();
-  quoteAmount = quoteAmount.data;
-  return quoteAmount * 0.97;
-}
-```
-
-### Convert BAT to DAI
-We now have all the required information to peform the trade transaction. Querying `https://api.kyber.network/trade_data?user_address=<user_address>&src_id=<src_id>&dst_id=<dst_id>&src_qty=<src_qty>&min_dst_qty=<min_dst_qty>&gas_price=<gas_price>&wallet_id=<wallet_id>&only_official_reserve=false` will return the transaction payload to be signed and broadcasted by the user to make the conversion. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#trade_data).
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-async function executeTrade(useraddress, srcToken, dstToken, srcQty, minDstQty, gasPrice, refAddress) {
-  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}`);
-  let tradeDetails = await tradeDetailsRequest.json();
-  let rawTx = tradeDetails.data[0];
-  await broadcastTx(rawTx);
-}
-```
-
-### Define Main function
-The main function will combine the different functions together to obtain the conversion rate, check that conditions are met for the trade, and execute the trade.
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-async function main() {
-  //Step 1: If either token is not supported, quit
-  if (!await isTokenSupported(BAT_TOKEN_ADDRESS) || !await isTokenSupported(DAI_TOKEN_ADDRESS)) {
-    // Quit the program
-    process.exit(0);
-  }
-
-  //Step 2: Check if BAT token is enabled. If not, enable.
-  await checkAndApproveTokenContract(BAT_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
-
-  // Step 3: Get expected DAI qty from selling 100 BAT tokens
-  let minDstQty = await getQuoteAmount(BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY);
-
-  //Step 4: Perform the BAT -> DAI trade
-  await executeTrade(USER_ADDRESS, BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY, minDstQty, GAS_PRICE, REF_ADDRESS);
-
-  // Quit the program
-  process.exit(0);
-}
-```
-
-### Full code example
-Before running this code example, the following fields need to be modified:
-1. Change `ENTER_PROJECT_ID` to your Infura Project ID.
-2. Change `ENTER_USER_PRIVATE_KEY` to the private key (without `0x` prefix) of the Ethereum wallet holding Ether
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-// Importing the relevant packages
-const Web3 = require("web3");
-const Tx = require("ethereumjs-tx").Transaction;
-const fetch = require('node-fetch');
-
-// Connecting to infura node
-const NETWORK = "ropsten"
-const PROJECT_ID = "ENTER_PROJECT_ID" //Replace this with your own Project ID
-const WS_PROVIDER = `wss://${NETWORK}.infura.io/ws/v3/${PROJECT_ID}`
-const web3 = new Web3(new Web3.providers.WebsocketProvider(WS_PROVIDER));
-
-//Base URL for API queries
-//Refer to API/ABI >> RESTFul API Overview >> Network URL section
-const NETWORK_URL = `https://${NETWORK == "main" ? "" : NETWORK + "-"}api.kyber.network`;
-
-//User Details
-const PRIVATE_KEY = Buffer.from("ENTER_USER_PRIVATE_KEY", "hex"); // Remove the 0x prefix
-const USER_ADDRESS = web3.eth.accounts.privateKeyToAccount("0x" + PRIVATE_KEY.toString('hex')).address;
-
-// Wallet Address for Fee Sharing Program
-const REF_ADDRESS = "0x483C5100C3E544Aef546f72dF4022c8934a6945E";
-
-//Token Addresses
-const BAT_TOKEN_ADDRESS = "0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6"; //Ropsten BAT token address
-const DAI_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; //Ropsten DAI token address
-
-//Token Quantity
-const BAT_QTY = 100; //100 BAT tokens to swap from
-
-//Gas amount affecting speed of tx
-const GAS_PRICE = "medium";
-
-async function main() {
-  //Step 1: If either token is not supported, quit
-  if (!await isTokenSupported(BAT_TOKEN_ADDRESS) || !await isTokenSupported(DAI_TOKEN_ADDRESS)) {
-    // Quit the program
-    process.exit(0);
-  }
-
-  //Step 2: Check if BAT token is enabled. If not, enable.
-  await checkAndApproveTokenContract(BAT_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
-
-  // Step 3: Get expected DAI qty from selling 100 BAT tokens
-  let minDstQty = await getQuoteAmount(BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY);
-
-  //Step 4: Perform the BAT -> DAI trade
-  await executeTrade(USER_ADDRESS, BAT_TOKEN_ADDRESS, DAI_TOKEN_ADDRESS, BAT_QTY, minDstQty, GAS_PRICE, REF_ADDRESS);
-
-  // Quit the program
-  process.exit(0);
-}
-
-function caseInsensitiveEquals(a, b) {
-  return typeof a === 'string' && typeof b === 'string' ?
-    a.localeCompare(b, undefined, {
-      sensitivity: 'accent'
-    }) === 0 :
-    a === b;
-}
-
 async function isTokenSupported(tokenAddress) {
   let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies`);
   let tokensBasicInfo = await tokensBasicInfoRequest.json();
@@ -322,7 +132,27 @@ async function isTokenSupported(tokenAddress) {
   return tokenSupported;
 }
 
-async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice) {
+function caseInsensitiveEquals(a, b) {
+  return typeof a === 'string' && typeof b === 'string' ?
+    a.localeCompare(b, undefined, {
+      sensitivity: 'accent'
+    }) === 0 :
+    a === b;
+}
+```
+
+### Check Source Token Approval
+
+We use the `/users/<user_address>/currencies` endpoint to check whether the proxy contract has been approved for selling source tokens on behalf of the user. This endpoints returns a JSON of enabled statuses of ERC20 tokens for the given walletAddress. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#users-user-address-currencies).
+
+If the source token is not enabled for trading, querying the `users/<user_address>/currencies/<currency_id>/enable_data` endpoint returns a transaction payload needed to be signed and broadcasted by the user to enable the KyberNetwork contract to trade source tokens on his behalf. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#users-user-address-currencies-currency-id-enable-data).
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+async function checkAndApproveTokenForTrade(tokenAddress, userAddress, gasPrice) {
   let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);      
   let enabledStatuses = await enabledStatusesRequest.json();
   let txsRequired = 0;
@@ -355,62 +185,470 @@ async function checkAndApproveTokenContract(tokenAddress, userAddress, gasPrice)
 }
 
 async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
-  let enableTokenDetailsRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`);
+  let enableTokenDetailsRequest = await fetch(
+    `${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`
+    );
   let enableTokenDetails = await enableTokenDetailsRequest.json();
-  let rawTx = enableTokenDetails.data;
-  await broadcastTx(rawTx);
+  await wallet.sendTransaction(enableTokenDetails.data);
 }
-
-async function broadcastTx(rawTx) {
-  // Extract raw tx details, create a new Tx
-  let tx = new Tx(rawTx, { chain: NETWORK, hardfork: 'petersburg' });
-  // Sign the transaction
-  tx.sign(PRIVATE_KEY);
-  // Serialize the transaction (RLP Encoding)
-  const serializedTx = tx.serialize();
-  // Broadcast the tx
-  txReceipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).catch(error => console.log(error));
-  // Log the tx receipt
-  console.log(txReceipt);
-}
-
-async function getQuoteAmount(srcToken, destToken, srcQty) {
-  let quoteAmountRequest = await fetch(`${NETWORK_URL}/quote_amount?base=${srcToken}&quote=${destToken}&base_amount=${srcQty}&type=sell`)
-  let quoteAmount = await quoteAmountRequest.json();
-  quoteAmount = quoteAmount.data;
-  return quoteAmount * 0.97;
-}
-
-async function executeTrade(useraddress, srcToken, dstToken, srcQty, minDstQty, gasPrice, refAddress) {
-  let tradeDetailsRequest = await fetch(`${NETWORK_URL}/trade_data?user_address=${useraddress}&src_id=${srcToken}&dst_id=${dstToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}&gas_price=${gasPrice}&wallet_id=${refAddress}`);
-  let tradeDetails = await tradeDetailsRequest.json();
-  let rawTx = tradeDetails.data[0];
-  await broadcastTx(rawTx);
-}
-
-main();
 ```
 
-## Scenario 2: Obtaining Token and Market Info
-### Basic Token Information
-The `/currencies` endpoint returns basic information about all tokens supported on Kyber. Details about possible path parameters and output fields can be [found here](api_abi-restfulapi.md#currencies).
+### Get Destination Token Amount Receivable
 
-#### Code Example
+Create a function to get an approximate of the destination token amount for the specified amount of source token. We will use the `/quote_amount` endpoint in this function. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#quote_amount).
+
+**Note:** 
+- The rates via the API are cached, so the `/quote_amount` **does not support reserve routing and platform fees**. Those have to be accounted for separately.
+
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const fetch = require('node-fetch')
+async function getQuoteAmount(srcToken, destToken, srcQty) {
+  const BPS = 10000;
+  // account for platform fees: subtracted from srcQty
+  let srcQtyAfterPlatformFee = srcQty * (BPS - PLATFORM_FEE) / BPS;
+  let quoteAmountRequest = await fetch(
+    `${NETWORK_URL}/quote_amount?base=${srcToken}&quote=${destToken}&base_amount=${srcQtyAfterPlatformFee}&type=sell`
+    );
+  let quoteAmount = await quoteAmountRequest.json();
+  return quoteAmount.data;
+}
+```
+
+### Trade Execution
+
+We now have all the required information to peform the trade transaction. Querying the `/trade_data` endpoint will return the transaction payload to be signed and broadcasted by the user to make the conversion. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#trade_data).
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+async function executeTrade(userAddress, srcToken, destToken, srcQty, minDstQty, gasPrice, platformWallet, platformFee) {
+  let tradeDetailsRequest = await fetch(
+    `${NETWORK_URL}/trade_data?user_address=${userAddress}&src_id=${srcToken}` + 
+    `&dst_id=${destToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}` + 
+    `&gas_price=${gasPrice}&wallet_id=${platformWallet}&wallet_fee=${platformFee}`
+    );
+
+  let tradeDetails = await tradeDetailsRequest.json();
+  await wallet.sendTransaction(tradeDetails.data[0]);
+}
+```
+
+### Tying Everything Together
+
+The main function will combine the different functions together to obtain the conversion rate, check that conditions are met for the trade, and execute the trade.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+async function main() {
+  // Step 1: If either token is not supported, quit
+  if (!await isTokenSupported(SRC_TOKEN_ADDRESS) || !await isTokenSupported(DEST_TOKEN_ADDRESS)) {
+    // Quit the program
+    process.exit(0);
+  }
+
+  // Step 2: Check if KNC token is enabled. If not, enable.
+  await checkAndApproveTokenForTrade(SRC_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
+
+  // Step 3: Get expected DAI qty from selling 100 KNC tokens
+  let minDstQty = await getQuoteAmount(SRC_TOKEN_ADDRESS, DEST_TOKEN_ADDRESS, SRC_QTY);
+
+  // Step 4: Perform the KNC -> DAI trade
+  await executeTrade(USER_ADDRESS, SRC_TOKEN_ADDRESS, DEST_TOKEN_ADDRESS, SRC_QTY, minDstQty, GAS_PRICE, PLATFORM_WALLET, PLATFORM_FEE);
+
+  // Quit the program
+  process.exit(0);
+}
+```
+
+### Full Code Example
+Before running this code example, the following fields need to be modified:
+1. Change `INFURA_PROJECT_ID` to your Infura Project ID.
+2. Change `PRIVATE_KEY` to the private key (with `0x` prefix) of the Ethereum wallet holding Ether.
+3. Change `PLATFORM_WALLET` to a wallet address for platform fees.
+
+```js
+const ethers = require('ethers');
+const fetch = require('node-fetch');
+
+// Connecting to a provider
+const NETWORK = "ropsten"
+const PROJECT_ID = "INFURA_PROJECT_ID" // Replace this with your own Project ID
+const provider = new ethers.getDefaultProvider(NETWORK, {'infura': PROJECT_ID});
+
+// Base URL for API queries
+// Refer to API/ABI >> RESTFul API Overview >> Network URL section
+const NETWORK_URL = `https://${NETWORK == "main" ? "" : NETWORK + "-"}api.kyber.network`;
+
+// User Details
+const PRIVATE_KEY = "PRIVATE_KEY"; // Eg. 0x40ddbce3c7df9ab8d507d6b4af3861d224711b35299470ab7a217f780fe696cd
+const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+const USER_ADDRESS = wallet.address;
+
+// Wallet Address for platform fees
+const PLATFORM_WALLET = "PLATFORM_WALLET"; // Eg. 0x483C5100C3E544Aef546f72dF4022c8934a6945E
+const PLATFORM_FEE = 25; // 0.25%
+
+// Token Addresses: Use 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for ETH
+const SRC_TOKEN_ADDRESS = "0x7b2810576aa1cce68f2b118cef1f36467c648f92"; // Ropsten KNC token address
+const DEST_TOKEN_ADDRESS = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; // Ropsten DAI token address
+
+// Src Token Quantity
+const SRC_QTY = 100; // 100 KNC tokens to swap from
+
+// Gas amount affecting speed of tx
+const GAS_PRICE = "medium";
+
+async function main() {
+  // Step 1: If either token is not supported, quit
+  if (!await isTokenSupported(SRC_TOKEN_ADDRESS) || !await isTokenSupported(DEST_TOKEN_ADDRESS)) {
+    // Quit the program
+    process.exit(0);
+  }
+
+  // Step 2: Check if KNC token is enabled. If not, enable.
+  await checkAndApproveTokenForTrade(SRC_TOKEN_ADDRESS, USER_ADDRESS, GAS_PRICE)
+
+  // Step 3: Get expected DAI qty from selling 100 KNC tokens
+  let minDstQty = await getQuoteAmount(SRC_TOKEN_ADDRESS, DEST_TOKEN_ADDRESS, SRC_QTY);
+
+  // Step 4: Perform the KNC -> DAI trade
+  await executeTrade(USER_ADDRESS, SRC_TOKEN_ADDRESS, DEST_TOKEN_ADDRESS, SRC_QTY, minDstQty, GAS_PRICE, PLATFORM_WALLET, PLATFORM_FEE);
+
+  // Quit the program
+  process.exit(0);
+}
+
+async function isTokenSupported(tokenAddress) {
+  let tokensBasicInfoRequest = await fetch(`${NETWORK_URL}/currencies`);
+  let tokensBasicInfo = await tokensBasicInfoRequest.json();
+  let tokenSupported = tokensBasicInfo.data.some(token => {
+    return caseInsensitiveEquals(tokenAddress, token.id)
+  });
+  if (!tokenSupported) {
+    console.log('Token is not supported');
+  }
+  return tokenSupported;
+}
+
+function caseInsensitiveEquals(a, b) {
+  return typeof a === 'string' && typeof b === 'string' ?
+    a.localeCompare(b, undefined, {
+      sensitivity: 'accent'
+    }) === 0 :
+    a === b;
+}
+
+async function checkAndApproveTokenForTrade(tokenAddress, userAddress, gasPrice) {
+  let enabledStatusesRequest = await fetch(`${NETWORK_URL}/users/${userAddress}/currencies`);      
+  let enabledStatuses = await enabledStatusesRequest.json();
+  let txsRequired = 0;
+  for (let token of enabledStatuses.data) {
+    if (caseInsensitiveEquals(tokenAddress, token.id)) {
+      txsRequired = token.txs_required;
+      break;
+    }
+  }
+  switch (txsRequired) {
+    case 1:
+      console.log("Approving to max amount");
+      // No allowance so approve to maximum amount (2^255)
+      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
+      break;
+    case 2:
+      // Allowance has been given but is insufficient.
+      // Have to approve to 0 first to avoid this issue https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+      // Approve to 0
+      console.log("Approving to 0");
+      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
+      // Approve to maximum amount (2^255)
+      console.log("Approving to max amount");
+      await enableTokenTransfer(tokenAddress, userAddress, gasPrice);
+      break;
+    default:
+      // Shouldn't need to do anything else in other scenarios.
+      break;
+  }
+}
+
+async function enableTokenTransfer(tokenAddress, userAddress, gasPrice) {
+  let enableTokenDetailsRequest = await fetch(
+    `${NETWORK_URL}/users/${userAddress}/currencies/${tokenAddress}/enable_data?gas_price=${gasPrice}`
+    );
+  let enableTokenDetails = await enableTokenDetailsRequest.json();
+  await wallet.sendTransaction(enableTokenDetails.data);
+}
+
+async function getQuoteAmount(srcToken, destToken, srcQty) {
+  const BPS = 10000;
+  // account for platform fees: subtracted from srcQty
+  let srcQtyAfterPlatformFee = srcQty * (BPS - PLATFORM_FEE) / BPS;
+  let quoteAmountRequest = await fetch(
+    `${NETWORK_URL}/quote_amount?base=${srcToken}&quote=${destToken}&base_amount=${srcQtyAfterPlatformFee}&type=sell`
+    );
+  let quoteAmount = await quoteAmountRequest.json();
+  return quoteAmount.data;
+}
+
+async function executeTrade(userAddress, srcToken, destToken, srcQty, minDstQty, gasPrice, platformWallet, platformFee) {
+  let tradeDetailsRequest = await fetch(
+    `${NETWORK_URL}/trade_data?user_address=${userAddress}&src_id=${srcToken}` + 
+    `&dst_id=${destToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}` + 
+    `&gas_price=${gasPrice}&wallet_id=${platformWallet}&wallet_fee=${platformFee}`
+    );
+
+  let tradeDetails = await tradeDetailsRequest.json();
+  await wallet.sendTransaction(tradeDetails.data[0]);
+}
+
+main();
+```
+
+## Reserve Routing
+
+### Overview
+
+In previous network versions, the `hint` parameter was used to filter permissionless reserves. With Katalyst, we utilise this parameter for routing trades to specific reserves.
+
+There are 4 optional routing rules:
+1.  **`BestOfAll`** - This is the default routing rule when no hint is provided, and is the classic reserve matching algorithm used by the Kyber smart contracts since the beginning.
+2.  **`MaskIn` (Whitelist)** - Specify a list of reserves to be *included* and perform the `BestOfAll` routing on them
+3.  **`MaskOut` (Blacklist)** - Specify a list of reserves to be *excluded* and perform the `BestOfAll` routing on the remaining reserves
+4.  **`Split`** - Specify a list of reserves and their respective percentages of the total `srcQty` that will be routed to each reserve.
+
+For token -> token trades, you can specify a routing rule for each half. For example, a `MaskIn` route can be used for the token -> ether side, while a `Split` route can be used for the ether -> token side.
+
+### Fetching Reserve Information
+
+Query the `/reserves` endpoint to get a list of supporting reserves for a trade. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#reserves).
+
+The `id` return parameter will be useful for building hints.
+
+#### Examples
+
+Get reserves information for a WBTC -> ETH trade.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
+
+async function fetchReservesInformation() {
+  let token = '0x3dff0dce5fc4b367ec91d31de3837cf3840c8284'; // Ropsten WBTC address
+  let type = 'sell'; // token -> ether
+
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
+  let reserveInfo = (await reserveInfoRequest.json()).data;
+}
+
+await fetchReservesInformation();
+```
+
+Get reserves information for a ETH -> KNC trade.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
+
+async function fetchReservesInformation() {
+  let token = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
+  let type = 'buy'; // ether -> token
+
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${token}&type=${type}`);
+  let reserveInfo = (await reserveInfoRequest.json()).data;
+}
+
+await fetchReservesInformation();
+```
+
+### Building Hints
+
+Querying the `/hint` endpoint will return data needed for the `hint` input parameter for the `/trade_data` endpoint. Details about the path parameters and output fields can be [found here](api_abi-restfulapi.md#hint).
+
+#### Examples
+
+Build a KNC -> ETH `MaskIn` hint selecting the first reserve.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
+
+async function buildHint() {
+  // Fetch reserves for KNC -> ETH trade, select the first reserve
+  let srcToken = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
+  let type = 'sell'; // token -> ether
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${srcToken}&type=${type}`);
+  let reserveInfo = await reserveInfoRequest.json();
+  // Choose first reserve
+  let reserveId = reserveInfo.data[0].id;
+
+  // Other /hint endpoint parameters
+  type = 't2e'; // token -> ether
+  let tradeType = 'maskin';
+
+  let hintRequest = await fetch(`${NETWORK_URL}/hint?type=${type}&token_src=${srcToken}&trade_type=${tradeType}&reserve_id=${reserveId}`);
+  let hint = (await hintRequest.json()).data;
+}
+
+await buildHint();
+```
+
+Build a ETH -> WBTC `MaskOut` hint excluding the first reserve.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
+
+async function buildHint() {
+  // Fetch reserves for ETH -> WBTC trade, select the first reserve
+  let destToken = '0x3dff0dce5fc4b367ec91d31de3837cf3840c8284'; // Ropsten WBTC address
+  let type = 'buy'; // ether -> token
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${destToken}&type=${type}`);
+  let reserveInfo = await reserveInfoRequest.json();
+  // Choose first reserve to be excluded
+  let reserveId = reserveInfo.data[0].id;
+
+  // Other /hint endpoint parameters
+  type = 'e2t'; // ether -> token
+  let tradeType = 'maskout';
+
+  let hintRequest = await fetch(`${NETWORK_URL}/hint?type=${type}&token_dest=${destToken}&trade_type=${tradeType}&reserve_id=${reserveId}`);
+  let hint = (await hintRequest.json()).data;
+}
+
+await buildHint();
+```
+
+Build a KNC -> WBTC hint with the following routes:
+- KNC -> ETH: `Split` trade among 2 reserves:
+  - 1st reserve trades 70%, 2nd reserves trades 30%
+- ETH -> WBTC: `BestOfAll` trade
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
+
+async function buildHint() {
+  // Fetch reserves for KNC -> ETH trade, select 2 reserves
+  let srcToken = '0x7b2810576aa1cce68f2b118cef1f36467c648f92'; // Ropsten KNC address
+  let type = 'sell'; // token -> ether
+  let reserveInfoRequest = await fetch(`${NETWORK_URL}/reserves?token=${srcToken}&type=${type}`);
+  let reserveInfo = await reserveInfoRequest.json();
+  let firstReserve = reserveInfo.data[0].id;
+  let secondReserve = reserveInfo.data[1].id;
+
+  // Other /hint endpoint parameters
+  type = 't2t'; // token -> token
+  let firstTradeType = 'split';
+  let secondTradeType = 'bestofall';
+  let destToken = '0x3dff0dce5fc4b367ec91d31de3837cf3840c8284'; // Ropsten WBTC address
+  let firstSplit = '7000';
+  let secondSplit = '3000';
+
+  let hintRequest = await fetch(`${NETWORK_URL}/hint?type=${type}&trade_type=${firstTradeType}&token_src=${srcToken}&reserve_id=${firstReserve},${secondReserve}&split_value=${firstSplit},${secondSplit}&trade_type=${secondTradeType}&token_dest=${destToken}`);
+  let hint = (await hintRequest.json()).data;
+}
+
+await buildHint();
+```
+
+### Using Hints
+
+Pass in the built hint into the `/trade_data` endpoint.
+
+#### Example
+
+Get the parameters needed for a 100 KNC -> DAI trade with `MaskIn` reserve routing for KNC -> ETH.
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+const fetch = require('node-fetch');
+const NETWORK_URL = 'ropsten-api.kyber.network';
+
+async function getTradeParams() {
+  // Building hint
+  let type = 't2e';
+  let srcToken = "0x7b2810576aa1cce68f2b118cef1f36467c648f92"; // Ropsten KNC token address
+  let tradeType = 'maskin';
+  let reserveId = '0xff00004b79626572000000000000000000000000000000000000000000000000';
+
+  let hintRequest = await fetch(`${NETWORK_URL}/hint?type=${type}&token_src=${srcToken}&trade_type=${tradeType}&reserve_id=${reserveId}`);
+  let hint = (await hintRequest.json()).data;
+  
+
+  // Trade Parameters
+  let userAddress = '0x483C5100C3E544Aef546f72dF4022c8934a6945E';
+  let destToken = "0xaD6D458402F60fD3Bd25163575031ACDce07538D"; // Ropsten DAI token address
+  let srcQty = 100;
+  let minDstQty = 1;
+  let gasPrice = 'medium';
+  let platformWallet = '0x483C5100C3E544Aef546f72dF4022c8934a6945E';
+  let platformFee = 25; // 0.25%
+
+  let tradeDetailsRequest = await fetch(
+      `${NETWORK_URL}/trade_data?user_address=${userAddress}&src_id=${srcToken}` + 
+      `&dst_id=${destToken}&src_qty=${srcQty}&min_dst_qty=${minDstQty}` + 
+      `&gas_price=${gasPrice}&wallet_id=${platformWallet}&wallet_fee=${platformFee}` + 
+      `&hint=${hint}`
+      );
+  
+  let tradeDetails = (await tradeDetailsRequest.json()).data;
+}
+```
+
+## Obtaining Token and Market Info
+### Basic Token Information
+
+The `/currencies` endpoint returns basic information about all tokens supported on Kyber. Details about possible path parameters and output fields can be [found here](api_abi-restfulapi.md#currencies).
+
+#### Example
+
+```js
+// DISCLAIMER: Code snippets in this guide are just examples and you
+// should always do your own testing. If you have questions, visit our
+// https://t.me/KyberDeveloper.
+
+const fetch = require('node-fetch');
 
 async function getSupportedTokens() {
-  let tokensBasicInfoRequest = await fetch('https://api.kyber.network/currencies?only_official_reserve=false')
-  let tokensBasicInfo = await tokensBasicInfoRequest.json()
-  console.log(tokensBasicInfo)
+  let tokensBasicInfoRequest = await fetch('https://api.kyber.network/currencies');
+  let tokensBasicInfo = await tokensBasicInfoRequest.json();
+  console.log(tokensBasicInfo);
+  return tokensBasicInfo;
 }
 
 await getSupportedTokens()
 ```
+
 #### Output
 ```json
 {  
@@ -444,20 +682,23 @@ await getSupportedTokens()
 ```
 
 ### Token Price & Volume Information
+
 The `/market` endpoint returns price and volume information on token to ETH pairs supported on Kyber. Details about possible path parameters and output fields can be [found here](api_abi-restfulapi.md#market).
 
-#### Code Example
+#### Example
+
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
 
 async function getMarketInformation() {
-  let marketInfoRequest = await fetch('https://api.kyber.network/market?only_official_reserve=false')
-  let marketInfo = await marketInfoRequest.json()
-  return marketInfo
+  let marketInfoRequest = await fetch('https://api.kyber.network/market');
+  let marketInfo = await marketInfoRequest.json();
+  console.log(tokensBasicInfo);
+  return marketInfo;
 }
 
 await getMarketInformation()
@@ -501,20 +742,23 @@ await getMarketInformation()
 ```
 
 ### Token/ETH and Token/USD Price Information
+
 The `/change24h` endpoint returns current token to ETH and USD rates and price percentage changes against the previous day. Details about possible path parameters and output fields can be [found here](api_abi-restfulapi.md#change24h).
 
-#### Code Example
+#### Example
+
 ```js
 // DISCLAIMER: Code snippets in this guide are just examples and you
 // should always do your own testing. If you have questions, visit our
 // https://t.me/KyberDeveloper.
 
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
 
 async function getPast24HoursTokenInformation() {
-  let past24HoursTokenInfoRequest = await fetch('https://api.kyber.network/change24h?only_official_reserve=false')
-  let past24HoursTokenInfo = await past24HoursTokenInfoRequest.json()
-  return past24HoursTokenInfo
+  let past24HoursTokenInfoRequest = await fetch('https://api.kyber.network/change24h')
+  let past24HoursTokenInfo = await past24HoursTokenInfoRequest.json();
+  console.log(past24HoursTokenInfo);
+  return past24HoursTokenInfo;
 }
 
 await getPast24HoursTokenInformation()
@@ -548,9 +792,3 @@ await getPast24HoursTokenInformation()
   ...
 }
 ```
-
-## Inclusion of Permissionless Reserves
-By default, the RESTful APIs only interact with reserves that were added in a **permissioned** manner. Most of these endpoints support a `only_official_reserve` parameter for the inclusion of permissionless reserves ([see RESTful API](api_abi-restfulapi.md)). You may find more information about the difference between permissioned and permissionless reserves [in this section](reserves-types.md#permissionless-vs-permissioned).
-
-## Fee Sharing Program
-You have the opportunity to join our *Fee Sharing Program*, which allows fee sharing on each swap that originates from your platform. Learn more about the program [here](integrations-feesharing.md)!

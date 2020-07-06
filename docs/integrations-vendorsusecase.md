@@ -11,7 +11,7 @@ The following diagram indicates how interacting with Kyber's protocol implementa
 
 Projects such as EDCON and Hodlmoon will be taking advantage of Kyber's protocol implementation to allow for payments in a wide range of tokens and currencies.
 
-Vendors also have the opportunity to join Kyber's *Fee Sharing Program*, which allows fee sharing for each payment originating from your business. Learn more about the program [here](integrations-feesharing.md)!
+Vendors also have the opportunity to incorporate a commission fee into each payment originating from their business. Learn more about platform fees [here](integrations-platformfees.md)!
 
 ## Integrate Your Platform
 The common methods existing vendors use to integrate with our protocol implementation are the **widgets** and **plugins**. Explore the [widgets](integrations-kyberwidgetguide.md) and [plugins](integrations-woocommercepluginguide.md) guides to learn more!

@@ -8,16 +8,16 @@ The three main components of any implementation of the Kyber protocol are the Ky
 
 ![Smart Contract Overview](/uploads/smartcontractoverview.png "Smart Contract Overview")
 
-In our implementation of the protocol, these 3 components are represented by the `KyberNetwork.sol` and `KyberReserveInterface.sol` contracts. The `KyberNetwork.sol` contract will act as a single endpoint for makers and takers to interface with in order to interact with our liquidity network. Moreover, the contract will also contain a list of registered reserves that will be iterated through when processing a trade.
+In our implementation of the protocol, these 3 components are represented by the `KyberNetwork.sol` and `IKyberReserve.sol` contracts. The `KyberNetworkProxy.sol` contract will act as a single endpoint for makers and takers to interface with in order to interact with our liquidity network. The contract will also contain a list of registered reserves that will be iterated through when processing a trade.
 
-We designed our solution with upgradeability in mind therefore additional auxiliary contracts (for example, `ExpectedRate.sol`, `FeeBurner.sol` and `KyberNetworkProxy.sol`) will be deployed to help the main `KyberNetwork.sol` contract achieve the core functionalities of the protocol.
+With upgradeability in mind, we have designed some auxiliary contracts, such as `KyberMatchingEngine.sol`, `KyberFeeHandler.sol` and `KyberStorage.sol`, will be deployed to help the main `KyberNetwork.sol` contract achieve the core functionalities of the protocol.
 
 ## Reserves Overview
-The `KyberReserveInterface.sol` is the interface that all reserve implementations are required to adhere to.
+The `IKyberReserve.sol` is the interface that all reserve implementations are required to adhere to.
 
 ![Kyber Reserve Interface Overview](/uploads/kyberreserveinterfaceoverview.png "Kyber Reserve Interface Overview")
 
-Our existing codebase contains 3 types of reserves; Fed Price Reserve, Automated Price Reserve and the Orderbook Reserve. The functions of these reserves are encapsulated within the `KyberReserve.sol` and `OrderbookReserve.sol` contracts. While each reserve type was designed with different features in mind, they share a common goal of contributing liquidity to the network.
+Our existing codebase contains 3 types of reserves; Fed Price Reserve, Automated Price Reserve and the Orderbook Reserve. The functions of these reserves are encapsulated within the `KyberReserve.sol` contract. While each reserve type was designed with different features in mind, they share a common goal of contributing liquidity to the network.
 
 ### Fed Price Reserve
 ![Fed Price Reserve](/uploads/fedpricereserve.png "Fed Price Reserve")
@@ -34,27 +34,33 @@ The Automated Price Reserve (APR) is the second type of reserve, which was desig
 Like the FPR, the APR can also be represented by the `KyberReserve.sol` contract. Reserve managers will instead interact with the `LiquidityConversionRates.sol` contract to [set the initial liquidity parameters](api_abi-liquidityconversionrates.md#setliquidityparams).
 
 ### Orderbook Reserve
-![Orderbook Reserve](/uploads/orderbookreserve.png "Orderbook Reserve")
+
+The Orderbook Reserve will be updated to be compatible with the Katalyst upgrade.
+<!-- ![Orderbook Reserve](/uploads/orderbookreserve.png "Orderbook Reserve")
 
 The Orderbook reserve (OR) is another type of reserve which is defined by the `OrderbookReserve.sol` contract. For every instance of the OR, 2 instances of the `OrderList.sol` contracts are needed to keep track of the bid and ask limit orders respectively.
 
-The 2 main features that sets the OR apart from other reserve types is that this is the first reserve type that can be deployed permissionlessly, i.e. any user can create a reserve for any token. Additionally, anyone can contribute to an orderbook reserve and make limit orders to help provide liquidity to the network.  
+The 2 main features that sets the OR apart from other reserve types is that this is the first reserve type that can be deployed permissionlessly, i.e. any user can create a reserve for any token. Additionally, anyone can contribute to an orderbook reserve and make limit orders to help provide liquidity to the network.   -->
 
 ## Maintainer Overview
 ![Maintainer Overview](/uploads/maintaineroverview.png "Maintainer Overview")
 
-Maintainers are entities within the ecosystem that have access to the functions for adding and removing reserves and token pairs. Currently, there are 2 groups of maintainers that help to perform the aforementioned functions. These maintainers are the Kyber's admin wallet (which is controlled by the core developers) and the `PermissionlessOrderbookReserveLister.sol` contract.  
+Maintainers are entities within the ecosystem that have access to the functions for adding and removing reserves and token pairs. Currently, the maintainers are Kyber's team members.
 
 ## Exchange Overview
 The liquidity network allows takers to convert one type of token (e.g. KNC) and receive a different token in return (e.g. DAI) according to the best rates provided by the reserves. The entire process happens in a single atomic transaction, so we can be assured that there is no partial execution of a trade. A conversion between KNC to DAI is depicted in the diagram below:
 
-![KNC to DAI](/uploads/knctodai.png "KNC to DAI")
+![KNC to DAI](/uploads/tradeSequence.png "KNC to DAI")
 
-When a taker (e.g. end user wallets, smart contracts, trading bots) initiates the trade function from `KyberNetworkProxy.sol` contract, the proxy contract will forward the trade request to the `KyberNetwork.sol` contract.
-
-An array of reserves that is stored on the `KyberNetwork.sol` contract will then be iterated through to find the reserves that provide the best KNC to ETH and ETH to DAI rates. The actual trade amounts will be calculated and the change refunded to the taker. Subsequently, 2 trades will be performed to convert KNC to ETH and from ETH to DAI and the DAI is transferred to the taker.
-
-The takers do not need to pay any additional fees other than the standard Ethereum transaction gas fees. The platform fees are paid for by the reserve / maker that executes the exchange and these fees are subsequently burnt. Note that some fees might be paid to the project that directed the user to the Kyber protocol as part of our [fee sharing program](integrations-feesharing.md).
+* A taker (e.g. end user wallets, smart contracts, trading bots) initiates the trade function from `KyberNetworkProxy.sol`.
+* `KyberNetworkProxy.sol` forwards the trade request to `KyberNetwork.sol`.
+* `KyberNetwork.sol` calls `KyberMatchingEngine.sol` to fetch the list of reserves supporting the KNC-ETH and ETH-DAI trade.
+* `KyberMatchingEngine.sol` calls `KyberStorage.sol` to fetch the full reserves list.
+* `KyberMatchingEngine.sol` applies the user-specified reserve route(s) for the trades, and returns the final reserve list to `KyberNetwork.sol`.
+* `KyberNetwork.sol` queries the rates from each reserves specified in the list. If necessary, a call is made to `KyberMatchingEngine` to determine the best rate(s) for the trade, whilst calculating the trade amounts, network and platform fees required for the trade.
+* `KyberNetwork.sol` executes the trades with the reserve(s), who will send the DAI tokens to the taker.
+* If there are excess KNC tokens, `KyberNetwork.sol` will send them to the taker.
+* Finally, `KyberNetwork.sol` sends the network and platform fees (calculated and collected in ETH) to `KyberFeeHandler`.
 
 ## Stack
 

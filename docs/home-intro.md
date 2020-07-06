@@ -17,7 +17,7 @@ You can learn more about the Kyber protocol specifications, our implementation o
 | [Design Principles](home-designprinciples.md) | Key Features of the Protocol |
 | [Integrations](integrations-intro.md) | Common integration use-cases and guides |
 | [Reserves](reserves-intro.md) | Reserve overview, types, use-cases and guides |
-| [Environments](environments-intro.md) | Contract addresses for different environments |
+| [Addresses](addresses-intro.md) | Contract addresses for mainnet and public testnets |
 | [API/ABI](api_abi-intro.md) | Detailed documentation on our smart contracts, APIs and ABIs |
 
 ## Support and Community

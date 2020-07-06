@@ -15,7 +15,7 @@ function docUrl (doc, language) {
 
 class Index extends React.Component {
   render () {
-    const script = `window.location.replace("${docUrl('Start')}")`;
+    const script = `window.location.replace("${docUrl('Katalyst-Intro')}")`;
     return (
       <script dangerouslySetInnerHTML={{ __html: script }}></script>
     );
