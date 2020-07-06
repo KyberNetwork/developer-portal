@@ -21,6 +21,12 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 ### `KyberNetwork`
 `0x72910183AfFe53C3f57a7D010C730C2F90AB3bFA`
 
+### `KyberStaking`
+`0x88b0cdE836b4DE5E274014EBE119f6B2782dDfa0`
+
+### `KyberDao`
+`0x62f199439E74c4F51154829D8eE92E3ADFd559c8`
+
 ### `KyberReserve`
 `0xEB52Ce516a8d054A574905BDc3D4a176D3a2d51a`
 
