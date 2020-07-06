@@ -77,15 +77,23 @@
       "API_ABI-Intro"
     ],
     "Core Smart Contracts": [
+      "API_ABI-IKyberNetworkProxy",
       "API_ABI-KyberNetworkProxy",
-      "API_ABI-KyberNetworkProxyInterface",
+      "API_ABI-ISimpleKyberProxy",
+      "API_ABI-IKyberMatchingEngine",
+      "API_ABI-KyberMatchingEngine",
+      "API_ABI-IKyberHint",
+      "API_ABI-KyberHintHandler",
+      "API_ABI-IKyberFeeHandler",
+      "API_ABI-KyberFeeHandler",
+      "API_ABI-IKyberStaking",
+      "API_ABI-KyberStaking",
       "API_ABI-KyberReserve",
       "API_ABI-KyberReserveInterface",
       "API_ABI-ConversionRates",
-      "API_ABI-FeeBurner",
       "API_ABI-LiquidityConversionRates",
-      "API_ABI-OrderbookReserve",
-      "API_ABI-PermissionlessOrderbookReserveLister"
+      "API_ABI-IEpochUtils",
+      "API_ABI-EpochUtils"
     ],
     "RESTful API": [
       "API_ABI-RESTfulAPIOverview",
