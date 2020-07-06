@@ -25,6 +25,12 @@ Read more [here](api_abi-restfulapi.md#currencies)
 ### `KyberNetwork`
 `0x7C66550C9c730B6fdd4C03bc2e73c5462c5F7ACC`
 
+### `KyberStaking`
+`0xECf0bdB7B3F349AbfD68C3563678124c5e8aaea3`
+
+### `KyberDao`
+`0x49bdd8854481005bBa4aCEbaBF6e06cD5F6312e9`
+
 ### `KyberReserve`
 `0x63825c174ab367968EC60f061753D3bbD36A0D8F`
 
