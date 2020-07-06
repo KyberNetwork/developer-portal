@@ -43,7 +43,7 @@ These events are no longer emitted, but remain documented.
 * [SendWalletFees](#sendwalletfees)
 
 ## [KyberNetworkProxy](addresses-mainnet.md#kybernetworkproxy)
-_Contract Address_: [TBD](https://etherscan.io/)
+_Contract Address_: [0x9AAb3f75489902f3a48495025729a0AF77d4b11e](https://etherscan.io/address/0x9AAb3f75489902f3a48495025729a0AF77d4b11e)
 <br />
 _Source_: [KyberNetworkProxy.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/KyberNetworkProxy.sol)
 
@@ -90,7 +90,7 @@ Event Signature: `0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b6146892
 <br />
 
 ## [KyberNetwork](addresses-mainnet.md#kybernetwork)
-_Contract Address_: [TBD](https://etherscan.io/)
+_Contract Address_: [0x7C66550C9c730B6fdd4C03bc2e73c5462c5F7ACC](https://etherscan.io/address/0x7C66550C9c730B6fdd4C03bc2e73c5462c5F7ACC)
 <br />
 _Source_: [KyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/KyberNetwork.sol)
 
@@ -122,7 +122,7 @@ Event Signature: `0xc6efb0df0b5d684cd6482e00270d068229ca5833634798e25f85b79eee51
 - For token to token trades, the `ethWeiValue` will be just 1 side of the trade. As an example, X KNC -> 10 ETH -> Y DAI yields `ethWeiValue = 10e18`.
 
 ## [KyberFeeHandler (ETH)](addresses-mainnet.md#kyberfeehandler-eth)
-_Contract Address_: [TBD](https://etherscan.io/)
+_Contract Address_: [0xd3d2b5643e506c6d9B7099E9116D7aAa941114fe](https://etherscan.io/address/0xd3d2b5643e506c6d9B7099E9116D7aAa941114fe)
 <br />
 _Source_: [KyberFeeHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/Katalyst/contracts/sol6/Dao/KyberFeeHandler.sol)
 
