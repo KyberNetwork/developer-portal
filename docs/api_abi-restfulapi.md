@@ -253,7 +253,8 @@ Get buy rates for 300 KNC and 10.1 OMG.
 |:---------:|:------:|:--------:|:----------------------------------------------------------:|
 | `source` | string | Yes | The source token contract address. |
 | `dest` | string | Yes | The destination token contract address. |
-| `sourceAMount` | number | Yes | The amount of source tokens. |
+| `sourceAmount` | number | Yes | The amount of source tokens. |
+| `platformFee` | number | No | The platform fee in BPS. |
 
 ---
 
@@ -270,12 +271,12 @@ Get buy rates for 300 KNC and 10.1 OMG.
 Get rates for 10000 DAI to OMG.
 
 ```json
-> curl "https://api.kyber.network/expectedRate?source=0x6b175474e89094c44da98b954eedeac495271d0f&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&sourceAmount=10000"
+> curl "https://dev-api.knstats.com/expectedRate?source=0x7b2810576aa1cce68f2b118cef1f36467c648f92&dest=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&sourceAmount=1000000000000000000&platformFee=8"
 {
   "error": false,
-  "expectedRate": "660300000000000000",
-  "slippageRate": "640491000000000000",
-  "timestamp": 1594034383
+  "expectedRate": "3773092145250929",
+  "slippageRate": "3659899380893400",
+  "timestamp": 1594092045
 }
 ```
 
