@@ -244,7 +244,7 @@ Get buy rates for 300 KNC and 10.1 OMG.
 
 <br />
 
-### `/expected_rate`
+### `/expectedRate`
 
 (GET) Return the expected rate for a token pair, with behavior similar to getExpectedRate from the proxy contract.
 
@@ -261,24 +261,26 @@ Get buy rates for 300 KNC and 10.1 OMG.
 **Response:**
 | Parameter | Type | Description |
 |:---------:|:-------:|:----------------------:|
-| `expectedRate` | string | The conversion rate of the token pair in 10^18. |
-| `slippageRate` | string | 97% of the expected rate, meant to provide a 3% buffer in case the market moves against you. |
+| `expectedRate` | string | The conversion rate of the token pair in 10^18. See example for reference. |
+| `slippageRate` | string | Deprecated, will return `expectedRate` |
 | `timestamp` | int | Server timestamp in UTC. |
 | `error` | bool | Returns `true` if the operation encountered an error, otherwise `false`. |
 
 #### Example
 
-Get rates for 10000 DAI to OMG.
+Get rates for 10000 DAI to OMG, with a 0.25% platform fee.
 
 ```json
-> curl "https://dev-api.knstats.com/expectedRate?source=0x7b2810576aa1cce68f2b118cef1f36467c648f92&dest=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&sourceAmount=1000000000000000000&platformFee=8"
+> curl "https://api.kyber.network/expectedRate?source=0x6b175474e89094c44da98b954eedeac495271d0f&dest=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&sourceAmount=10000&platformFee=25"
 {
   "error": false,
-  "expectedRate": "3773092145250929",
-  "slippageRate": "3659899380893400",
-  "timestamp": 1594092045
+  "expectedRate": "634908750000000033",
+  "slippageRate": "615861487500000032",
+  "timestamp": 1594182159
 }
 ```
+
+This means that 1 DAI can be exchanged for `634908750000000033 / 1e18` = 0.63490875 OMG.
 
 <br />
 
@@ -388,8 +390,8 @@ Get the gas limit for exchanging 10000 DAI to OMG.
 | `token_src` | string | Dependent on route | source token address |
 | `token_dest` | string | Dependent on route | destination token address |
 | `trade_type` | string | Yes | Must be `bestofall`, `maskin`, `maskout`, or `split` |
-| `reserve_id` | string | ID(s) of the reserve, comma-separated |
-| `split_value` | string | Respective split for the reserveId, comma-separated |
+| `reserve_id` | string | Dependent on route | ID(s) of the reserve, comma-separated |
+| `split_value` | string | Dependent on route | Respective split for the reserveId, comma-separated |
 
 ---
 
