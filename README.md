@@ -11,9 +11,10 @@ Read options for operating a pool [here](pool-operator-options.md).
 - [Contract Addresses & Changelog](changelog.md)
 - [Delegating Overview And Example](delegating-example.md)
 - [Kyber Team as DAO Maintainer](kyber-team-maintainer.md)
-- [Staking and Delegating APIs](staking-api.md)
-- [Voting APIs](voting-api.md)
-- [Claiming APIs](claiming-api.md)
+- [Staking and Delegating Section](staking-api.md)
+- [Voting Section](voting-api.md)
+- [Claiming Section](claiming-api.md)
+- [RestFUL APIs](api-endpoints.md)
 - [FAQs](faqs.md)
 
 ## Grants Given 
