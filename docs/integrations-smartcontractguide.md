@@ -64,10 +64,8 @@ Call the `getExpectedRateAfterFee` function of the network proxy contract. The i
 | `platformFeeBps`   | uint256 | platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md) |
 | `hint`             | bytes   | hint for reserve routing. hint for reserve routing. Refer to [this section](#reserve-routing) |
 
-**Returns**
+**Returns**\
 Expected rate for a trade after deducting network and platform fees. To get a 'readable' rate, divide it by 10\*\*18. Refer to the example below.
-
-You may read more about network fees [here].
 
 #### Example
 
@@ -106,7 +104,7 @@ Call the `tradeWithHintAndFee` function of the network proxy contract. The input
 | `platformFeeBps`    | uint256 | platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md)  |
 | `hint`             | bytes    | hint for reserve routing. Refer to [this section](#reserve-routing) |
 
-**Returns**
+**Returns**\
 Actual `dest` token wei amount sent to `destAddress`
 
 #### Example
