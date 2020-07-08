@@ -33,29 +33,6 @@ Signature: 0xc32b42768a47a585121e9b8d7a2ab9d3f34c326a192dee11ee1732e3d18313f3
 <br />
 
 ### Functions
-
-### `getLatestNetworkFeeDataWithCache`
-Returns the latest network fee data and expiry timestamp, and conclude network fee campaign if needed and caching latest result in the KyberDao.
-___
-function __getLatestNetworkFeeDataWithCache__() external view returns (uint256 feeInBps, uint256 expiryTimestamp)
-**Returns:**\
-feeInBps - latest fee in BPS
-expiryTimestamp - expiry timestamp in epoch time
-
-<br />
- 
-### `getLatestBRRDataWithCache`
-Returns the latest burn/reward/rebate data.
-___
-function __getLatestBRRDataWithCache__() external view returns (uint256 burnInBps, uint256 rewardInBps, uint256 rebateInBps, uint256 epoch, uint256 expiryTimestamp)
-**Returns:**\
-burnInBps - burn weight in BPS
-rewardInBps - reward weight in BPS
-rebateInBps - rebate weight in BPS
-epoch - latest epoch number
-expiryTimestamp- expiry timestamp in epoch time for the current epoch
-
-<br />
  
 ### `vote`
 Votes for an option of a campaign, where options are indexed from 1 to N number of options.
@@ -73,64 +50,42 @@ Returns the latest network fee data and expiry timestamp.
 ___
 function __getLatestNetworkFeeData__() external view returns (uint256 feeInBps, uint256 expiryTimestamp)
 **Returns:**\
-feeInBps - latest fee in BPS
-expiryTimestamp - expiry timestamp in epoch time
+feeInBps - network fee in BPS
+expiryTimestamp - the timestamp when the fee will expire and needs to be updated
 
 <br />
  
 ### `shouldBurnRewardForEpoch`
-//TODO: 
+Since some epochs have rewards but no one can claim it, return true if those rewards should be burned.
 ___
-function __shouldBurnRewardForEpoch__(uint256 epoch) external returns (bool)
+function __shouldBurnRewardForEpoch__(uint256 epoch) external view returns (bool)
 | Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
-| `epoch` | uint256 | //TODO:    |
- 
-
+| `epoch` | uint256 | epoch number to check    |
 **Returns:**\
-bool
- 
-
----
+`true` if rewards should be burned for the epoch, `false` otherwise 
 
 <br />
  
 ### `getPastEpochRewardPercentageInPrecision`
-//TODO:  return staker's reward percentage in precision for a past epoch only
-fee handler should call this function when a staker wants to claim reward
-return 0 if staker has no votes or stakes
+Returns the staker's reward percentage in precision for a past epoch only.
 ___
-function __getPastEpochRewardPercentageInPrecision__(address staker, uint256 epoch) external returns (uint256)
+function __getPastEpochRewardPercentageInPrecision__(address staker, uint256 epoch) external view returns (uint256)
 | Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
-| `staker` | address | //TODO:    |
-| `epoch` | uint256 | //TODO:    |
- 
-
+| `staker` | address | staker's address    |
+| `epoch` | uint256 | past epoch number    |
 **Returns:**\
-uint256
- 
-
----
+Past epoch reward percentage in precision for the staker
 
 <br />
  
 ### `getCurrentEpochRewardPercentageInPrecision`
-//TODO:  return staker's reward percentage in precision for the current epoch
-reward percentage is not finalized until the current epoch is ended
+Returns the staker's reward percentage in precision for the current epoch. Reward percentage is not finalized until the current epoch has ended.
 ___
-function __getCurrentEpochRewardPercentageInPrecision__(address staker) external returns (uint256)
+function __getCurrentEpochRewardPercentageInPrecision__(address staker) external view returns (uint256)
 | Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
-| `staker` | address | //TODO:    |
- 
-
+| `staker` | address | staker's address   |
 **Returns:**\
-uint256
- 
-
----
-
-<br />
- 
- 
+Current epoch reward percentage in precision for the staker

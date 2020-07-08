@@ -88,6 +88,8 @@
       "API_ABI-KyberFeeHandler",
       "API_ABI-IKyberStaking",
       "API_ABI-KyberStaking",
+      "API_ABI-IKyberDao",
+      "API_ABI-KyberDao",
       "API_ABI-IKyberStorage",
       "API_ABI-KyberStorage",
       "API_ABI-IKyberHistory",
