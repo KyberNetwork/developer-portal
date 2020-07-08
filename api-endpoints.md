@@ -460,8 +460,8 @@ Get all reward information for staker `0x1375355fEcCB15e0DBedd7dcF3c496E2b1a25f6
 | `staker` | Staker's address |
 | `epoch` | Epoch number |
 | `campaign_id` | Campaign ID number |
-| `option` | Voted option |
-| `power` | Voting power of staker |
+| `option` | Voted option by staker |
+| `power` | Voting power of staker (delegations accounted for) |
 
 #### Example
 
