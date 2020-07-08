@@ -113,40 +113,6 @@ function __KyberReserve__(address \_kyberNetwork, ConversionRatesInterface \_rat
 | `_kyberNetwork`  | address                  | KyberNetwork contract address    |
 | `_ratesContract` | ConversionRatesInterface | ConversionRates contract address |
 | `_admin`         | address                  | admin's wallet address           |
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const fs = require('fs');
-const solc = require('solc');
-const Web3 = require('web3');
-
-const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-const input = fs.readFileSync('KyberReserve.sol', 'utf8');
-const output = await solc.compile(input, 1);
-const bytecode = output.contracts['KyberReserve'].bytecode;
-const abi = JSON.parse(output.contracts['KyberReserve'].interface);
-
-const KyberReserve = new web3.eth.Contract(JSON.parse(abi));
-const _kyberNetwork = '0x964F35fAe36d75B1e72770e244F6595B68508CF5';
-const _ratesContract = '0x798AbDA6Cc246D0EDbA912092A2a3dBd3d11191B';
-const _admin = '<ADMIN ADDRESS>';
-
-const deploy = KyberReserve.deploy({
-  data: `0x${bytecode}`,
-  arguments: [
-    _kyberNetwork,
-    _ratesContract,
-    _admin
-  ]
-});
-
-broadcastTx(deploy)
-```
-Code snippet reference: [broadcastTx()](api_abi-web3.md#broadcasting-transactions)
 
 <br />
 
@@ -159,54 +125,15 @@ function __approveWithdrawAddress__(ERC20 token, address addr, bool approve) pub
 | `token`   | ERC20   | ERC20 token contract address                                           |
 | `addr`    | address | withdrawal address                                                     |
 | `approve` | bool    | `true` if address is enabled, otherwise `false` if address is disabled |
-Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
 
-const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
-const addr = WITHDRAWAL_ADDRESS
-const approve = true
-
-transactionData = KyberReserve.methods.approveWithdrawAddress(
-  token,
-  addr,
-  approve
-).encodeABI()
-
-txReceipt = await web3.eth.sendTransaction({
-    from: ADMIN_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS,
-    data: transactionData
-})
-```
 <br />
 
 ### `disableTrade`
 Disable trading for the reserve. Only alerter can invoke.
 ___
 function __disableTrade__() public onlyAlerter returns (bool)\
-Modifiers: [onlyAlerter](api_abi-permissiongroups.md#onlyalerter)\
 **Returns:**\
 `true` if trade is successfully disabled, otherwise `false`
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-transactionData = KyberReserve.methods.disableTrade().encodeABI()
-
-txReceipt = await web3.eth.sendTransaction({
-    from: ALERTER_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS,
-    data: transactionData
-})
-```
 
 <br />
 
@@ -214,24 +141,8 @@ txReceipt = await web3.eth.sendTransaction({
 Enables trading in the reserve. Only admin can invoke.
 ___
 function __enableTrade__() public onlyAdmin returns (bool)\
-Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)\
 **Returns:**\
-`true` if trading is successfully enabled, otherwise `false`
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-transactionData = KyberReserve.methods.enableTrade().encodeABI()
-
-txReceipt = await web3.eth.sendTransaction({
-    from: ADMIN_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS,
-    data: transactionData
-})
-```
+`true` if trading is enabled, otherwise `false`
 <br />
 
 ### `getBalance`
@@ -243,16 +154,7 @@ function __getBalance__(ERC20 token) public view returns (uint)
 | `token`   | ERC20   | ERC20 token contract address |
 **Returns:**\
 ERC20 token balance of the reserve in wei
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
 
-const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
-tokenBalance = await KyberReserve.methods.getBalance(token).call()
-```
 <br />
 
 ### `getConversionRate`
@@ -267,25 +169,7 @@ function __getConversionRate__(ERC20 src, ERC20 dest, uint srcQty, uint blockNum
 | `blockNumber` | uint   | current block height or block number     |
 **Returns:**\
 Current conversion rate of token pairs at block number
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
 
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
-const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
-const srcQty = new web3.utils.BN('3000000000000000000000')
-const blockNumber = 6015205
-
-conversionRate = await KyberReserve.methods.getConversionRate(
-  src,
-  dest,
-  srcQty,
-  blockNumber
-).call()
-```
 <br />
 
 ### `getDestQty`
@@ -300,25 +184,7 @@ function __getDestQty__(ERC20 src, ERC20 dest, uint srcQty, uint rate) public vi
 | `rate`    | uint  | the conversion rate between src and dest |
 **Returns:**\
 Calculated destination ERC20 token quantity in wei
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
 
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
-const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
-const srcQty = new web3.utils.BN('3000000000000000000000')
-const rate = new web3.utils.BN('55555')
-
-let destQty = await KyberReserve.methods.getDestQty(
-  src,
-  dest,
-  srcQty,
-  rate
-).call()
-```
 <br />
 
 ### `getSrcQty`
@@ -333,25 +199,7 @@ function __getSrcQty__(ERC20 src, ERC20 dest, uint dstQty, uint rate) public vie
 | `rate`    | uint  | the conversion rate between src and dest |
 **Returns:**\
 Calculated source ERC20 token quantity in wei
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
 
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'  // ETH
-const dest = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
-const destQty = new web3.utils.BN('3000000000000000000000')
-const rate = new web3.utils.BN('55555')
-
-let srcQty = KyberReserve.methods.getSrcQty(
-  src,
-  dest,
-  destQty,
-  rate
-).call()
-```
 <br />
 
 ### `setContracts`
@@ -364,29 +212,7 @@ function __setContracts__(address \_kyberNetwork, ConversionRatesInterface \_con
 | `_conversionRates` | ConversionRatesInterface | ConversionRates contract address               |
 | `_sanity`     | SanityRatesInterface     | SanityRates contract address                   |
 Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
 
-const _kyberNetwork = '0x964F35fAe36d75B1e72770e244F6595B68508CF5';
-const _conversionRates = '0x798AbDA6Cc246D0EDbA912092A2a3dBd3d11191B';
-const _sanity = '0xdfc85C08d5e5924aB49750E006CF8a826ffb7B13';
-
-transactionData = KyberReserve.methods.setContracts(
-  _kyberNetwork,
-  _conversionRates,
-  _sanity
-).encodeABI()
-
-txReceipt = await web3.eth.sendTransaction({
-    from: ADMIN_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS,
-    data: transactionData
-})
-```
 <br />
 
 ### `setTokenWallet`
@@ -397,25 +223,7 @@ function __setTokenWallet__(ERC20 token, address wallet) public onlyAdmin
 | -------------------|:------------------------:|:----------------------------------------------:|
 | `token`    | ERC20                  | ERC20 token contract address                  |
 | `wallet` | address | wallet address               |
-Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
 
-token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200' // KNC
-wallet = WALLET_ADDRESS
-
-transactionData = KyberReserve.methods.setTokenWallet(token,wallet).encodeABI()
-
-txReceipt = await web3.eth.sendTransaction({
-    from: ADMIN_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS,
-    data: transactionData
-})
-```
 <br />
 
 ### `withdraw`
@@ -427,30 +235,5 @@ function __withdraw__(ERC20 token, uint amount, address destination) public only
 | `token`       | ERC20   | ERC20 token contract address                   |
 | `amount`      | uint    | ERC20 token amount in wei                      |
 | `destination` | address | recipient address for destination ERC20 tokens |
-Modifiers: [onlyOperator](api_abi-permissiongroups.md#onlyoperator)\
 **Returns:**\
 `true` if the withdrawal was successful, otherwise `false` if unsuccessful
-___
-Web3 Example:
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const token = '0xdd974D5C2e2928deA5F71b9825b8b646686BD200'; // KNC
-const amount = new web3.utils.BN('12345');
-const destination = '0x12370dc7321e84ca96fcaedd0c8abcebbaeb68c6';
-
-transactionData = KyberReserve.methods.withdraw(
-  token,
-  amount,
-  destination,
-).encodeABI()
-
-txReceipt = await web3.eth.sendTransaction({
-    from: OPERATOR_ADDRESS,
-    to: KYBER_RESERVE_ADDRESS,
-    data: transactionData
-})
-```
-<br />

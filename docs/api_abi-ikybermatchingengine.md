@@ -20,7 +20,7 @@ ___
 ### `getNegligibleRateDiffBps`
 Returns the negligible rate difference in BPS.
 ___
-function __getNegligibleRateDiffBps__() external view returns (uint256)
+function __getNegligibleRateDiffBps__() external view returns (uint256)\
 **Returns:**\
  The negligible rate difference in BPS.
 
@@ -56,5 +56,3 @@ function __doMatch__(IERC20 src, IERC20 dest, uint256[] srcAmounts, uint256[] fe
 | `rates` | uint256[] | array of rates queried from reserves    |
 **Returns:**\
 reserveIndexes - array of the indexes most suited for the trade
-
-<br />

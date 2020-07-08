@@ -21,7 +21,7 @@ ___
 ### `getCurrentEpochNumber`
 Returns the current epoch number.
 ___
-function __getCurrentEpochNumber__() public view override returns (uint256)
+function __getCurrentEpochNumber__() public view override returns (uint256)\
 **Returns:**\
 Current epoch number
 

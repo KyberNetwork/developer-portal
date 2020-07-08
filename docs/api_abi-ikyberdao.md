@@ -48,7 +48,7 @@ function __vote__(uint256 campaignID, uint256 option) external
 ### `getLatestNetworkFeeData`
 Returns the latest network fee data and expiry timestamp.
 ___
-function __getLatestNetworkFeeData__() external view returns (uint256 feeInBps, uint256 expiryTimestamp)
+function __getLatestNetworkFeeData__() external view returns (uint256 feeInBps, uint256 expiryTimestamp)\
 **Returns:**\
 feeInBps - network fee in BPS
 expiryTimestamp - the timestamp when the fee will expire and needs to be updated

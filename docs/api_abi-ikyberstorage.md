@@ -118,7 +118,7 @@ rebateWallets - array of rebate wallets addresses
 ### `getKyberProxies`
 Returns the list of KyberNetworkProxy addresses.
 ___
-function __getKyberProxies__() external view returns (IKyberNetworkProxy[])
+function __getKyberProxies__() external view returns (IKyberNetworkProxy[])\
 **Returns:**\
 Array of KyberNetworkProxy addresses
 
@@ -189,8 +189,6 @@ function __getReservesData__(bytes32[] reserveIds, IERC20 src, IERC20 dest) exte
 | `reserveIds` | bytes32[] | list of reserve IDs   |
 | `src` | IERC20 | source token    |
 | `dest` | IERC20 | destination token    |
- 
-
 **Returns:**\
 areAllReservesListed - if token is listed for the given reserve ID
 feeAccountedArr - array of fee accounted booleans respective to reserve IDs input
@@ -202,6 +200,6 @@ reserveAddresses - array of reserve addresses
 ### `isKyberProxyAdded`
 Returns a boolean indicating if a KyberNetworkProxy has been added.
 ___
-function __isKyberProxyAdded__() external view returns (bool)
+function __isKyberProxyAdded__() external view returns (bool)\
 **Returns:**\
 `true` if proxy has been added, otherwise `false`

@@ -171,7 +171,7 @@ value - the value of the winning option
 ### `getLatestNetworkFeeData`
 Return the latest network fee and expiry timestamp.
 ___
-function __getLatestNetworkFeeData__() public returns (uint256 feeInBps, uint256 expiryTimestamp)
+function __getLatestNetworkFeeData__() public returns (uint256 feeInBps, uint256 expiryTimestamp)\
 **Returns:**\
 feeInBps - network fee in BPS
 expiryTimestamp - the timestamp when the fee will expire and needs to be updated
@@ -181,9 +181,7 @@ expiryTimestamp - the timestamp when the fee will expire and needs to be updated
 ### `getLatestBRRData`
 Returns the latest BRR result.
 ___
-function __getLatestBRRData__() public view returns (uint256 burnInBps, uint256 rewardInBps, uint256 rebateInBps, uint256 epoch, uint256 expiryTimestamp)
-| Parameter | Type  | Description |
-| --------- |:-----:|:-----------:|
+function __getLatestBRRData__() public view returns (uint256 burnInBps, uint256 rewardInBps, uint256 rebateInBps, uint256 epoch, uint256 expiryTimestamp)\
 **Returns:**\
 burnInBps - burn ratio in BPS
 rewardInBps - rewards ratio in BPS

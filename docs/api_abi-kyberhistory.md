@@ -34,6 +34,6 @@ Signature: 0xed8c790db7ddf303f576c18e6644ec19e7b39356088eeeeac11c95212c61f49a
 ### `getContracts`
 Returns list of historic addresses, where index 0 is the currently used contract address and indexes > 0 are older versions.
 ___
-function __getContracts__() external override view returns (address[])
+function __getContracts__() external override view returns (address[])\
 **Returns:**\
 List of history addresses

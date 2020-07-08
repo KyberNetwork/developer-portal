@@ -37,7 +37,7 @@ Start timestamp of first epoch
 ### `getCurrentEpochNumber`
 Returns the current epoch number.
 ___
-function __getCurrentEpochNumber__() external view returns (uint256)
+function __getCurrentEpochNumber__() external view returns (uint256)\
 **Returns:**\
 Current epoch number
 

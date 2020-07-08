@@ -53,7 +53,7 @@ Signature: 0x4b3150a36b957ed95a132721c7412af319174861da7c8c7a55ef6e1a2794528d
 <br />
 
 ### `EthReceived`
-Event logging the receiving of ETH in the FeeHandler.
+Event logging the receiving of ETH to the FeeHandler.
 ___
 event __EthReceived__(uint256 amount)
 | Parameter | Type  | Description |

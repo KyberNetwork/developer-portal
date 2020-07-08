@@ -176,7 +176,7 @@ expectedRate - conversion rate of the src and dest tokens after deducting the ne
 ### `maxGasPrice`
 Get the maximum gas price limit.
 ___
-function __maxGasPrice__() external view returns (uint256)
+function __maxGasPrice__() external view returns (uint256)\
 **Returns:**\
 The maximum gas price limit
 
@@ -185,6 +185,6 @@ The maximum gas price limit
 ### `enabled`
 Returns if the network is enabled or not.
 ___
-function __enabled__() external view returns (bool)
+function __enabled__() external view returns (bool)\
 **Returns:**\
 `true` if the network is enabled, `false` otherwise.

@@ -311,8 +311,6 @@ function __getReservesData__(bytes32[] reserveIds, IERC20 src, IERC20 dest) exte
 | `reserveIds` | bytes32[] | list of reserve IDs   |
 | `src` | IERC20 | source token    |
 | `dest` | IERC20 | destination token    |
- 
-
 **Returns:**\
 areAllReservesListed - if token is listed for the given reserve ID
 feeAccountedArr - array of fee accounted booleans respective to reserve IDs input

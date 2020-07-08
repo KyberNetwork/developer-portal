@@ -79,6 +79,8 @@
     "Core Smart Contracts": [
       "API_ABI-IKyberNetworkProxy",
       "API_ABI-KyberNetworkProxy",
+      "API_ABI-IKyberNetwork",
+      "API_ABI-KyberNetwork",
       "API_ABI-ISimpleKyberProxy",
       "API_ABI-IKyberMatchingEngine",
       "API_ABI-KyberMatchingEngine",

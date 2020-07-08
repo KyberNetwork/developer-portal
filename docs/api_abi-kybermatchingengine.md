@@ -62,7 +62,7 @@ processWithRate - whether extra processing is required or not
 ### `getNegligibleRateDiffBps`
 Returns the negligible rate difference in BPS.
 ___
-function __getNegligibleRateDiffBps__() external view override returns (uint256)
+function __getNegligibleRateDiffBps__() external view override returns (uint256)\
 **Returns:**\
 The negligible rate difference in BPS.
 

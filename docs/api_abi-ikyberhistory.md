@@ -19,6 +19,6 @@ ___
 ### `getContracts`
 Returns list of historic addresses, where index 0 is the currently used contract address and indexes > 0 are older versions.
 ___
-function __getContracts__() external view returns (address[])
+function __getContracts__() external view returns (address[])\
 **Returns:**\
 List of history addresses
