@@ -192,6 +192,10 @@ let minConversionRate = await KyberNetworkProxyContract.getExpectedRateAfterFee(
     );
 ```
 
+##### Understanding the rate
+
+Divide the rate by 10\*\*18 to get a 'readable' rate. For example, if the rate returned from a query of 1 WBTC -> KNC is `7980824281140923034320`, then 1 WBTC can be exchanged for `7980824281140923034320 / 1e18` ~= 7980.824 KNC.
+
 #### Step 3: Gas Configurations
 
 We next define the gas limit and price to be used for the trade. There are a number of ways to go about this. We give 2 possible methods to determine each parameter, but this is definitely customisable to suit your needs.
