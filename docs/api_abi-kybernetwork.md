@@ -3,16 +3,12 @@ id: API_ABI-KyberNetwork
 title: KyberNetwork
 ---
 [//]: # (tagline)
-# contract KyberNetwork
+# //TODO KyberNetwork
+is WithdrawableNoModifiers, Utils5, [IKyberNetwork](api_abi-ikybernetwork.md), ReentrancyGuard\
+imports WithdrawableNoModifiers, Utils5, ReentrancyGuard, SafeERC20, [IKyberNetwork](api_abi-ikybernetwork.md), [IKyberReserve](api_abi-ikyberreserve.md), [IKyberFeeHandler](api_abi-ikyberfeehandler.md), [IKyberDao](api_abi-ikyberdao.md), [IKyberMatchingEngine](api_abi-ikybermatchingengine.md), [IKyberStorage](api_abi-ikyberstorage.md), IGasHelper
 
-is [Withdrawable](api_abi-withdrawable.md), Utils2, [KyberNetworkInterface](api_abi-kybernetworkinterface.md)\
-imports ERC20Interface, [KyberReserveInterface](api_abi-kyberreserveinterface.md), [KyberNetworkInterface](api_abi-kybernetworkinterface.md), [Withdrawable](api_abi-withdrawable.md), Utils, WhiteListInterface, ExpectedRateInterface, [FeeBurnerInterface](api_abi-feeburnerinterface.md)
-
-_Source_: [KyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetwork.sol)
-
-The KyberNetwork contract's role is to facilitate two main functionalities, which is to return the expected exchange rate, and to execute a trade.
-
----
+*Source*: [KyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetwork.sol)
+___
 
 ## INDEX
 
@@ -20,1084 +16,238 @@ The KyberNetwork contract's role is to facilitate two main functionalities, whic
 
 ## REFERENCE
 
-### Structs
-
-### `TradeInput`
-
-| Property            |  Type   |                            Description                             |
-| ------------------- | :-----: | :----------------------------------------------------------------: |
-| `trader`            | address |                          trader's address                          |
-| `src`               |  ERC20  |                source ERC20 token contract address                 |
-| `srcAmount`         |  uint   |          source ERC20 token amount in its token decimals           |
-| `dest`              |  ERC20  |              destination ERC20 token contract address              |
-| `destAddress`       | address |           recipient address for destination ERC20 token            |
-| `maxDestAmount`     |  uint   |             limit on the amount of destination tokens              |
-| `minConversionRate` |  uint   | minimum conversion rate; trade is canceled if actual rate is lower |
-| `walletId`          | address |             wallet address to send part of the fees to             |
-| `hint`              |  bytes  |                   internal use by smart contract                   |
-
-<br />
-
-### `BestRateResult`
-
-| Property        |  Type   |                     Description                     |
-| --------------- | :-----: | :-------------------------------------------------: |
-| `rate`          |  uint   |                  trader's address                   |
-| `reserve1`      | address | reserve address offering best srcToken -> ETH rate  |
-| `reserve2`      | address | reserve address offering best ETH -> destToken rate |
-| `weiAmount`     |  uint   |                   ETH wei amount                    |
-| `rateSrcToEth`  |  uint   |                srcToken -> ETH rate                 |
-| `rateEthToDest` |  uint   |                ETH -> destToken rate                |
-| `destAmount`    |  uint   |              destination token amount               |
-
-<br />
-
 ### Events
 
-### `AddReserveToNetwork`
-
-Event for logging reserve additions to the network.
-
----
-
-event **AddReserveToNetwork**(KyberReserveInterface indexed reserve, bool add, bool isPermissionless)
-| Parameter | Type | Description |
-| --------- |:---------------------:|:-----------------------------------------------------------:|
-| `reserve` | KyberReserveInterface | reserve's contract address |
-| `add` | bool | `true` if reserve was successfully added, `false` otherwise |
-| `isPermissionless` | bool | `true` if reserve was permissionlessly added, `false`otherwise |
-<br />
-
 ### `EtherReceival`
-
-Event for logging amount of ETH received from sender.
-
----
-
-event **EtherReceival**(address indexed sender, uint amount)
-| Parameter | Type | Description |
-| --------- |:---------------:|:----------------:|
+Event logging the receival of ETH in the network contract.
+___
+event __EtherReceival__(address sender, uint256 amount)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
 | `sender` | address | sender's address |
-| `amount` | uint | ETH amount sent |
+| `amount` | uint256 | amount of ETH received in wei |
+Signature: 0x75f33ed68675112c77094e7c5b073890598be1d23e27cd7f6907b4a7d98ac619
+
 <br />
 
-### `ExpectedRateContractSet`
+### `KyberFeeHandlerUpdated`
+Event logging the setting of the new KyberFeeHandler contract.
+___
+event __KyberFeeHandlerUpdated__(IKyberFeeHandler newKyberFeeHandler)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `newKyberFeeHandler` | IKyberFeeHandler | new KyberFeeHandler contract |
+Signature: 0x5128fc9be01065f3cabe4c8b72796eb6b8a00284f39a2390cd71e91b509f90b6
 
-Event for logging of updates to the ExpectedRate contract address.
-
----
-
-event **ExpectedRateContractSet**(ExpectedRateInterface newContract, ExpectedRateInterface currentContract)
-| Parameter | Type | Description |
-| --------- |:---------------------:|:-----------------------------------------------------------:|
-| `newContract` | ExpectedRateInterface | New ExpectedRate contract address |
-| `currentContract` | ExpectedRateInterface | Current (old) ExpectedRate contract address |
 <br />
 
-### `FeeBurnerContractSet`
+### `KyberMatchingEngineUpdated`
+Event logging the setting of the new KyberMatchingEngine contract.
+___
+event __KyberMatchingEngineUpdated__(IKyberMatchingEngine newKyberMatchingEngine)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `newKyberMatchingEngine` | IKyberMatchingEngine | //TODO: description |
+ 
+Signature: KyberMatchingEngineUpdated(IKyberMatchingEngine)
 
-Event for logging of updates to the FeeBurner contract address.
+<br />
 
----
+### `GasHelperUpdated`
+Event logging the setting of the new GasHelper contract.
+___
+event __GasHelperUpdated__(IGasHelper newGasHelper)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `newGasHelper` | IGasHelper | new GasHelper contract |
+Signature: 0x95ba6becebde78de944071b522d81414292f67e3d95db7d9df46bb8e8b3da8b8
 
-event **FeeBurnerContractSet**(FeeBurnerInterface newContract, FeeBurnerInterface currentContract)
-| Parameter | Type | Description |
-| --------- |:---------------------:|:-----------------------------------------------------------:|
-| `newContract` | FeeBurnerInterface | New FeeBurner contract address |
-| `currentContract` | FeeBurnerInterface | Current (old) FeeBurner contract address |
+<br />
+
+### `KyberDaoUpdated`
+Event logging the setting of the new KyberDao contract.
+___
+event __KyberDaoUpdated__(IKyberDao newKyberDao)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `newKyberDao` | IKyberDao | new KyberDao contract |
+Signature: 0x16a2e1af8449067f38aa765b54d479785c94d8ebdfbba7b410e3488b0877c1e4
+
 <br />
 
 ### `KyberNetworkParamsSet`
+Event logging the setting of the maxGasPrice and negligibleRateDiffBps params in the network.
+___
+event __KyberNetworkParamsSet__(uint256 maxGasPrice, uint256 negligibleRateDiffBps)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `maxGasPrice` | uint256 | maximum gas price limit to prevent front running |
+| `negligibleRateDiffBps` | uint256 | negligible rate difference in BPS |
+Signature: 0xc1e6729d7fd9a615adc03ebe7d8ff15649d8eed7516bf6c30538a1e722bb1975
 
-Event for logging of updates to the `maxGasPrice` and `negligibleRateDiff` parameters
-
----
-
-event **KyberNetworkParamsSet**(uint maxGasPrice, uint negligibleRateDiff)
-| Parameter | Type | Description |
-| --------- |:---------------------:|:-----------------------------------------------------------:|
-| `maxGasPrice` | uint | Maximum gas price limit to prevent frontrunning |
-| `negligibleRateDiff` | uint | Neligible rate difference |
 <br />
 
 ### `KyberNetworkSetEnable`
+Event logging the enabling or disabling of trading in the network
+___
+event __KyberNetworkSetEnable__(bool isEnabled)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `isEnabled` | bool | `true` if network is enabled, otherwise `false` |
+Signature: 0x8a846a525e22497042ee2f99423a8ff8bbb831d3ae5384692bf6040f591c1eba
 
-Event for logging of enabling or disabling of the network
-
----
-
-event **KyberNetworkSetEnable**(bool isEnabled)
-| Parameter | Type | Description |
-| --------- |:---------------------:|:-----------------------------------------------------------:|
-| `isEnabled` | bool | `true` if network is enabled, `false` if it is disabled |
 <br />
 
-### `KyberProxySet`
+### `KyberProxyAdded`
+Event logging the adding of a new proxy contract.
+___
+event __KyberProxyAdded__(address kyberProxy)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `kyberProxy` | address | added KyberNetworkProxy contract |
+Signature: 0x0b008ff10c7e378a96d6566635e1aa748886d16fb87659faee2aa20608fec815
 
-Event for logging of updates to the [`KyberNetworkProxy.sol`](api_abi-kybernetworkproxy.md) contract address
-
----
-
-event **KyberProxySet**(address proxy, address sender)
-| Parameter | Type | Description |
-| ------------------ |:---------------:|:----------------------------------------:|
-| `proxy` | address | KyberNetworkProxy contract address |
-| `sender` | address | sender's address |
 <br />
 
-### `KyberTrade`
+### `KyberProxyRemoved`
+Event logging the removal of a proxy contract.
+___
+event __KyberProxyRemoved__(address kyberProxy)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `kyberProxy` | address | removed KyberNetworkProxy contract |
+Signature: 0xbb9ee888852ae070b75270fa50ea2845ba32102d3a96842c7c416d12aad2f487
 
-Event for logging execution of trades.
-
----
-
-event **KyberTrade**(address indexed trader, ERC20 src, ERC20 dest, uint srcAmount, uint dstAmount, address destAddress, uint ethWeiValue, address reserve1, address reserve2, bytes hint)
-| Parameter | Type | Description |
-| ------------------ |:---------------:|:----------------------------------------:|
-| `trader` | address | trader's address |
-| `src` | ERC20 | source ERC20 token contract address |
-| `dest` | ERC20 | destination ERC20 token contract address |
-| `srcAmount` | uint | source ERC20 token amount |
-| `dstAmount` | uint | destination ERC20 token amount |
-| `destAddress` | ERC20 | recipient address for destination ERC20 token |
-|`ethWeiValue` | uint | Ether wei value of the trade |
-| `reserve1` | address | address of reserve selected for source token to Ether trade |
-| `reserve2` | address | address of reserve selected for source token to Ether trade |
-| `hint` | bytes | Used to determine if permissionless reserves are to be used |
 <br />
 
-### `ListReservePairs`
+### `ListedReservesForToken`
+Event logging the listing of a list of reserves for a token.
+___
+event __ListedReservesForToken__(IERC20 token, address[] reserves, bool add)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `token` | IERC20 | ERC20 token address |
+| `reserves` | address[] | list of reserve addresses |
+| `add` | bool | `true` if to list, `false` otherwise |
+Signature: 0xd4b0877e3beef91cd767680ac04114217ec7c9cb3a4705c03fc8061de81168fc
 
-Event for logging of listing of token pairs that a reserve is allowed to trade.
-
----
-
-event **ListReservePairs**(address reserve, ERC20 src, ERC20 dest, bool add)
-| Parameter | Type | Description |
-| ----------|:-------:|:--------------------------------------------------------------:|
-| `reserve` | address | reserve's contract address |
-| `src` | ERC20 | source ERC20 token contract address |
-| `dest` | ERC20 | destination ERC20 token contract address |
-| `add` | bool | `true` if token pair is listed, `false` otherwise |
-<br />
-
-### `RemoveReserveFromNetwork`
-
-Event for logging reserve removals from the network.
-
----
-
-event **RemoveReserveFromNetwork**(KyberReserveInterface reserve)
-| Parameter | Type | Description |
-| --------- |:---------------------:|:-----------------------------------------------------------:|
-| `reserve` | KyberReserveInterface | reserve's contract address |
-<br />
-
-### `WhiteListContractSet`
-
-Event for logging of updates to the WhiteList contract address.
-
----
-
-event **WhiteListContractSet**(WhiteListInterface newContract, WhiteListInterface currentContract)
-| Parameter | Type | Description |
-| --------- |:---------------------:|:-----------------------------------------------------------:|
-| `newContract` | WhiteListInterface | New whitelist contract address |
-| `currentContract` | WhiteListInterface | Current (old) whitelist contract address |
 <br />
 
 ### Functions
 
-### `KyberNetwork`
-
-Contract constructor. Note that constructor methods are called exactly once during contract instantiation and cannot be called again.
-
----
-
-function **KyberNetwork**(address \_admin) public
-| Parameter | Type | Description |
-| ---------- |:-------:|:----------------------:|
-| `_admin` | address | admin's wallet address |
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const fs = require("fs");
-const solc = require("solc");
-const Web3 = require("web3");
-
-const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-const input = fs.readFileSync("KyberNetwork.sol", "utf8");
-const output = await solc.compile(input, 1);
-const bytecode = output.contracts["KyberNetwork"].bytecode;
-const abi = JSON.parse(output.contracts["KyberNetwork"].interface);
-
-const KyberNetwork = new web3.eth.Contract(JSON.parse(abi));
-const _admin = "<ADMIN ADDRESS>";
-
-const deploy = KyberNetwork.deploy({
-  data: `0x${bytecode}`,
-  arguments: [_admin]
-});
-
-broadcastTx(deploy);
-```
-
-Code snippet reference: [broadcastTx()](api_abi-web3.md#broadcasting-transactions)
-
-<br />
-
-### `addReserve`
-
-Adds a reserve to the network. Only an operator can invoke.
-
----
-
-function **addReserve**(KyberReserveInterface reserve, bool isPermissionless) public onlyOperator
-| Parameter | Type | Description |
-| --------- |:---------------------:|:------------------------------------------------:|
-| `reserve` | KyberReserveInterface | reserve's contract address |
-| `isPermissionless` | bool | `true` if added permissionlessly, `false` otherwise |
-Modifiers: [onlyOperator](api_abi-permissiongroups.md#onlyoperator)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const reserve = "0x63825c174ab367968EC60f061753D3bbD36A0D8F";
-const isPermissionless = false;
-
-let transactionData = KyberNetwork.methods
-  .addReserve(reserve, isPermissionless)
-  .encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: OPERATOR_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
-<br />
-
-### `enabled`
-
-Determine the state of the network (Eg. disabled when smart contracts are upgraded)
-
----
-
-function **enabled**() public view returns (bool)
-**Returns:**\
-`true` if network is enabled, `false` otherwise
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-let networkEnabled = await KyberNetwork.methods.enabled().call();
-```
-
-<br />
-
-### `findBestRate`
-
-Finds the best conversion rate for a pair of tokens. If several reserves have small rate differences, pick one at random.
-
----
-
-function **findBestRate**(ERC20 src, ERC20 dest, uint srcAmount) public view returns (uint obsolete, uint rate)
-| Parameter | Type | Description |
-| --------- |:-----:|:----------------------------------------:|
-| `src` | ERC20 | source ERC20 token contract address |
-| `dest` | ERC20 | destination ERC20 token contract address |
-| `srcAmount` | uint | source ERC20 token amount in its token decimals |
-**Returns:**\
-Index of the best reserve (depreciated) and the best exchange rate for the pair
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
-const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
-const srcAmount = new web3.utils.BN("3000000000000000000000");
-result = await KyberNetwork.methods.findBestRate(src, dest, srcAmount).call();
-
-rate = result[1];
-```
-
-<br />
-
-### `findBestRateOnlyPermission`
-
-Finds the best conversion rate, using only permissioned reserves, for a pair of tokens. If several reserves have small rate differences, pick one at random.
-
----
-
-function **findBestRateOnlyPermission**(ERC20 src, ERC20 dest, uint srcAmount) public view returns (uint obsolete, uint rate)
-| Parameter | Type | Description |
-| --------- |:-----:|:----------------------------------------:|
-| `src` | ERC20 | source ERC20 token contract address |
-| `dest` | ERC20 | destination ERC20 token contract address |
-| `srcAmount` | uint | source ERC20 token amount in its token decimals |
-**Returns:**\
-Index of the best reserve (depreciated) and the best exchange rate for the pair
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
-const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
-const srcAmount = new web3.utils.BN("3000000000000000000000");
-result = await KyberNetwork.methods
-  .findBestRateOnlyPermission(src, dest, srcAmount)
-  .call();
-
-rate = result[1];
-```
-
-<br />
-
-### `getExpectedRate`
-
-Get the expected exchange rate.
-
----
-
-function **getExpectedRate**(ERC20 src, ERC20 dest, uint srcQty) public view returns (uint expectedRate, uint slippageRate)
-| Parameter | Type | Description |
-| --------- |:-----:|:----------------------------------------:|
-| `src` | ERC20 | source ERC20 token contract address |
-| `dest` | ERC20 | destination ERC20 token contract address |
-| `srcQty` | uint | source ERC20 token amount in its token decimals |
-**Returns:**\
-The expected exchange rate and slippage rate
-
-**Notes:**
-
-- Returned values are in precision values `(10**18)`. Refer to the example below.
-- The Most Significant Bit (MSB) is used for excluding permissionless reserves, since this function lacks a hint parameter for this purpose. Alternatively, call the `getExpectedRateOnlyPermission` function.
-
-#### Understanding the returned values
-
-To understand what this rate means, divide the obtained value by 10\*\*18. Let us look at an example.
-Suppose calling `getExpectedRate(KNC_TOKEN,WBTC_TOKEN,1000000000000000000)` returns the following values:
-
-- `expectedRate: 64760000000000`
-- `slippageRate: 62817200000000`
-
-`64760000000000 / (10**18) = 0.0000648098`
-Hence, 1 KNC token can be converted to 0.000065 WBTC token.
-
-#### `0` expected and slippage rates
-
-A returned rate of `0` signifies that a trade from the requested source token amount to the destination token is not possible at the moment. It could be due to the following reasons:
-
-- No reserve is supporting either `src` or `dest` token, or both
-- No reserve can support the queried `srcQty` amount (Eg. due to insufficient liquidity, expired conversion rates)
-- The network is undergoing maintenance (this can be checked with [this function](#enabled))
-
-#### Turning on MSB to exclude permissionless reserves
-
-Add `2**255` to the desired `srcQty`. As `2**255` is a really large number, the use of a BigNum library / package is recommended for calculations. Refer to the latter part of the web3 example below.
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const src = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' // ETH
-const dest = '0x6b175474e89094c44da98b954eedeac495271d0f' // DAI
-const srcQty = new web3.utils.BN('3000000000000000000000')
-
-let result = await kyberNetworkProxyContract.methods.getExpectedRate(
-	src,
-	dest
-	srcQty
-).call()
-
-//Example where MSB is turned on to exclude permissionless reserves
-const hint = new web3.utils.BN('57896044618658097711785492504343953926634992332820282019729792003956564819968') // 2^255 (turning on MSB)
-const newSrcQty = srcQty.add(hint)
-let result = await kyberNetworkProxyContract.methods.getExpectedRate(
-	src,
-	dest
-	newSrcQty
-).call()
-
-let expectedRate = result[0]
-let slippageRate = result[1]
-```
-
-<br />
-
-### `getExpectedRateOnlyPermission`
-
-Get the expected exchange rate from only permissioned reserves (ie. excluding permissionless reserves).
-
----
-
-function **getExpectedRateOnlyPermission**(ERC20 src, ERC20 dest, uint srcQty) public view returns (uint expectedRate, uint slippageRate)
-| Parameter | Type | Description |
-| --------- |:-----:|:----------------------------------------:|
-| `src` | ERC20 | source ERC20 token contract address |
-| `dest` | ERC20 | destination ERC20 token contract address |
-| `srcQty` | uint | source ERC20 token amount in its token decimals |
-**Returns:**\
-The expected exchange rate and slippage rate
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
-const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
-const srcQty = new web3.utils.BN("3000000000000000000000");
-
-let result = await KyberNetwork.methods
-  .getExpectedRateOnlyPermission(src, dest, srcQty)
-  .call();
-
-let expectedRate = result[0];
-let slippageRate = result[1];
-```
-
-<br />
-
-### `getNumReserves`
-
-Get the total number of reserves in the network.
-
----
-
-function **getNumReserves**() public view returns (uint)\
-**Returns:**\
-Total number of reserves
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-let numOfReserves = await KyberNetwork.methods.getNumReserves().call();
-```
-
-<br />
-
-### `getReserves`
-
-Get all the reserves added in the network.
-
----
-
-function **getReserves**() public view returns (KyberReserveInterface[])\
-**Returns:**\
-An array of all reserves' contract addresses
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-let reserves = await KyberNetwork.methods.getReserves().call();
-```
-
-<br />
-
-### `getUserCapInTokenWei`
-
-Get the user's exchange limit in the specified ERC20 token based on whether user has been KYC'd or not. Future feature.
-
----
-
-function **getUserCapInTokenWei**(address user, ERC20 token) public view returns (uint)
-| Parameter | Type | Description |
-| --------- |:-------:|:--------------:|
-| `user` | address | user's address |
-| `token` | ERC20 | ERC20 token contract address |
-**Returns:**\
-The user's exchange limit in the specified ERC20 token decimals
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const user = account.address;
-const token = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
-let userCapInTokenWei = await KyberNetwork.methods
-  .getUserCapInTokenWei(user, token)
-  .call();
-```
-
-<br />
-
-### `getUserCapInWei`
-
-Get the user's exchange limit in ETH based on whether user has been KYC'd or not. Currently not enforced.
-
----
-
-function **getUserCapInWei**(address user) public view returns (uint)
-| Parameter | Type | Description |
-| --------- |:-------:|:--------------:|
-| `user` | address | user's address |
-**Returns:**\
-The user's exchange limit in ETH wei
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const user = account.address;
-let userCapInWei = await KyberNetwork.methods.getUserCapInWei(user).call();
-```
-
-<br />
-
-### `info`
-
-Get the information only used by an external UI application.
-
----
-
-function **info**(bytes32 field) public view returns (uint)
-| Parameter | Type | Description |
-| --------- |:-------:|:-----------------------------------:|
-| `field` | bytes32 | key in the `info` mapping |
-**Returns:**\
-Value that was mapped to the `field` input
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-let value = await KyberNetwork.methods.info(`field`).call();
-```
-
-<br />
-
-### `listPairForReserve`
-
-Allow or prevent a specific reserve to trade a pair of tokens. Only operator can invoke.
-
----
-
-function **listPairForReserve**(address reserve, ERC20 token, bool ethToToken, bool tokenToEth, bool add) public onlyOperator
-| Parameter | Type | Description |
-| ----------|:---------------------:|:-----------------------------------------------------------:|
-| `reserve` | KyberReserveInterface | reserve's contract address |
-| `token` | ERC20 | Token contract address |
-| `ethToToken` | bool | `true` if ETH -> token trade supported, `false` otherwise |
-| `tokenToEth` | bool | `true` if token -> ETH trade supported, `false` otherwise |
-| `add` | uint | `true` if trade enabled, otherwise disable trade if `false` |
-Modifiers: [onlyOperator](api_abi-permissiongroups.md#onlyOperator)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const reserve = "0x798AbDA6Cc246D0EDbA912092A2a3dBd3d11191B";
-const token = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
-const ethToToken = true;
-const tokenToEth = false;
-const add = true;
-
-let transactionData = KyberNetwork.methods
-  .listPairForReserve(reserve, token, ethToToken, tokenToEth, add)
-  .encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: ADMIN_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
-<br />
-
-### `maxGasPrice`
-
-Get the maximum gas price allowable for trade transactions.
-
----
-
-function **maxGasPrice**() public view returns (uint)\
-**Returns:**\
-Maximum gas price
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-let maxGasPrice = await KyberNetwork.methods.maxGasPrice().call();
-```
-
-<br />
-
-### `removeReserve`
-
-Removes a reserve from the network. Only an operator can invoke.
-
----
-
-function **removeReserve**(KyberReserveInterface reserve, uint index) public onlyOperator
-| Parameter | Type | Description |
-| --------- |:---------------------:|:------------------------------------------------:|
-| `reserve` | KyberReserveInterface | reserve's contract address |
-| `index` | uint | Reserve index in the reserve array |
-Modifiers: [onlyOperator](api_abi-permissiongroups.md#onlyoperator)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const reserve = "0x63825c174ab367968EC60f061753D3bbD36A0D8F";
-var allReserves = await KyberNetworkContract.methods.getReserves().call();
-const reserveIndex = allReserves.indexOf(reserve);
-
-let transactionData = KyberNetwork.methods
-  .removeReserve(reserve, reserveIndex)
-  .encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: OPERATOR_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
-<br />
-
-### `searchBestRate`
-
-Obtain the best exchange rate.\
-**Note: either `src` or `dest` must be ETH, ie. srcToken -> ETH or ETH -> destToken**.
-
----
-
-function **searchBestRate**(ERC20 src, ERC20 dest, uint srcAmount) public view returns (address, uint)
-| Parameter | Type | Description |
-| --------- |:-------:|:-----------------------------------:|
-| `src` | ERC20 | source token contract address |
-| `dest` | ERC20 | destination token contract address |
-| `srcAmount` | uint | source ERC20 token amount in its token decimals |
-**Returns:**\
-Reserve address that offered the best rate, and the actual exchange rate.
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
-dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
-srcAmount = new web3.utils.BN("3000000000000000000000");
-
-let result = await KyberNetwork.methods
-  .searchBestRate(src, dest, srcAmount)
-  .call();
-reserveAddress = result[0];
-rate = result[1];
-```
-
-<br />
-
-### `setEnable`
-
-Enables or disables the entire network (Eg. disabled when smart contracts are upgraded)
-
----
-
-function **setEnable**(bool \_enable) public onlyAdmin
-| Parameter | Type | Description |
-| --------- |:-----:|:----------------------------------------:|
-| `_enable` | bool | `true` to enable network, `false` to disable |
-Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const _enable = true;
-let transactionData = KyberNetwork.methods.setEnable(_enable).encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: ADMIN_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
-<br />
-
-### `setExpectedRate`
-
-Set whiteList contract address. Only admin can invoke.
-
----
-
-function **setExpectedRate**(ExpectedRateInterface expectedRate) public onlyAdmin
-| Parameter | Type | Description |
-| ----------------------|:---------------------:|:----------------------------------------------:|
-| `expectedRate` | ExpectedRateInterface | ExpectedRate contract address |
-Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const expectedRate = "0x543f2592b1C478837B5EE2013eD26C7Fe04a8C7e";
-let transactionData = KyberNetwork.methods
-  .setExpectedRate(expectedRate)
-  .encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: ADMIN_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
-<br />
-
-### `setFeeBurner`
-
-Set feeBurner contract address. Only admin can invoke.
-
----
-
-function **setFeeBurner**(FeeBurnerInterface feeBurner) public onlyAdmin
-| Parameter | Type | Description |
-| ----------------------|:---------------------:|:----------------------------------------------:|
-| `feeBurner` | FeeBurnerInterface | FeeBurner contract address |
-Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const feeBurner = "0x543f2592b1C478837B5EE2013eD26C7Fe04a8C7e";
-let transactionData = KyberNetwork.methods.setFeeBurner(feeBurner).encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: ADMIN_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
-<br />
-
-### `setInfo`
-
-Sets the information only used by an external UI application.
-
----
-
-function **setInfo**(bytes32 field, uint value) public onlyOperator
-| Parameter | Type | Description |
-| --------- |:-------:|:-----------------------------------:|
-| `field` | bytes32 | key in the `info` mapping |
-| `value` | uint | value to be set in the `info` field |
-Modifiers: [onlyOperator](api_abi-permissiongroups.md#onlyoperator)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const field = "someField";
-const value = "someValue";
-let transactionData = KyberNetwork.methods.setInfo(field, value).encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: OPERATOR_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
-<br />
-
-### `setKyberProxy`
-
-Sets the [`KyberNetworkProxy.sol`](api_abi-kybernetworkproxy.md) contract address.
-
----
-
-function **setKyberProxy**(address networkProxy) public onlyAdmin
-| Parameter | Type | Description |
-| --------- |:-------:|:-----------------------------------:|
-| `networkProxy` | address | KyberNetworkProxy contract address |
-Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const networkProxy = "0x818E6FECD516Ecc3849DAf6845e3EC868087B755";
-let transactionData = KyberNetwork.methods
-  .setKyberProxy(networkProxy)
-  .encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: ADMIN_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
-<br />
-
-### `setParams`
-
-Sets the parameters for `maxGasPrice` and `negligibleRateDiff`. Only admin can invoke.
-
----
-
-function **setParams**(uint \_maxGasPrice, uint \_negligibleRateDiff) public onlyAdmin
-| Parameter | Type | Description |
-| ----------------------|:---------------------:|:----------------------------------------------:|
-| `_maxGasPrice` | uint | maximum gas price for trades |
-| `_negligibleRateDiff` | uint | Neligible rate difference |
-Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const _maxGasPrice = new web3.utils.BN("50000000000");
-const _negligibleRateDiff = new web3.utils.BN("350000000");
-
-let transactionData = KyberNetwork.methods
-  .setParams(_maxGasPrice, _negligibleRateDiff)
-  .encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: ADMIN_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
-<br />
-
-### `setWhiteList`
-
-Set whiteList contract address. Only admin can invoke.
-
----
-
-function **setWhiteList**(WhiteListInterface whiteList) public onlyAdmin
-| Parameter | Type | Description |
-| ----------------------|:---------------------:|:----------------------------------------------:|
-| `whiteList` | WhiteListInterface | WhiteList contract address |
-Modifiers: [onlyAdmin](api_abi-permissiongroups.md#onlyadmin)
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const whiteList = "0x543f2592b1C478837B5EE2013eD26C7Fe04a8C7e";
-let transactionData = KyberNetwork.methods.setWhiteList(whiteList).encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: ADMIN_ADDRESS,
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
-
+ <br />
+ 
 ### `tradeWithHint`
+Makes a trade between src and dest token and send dest tokens to destAddress, with an additional `hint` parameter for reserve routing. Function is backwards compatible to pre-Katalyst.
 
-Makes a trade between src and dest token and send dest tokens to destAddress, with an additional `hint` parameter for exclusion of permissionless reserves.
-
----
-
-function **tradeWithHint**(address trader, ERC20 src, uint srcAmount, ERC20 dest, address destAddress, uint maxDestAmount, uint minConversionRate, address walletId, bytes hint) public nonReentrant payable returns (uint)
-| Parameter | Type | Description |
-| ------------------- |:-------:|:--------------------------------------------------------------------:|
+___
+function __tradeWithHint__(address payable trader, ERC20 src, uint256 srcAmount, ERC20 dest, address payable destAddress, uint256 maxDestAmount, uint256 minConversionRate, address payable walletId, bytes hint) external payable returns (uint256 destAmount)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
 | `trader` | address | trader's address |
 | `src` | ERC20 | source ERC20 token contract address |
-| `srcAmount` | uint | source ERC20 token amount in its token decimals |
+| `srcAmount` | uint256 | source ERC20 token amount in its token decimals |
 | `dest` | ERC20 | destination ERC20 token contract address |
 | `destAddress` | address | recipient address for destination ERC20 token |
-| `maxDestAmount` | uint | limit on the amount of destination tokens |
+| `maxDestAmount` | uint256 | limit on the amount of destination tokens |
 | `minConversionRate` | uint | minimum conversion rate; trade is canceled if actual rate is lower |
 | `walletId` | address | wallet address to send part of the fees to |
 | `hint` | bytes | for filtering permissionless reserves |
 **Returns:**\
-Amount of actual destination tokens
+destAmount - Amount of actual destination tokens
 
-**Notes:**
+<br />
+ 
+### `tradeWithHintAndFee`
+Executes a trade between src and dest token and send dest tokens to destAddress; includes the platform fee.
+___
+function __tradeWithHintAndFee__(address payable trader, IERC20 src, uint256 srcAmount, IERC20 dest, address payable destAddress, uint256 maxDestAmount, uint256 minConversionRate, address payable platformWallet, uint256 platformFeeBps, bytes hint) external payable override returns (uint256 destAmount)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `trader` | address | trader's address |
+| `src`               | IERC20   | source ERC20 token contract address                                  |
+| `srcAmount`   | uint256    | source ERC20 token amount in its token decimals             |
+| `dest`              | IERC20   | destination ERC20 token contract address                             |
+| `destAddress`       | address | recipient address for destination ERC20 token                        |
+| `maxDestAmount`     | uint256    | limit on the amount of destination tokens                            |
+| `minConversionRate` | uint256    | minimum conversion rate;  trade is canceled if actual rate is lower |
+| `platformWallet` | address | address receiving the platform fee |
+| `platformFeeBps` | uint256 | platform fee in BPS to be used in this trade |
+| `hint` | bytes | hint in bytes for reserve routing |
+**Returns:**\
+destAmount - Amount of actual destination tokens in twei
 
-#### `srcAmount` | `maxDestAmount`
+<br />
+ 
+### `getExpectedRateWithHintAndFee`
+Get the token conversion rate after processing the hint and includes the platform fee.
+___
+function __getExpectedRateWithHintAndFee__(IERC20 src, IERC20 dest, uint256 srcQty, uint256 platformFeeBps, bytes hint) external view override returns (uint256 rateWithNetworkFee, uint256 rateWithAllFees)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `src`     | IERC20 | source ERC20 token contract address      |
+| `dest`    | IERC20 | destination ERC20 token contract address |
+| `srcQty`  | uint256  | source ERC20 token amount in its token decimals         |
+| `platformFeeBps` | uint256 | platform fee in BPS    |
+| `hint` | bytes | hint in bytes for reserve routing |
+ **Returns:**\
+rateWithNetworkFee - conversion rate of the src and dest tokens after deducting the network fee.
+rateWithAllFees - conversion rate of the src and dest tokens after deducting the network and platform fee.
 
-These amounts should be in the source and destination token decimals respectively. For example, if the user wants to swap from / to 10 POWR, which has 6 decimals, it would be `10 * (10 ** 6) = 10000000`
+<br />
+ 
+### `getExpectedRate`
+Get the token expected and worst rates. worstRate is hardcoded as 3% lower of expectedRate. Function is backwards compatible to pre-Katalyst.
+___
+function __getExpectedRate__(ERC20 src, ERC20 dest, uint256 srcQty) external view returns (uint256 expectedRate, uint256 worstRate)
+| Parameter | Type  | Description |
+| --------- |:-----:|:-----------:|
+| `src` | ERC20 | source ERC20 token contract address |
+| `dest` | ERC20 | destination ERC20 token contract address |
+| `srcQty` | uint256 | source ERC20 token amount in its token decimals |
+**Returns:**\
+expectedRate - rate for a trade after deducting network fee
+worstRate - rate for a trade, calculated to be expectedRate * 97 / 100
 
-#### `maxDestAmount`
+<br />
+ 
+### `getNetworkData`
+Returns basic network data.
+___
+function __getNetworkData__() external view override returns (uint256 negligibleDiffBps, uint256 networkFeeBps, uint256 expiryTimestamp)\
+**Returns:**\
+negligibleDiffBps - neglibigle difference in BPS
+networkFeeBps - network fees in BPS
+expiryTimestamp - expiry timestamp in epoch time when the network fees will expire and need to be updated
 
-This parameter should never be zero. Set to an arbitarily large amount for all source tokens to be converted.
-When using `maxDestAmount`, we recommend using `slippageRate` or add a buffer to `expectedRate` rather than using the exact rate from getExpectedRate. Otherwise, it is likely that the trade will revert.
+<br />
+ 
+### `getContracts`
+Returns the Kyber contracts used by the network.
+___
+function __getContracts__() external returns (IKyberFeeHandler kyberFeeHandlerAddress, IKyberDao kyberDaoAddress, IKyberMatchingEngine kyberMatchingEngineAddress, IKyberStorage kyberStorageAddress, IGasHelper gasHelperAddress, IKyberNetworkProxy[] kyberProxyAddresses)\
+**Returns:**\
+kyberFeeHandlerAddress - KyberFeeHandler contract address
+kyberDaoAddress - KyberDao contract address
+kyberMatchingEngineAddress - KyberMatchingEngine contract address
+kyberStorageAddress - KyberStorage contract address
+gasHelperAddress - GasHelper contract address
+kyberProxyAddresses - array of KyberNetworkProxy contract addresses
 
-#### `minConversionRate`
+<br />
+ 
+### `maxGasPrice`
+Returns the maximum gas price limit to prevent front running.
+___
+function __maxGasPrice__() external view override returns (uint256)\
+**Returns:**\
+The maximum gas price limit
 
-This rate is independent of the source and destination token decimals. To calculate this rate, take `yourRate * 10**18`. For example, even though WBTC has 8 token decimals, if we want the minimum conversion rate to be `1 ETH = 0.023 WBTC`, then `minConversionRate = 0.023 * (10 ** 18)`.
-
-#### `walletId`
-
-If you are part of our [fee sharing program](integrations-feesharing.md), this will be your registered wallet address. Set to the null address if you are not a participant.
-
-#### `hint`
-
-By default, permissionless reserves are included for selection for the trade. To exclude permissionless reserves, parse `PERM` in the `hint` parameter.
-
----
-
-Web3 Example:
-
-```js
-// DISCLAIMER: Code snippets in this guide are just examples and you
-// should always do your own testing. If you have questions, visit our
-// https://t.me/KyberDeveloper.
-
-const src = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"; // ETH
-const srcAmount = new web3.utils.BN("3000000000000000000000");
-const dest = "0xdd974D5C2e2928deA5F71b9825b8b646686BD200"; // KNC
-const destAddress = "RECIPIENT_ADDRESS";
-const maxDestAmount = new web3.utils.BN(Math.pow(2, 255).toString);
-const minConversionRate = new web3.utils.BN("55555");
-const walletId = "0x0000000000000000000000000000000000000000";
-const hint = ""; //hint = "PERM" to filter permissionless reserves
-
-transactionData = KyberNetwork.methods
-  .trade(
-    src,
-    srcAmount,
-    dest,
-    destAddress,
-    maxDestAmount,
-    minConversionRate,
-    walletId,
-    hint
-  )
-  .encodeABI();
-
-txReceipt = await web3.eth.sendTransaction({
-  from: USER_WALLET_ADDRESS, //obtained from web3 interface
-  to: KYBER_NETWORK_ADDRESS,
-  data: transactionData
-});
-```
+<br />
+ 
+### `enabled`
+Returns a boolean determining if trading is enabled on the network.
+___
+function __enabled__() external view override returns (bool)\
+**Returns:**\
+Returns `true` if the network is enabled for trading, otherwise `false`.
