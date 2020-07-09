@@ -146,7 +146,7 @@ npm install
 Then run the command
 
 ```
-node liquidityReserveDeployer.js --config-path liquidityReserve_input.json --gas-price-gwei 30 --rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x753fe1914db38ee744e071baadd123f50f9c8e46"
+node liquidityReserveDeployer.js --config-path liquidityReserve_input.json --gas-price-gwei 30 --rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x920B322D4B8BAB34fb6233646F5c87F87e79952b"
 
 ```
 
@@ -238,7 +238,7 @@ Now, Let's assume we want to list a token with the following considerations:
 4. Initial Token Amount – 2,000,000 tokens (100 ETH worth)
 5. Minimum (pMin) and Maximum (pMax) Supported Price Factor – 0.5:2.0
 6. Maximum Buy and Maximum Sell Amount in a Trade – 5 ETH max buy and sell cap
-7. Fee Percentage – 0.25%
+7. Fee Percentage – 0.10%
 
 Below, we will calculate the different parameters.
 
@@ -249,7 +249,7 @@ Below, we will calculate the different parameters.
 |          `_numFpBits`           |           InFp in numFpBits           |                              \_numFpBits = **40**                              |
 |        `_maxCapBuyInWei`        |         max buy cap \* 10^18          |           \_maxCapBuyInWei = (5 \* 10^18) = **5000000000000000000**            |
 |       `_maxCapSellInWei`        |         max sell cap \* 10^18         |           \_maxCapSellInWei = (5 \* 10^18) = **5000000000000000000**           |
-|           `_feeInBps`           |         fee percentage in BPS         |                              \_feeInBps = **25**                               |
+|           `_feeInBps`           |         fee percentage in BPS         |                              \_feeInBps = **10**                               |
 | `_maxTokenToEthRateInPrecision` | pMax \* initial price of token \* 10^18 | \_maxTokenToEthRateInPrecision = (2.0 \* 0.00005 \* 10^18) = **100000000000000** |
 | `_minTokenToEthRateInPrecision` | pMin \* initial price of token \* 10^18 | \_minTokenToEthRateInPrecision = (0.5 \* 0.00005 \* 10^18) = **25000000000000**  |
 
@@ -267,7 +267,7 @@ A Python script, located in `scripts/get_liquidity_params.py` in the `smart-cont
   "max_supported_price_factor": 2.0,
   "max_tx_buy_amount_eth": 5.0,
   "max_tx_sell_amount_eth": 5.0,
-  "fee_percent": 0.25,
+  "fee_percent": 0.10,
   "formula_precision_bits": 40
 }
 ```
@@ -288,7 +288,7 @@ _pMinInFp: 27487790
 _numFpBits: 40
 _maxCapBuyInWei: 5000000000000000000
 _maxCapSellInWei: 5000000000000000000
-_feeInBps: 25
+_feeInBps: 10
 _maxTokenToEthRateInPrecision: 100000000000000
 _minTokenToEthRateInPrecision: 25000000000000
 ```
@@ -303,7 +303,7 @@ Once approved, you can test your reserve on [KyberSwap](https://ropsten.kyber.ne
 
 ## Maintaining your APR
 
-This section walks you through the necessary steps involved in case you want to rebalance the APR or withdraw fees collected in order to pay network fees. You will also need to perform the same activities in the event that:
+This section walks you through the necessary steps involved in case you want to rebalance the APR or withdraw fees collected. You will also need to perform the same activities in the event that:
 - the reserve is depleted of tokens or ETH;
 - you want to rebalance your reserve;
 - you want to withdraw fees from the reserve;
