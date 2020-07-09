@@ -40,15 +40,15 @@ event RewardPaid(address staker, uint amountWei);
 
 ## Index
 
-- `/dao-info`: General DAO information
-- `/epoch_stats`: General epoch information
-- `/campaigns`: All campaigns' information
-  - `/campaigns/:id`: A specific campaign's information
-- `/stakers/:wallet?epoch=[epoch]`: `wallet`'s information for a specific epoch
-- `/stakers/:wallet/actions`: All staking, claiming and voting actions executed by `wallet`
-- `/stakers/:wallet/rewards`: `wallet`'s rewards
-- `/stakers/:wallet/votes`: `wallet`'s votes
-- `/wallet_info/:address`: `wallet`'s information (if any)
+- [`/dao-info`](#dao-info): General DAO information
+- [`/epoch_stats`](#epoch_stats): General epoch information
+- [`/campaigns`](#campaigns): All campaigns' information
+- [`/campaigns/:id`](#campaignsid): A specific campaign's information
+- [`/stakers/:wallet?epoch=[epoch]`](#stakerswalletepochepoch): `wallet`'s information for a specific epoch
+- [`/stakers/:wallet/actions`](#stakerswalletactions): All staking, claiming and voting actions executed by `wallet`
+- [`/stakers/:wallet/rewards`[(#stakerswalletrewards): `wallet`'s rewards
+- [`/stakers/:wallet/votes`](#stakerswalletvotes): `wallet`'s votes
+- [`/wallet_info/:address`](#wallet_infoaddress): `wallet`'s information (if any)
 
 ## API
 
