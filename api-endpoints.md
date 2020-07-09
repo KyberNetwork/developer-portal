@@ -46,7 +46,7 @@ event RewardPaid(address staker, uint amountWei);
 - [`/campaigns/:id`](#campaignsid): A specific campaign's information
 - [`/stakers/:wallet?epoch=[epoch]`](#stakerswalletepochepoch): `wallet`'s information for a specific epoch
 - [`/stakers/:wallet/actions`](#stakerswalletactions): All staking, claiming and voting actions executed by `wallet`
-- [`/stakers/:wallet/rewards`[(#stakerswalletrewards): `wallet`'s rewards
+- [`/stakers/:wallet/rewards`](#stakerswalletrewards): `wallet`'s rewards
 - [`/stakers/:wallet/votes`](#stakerswalletvotes): `wallet`'s votes
 - [`/wallet_info/:address`](#wallet_infoaddress): `wallet`'s information (if any)
 
