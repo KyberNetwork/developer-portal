@@ -612,7 +612,7 @@ Refer to [this section](reserves-types.md) for more information on reserve types
 #### Example
 
 ```json
-> curl "https://api.kyber.network/all_reserves
+> curl "https://api.kyber.network/all_reserves"
 {
   "data": [
     {
@@ -670,7 +670,7 @@ Refer to [this section](reserves-types.md) for more information on reserve types
 Get list of reserves that support ETH -> KNC trades.
 
 ```json
-> curl "https://api.kyber.network/reserves?token=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&type=buy
+> curl "https://api.kyber.network/reserves?token=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&type=buy"
 {
   "data": [
     {
