@@ -586,6 +586,54 @@ Build a KNC to ETH split trade among 2 reserves:
 
 <br />
 
+### `/all_reserves`
+
+(GET) Returns a list of all reserves added to the network.
+
+**Response:**
+| Parameter | Type | Description |
+|:----------:|:------:|:--------------------------------------------------------------------------------------------:|
+| `address` | string | The address of the asset in its native chain. |
+| `id` | string | Reserve ID. Refer to [this section](reserves-resIDs.md) for more information. |
+| `type` | integer | Reserve Type. Refer below. |
+| `rebate_wallet` | string | Reserve rebate wallet address |
+
+#### Reserve Types
+
+Refer to [this section](reserves-types.md) for more information on reserve types.
+
+- `1` = Fed Price Reserve (FPR)
+- `2` = Automated Price Reserve (APR)
+- `3` = Bridge Reserve (BRIDGE)
+- `4` = Utility Reserve (UTILITY)
+- `5` = Custom Reserve (CUSTOM)
+- `6` = Orderbook Reserve (ORDERBOOK)
+
+#### Example
+
+```json
+> curl "https://api.kyber.network/all_reserves
+{
+  "data": [
+    {
+      "address": "0x39C30B03799DB870e9C01747f68e24D2b38A30C9",
+      "id": "0xff00004b79626572000000000000000000000000000000000000000000000000",
+      "type": 1,
+      "rebate_wallet": "0xDd102CeDa27a2283dC85028f9bF7d022d8a640d2"
+    },
+    {
+      "address": "0xc4684f4FbfC3db0A24CFFe35821b12e55BeaEF7A",
+      "id": "0xaa4b4e4320415052000000000000000000000000000000000000000000000000",
+      "type": 2,
+      "rebate_wallet": "0x7de9bC2cDfa6B7Ee7088a4f5848A86A26Cd5aFD1"
+    },
+    ...
+  ]
+}
+```
+
+<br />
+
 ### `/reserves`
 
 (GET) Returns a list of reserves that supports a token pair.
