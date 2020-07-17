@@ -552,7 +552,7 @@ Build a KNC to ETH split trade among 2 reserves:
 | `quote` | string | Yes | The quote token contract address. |
 | `base_amount` | number | The amount of base tokens you would like to buy / sell. |
 | `type` | string | Yes | Accepts `buy` or `sell` as arguments. Whether you want to buy / sell `base_amount` worth of `base` token. |
-
+| `platformFee` | number | No | Platform fee to be charged, in basis points. Read more about platform fees [here](integrations-platformfees.md). |
 
 ---
 
@@ -564,23 +564,23 @@ Build a KNC to ETH split trade among 2 reserves:
 
 #### Examples
 
-1. Get WETH amount receivable for selling 10 KNC. (10 KNC -> ? WETH)
+1. Get WETH amount receivable for selling 10 KNC, with 0.08% platform fee. (10 KNC -> ? WETH)
 
 ```json
-> curl "https://api.kyber.network/quote_amount?base=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&quote=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&base_amount=10&type=sell"
+> curl "https://api.kyber.network/quote_amount?base=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&quote=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&base_amount=10&type=sell&platformFee=8"
 {
-  "error":false,
-  "data":"0.048480"
+  "data":"0.068293",
+  "error":false
 }
 ```
 
-2. Get WETH amount needed to purchase 10 KNC. (? WETH -> 10 KNC)
+2. Get WETH amount needed to purchase 10 KNC, with 0.1% platform fee. (? WETH -> 10 KNC)
 
 ```json
-> curl "https://api.kyber.network/quote_amount?base=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&quote=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&base_amount=10&type=sell"
+> curl "https://api.kyber.network/quote_amount?base=0xdd974d5c2e2928dea5f71b9825b8b646686bd200&quote=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&base_amount=10&type=buy&platformFee=10"
 {
-  "error":false,
-  "data":"0.048817"
+  "data":"0.068949",
+  "error":false
 }
 ```
 
@@ -595,8 +595,9 @@ Build a KNC to ETH split trade among 2 reserves:
 |:----------:|:------:|:--------------------------------------------------------------------------------------------:|
 | `address` | string | The address of the asset in its native chain. |
 | `id` | string | Reserve ID. Refer to [this section](reserves-resIDs.md) for more information. |
-| `type` | integer | Reserve Type. Refer below. |
+| `type` | integer | Reserve Type. Elaborated in description. |
 | `rebate_wallet` | string | Reserve rebate wallet address |
+| `description` | string | Reserve type description |
 
 #### Reserve Types
 
@@ -651,8 +652,9 @@ Refer to [this section](reserves-types.md) for more information on reserve types
 |:----------:|:------:|:--------------------------------------------------------------------------------------------:|
 | `address` | string | The address of the asset in its native chain. |
 | `id` | string | Reserve ID. Refer to [this section](reserves-resIDs.md) for more information. |
-| `type` | integer | Reserve Type. Refer below. |
+| `type` | integer | Reserve Type. Elaborated in description. |
 | `rebate_wallet` | string | Reserve rebate wallet address |
+| `description` | string | Reserve type description |
 
 #### Reserve Types
 
