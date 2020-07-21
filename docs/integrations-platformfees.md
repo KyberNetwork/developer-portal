@@ -5,11 +5,11 @@ title: Platform Fees
 [//]: # (tagline)
 ## What is the platform fee?
 
-For each trade that originates from your DApp, wallet or payment gateway, you are able to specify a percentage that can taken as commission. It is collected in ETH (and stablecoins in the future).
+For each trade that originates from your DApp, wallet or payment gateway, you are able to specify a percentage that can taken as commission. It is collected in ETH (and stablecoins in the future). This is **separate from the network fee** that is collected and distributed according to the BRR percentages determined by the Kyber DAO.
 
 ## How do I specify the platform fee percentage and wallet address?
 
-The platform fee is defined in basis points (bps). 1 basis point = 0.01%. As an example, a platform fee of 25 basis points would mean 0.25% is to be charged. The fee amount is calculated by `platformFeeBps * srcQty / 10000`. Kindly refer to the [example](#example) below. 
+The platform fee is defined in basis points (bps). 1 basis point = 0.01%. As an example, a platform fee of 8 basis points would mean 0.08% is to be charged. The fee amount is calculated by `platformFeeBps * srcQty / 10000`. Kindly refer to the [example](#example) below. 
 
 ## Is there a max cap to the platform fee?
 
@@ -36,12 +36,13 @@ The Fee Sharing Program has been **deprecated**. The new APIs will have to be us
 
 ## Example
 
-Suppose a user has successfully made a KNC -> WBTC trade transaction of 10 ETH in value (ie. `X KNC -> 10 ETH -> Y WBTC`). A platform fee of 0.25% (25 bps) is specified.
+Suppose a user has successfully made a KNC -> WBTC trade transaction of 10 ETH in value (ie. `X KNC -> 10 ETH -> Y WBTC`). A platform fee of 0.08% (8 bps) is specified. We further assume the network fee is 0.20%.
 
 | Description                    | Amount              | Calculation            | % of Transaction Value |
 | ------------------------------ | ------------------- | ---------------------- | ---------------------- |
 | Trasaction Value               | 10 ETH              | na                     | 100%                   |
-| Platform Fee                   | 0.025 ETH           | `0.025 = 10 * 0.25%`   | 0.25%                  |
+| Platform Fee                   | 0.008 ETH           | `0.008 = 10 * 0.08%`   | 0.08%                  |
+| Network Fee                    | 0.02 ETH           | `0.02 = 10 * 0.2%`      | 0.2%                   |
 
 ### Checking Fees Claimable
 
