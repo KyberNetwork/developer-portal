@@ -48,7 +48,7 @@ Check that you have the following:
 
 ### `Step 1: Setting up the reserve`
 
-Create a local directory and clone the `master` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts) on GitHub.
+Create a local directory and clone the `master` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts/tree/master_preKatalyst) on GitHub.
 
 ```
 git clone https://github.com/KyberNetwork/smart-contracts.git
