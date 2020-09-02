@@ -35,7 +35,8 @@ Create a local directory, clone the `master` branch of our [reserves smart contr
 ```
 git clone https://github.com/KyberNetwork/kyber_reserves_sc.git
 cd kyber_reserves_sc
-yarn 
+yarn install
+yarn compile
 ```
 
 ### `Step 1: Specifying Settings`
@@ -81,7 +82,7 @@ The contracts to be deployed are the reserve and pricing contracts:
 Run the command
 
 ```
-yarn buidler deployApr --network ropsten deployApr --network-address 0x920B322D4B8BAB34fb6233646F5c87F87e79952b
+yarn buidler deployApr --network ropsten --network-address 0x920B322D4B8BAB34fb6233646F5c87F87e79952b
 ```
 
 For more information on the arguments, run `yarn buidler deployApr help`.
