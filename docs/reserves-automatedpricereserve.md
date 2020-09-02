@@ -35,7 +35,8 @@ Create a local directory, clone the `master` branch of our [reserves smart contr
 ```
 git clone https://github.com/KyberNetwork/kyber_reserves_sc.git
 cd kyber_reserves_sc
-yarn 
+yarn install
+yarn compile
 ```
 
 ### `Step 1: Specifying Settings`
@@ -81,7 +82,7 @@ The contracts to be deployed are the reserve and pricing contracts:
 Run the command
 
 ```
-yarn buidler deployApr --network ropsten deployApr --network-address 0x920B322D4B8BAB34fb6233646F5c87F87e79952b
+yarn buidler deployApr --network ropsten --network-address 0x920B322D4B8BAB34fb6233646F5c87F87e79952b
 ```
 
 For more information on the arguments, run `yarn buidler deployApr help`.
@@ -145,7 +146,7 @@ We explain the JSON fields in the table below:
 | `minAllowablePrice` | No | Maximum price decrease tolerable. Reserve returns 0 rate if price decreases further. Eg. 0.5 = 50% decrease in price |
 | `maxAllowablePrice` | No | Maximum price increase tolerable. Reserve returns 0 rate if price increases further. Eg. 2.0 = 100% increase in price |
 | `maxTxBuyAmtEth` | No | The maximum amount in ETH purchaseable in a single trade |
-| `maxTxSellAmtEth` | No | The maximum token amount (in ETH) sellable in a single trade |
+| `maxTxSellAmtEth` | No | The maximum token amount (specify in ETH) sellable in a single trade |
 | `feePercent` | No | The fee amount that should be factored into the price. |
 
 #### Setting liquidity parameters
