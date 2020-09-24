@@ -59,7 +59,7 @@ Navigate to the `./deployment/apr` directory and open `apr_input.json`, where yo
   "whitelistedAddresses": ["0x5bab5ef16cfac98e216a229db17913454b0f9365"],
   "reserveAdmin": "0xBC33a1F908612640F2849b56b67a4De4d179C151",
   "reserveOperators": ["0x5bab5ef16cfac98e216a229db17913454b0f9365"],
-  "pricingOperator": "0x5bab5ef16cfac98e216a229db17913454b0f9365",
+  "pricingAdmin": "0x5bab5ef16cfac98e216a229db17913454b0f9365",
   "outputFilename" : "apr_reserve_deployment_details.json"
 }
 ```
@@ -69,8 +69,8 @@ Navigate to the `./deployment/apr` directory and open `apr_input.json`, where yo
 | `tokenAddress` | Token address on public testnets / mainnet. For local testnet environment, the deployer script can do token deployments as well, so you can ignore this field. |
 | `whitelistedAddresses` | Addresses that reserve operators can withdraw ETH and tokens to |
 | `reserveAdmin` | Handles infrequent, manual operations like enabling trades on the reserve, and withdrawing funds to any account. Typically a **cold wallet** |
-| `reserveOperators` | Used for withdrawing funds from the reserve to whitelisted addresses (e.g. when selling excess tokens in the open market. Typically **hot wallets**, and more than 1 operator is allowed |
-| `pricingOperator` | Used to set token prices whenever a reserve rebalance is needed. Recommended to be 1 of the reserve operator addresses |
+| `reserveAdmin` | Used for withdrawing funds from the reserve to whitelisted addresses (e.g. when selling excess tokens in the open market. Typically **hot wallets**, and more than 1 operator is allowed |
+| `pricingOperator` | Used to `setLiquidityParams` whenever a reserve rebalance is needed.|
 
 ### `Step 2: Deploying the contracts`
 
@@ -156,7 +156,7 @@ We explain the JSON fields in the table below:
 1) The correct network is specified (develop, ropsten, kovan, mainnet etc.)
 2) The reserve has the desired ETH and token inventories, as the script will read the reserve's balances to calculate the right settings
 3) Should the script throw some warnings, it is best to clarify these warnings with the Kyber team before proceeding to call `setLiquidityParams`.
-4) If there are no warnings generated, and the private key specified in the `.env` file corresponds to the pricing operator, the script will automatically send a transaction to call `setLiquidityParams`.
+4) If there are no warnings generated, and the private key specified in the `.env` file corresponds to the pricing `admin`, the script will automatically send a transaction to call `setLiquidityParams`.
 
 #### Testnets
 
