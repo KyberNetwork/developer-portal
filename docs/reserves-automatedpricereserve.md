@@ -69,8 +69,8 @@ Navigate to the `./deployment/apr` directory and open `apr_input.json`, where yo
 | `tokenAddress` | Token address on public testnets / mainnet. For local testnet environment, the deployer script can do token deployments as well, so you can ignore this field. |
 | `whitelistedAddresses` | Addresses that reserve operators can withdraw ETH and tokens to |
 | `reserveAdmin` | Handles infrequent, manual operations like enabling trades on the reserve, and withdrawing funds to any account. Typically a **cold wallet** |
-| `reserveAdmin` | Used for withdrawing funds from the reserve to whitelisted addresses (e.g. when selling excess tokens in the open market. Typically **hot wallets**, and more than 1 operator is allowed |
-| `pricingOperator` | Used to `setLiquidityParams` whenever a reserve rebalance is needed.|
+| `reserveOperator` | Used for withdrawing funds from the reserve to whitelisted addresses (e.g. when selling excess tokens in the open market. Typically **hot wallets**, and more than 1 operator is allowed |
+| `pricingAdmin` | Used to `setLiquidityParams` whenever a reserve rebalance is needed.|
 
 ### `Step 2: Deploying the contracts`
 
