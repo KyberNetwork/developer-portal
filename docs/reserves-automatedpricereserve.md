@@ -5,7 +5,7 @@ title: Automated Price Reserve
 [//]: # (tagline)
 ## Objective
 
-In this guide, we will learn how to configure and deploy an Automated Price Reserve either locally via Ganache or to the Ropsten testnet.
+In this guide, we will learn how to configure and deploy an Automated Price Reserve.
 
 ## Introduction
 
@@ -26,171 +26,182 @@ With this in mind, the automated reserve was designed with various parameters to
 - Limited list of destination withdrawal addresses to prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
 - **An automated price reserve can only support one token.** If another token needs to be supported, another automated price reserve needs to be deployed.
 
-## How to set up your own reserve
+## Reserve Deployment and Setup
 
-### Local testnet deployment
+### `Step 0: Clone Repo`
 
-You may refer to [this section](reserves-ganache.md) on how to deploy and test the reserve locally using [Truffle's Ganache](https://truffleframework.com/ganache).
-
-### Public testnet deployment
-
-Here, we will walk you through an example to set up an automated reserve on the Ropsten testnet. The guide is applicable for mainnet deployment as well.
-
-#### Before you begin
-
-Check that you have the following:
-
-1. [node.js](https://nodejs.org/en/download/)
-2. [web3 v1.0.0](https://www.npmjs.com/package/web3)
-3. An ETH account. You can easily create one on [MEW](https://www.myetherwallet.com/), [MyCrypto](https://mycrypto.com/), or [MetaMask](https://metamask.io/).
-4. Ropsten ETH. You may get some from the [MetaMask faucet](https://faucet.metamask.io/) or [Ropsten faucet](http://faucet.ropsten.be:3001/).
-   ​
-
-### `Step 1: Setting up the reserve`
-
-Create a local directory and clone the `master_preKatalyst` branch of our [smart contracts repo](https://github.com/KyberNetwork/smart-contracts/tree/master_preKatalyst) on GitHub.
+Create a local directory, clone the `master` branch of our [reserves smart contracts repo](https://github.com/KyberNetwork/kyber_reserves_sc) and install necessary dependencies. Yarn is used as the package manager, but npm / npx can be used too.
 
 ```
-git clone https://github.com/KyberNetwork/smart-contracts/tree/master_preKatalyst
+git clone https://github.com/KyberNetwork/kyber_reserves_sc.git
+cd kyber_reserves_sc
+yarn install
+yarn compile
 ```
 
-#### Specifying the supported token
+### `Step 1: Specifying Settings`
 
-After you have a local copy, go to `web3deployment` directory and open `liquidityReserve_input.json`, where you will find the token details that the automated reserve will support.
+#### Importing Private Key and Provider API
+
+We use the [Buidler](https://buidler.dev/) environment for deployment. Create a `.env` file in the root directory with the following settings:
+```
+INFURA_API_KEY=********************************
+PRIVATE_KEY=0x****************************************************************
+```
+
+You can also specify other node provider API keys as well (eg. Alchemy, Metamask). Note that this means editing the `.buidler.config.js` file too.
+
+Navigate to the `./deployment/apr` directory and open `apr_input.json`, where you will the settings you have to define.
 
 ```json
 {
-  "tokens": {
-    "KNC": {
-      "name": "KyberNetwork",
-      "decimals": 18,
-      "address": "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6",
-    }
-    (...)
-  }
+  "tokenAddress": "0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6",
+  "whitelistedAddresses": ["0x5bab5ef16cfac98e216a229db17913454b0f9365"],
+  "reserveAdmin": "0xBC33a1F908612640F2849b56b67a4De4d179C151",
+  "reserveOperators": ["0x5bab5ef16cfac98e216a229db17913454b0f9365"],
+  "pricingOperator": "0x5bab5ef16cfac98e216a229db17913454b0f9365",
+  "outputFilename" : "apr_reserve_deployment_details.json"
 }
 ```
 
-Specify your token details, filling in these fields.
-
-In essence, an example of the first part of `liquidityReserve_input.json` would be:
-
-```json
-{
-  "tokens": {
-    "XYZ": {
-      "name": "TokenXYZ",
-      "decimals": 18,
-      "address": "0xB2f3dD487708ca7794f633D9Df57Fdb9347a7afF"
-    },
-    ...
-  }
-}
-```
-
-#### Defining withdrawal addresses
-
-Since withdrawing funds from the reserve contract might be needed in the future, we assume the withdraw operation will be done from a hot wallet address. That is why the withdraw permissions are granted to the operator addresses of the reserve contract. As hot wallets are in greater risk of being compromised, a limited list of withdrawal addresses is defined per token by the admin address. In the JSON file, a few withdrawal addresses can be defined per token and at least one address per exchange.
-
-Let's take a look at the `exchanges` dictionary in `liquidityReserve_input.json`. Fill in your ETH and XYZ token withdraw addresses. Note that the `binance` string is just an example. Also note that the **token you wish to support must have withdraw addresses**.
-
-```json
-  "exchanges": {
-		"binance" : {
-			"ETH" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
-			"XYZ" : "0x1234567890ABCDEF1234567890ABCDEF1111111"
-		}
-  },
-```
-
-#### Setting permissions
-
-In the `permission` dictionary, you will fill in the addresses for admin, operator, and alerter. We recommend that you use different addresses for each of the 3 roles. It is highly recommended that for sensitive contracts like the reserve, a cold wallet is used as the admin wallet. <br>
-**Note:** It is possible to have multiple operators and alerters, but there can only be 1 admin.
-
-```json
-"permission" : {
-	"KyberReserve" : {
-		"admin" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
-		"operator" : ["0x9876543210FDECBA9876543210FDECBA2222222"],
-		"alerter" : ["0x1234567890ABCDEF9876543210FDECBA3333333"]
-	},
-  "LiquidityConversionRates" : {
-		"admin" : "0x1234567890ABCDEF1234567890ABCDEF1111111",
-		"operator" : ["0x9876543210FDECBA9876543210FDECBA2222222"],
-		"alerter" : ["0x1234567890ABCDEF9876543210FDECBA3333333"]
-	}
-},
-```
-
-**KyberReserve**
 | Property | Explanation |
 | :-------: | :---------: |
-| `admin` | Wallet address (usually a cold wallet) that handles infrequent, manual operations like calling `setLiquidityParams().` |
-| `alerter` | The alerter account is used to halt the operation of the reserve on alerting conditions (e.g. strange conversion rates). In such cases, the reserve operation can be resumed only by the admin account. |
-| `operator` | The operator account is used for withdrawing funds from the reserve to certain destinations (e.g. when selling excess tokens in the open market). |
+| `tokenAddress` | Token address on public testnets / mainnet. For local testnet environment, the deployer script can do token deployments as well, so you can ignore this field. |
+| `whitelistedAddresses` | Addresses that reserve operators can withdraw ETH and tokens to |
+| `reserveAdmin` | Handles infrequent, manual operations like enabling trades on the reserve, and withdrawing funds to any account. Typically a **cold wallet** |
+| `reserveOperators` | Used for withdrawing funds from the reserve to whitelisted addresses (e.g. when selling excess tokens in the open market. Typically **hot wallets**, and more than 1 operator is allowed |
+| `pricingOperator` | Used to set token prices whenever a reserve rebalance is needed. Recommended to be 1 of the reserve operator addresses |
 
 ### `Step 2: Deploying the contracts`
 
-The relevant contracts to deploy are the following:
+The contracts to be deployed are the reserve and pricing contracts:
 
 - `KyberReserve.sol`: The contract has no direct interaction with the end users (the only interaction with them is via the network platform). Its main interaction is with the reserve operator who manages the token inventory and feeds conversion rates to Kyber Network's contract.
 - `LiquidityConversionRates.sol`: Provides the interface to set the liquidity parameters and the logic to maintain on-chain adjustment to the prices.
 
-Run the command below in your terminal to install all required dependencies. Ensure that you are in the `/web3deployment` directory.
+Run the command
 
 ```
-npm install
+yarn buidler deployApr --network ropsten --network-address 0x920B322D4B8BAB34fb6233646F5c87F87e79952b
 ```
 
-Then run the command
+For more information on the arguments, run `yarn buidler deployApr help`.
 
-```
-node liquidityReserveDeployer.js --config-path liquidityReserve_input.json --gas-price-gwei 30 --rpc-url https://ropsten.infura.io --print-private-key true --network-address "0x920B322D4B8BAB34fb6233646F5c87F87e79952b"
+### `Step 3: Test Deposits And Withdrawals`
 
-```
+#### Deposits
 
-- `--gas-price-gwei`: The gas price in gwei
-- `--rpc-url`: The URL of your geth, parity or infura node. Here we use infura's node, `https://ropsten.infura.io`.
-- `--print-private-key`: The script generates a random and one-time ETH account that will send transactions to deploy and setup your contracts. The `true` value reveals the private key of this generated account to you (you may want to set it to `false` when deploying onto the mainnet).
-- `--network-address`: `KyberNetwork.sol` contract address (the address above is Ropsten testnet address).
+Depositing funds into your reserve is easy. You can transfer ETH and tokens to your reserve contract from any address, like how you would with transferring funds for any ethereum wallet.
 
-You should see something similar to the image below while the script is running.
+#### Withdrawals
 
-![Waitforbalance](/uploads/waitforbalance.jpg "Waitforbalance")
+Only authorized accounts have the right to withdraw tokens from the reserve.
 
-The generated ETH account is waiting for some ETH to be deposited so that it can send transactions to deploy and setup your contracts. Send around 0.3 ETH to the address. The console will eventually show
+- The reserve admin can call the `withdrawEther` and `withdrawToken` functions to withdraw tokens to any address.
+- The reserve operator can only withdraw ether and tokens to whitelisted addresses by calling `withdraw`
+- The reserve admin can add / remove whitelisted address by calling `approveWithdrawAddress`.
 
-![Ethsent](/uploads/ethsent.jpg "Ethsent")
+**Note:** It is recommended that you perform test deposits and withdrawals before proceeding to the next step.
 
-- `reserve` shows the address of your deployed `KyberReserve.sol` contract.
-- `pricing` shows the address of your deployed `ConversionRates.sol` contract.
-- `network` should be the same as that of `--network-address`
+### `Step 4: Setting the liquidity parameters`
 
-Congratulations, you have successfully deployed contracts on the Ropsten testnet!
-
-### `Step 3: Deposit tokens to and withdraw tokens from your reserve`
-
-A reserve can’t operate without tokens. A reserve that supports ETH-KNC swap pair will need to hold both ETH and KNC so that users can sell and buy KNC from your reserve.
-
-Filling up your reserve is easy. You can transfer tokens to your reserve contract from any address.
-
-However, only authorized accounts have the right to withdraw tokens from the reserve.
-
-- `admin` can call `withdrawEther` and `withdrawToken` of `KyberReserve.sol` to withdraw tokens to any address
-- `operator` can only withdraw tokens to whitelisted addresses by calling `withdraw`
-- `admin` can add withdraw/whitelisted address by calling `approveWithdrawAddress` of `KyberReserve.sol`.
-
-### `Step 4: Depositing the inventory and setting the liquidity parameters`
 The reserve manager needs to decide on the initial liquidity parameters of the automated reserve. The following parameters should be configured:
 
-1. Liquidity Rate `r`
+1. Initial ETH and Token Inventory Amounts
 2. Initial Token Price `initialPrice`
-3. Initial Ether Amount `E`
-4. Initial Token Amount
-5. Minimum (`pMin`) and Maximum (`pMax`) Supported Price Factor
-6. Maximum Buy and Maximum Sell Amount in a Trade
-7. Fee Percentage
+3. Token Price Range
+4. Maximum Buy and Maximum Sell Amount in a Trade
+5. Fee Percentage
+
+#### About Token Price Range
+
+Unlike other AMM models that support unbounded price ranges, the reserve manager can specify the minium and maximum bounds that the reserve will fluctuate within. The limits on these bounds are dependent on the inventory amounts.
+
+For example, a reserve manager can specify a maximum tolerance of 50% decrease and 100% increase relative to the initial token price. This is the default setting unless otherwise configured.
+
+#### Configuring liquidity parameters
+
+Setting the liquidity parameters is done by executing the [`setLiquidityParameters()`](api_abi-liquidityconversionrates.md#setliquidityparams) function from the LiquidityConversionRates contract.
+
+In the same `./deployment/apr` directory, open `liquidity_settings.json`. If you have completed step 2,the `reserve` field should have reflect the deployed reserve address.
+
+```json
+{
+  "reserve": "0xcF76b605484Cd4bD46237c05B7De98d538ff44AE",
+  "tokenPriceInEth": 0.00153086,
+  "minAllowablePrice": 0.5,
+  "maxAllowablePrice": 2,
+  "maxTxBuyAmtEth": 10,
+  "maxTxSellAmtEth": 10,
+  "feePercent": 0.05
+}
+```
+
+We explain the JSON fields in the table below:
+
+| Parameter | Required | Explanation |                                     
+| :----: | :----:| :-------------------------: |
+| `reserve` | Yes | Reserve address |
+| `tokenPriceInEth` | Yes | Desired token price in ETH. For mainnet deployment, the script will fetch the latest price from CoinGecko. This behaviour can be disabled by passing a flag to the script. |
+| `minAllowablePrice` | No | Maximum price decrease tolerable. Reserve returns 0 rate if price decreases further. Eg. 0.5 = 50% decrease in price |
+| `maxAllowablePrice` | No | Maximum price increase tolerable. Reserve returns 0 rate if price increases further. Eg. 2.0 = 100% increase in price |
+| `maxTxBuyAmtEth` | No | The maximum amount in ETH purchaseable in a single trade |
+| `maxTxSellAmtEth` | No | The maximum token amount (specify in ETH) sellable in a single trade |
+| `feePercent` | No | The fee amount that should be factored into the price. |
+
+#### Setting liquidity parameters
+
+##### Things to note
+
+1) The correct network is specified (develop, ropsten, kovan, mainnet etc.)
+2) The reserve has the desired ETH and token inventories, as the script will read the reserve's balances to calculate the right settings
+3) Should the script throw some warnings, it is best to clarify these warnings with the Kyber team before proceeding to call `setLiquidityParams`.
+4) If there are no warnings generated, and the private key specified in the `.env` file corresponds to the pricing operator, the script will automatically send a transaction to call `setLiquidityParams`.
+
+#### Testnets
+
+```
+yarn buidler setLiquidityParams --network ropsten --a false
+```
+
+The `-a` flag disables the price fetch behaviour.
+
+#### Mainnet
+
+```
+yarn buidler setLiquidityParams --network mainnet --r "0xcF76b605484Cd4bD46237c05B7De98d538ff44AE"
+```
+
+The `-r` flag takes the reserve's address from the CLI instead of `liquidity_settings.json`.
+
+```
+yarn buidler setLiquidityParams --network mainnet
+```
+
+### `Step 5: Get your reserve authorized and running`
+
+Once you have completed the above steps, you can let any network operator know so that they can approve your reserve and list your token to the network. Kyber Network is currently the only network operator.
+
+Once approved, you can test your reserve on [KyberSwap](https://ropsten.kyber.network) Ropsten site! Please note that if there are other reserves listing same swap pair as you, your swap may not get matched with your reserve, because only the reserve that offers best rate will be matched. We can disable other reserves on the testnet to make sure you will swap with your reserve.
+
+## Maintaining your APR
+
+This section walks you through the necessary steps involved in case you want to rebalance the APR or withdraw fees collected. You will also need to perform the same activities in the event that:
+- the reserve is depleted of tokens or ETH;
+- you want to rebalance your reserve;
+- you want to withdraw fees from the reserve;
+- when you want to change any of the liquidity parameters such as maximum buy/sell amount, initial price, etc.
+
+#### Note : **It is highly recommended to follow the steps documented below to avoid incurring any loss of funds**
+
+1. DISABLE trading in the reserve : The alerter can do this by calling `disableTrade()` function in the reserve contract.
+2. Rebalance the reserve : After and only when the reserve is disabled, the reserve manager can deposit or withdraw Ether/Tokens to the reserve.
+3. Recompute and set liquidity params. Run either `yarn buidler setLiquidityParams --network mainnet` or `yarn buidler setLiquidityParams --network mainnet --r <RESERVE_ADDRESS>`.
+4. Enabling trading back : The admin can enable trades back by invoking the `enableTrade()` function in the reserve contract.
+
+## Appendix
+
+### Liquidity Params of `setLiquidityParams`
 
 #### About liquidity rate `r`
 `r` is liquidity the rate in basis points or units of 100 which the price should move each time the ETH/token inventory changes in 1 ETH worth of quantity. For an `r` of 0.007, the price will move 0.7% when buying / selling 1 Eth.
@@ -213,9 +224,6 @@ Hence, since the 4 variables are tightly coupled together, you are **only able t
 A quick overview of how price adjusts for a given price range can be seen below. This illustration uses 0.1, 70, 2 and 0.5 for the `intial price`, initial ETH amount `E`, `pMax` and `pMin` respectively.
 
 ![AprChart](/uploads/aprchart.png "AprChart")
-
-#### Setting liquidity parameters
-Setting the liquidity parameters is done by executing the [`setLiquidityParameters()`](api_abi-liquidityconversionrates.md#setliquidityparams) function from the LiquidityConversionRates contract. We explain the different parameters below:
 
 |  Type  |            Parameter            |                                                        Explanation                                                        |
 | :----: | :-----------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
@@ -241,80 +249,6 @@ Now, Let's assume we want to list a token with the following considerations:
 7. Fee Percentage – 0.10%
 
 Below, we will calculate the different parameters.
-
-|            Parameter            |                Formula                |                                 Example Value                                  |
-| :-----------------------------: | :-----------------------------------: | :----------------------------------------------------------------------------: |
-|            `_rInFp`             |               r \* InFp               |                   \_rInFp = (0.007 \* 2^40) = **7696581394**                   |
-|           `_pMinInFp`           | pMin \* initial price of token \* InFp  |               \_pMinInFp = (0.5 \* 0.00005 \* 2^40) = **27487790**               |
-|          `_numFpBits`           |           InFp in numFpBits           |                              \_numFpBits = **40**                              |
-|        `_maxCapBuyInWei`        |         max buy cap \* 10^18          |           \_maxCapBuyInWei = (5 \* 10^18) = **5000000000000000000**            |
-|       `_maxCapSellInWei`        |         max sell cap \* 10^18         |           \_maxCapSellInWei = (5 \* 10^18) = **5000000000000000000**           |
-|           `_feeInBps`           |         fee percentage in BPS         |                              \_feeInBps = **10**                               |
-| `_maxTokenToEthRateInPrecision` | pMax \* initial price of token \* 10^18 | \_maxTokenToEthRateInPrecision = (2.0 \* 0.00005 \* 10^18) = **100000000000000** |
-| `_minTokenToEthRateInPrecision` | pMin \* initial price of token \* 10^18 | \_minTokenToEthRateInPrecision = (0.5 \* 0.00005 \* 10^18) = **25000000000000**  |
-
-#### Using get_liquidity_params.py Python script
-
-A Python script, located in `scripts/get_liquidity_params.py` in the `smart-contracts` repository, will help you calculate the liquidity parameters. Edit the input file `liquidity_input_params.json`, and specify the inputs similar to the considerations in the example above.
-
-```json
-{
-  "liquidity_rate": 0.007,
-  "initial_ether_amount": 100.0,
-  "initial_token_amount": 2000000,
-  "initial_price": 0.00005,
-  "min_supported_price_factor": 0.5,
-  "max_supported_price_factor": 2.0,
-  "max_tx_buy_amount_eth": 5.0,
-  "max_tx_sell_amount_eth": 5.0,
-  "fee_percent": 0.10,
-  "formula_precision_bits": 40
-}
-```
-
-Please note that the `formula_precision_bits` refers to `_numFpBits`, 40 should be used.
-
-Afterwards, just execute the Python script, using the following command:
-
-```sh
-python3 get_liquidity_params.py --input liquidity_input_params.json --get params
-```
-
-It should give the following output:
-
-```sh
-_rInFp: 7696581394
-_pMinInFp: 27487790
-_numFpBits: 40
-_maxCapBuyInWei: 5000000000000000000
-_maxCapSellInWei: 5000000000000000000
-_feeInBps: 10
-_maxTokenToEthRateInPrecision: 100000000000000
-_minTokenToEthRateInPrecision: 25000000000000
-```
-
-To finalize this step, deposit exact amount of Ether and tokens (in our example above, it is 100 ETH and 2,000,000 tokens), and finally invoke the `setLiquidityParams()` using web3, Etherescan's write contract feature, or MyEtherWallet, passing in the calculated parameters above.
-
-### `Step 5: Get your reserve authorized and running`
-
-Once you have completed the above steps, you can let any network operator know so that they can approve your reserve and list your token to the network. Kyber Network is currently the only network operator.
-
-Once approved, you can test your reserve on [KyberSwap](https://ropsten.kyber.network) Ropsten site! Please note that if there are other reserves listing same swap pair as you, your swap may not get matched with your reserve, because only the reserve that offers best rate will be matched. We can disable other reserves on the testnet to make sure you will swap with your reserve.
-
-## Maintaining your APR
-
-This section walks you through the necessary steps involved in case you want to rebalance the APR or withdraw fees collected. You will also need to perform the same activities in the event that:
-- the reserve is depleted of tokens or ETH;
-- you want to rebalance your reserve;
-- you want to withdraw fees from the reserve;
-- when you want to change any of the liquidity parameters such as maximum buy/sell amount, initial price, etc.
-
-#### Note : **It is highly recommended to follow the steps documented below to avoid incurring any loss of funds**
-
-1. DISABLE trading in the reserve : The alerter can do this by calling `disableTrade()` function in the reserve contract.
-2. Rebalance the reserve : After and only when the reserve is disabled, the reserve manager can deposit or withdraw Ether/Tokens to the reserve.
-3. Recompute liquidity params : Calculate the new parameters by taking note of the new ETH and token inventory and the latest market price. The admin of the pricing contract can then set these new params by invoking `setLiquidityParams()` in the pricing contract.
-4. Enabling trading back : The admin can enable trades back by invoking the `enableTrade()` function in the reserve contract.
 
 ## Price Discovery Algorithm
 
