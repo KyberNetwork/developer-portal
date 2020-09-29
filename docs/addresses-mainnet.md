@@ -11,8 +11,8 @@ Read more [here](api_abi-restfulapi.md#currencies)
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
-`0x9AAb3f75489902f3a48495025729a0AF77d4b11e`\
-`0x818E6FECD516Ecc3849DAf6845e3EC868087B755`
+New: `0x9AAb3f75489902f3a48495025729a0AF77d4b11e`\
+Old: `0x818E6FECD516Ecc3849DAf6845e3EC868087B755`
 
 ### `KyberStorage`
 `0xC8fb12402cB16970F3C5F4b48Ff68Eb9D1289301`

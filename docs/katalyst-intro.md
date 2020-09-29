@@ -11,9 +11,11 @@ We give a brief summary on the technical changes regarding the Katalyst upgrade 
 
 The Katalyst upgrade is **backwards-compatible** with the previous network proxy contract. Existing implementations of `getExpectedRate()`, `trade()`, `tradeWithHint()`, etc. should not be affected by this upgrade, and should work normally.
 
-### Current Proxy
+### Old Proxy
 
-The current mainnet network proxy contract `0x818E6FECD516Ecc3849DAf6845e3EC868087B755` will work as per normal. Transactions to the current network proxy will work without any behavior change with the exception that the `PERM` hint (signaling the filtering of permissionless reserves in a trade) will be ignored and no filtering actions will take place.
+We recommend using / migrating to the new proxy contract `0x9AAb3f75489902f3a48495025729a0AF77d4b11e` if possible.
+
+Nevertheless, the old mainnet network proxy contract `0x818E6FECD516Ecc3849DAf6845e3EC868087B755` will work as per normal. Transactions to the current network proxy will work without any behavior change with the exception that the `PERM` hint (signaling the filtering of permissionless reserves in a trade) will be ignored and no filtering actions will take place.
 
 ### New Proxy
 
