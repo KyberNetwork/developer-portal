@@ -10,7 +10,7 @@ This section lists some guidelines on creating a new reserve type.
 ![Reserve Interface](/uploads/reserveinterface.png "Reserve Interface")
 The reserve interface provides a generic template of the contract functions one should implement in their smart contract. This interface may be tweaked depending on the needs and features of each blockchain. All existing reserve types, like the ones covered in the developer portal (e.g. Fed Price Reserve), as well as integrated reserves (e.g. Uniswap Reserve), implement this interface.
 
-For the exact functions and inputs to implement, refer to the [KyberReserveInterface](api_abi-kyberreserveinterface.md) contract.
+For the exact functions and inputs to implement, refer to the [KyberReserveInterface](api_abi-ikyberreserve.md) contract.
 
 ## Step 2: Write Unit Tests
 Smart contract security is of upmost importance. As such, we require tests to be written for the smart contract functions to ensure that they only do what is expected. You may take a look at our [test](https://github.com/KyberNetwork/smart-contracts/tree/master/test) repository for test script examples.

@@ -4,8 +4,8 @@ title: IKyberStaking
 ---
 [//]: # (tagline)
 # interface IKyberStaking
-is [IEpochUtils](api_api-iepochutils.md)
-imports [IEpochUtils](api_api-iepochutils.md)
+is [IEpochUtils](api_abi-iepochutils.md)
+imports [IEpochUtils](api_abi-iepochutils.md)
 
 *Source*: [IKyberStaking.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberStaking.sol)
 ___
