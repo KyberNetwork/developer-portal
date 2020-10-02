@@ -1,8 +1,10 @@
 ---
-id: Reserves-TradingStrategy
+id: KyberPro-TradingStrategy
 title: Trading Strategy
 ---
 [//]: # (tagline)
+
+
 ## Trading Strategy
 A reserve manager will need to develop their own strategies to decide on token-to-token conversion rates and reserve size. This strategy could be executed by a person and/or a machine and could change over time.
 
