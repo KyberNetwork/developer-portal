@@ -14,8 +14,8 @@ Outlined here are details on how to add multiple tokens to the reserve, set imba
 To proceed further on this doc, please make sure you have completed walkthrough 1 and 2 and most likely are on staging environment. Steps before getting started on this.
 
 
-Complete basic testing on ropsten testnet. - covered in walkthrough [1](/tutorials/guides/tutorial-walkthrough1.md) and [2](/tutorials/guides/tutorial-walkthrough2.md)
-On [staging](/tutorials/guides/tutorial-mainnetStaging.md) environment 
+Complete basic testing on ropsten testnet. - covered in walkthrough [1](kyberpro-walkthrough1.md) and [2](kyberpro-walkthrough2.md)
+On [staging](kyberpro-mainnetStaging.md) environment 
 * Deploy contracts
 * Set permission group
 * Add token
@@ -30,7 +30,7 @@ Until now we have added a single token pair(KTT/ETH) to the reserve, set rates, 
 
 As discussed in the previous docs, determine the token control parameters for each of the tokens you would like to market make and invoke addToken() function.
 
-
+[source code](https://github.com/KyberNetwork/kyber-pro/tree/master/tutorials/scripts)
 *Example:* let’s add DAI token to the reserve.
 ```js
 const reserveManager = new FPR.Reserve(web3, addresses)
@@ -149,4 +149,28 @@ Likely, if the conversion rate is below `216`, for example, a rate of `210`, you
 
 ```
 
-This is it for setting up and maintaining the FPR on kyber. For detailed explanation and suggestions on operational and infrastructure details check [this](/documentation/infrastructureDetails.md)
+This is it for setting up and maintaining the FPR on kyber. For detailed explanation and suggestions on operational and infrastructure details check [this](kyberpro-infra.md)
+
+
+##### Appendix for Multiple tokens
+
+As mentioned, to save on gas costs, we recommend using the `setCompactData` function instead of `setBaseRates`. The inputs of `setCompactData` are the last 4 inputs of `setBaseRates`, namely: `bytes14[] buy`, `bytes14[] sell`, `uint blockNumber` and `uint[] indices`.
+
+##### `uint[] indices`
+
+![Multipletokensfig 1](/uploads/multipletokensfig-1.jpg "Multipletokensfig 1")
+Each index allows you to modify up to 14 tokens at once. The token index number is determined by the order which they were added. Intuitively, an earlier token would have a smaller index, ie. the earliest token would be token 0, the next would be token 1, etc.
+
+##### `bytes14[] buy / sell`
+
+For simplicity, assume that we want to modify the base buy rates. The logic for modifying base sell rates is the same.
+
+- Suppose the reserve supports 3 tokens: DAI, BAT and DGX.
+- We want to make the following modifications to their base buy rates: 1. +2.5% (+25 pts) to DAI_BASE_BUY_RATE 2. +1% (+10 pts) to BAT_BASE_BUY_RATE 3. -3% (-30 pts) to DGX_BASE_BUY_RATE
+
+**Note:**
+
+1. One pt here means a **0.1% change**, as compared to basis points used in step functions where 1 basis point = 0.01%.
+2. The range which compact data can handle is from -12.8% to 12.7%.
+
+This gives us the buy array `[25,10,-30]`. Encoding this to hex yields `[0x190ae2]

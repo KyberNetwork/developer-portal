@@ -1,9 +1,9 @@
 ---
-id: KyberPro-SDKAPI
+id: KyberPro-SDK API
 title: Javascript SDK API
 ---
 [//]: # (tagline)
 
-# SDK API DOCUMENTATION 
+## FULL SDK API documentaion 
 
 [LINK](https://fpr-sdk-js.knreserve.com/)

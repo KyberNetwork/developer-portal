@@ -14,13 +14,13 @@ In this walkthrough, we will help you understand how to mirror the orderbook sty
 
 ### Before You Begin
 
-1. Should have completed the [walkthrough 1](/tutorials/guides/tutorial-walkthrough1.md)
+1. Should have completed the [walkthrough 1](kyberpro-walkthrough1.md)
 2. Listed the reserve to the Kyber network
 3. Added the tokens as a trading pair on testnet
 
 **If you have not completed the above, please do so and contact us in case of any questions.**
 
-The source code for this walkthrough is at [link](/scripts).
+The source code for this walkthrough is at [link](https://github.com/KyberNetwork/kyber-pro/tree/master/tutorials/scripts).
 
 ## 1. Quantity Step Functions: Orderbook Simulation 
 
@@ -74,8 +74,8 @@ Once we set `QtyStepFunction`, when querying for rates via smart contracts or th
 We encourage you to buy and sell in different quantities to understand the impact of trades on your inventory and conversion rates returned.
 
 Sample snapshots of how rates vary with different buy/sell rates are illustrated here:
-![Buy illustration](/snapShots/buy.png "Buy")
-![Sell Illustration](/snapShots/sell.png "Sell" )
+![Buy illustration](/uploads/buy.png "Buy")
+![Sell Illustration](/uploads/sell.png "Sell" )
 
 ## 3. Changing the default token parameters 
 

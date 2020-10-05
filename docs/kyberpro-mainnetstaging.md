@@ -14,12 +14,12 @@ Having said that, we haven’t covered the techniques for optimization and effic
 
 ## Rundown on how to set up a reserve : 
 
-We have briefed the process on how to set up and manage a running reserve on ROPSTEN testnet in walkthrough [1](/tutorials/guides/tutorial-walkthrough1.md) and [2](/tutorials/guides/tutorial-walkthrough2.md), outlined here is the gist
+We have briefed the process on how to set up and manage a running reserve on ROPSTEN testnet in walkthrough [1](kyberpro-walkthrough1.md) and [2](/kyberpro-walkthrough2.md), outlined here is the gist
 
 * **Step 1 : Deploy contracts** 
 
 Deploy Reserve and Conversion rates contracts using the KYBER-FPR-SDK. If you are using Infura node, ensure to change the Node URLto mainnet and kyberNetworkAddress to the staging smart contract. 
-
+[source code](https://github.com/KyberNetwork/kyber-pro/tree/master/tutorials/scripts)
 ```js
 //KNAddress : “0x9CB7bB6D4795A281860b9Bfb7B1441361Cc9A794”. 
 const provider = new Web3.providers.HttpProvider(process.env.MAINNET_NODE_URL)
@@ -145,4 +145,4 @@ Once you have deployed contracts on mainnet, completed all the steps, let the Ky
 ## Appendix
 
 * Set of responsibilities each of the permission group holds
-![Permission Groups](/snapShots/perm.png)
+![Permission Groups](/uploads/perm.png)

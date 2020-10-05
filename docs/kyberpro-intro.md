@@ -1,25 +1,22 @@
 
 ---
 id: KyberPro-Introduction
-title: Fed Price Reserve - Intro
+title: Kyber Pro - Intro
 ---
 [//]: # (tagline)
 
-## Introduction
+![Kyber Pro Overview](/uploads/kyberprooverview.png "Kyber Pro Overview")
 
-A Fed Price Reserve consists of two main components: an on-chain component of your reserve smart contracts and an off-chain component (normally, an automated system) that manages your on-chain component. The two components are depicted in the diagram below.
+At Kyber Network, we have been market making on-chain since our inception with consistently high profits. We have also helped onboard and support other market makers in the decentralized finance (DeFi) space. With our deep expertise in this field, and in collaboration with the Chicago DeFi Alliance, we have formalised a new framework called ‘KyberPRO’ that aims to help professional market makers operate profitably on the blockchain and serves as a bridge between traditional market making and the world of DeFi.
 
-![Kyber Reserve Components](/snapShots/kyberreservecomponents.png "Kyber Reserve Components")
+## What is KyberPRO?
 
-The on-chain component has smart contracts that store your tokens, provide conversion rates, and swap your tokens with users. The off-chain component hosts your [trading strategy](/documentation/tradingStrategy.md) that calculate and feed conversion rates and rebalance your reserve of tokens.
+KyberPRO is an end-to-end framework that provides the most robust and proven liquidity system (Kyber’s Fed Price Reserve) for professional market making, along with the required tools, documentation, and technical material to allow market makers to easily get started and run a profitable on-chain operation with minimal smart contract knowledge.
 
-## Points to Note
+In addition, Kyber will provide close guidance to market makers, helping them to set up the right infrastructure, overcome the learning curve, and offer any assistance they might need. Around the middle of November, an incentive program will also be launched to encourage market makers to take the first step towards on-chain market making.
 
-A reserve manager's primary purpose is to keep funds safe. This however is a difficult task since inventory and prices are on-chain. On-chain issues such as gas prices and network congestion can delay pricing rate updates in the contracts.
+## Who should use KyberPRO?
 
-With this in mind, the reserve was designed with various parameters to help secure your funds.
+The KyberPRO framework is specially designed for market makers, by market makers. While market making on-chain allows for higher profit margins compared to off-chain systems and is the only way to provide liquidity for popular DeFi applications, it can be complex for new entrants. KyberPRO aims to remove barriers to entry for on-chain market makers and help them be as profitable as possible. By catering to their specific requirements and streamlining operations, KyberPRO will save substantial resources for market makers during both reserve setup and management, help maximise profits, and optimise their overall performance. 
 
-- Valid duration gives a time limit to the last price update, when the duration is over trades are stopped until the next price update.
-- Max imbalance values limit inventory changes since the last price update. Once again, if the imbalance threshold is exceeded for a specific token, trades are blocked until the next price update.
-- Step functions enable “automatic” price updates. When some token price has a clear trend, automatic price changes could act as a degenerated order book. This way, during periods the reserve manager doesn’t control the price (between updates) steps simulate actual liquidity in an order book market.
-- Limited list of destination withdrawal addresses will prevent the operator account (hot wallet) from withdrawing funds to any destination address (if this account is compromised).
+

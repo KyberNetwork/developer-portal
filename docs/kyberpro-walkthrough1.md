@@ -17,7 +17,7 @@ Steps here includes:
   5. [See Your Quote For This Pair On Testnet](#5-see-your-quote-for-this-pair-on-testnet)
   6. [Trade KTT for ETH](#6-trade-ktt-for-eth)
 
-The source code for this walkthrough is at [link](https://github.com/KyberNetwork/fpr-js-reference/scripts). 
+The source code for this walkthrough is at [link](https://github.com/KyberNetwork/kyber-pro/tree/master/tutorials/scripts). 
 
 
 ## Requirements
@@ -48,7 +48,7 @@ To deploy, run a script which deploys the reserve and the conversion smart contr
 Note: **The account used to deploy the script in step 1, will hold the ADMIN rights for both contracts**. Be sure to have the appropriate operational security before deploying to mainnet.
 
 ```js
-// full code in fpr-sdk-reference/deploy.js
+// full code in kyber-pro/deploy.js
 
 const provider = new Web3.providers.HttpProvider(process.env.ROPSTEN_NODE_URL)
 
@@ -167,5 +167,5 @@ To test out a quote/Trade where you buy KTT, you will need to do the following�
 
 ## Next Steps
 
-That’s it for the walkthrough, hope that’s simple enough! In the coming [walkthroughs](/tutorials/guides/tutorial-walkthrough1.md), we will demonstrate advanced features for controling your quotes and optimize your on-chain market making. 
+That’s it for the walkthrough, hope that’s simple enough! In the coming [walkthroughs](kyberpro-walkthrough2.md), we will demonstrate advanced features for controling your quotes and optimize your on-chain market making. 
 
