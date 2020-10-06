@@ -37,7 +37,7 @@ npm install --save kyber-fpr-sdk
 npm install web3
 ```
 
-All through this walkthrough, use the same address and do not switch accounts. 
+*All through this walkthrough, use the same address and do not switch accounts.* 
 
 ## 1. Deployment Of The Reserve To Testnet
 

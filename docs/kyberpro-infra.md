@@ -1,5 +1,5 @@
 ---
-id: KyberPro-InfrastructureGuide
+id: KyberPro-Infra
 title: Infrastructure Details
 ---
 [//]: # (tagline)

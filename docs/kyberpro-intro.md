@@ -1,6 +1,5 @@
-
 ---
-id: KyberPro-Introduction
+id: KyberPro-Intro
 title: Kyber Pro - Intro
 ---
 [//]: # (tagline)

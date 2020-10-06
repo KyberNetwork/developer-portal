@@ -57,8 +57,26 @@
     "Miscellaneous": [
       "Reserves-Ids",
       "Reserves-Rebates",
-      "Reserves-TradingStrategy",
       "Reserves-SanityRates"
+    ]
+  },
+  "KyberPro": {
+    "Getting Started": [
+      "KyberPro-Intro",
+      "KyberPro-MMPrimer",
+      "KyberPro-Infra",
+      "KyberPro-TradingStrategy"
+    ],
+    "Tutorials": [
+      "KyberPro-Walkthrough1",
+      "KyberPro-Walkthrough2",
+      "KyberPro-MainnetStaging",
+      "KyberPro-Walkthrough3"
+    ],
+    "Additional": [
+      "KyberPro-ReserveId&Rebate",
+      "KyberPro-SDK API",
+      "KyberPro-FAQ's"
     ]
   },
   "Addresses": {

@@ -1,5 +1,5 @@
 ---
-id: KyberPro-primer
+id: KyberPro-MMprimer
 title: Market Making primer
 ---
 [//]: # (tagline)
