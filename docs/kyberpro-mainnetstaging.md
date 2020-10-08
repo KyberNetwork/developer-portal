@@ -46,6 +46,19 @@ Deposit inventory, test withdrawals and **contact kyber team** to get reserve li
 
 After this step, our team will perform test on the reserve. To do so, enable trade on reserve, set buy/sell rate by invoking setRate() and quantity step for the token using setQtyStepFunction() , we’d recommend you to just initialize the imbalance step function to 0
 
+## Broadcasting Tx to multiple nodes
+
+The javascript SDK allows broadcasting transactions to multiple nodes. For example, operations like price update transaction, we recommend you to broadcast it to multiplt nodes. Use `MultiHttpProvider` class of the SDK.
+
+```js 
+//example 
+//add credentials to your env variables
+const mainProvider = new Web3.providers.HttpProvider(process.env.ROPSTEN_NODE_URL)
+const mirrors = new Web3.providers.HttpProvider(process.env.ROPSTEN2_NODE_URL);
+const mProvider = new FPR.MultiHttpProvider([mainProvider,mirrors], r=>{ console.log("node result",r); })
+const web3 = new Web3(mProvider);
+```
+Please Note that **the mirror node only help to broadcast tx to multiple node, it’s not kind of backup node that use to replace main when main is down**
 
 ## Permission groups: 
 Here, we set additional managing roles for the reserve and conversion rates contracts. As discussed earlier, each role has specific rights and responsibilities in each contract. Please make sure you have assigned these roles to rightful addresses.
