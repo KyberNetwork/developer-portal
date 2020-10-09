@@ -1,6 +1,6 @@
 ---
 id: KyberPro-FAQs
-title: Trading and reserve management
+title: FAQ's
 ---
 [//]: # (tagline)
 

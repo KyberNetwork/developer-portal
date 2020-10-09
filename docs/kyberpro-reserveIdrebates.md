@@ -1,5 +1,5 @@
 ---
-id: KyberPro-ResereveId&Rebates
+id: KyberPro-ReserveId&Rebate
 title: Reserve ID and Rebates
 ---
 [//]: # (tagline)
