@@ -101,6 +101,10 @@ const siteConfig = {
       label: 'Reserves',
     },
     {
+      doc: 'KyberPro-Intro',
+      label: 'KyberPro',
+    },
+    {
       doc: 'Addresses-Intro',
       label: 'Addresses',
     },
