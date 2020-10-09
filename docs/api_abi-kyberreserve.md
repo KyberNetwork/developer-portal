@@ -4,8 +4,8 @@ title: KyberReserve
 ---
 [//]: # (tagline)
 # contract KyberReserve
-is [KyberReserveInterface](api_abi-kyberreserveinterface.md), [Withdrawable](api_abi-withdrawable.md), Utils\
-imports ERC20Interface, Utils, [Withdrawable](api_abi-withdrawable.md),  [ConversionRatesInterface](api_abi-conversionratesinterface.md), [SanityRatesInterface](api_abi-sanityratesinterface.md), [KyberReserveInterface](api_abi-kyberreserveinterface.md)
+is [IKyberReserve](api_abi-ikyberreserve.md), [Withdrawable](api_abi-withdrawable.md), Utils\
+imports ERC20Interface, Utils, [Withdrawable](api_abi-withdrawable.md),  [ConversionRatesInterface](api_abi-conversionratesinterface.md), [SanityRatesInterface](api_abi-sanityratesinterface.md), [IKyberReserve](api_abi-ikyberreserve.md)
 
 *Source*: [KyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/reserves/KyberReserve.sol)
 

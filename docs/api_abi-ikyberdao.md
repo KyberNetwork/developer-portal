@@ -4,8 +4,8 @@ title: IKyberDao
 ---
 [//]: # (tagline)
 # interface IKyberDao
-is [IEpochUtils](api_abi-api_abi-iepochutils.md)
-imports [IEpochUtils](api_abi-api_abi-iepochutils.md)
+is [IEpochUtils](api_abi-iepochutils.md)
+imports [IEpochUtils](api_abi-iepochutils.md)
 
 *Source*: [IKyberDao.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberDao.sol)
 ___
