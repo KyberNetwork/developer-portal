@@ -33,4 +33,5 @@ With this in mind, the reserve was designed with various parameters to help secu
 You may refer to [this section](reserves-ganache.md) on how to deploy and test the reserve locally using [Truffle's Ganache](https://truffleframework.com/ganache).
 
 ### Public testnet deployment
- [REFER to tutorials on kyberpro section](kyberpro-walkthrough1.md)
+
+You may refer to tutorials in the [KyberPRO section](kyberpro-walkthrough1.md).
