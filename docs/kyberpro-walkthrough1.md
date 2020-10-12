@@ -6,9 +6,9 @@ title: Walkthrough 1
 
 # Setting Up Kyber Fed Price Reserve On Testnet With A Token Pair
 
-This walkthrough will help you use the [FPR SDK](https://github.com/KyberNetwork/fpr-sdk.js) create a working reserve with trading pairs on testnet. For the purpose of this walkthrough, we will be setting a KTT/ETH pair. The KTT token is a custom token deployed on testnet for accessibility and convenience. 
+This walkthrough will help you use the [FPR SDK](https://github.com/KyberNetwork/fpr-sdk.js) to create a working reserve with trading pairs on a testnet. For the purpose of this walkthrough, we will be setting a KTT/ETH pair. The KTT token is a custom token deployed on testnet for accessibility and convenience. 
 
-Steps here includes:
+Steps here include:
 
   1. [Deployment Of The Reserve To Testnet](#1-deployment-of-the-reserve-to-testnet)
   2. [Add a KyberTestToken/ETH Pair](#2-add-a-kybertesttokeneth-pair)
@@ -17,14 +17,14 @@ Steps here includes:
   5. [See Your Quote For This Pair On Testnet](#5-see-your-quote-for-this-pair-on-testnet)
   6. [Trade KTT for ETH](#6-trade-ktt-for-eth)
 
-The source code for this walkthrough is at [link](https://github.com/KyberNetwork/kyber-pro/tree/master/tutorials/scripts). 
+The source code for this walkthrough can be found [here](https://github.com/KyberNetwork/kyber-pro/tree/master/tutorials/scripts). 
 
 
 ## Requirements
 
-To get started, create an ETH testnet account using [MetaMask](https://metamask.io/), and an account/project on [infura.io](https://infura.io/) to connect to the blockchain. For testnet ETH you can farm them from the [faucet](https://faucet.metamask.io/). 
+To get started, create an ETH testnet account using [MetaMask](https://metamask.io/), and an account/project on [infura.io](https://infura.io/) to connect to the blockchain. For testnet ETH you can obtain them from the [faucet](https://faucet.metamask.io/). 
 
-Once you have an ETH account and an infura url, save the following as environment variables. 
+Once you have an ETH account and an infura URL, save the following as environment variables (create a `.env` file).
 
 *   `TESTNET_ADMIN_PRIVATE_KEY: Private key of the admin account`
 *   `TESTNET_NODE_URL: Infura or Alchemy node URL `
@@ -37,13 +37,15 @@ npm install --save kyber-fpr-sdk
 npm install web3
 ```
 
-*All through this walkthrough, use the same address and do not switch accounts.* 
+*For this walkthrough, use the same address and do not switch accounts.* 
 
 ## 1. Deployment Of The Reserve To Testnet
 
-There are 2 smart contracts that are required. The Reserve smart contract - which manages reserve operations, and the Conversion rates contract - which manages the price settings. 
+There are 2 smart contracts that are required.
+1. Reserve smart contract - manages reserve operations
+2. Conversion rates contract - manages the price settings. 
 
-To deploy, run a script which deploys the reserve and the conversion smart contracts. The script in the GitHub repo will save the deployed contract addresses to a json file for further reference.
+The following script deploys the reserve and the conversion smart contracts. The script in the GitHub repo will save the deployed contract addresses to a json file for further reference.
 
 Note: **The account used to deploy the script in step 1, will hold the ADMIN rights for both contracts**. Be sure to have the appropriate operational security before deploying to mainnet.
 
@@ -67,9 +69,9 @@ deployer.web3.eth.accounts.wallet.add(account)
 
 ## 2. Add a KyberTestToken/ETH Pair 
 
-Now that we have the Reserve and conversionRates contracts on the testnet, we will now let the conversionrates contract know that it has to manage KTT, which would be to simply addToken.
+Now that we have the Reserve and ConversionRates contracts on the testnet, we will now let the conversionrates contract know that it has to manage KTT, which would be to simply addToken.
 
-So, in order for us to interact with the reserve and the conversion rates contracts, lets create a JS instance of the contracts and invoke addToken method with some default parameters, using the admin account. 
+In order for us to interact with the reserve and the conversion rates contracts, let's create a JS instance of the contracts and invoke addToken method with some default parameters, using the admin account. 
 
 These default parameters determine the limits for per-block or between updates the net amount of each token can be traded. For now just use these params and we will review these parameters later on in the walkthrough. 
 
@@ -87,7 +89,6 @@ const tokenInfo = new FPR.TokenControlInfo(100000000000000,440000000000000000000
  await manageReserve.addToken(account.address, KTTokenAddress, tokenInfo)
    })();
 ```
-
 
 This will display the token indices, since this is our first pair the index will be 0. Now u have successfully set up your first trading pair.
 
