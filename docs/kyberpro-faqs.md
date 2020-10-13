@@ -6,6 +6,7 @@ title: FAQ's
 
 ### Frequently Asked Questions
 
+<<<<<<< HEAD
 ## Which blockchain should KyberPRO be used on?
 
 Only and only on ETHEREUM.
@@ -25,3 +26,22 @@ One way of mitigating risk would be to stop quoting after a certain threshold an
 ## How to check the number of trades facilitated by your reserve?
 
 Kyber reserve's emit TradeExecute event after executing a trade, you can listen to the event on reserve address to get the history.
+=======
+### 1. Which blockchain can KyberPRO be used on?
+
+At the moment, KyberPRO is suited for use on only Ethereum.
+
+
+The key difference between them is that on-chain MM requires sending pricing updates onto the blockchain.
+
+### 3. How frequently should prices be updated? 
+
+This is up to you, the market maker, to decide. The main trade-off to be made is frequency over the cost of sending the pricing update txs.
+
+### 4. What should be done in a high gas volatility situation?
+
+
+### 5. How do we check the number of trades facilitated by your reserve?
+
+You may visit tracker.kyber.network once the reserve is authorized and running. For deeper insights, use DuneAnalytics or listen to the `TradeExecute` event emitted by the reserve.
+>>>>>>> 666714ce5334e945b834e32223ec34033337ad06
