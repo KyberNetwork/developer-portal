@@ -100,7 +100,7 @@ const tokenInfo = new FPR.TokenControlInfo(
 console.log(‘Adding Token Details’);
 await reserveManager.updateTokenControlInfo(account.address, tokenAddress, tokenInfo); })();
 ```
-## Changing valid Block Duration. 
+## Changing Valid Block Duration
 * Since, all actions are on-chain, there is a check on the number of blocks these rates are valid. After the set number of blocks the price needs to be updated again else conversion rate returned from the reserve is zero, and trades will fail. This is a safety mechanism in order to prevent reserves from attacks. The default while deploying the reserve is around 10 blocks. This can be changed to any number you deem appropriate. You could interact directly with the conversionRatesContract to do so. Code snippet @scripts/setValidDuration.js
 
 * One thing that needs to be paid attention to is the Block duration. If you have setBaseRate for the token in the walkthrough 1, we’d recommend you set baseRate again, for this example again as rates would have expired. Optimization of these operations will be covered in the coming walkthroughs .
