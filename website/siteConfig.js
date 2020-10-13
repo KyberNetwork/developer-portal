@@ -102,7 +102,7 @@ const siteConfig = {
     },
     {
       doc: 'KyberPro-Intro',
-      label: 'KyberPro',
+      label: 'KyberPRO',
     },
     {
       doc: 'Addresses-Intro',
