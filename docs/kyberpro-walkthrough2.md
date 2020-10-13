@@ -55,8 +55,9 @@ The conversion rate for each step value in ‘x’ will be worse by correspondin
 | Sell 110 KTT      | 0.004187 `0.0042*(1-0.3%)` | 110 is in the range of 100 and above, which is the **second** sell step in the `xSell`, so the impact on the the base rate is -0.3% according to the **second** number in the `ySell`. |
 
 ```js
-// full code in fpr-sdk-reference/scipts/setQtyStep.js
+// full code in kyber-pro/scripts/6.setQtyStep.js
 //stepFuncData, convertToTwei are functions in utils.js
+
 var stepsData = stepFuncData(steps);
 (async () => {
  
@@ -89,7 +90,7 @@ In walkthrough 1, we set the params to a few default values when adding KTT toke
 In this case, we will set the maximum change in the token inventory per block to be 250 KTT and the net(buy/sell) token change that can happen between consecutive price updates to be 550 KTT.  
 
 ```js
-// full code in fpr-sdk-reference/scipts/updateTokenContolInfo.js
+// full code in kyber-pro/scripts/7.updateTokenContolInfo.js
 
 const tokenInfo = new FPR.TokenControlInfo(
                        convertToTwei(0.001),
@@ -101,6 +102,7 @@ console.log(‘Adding Token Details’);
 await reserveManager.updateTokenControlInfo(account.address, tokenAddress, tokenInfo); })();
 ```
 ## Changing Valid Block Duration
+
 * Since, all actions are on-chain, there is a check on the number of blocks these rates are valid. After the set number of blocks the price needs to be updated again else conversion rate returned from the reserve is zero, and trades will fail. This is a safety mechanism in order to prevent reserves from attacks. The default while deploying the reserve is around 10 blocks. This can be changed to any number you deem appropriate. You could interact directly with the conversionRatesContract to do so. Code snippet @scripts/setValidDuration.js
 
 * One thing that needs to be paid attention to is the Block duration. If you have setBaseRate for the token in the walkthrough 1, we’d recommend you set baseRate again, for this example again as rates would have expired. Optimization of these operations will be covered in the coming walkthroughs .

@@ -4,7 +4,7 @@ title: FAQ's
 ---
 [//]: # (tagline)
 
-## Frequently Asked Questions
+### Frequently Asked Questions
 
 ### 1. Which blockchain can KyberPRO be used on?
 
