@@ -31,6 +31,7 @@ Kyber reserve's emit TradeExecute event after executing a trade, you can listen 
 
 At the moment, KyberPRO is suited for use on only Ethereum.
 
+### 2. What is the difference between off-chain and on-chain market making?
 
 The key difference between them is that on-chain MM requires sending pricing updates onto the blockchain.
 
@@ -40,6 +41,7 @@ This is up to you, the market maker, to decide. The main trade-off to be made is
 
 ### 4. What should be done in a high gas volatility situation?
 
+In cases of extreme network congestion, it might be better to disable the reserve and halt price updates until the congestion clears.
 
 ### 5. How do we check the number of trades facilitated by your reserve?
 
