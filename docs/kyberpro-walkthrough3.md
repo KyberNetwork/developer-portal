@@ -26,7 +26,7 @@ On [staging](kyberpro-mainnetstaging.md) environment
 
 Until now we have added a single token pair(KTT/ETH) to the reserve, set rates, set quantity step functions and tested trades. Lets now leverage the advantage of FPRs being able to support a wide range of tokens profitable and feasible.
 
-## 1. Add multiple tokens to the reserve.
+## 1. Adding Multiple Tokens
 
 As discussed in the previous docs, determine the token control parameters for each of the tokens you would like to market make and invoke addToken() function.
 
@@ -49,7 +49,7 @@ const tokenInfo = new FPR.TokenControlInfo(
 *NOTE:* `when you add a new token to the reserve you will have to let the kyber team know so that we list the token pair in the network as well.`
 
 
-## 2. Set rates for multiple tokens.
+## 2. Pricing Updates for Multiple Tokens
 
 FPR provides a mechanism that feeds the price for tokens in batches, allowing operators to update their price for all tokens with a single transaction. This quoting mechanism allows for price changes to be pushed frequently for a large number of tokens, enabling MMs to always maintain current prices on-chain.
 
@@ -70,7 +70,7 @@ const DAIrate =  new FPR.RateSetting (DAITokenAddress, convertToTWei(100), conve
 })();
  ```
 
-## 3. Imbalance Functions: 
+## 3. Imbalance Functions
 
 Imbalance step function allows different conversion rates based on the net traded token amount between price update operations. The motivation for imbalance step functions is to prevent imbalances in your inventory, in between price updates.
 Example:
@@ -108,7 +108,7 @@ var imbalanceData = stepFuncData(imbalance);
 The step BPS values should always be non-positive (<=0) in this case, because the smart contract reduces the output amount by the Y-value set in each step.
 
 
-## 4. Sanity rates contract
+## 4. Sanity Rates
 
 
 The sanity rate contract acts as a safeguard for reserves from bugs in the conversion rate logic or from any hacks into the conversion rate system. If there are large inconsistencies between the sanity rates and the actual rates, then trades involving the reserve will be disabled.
