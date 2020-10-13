@@ -50,7 +50,7 @@ The following script deploys the reserve and the conversion smart contracts. The
 Note: **The account used to deploy the script in step 1, will hold the ADMIN rights for both contracts**. Be sure to have the appropriate operational security before deploying to mainnet.
 
 ```js
-// full code in kyber-pro/deploy.js
+// full code in kyber-pro/scripts/1.deploy.js
 
 const provider = new Web3.providers.HttpProvider(process.env.ROPSTEN_NODE_URL)
 
@@ -77,7 +77,7 @@ These default parameters determine the limits for per-block or between updates t
 
 
 ```js
-// addToken.js
+// full code in kyber-pro/scripts/2.addToken.js
 
 const reserveManager = new FPR.Reserve(web3, addresses)
 Const KTTokenAddress = "0xc376079608C0F17FE06b9e950872666f9c3C3DA4"
@@ -94,6 +94,7 @@ This will display the token indices, since this is our first pair the index will
 
 
 ## 3. Setting Permissions Group 
+
 In the current smart contract architecture there are 3 permission groups for each contract - Admin, Operator and Alerter, with each group having a separate set of duties. 
 
 It’s recommended to have only one admin address, operator and alerter can be multiple accounts. 
@@ -111,7 +112,7 @@ As this is on testnet, you may add the admin address as the operator account as 
 After that, give the operator permission for the conversionRates contract.
 
 ```js
-// addOperator.js
+// full code in kyber-pro/scripts/3.addOperator.js
 
 const CRContract = new FPR.ConversionRatesContract(web3, addresses.conversionRates)
 
@@ -129,7 +130,7 @@ We will get the current block number and set initial rate, this would mean that 
 
 
 ```js
-// setRates.js
+// full code in kyber-pro/scripts/4.setRates.js
 
 (async () => {
    const blockNumber = await web3.eth.getBlockNumber();
@@ -146,7 +147,7 @@ Once you have completed step 4, you could call getBuyRates() and getSellRates() 
 
 
 ```js
-// checkRates.js
+// full code in kyber-pro/scripts/5.checkRates.js
 
   reserveManager.getBuyRates(KTTokenAddress,1).
      then(Brates => {console.log("Buy Rates"+Brates)})

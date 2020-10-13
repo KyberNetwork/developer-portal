@@ -58,6 +58,8 @@ Suppose, we want to change rates for both the tokens KTT and DAI listed on the r
 
 *Example:*
  ```js
+ // full code in kyber-pro/scripts/12.compacytData.js
+
 const KTTrate =  new FPR.RateSetting (KTTokenAddress, convertToTWei(237), convertToTWei(0.0040));
 const DAIrate =  new FPR.RateSetting (DAITokenAddress, convertToTWei(100), convertToTWei(0.0018));
 
@@ -95,7 +97,8 @@ imbalance = {
 
 Similar to step functions, the rate will get worse due to the non-positive Y-value set in each step.
 ```js
-// full code in fpr-sdk-reference/scipts/setImbalanceStep.js
+// full code in kyber-pro/scripts/11.setImbalanceStep.js
+
 var imbalanceData = stepFuncData(imbalance);
 (async () => {
   //setImbalanceStepFunction is a only operator function
@@ -116,7 +119,7 @@ The sanity rate contract acts as a safeguard for reserves from bugs in the conve
 When we initially deployed the reserve and conversion rates smart contracts, sanity rates wasn't deployed, as this is an additional and optional feature to safeguard pricing.
 Let’s first deploy a sanity rates contract and link that to the reserve smart contract.
 ```js
-//snippet
+//full code in kyber-pro/scripts/13.deploySrc.js
 
 (async ()=>{
 
@@ -136,7 +139,8 @@ If the conversion rate of ETH to KTT queried from your reserve is above your ass
 Likely, if the conversion rate is below `216`, for example, a rate of `210`, your reserve will continue to process the conversion as the rate is favorable to your reserve. It is the user's responsibility to set their minimum acceptable rate.
 
 ```js
-//script to set reasonableDiff and sanityRate
+//full code in kyber-pro/scripts/14.setSanityRates.js
+
 (async () => {
 //setSanityRates - admin func'
    console.log("Setting sanity rates");

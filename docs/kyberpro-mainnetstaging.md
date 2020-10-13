@@ -79,7 +79,8 @@ The alerter account is also a hot wallet and is used to halt trading due to inco
 *Context:* The admin of both the contracts are set to the address used to deploy contracts. However if you’d wish to transfer admin, then current admin can call transferAdmin() to the desired address, and the newAdmin should call claimAdmin(), in order to complete the transfer of admin rights.
 
 ```js
-//snippet
+//full code in kyber-pro/scripts/9.transferAdmin.js
+
 const baseContract = new FPR.BaseContract(web3, addresses.reserve);
  
 (async() => {
