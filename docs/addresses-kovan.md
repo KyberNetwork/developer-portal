@@ -7,19 +7,20 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ## Contract Addresses
 ### `KyberNetworkProxy`
-`TBD`
+New: `0xc153eeAD19e0DBbDb3462Dcc2B703cC6D738A37c`\
+Old: `0x692f391bCc85cefCe8C237C01e1f636BbD70EA4D`
 
 ### `KyberStorage`
-`TBD`
+`0xB18D90bE9ADD2a6c9F2c3943B264c3dC86E30cF5`
 
 ### `KyberHintHandler (KyberMatchingEngine)`
-`TBD`
+`0x9Cf739155941A3A7964E711543A8BC902613fF17`
 
 ### `KyberFeeHandler (ETH)`
-`TBD`
+`0xA943b542D1d5683d3454bD0D7EE86C48F36eCFd5`
 
 ### `KyberNetwork`
-`TBD`
+`0x9CB7bB6D4795A281860b9Bfb7B1441361Cc9A794`
 
 ### `KyberReserve`
 `0x45460BD0f9a68b98Bf1f5c478B7584E057e32eF5`
@@ -33,6 +34,9 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 ## Token Addresses
 ### `ETH (Ether)`
 `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+
+### `BAT (Basic Attention Token)`
+`0x9f8cfb61d3b2af62864408dd703f9c3beb55dff7`
 
 ### `KNC (Kyber Network)`
 `0xad67cB4d63C9da94AcA37fDF2761AaDF780ff4a2`
@@ -51,6 +55,9 @@ Please note that contracts `KyberReserve` and `ConversionRates` below are using 
 
 ### `POLY (Polymath)`
 `0xd92266fd053161115163a7311067F0A4745070b5`
+
+### `REP (Augur)`
+`0x5592ec0cfb4dbc12d3ab100b257153436a1f0fea`
 
 ### `SAI (SAI)`
 `0xC4375B7De8af5a38a93548eb8453a498222C4fF2`
