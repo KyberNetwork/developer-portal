@@ -44,17 +44,20 @@
   "Reserves": {
     "Getting Started": [
       "Reserves-Intro",
+      "Reserves-WhyDevlop",
+      "Reserves-Create",
       "Reserves-Types",
-      "Reserves-Requirements",
-      "Reserves-ListingProcess"
+      "Reserves-Customize"
     ],
-    "Setup Tutorials": [
+    "Deployment Gudies": [
       "Reserves-FedPriceReserve",
       "Reserves-AutomatedPriceReserve",
       "Reserves-OrderbookReserve",
       "Reserves-Ganache"
     ],
-    "Miscellaneous": [
+    "Operations": [
+      "Reserves-Requirements",
+      "Reserves-ListingPolicies",
       "Reserves-Ids",
       "Reserves-Rebates",
       "Reserves-SanityRates"

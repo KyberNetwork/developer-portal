@@ -1,19 +1,38 @@
 ---
 id: Reserves-Intro
-title: Introduction
+title: Overiew
 ---
 [//]: # (tagline)
-![Kyber Reserve Overview](/uploads/kyberreserveoverview.png "Kyber Reserve Overview")
+### Overview Of Kyber Reserve System 
 
-Over time, Kyber aims to streamline the process of providing liquidity to network and make it as straightforward as possible. Makers provide liquidity to the protocol by contributing a diverse range of tokens. Makers are comprised of a wide range of parties, from project teams looking to list their tokens, to professional market makers with customised trading strategies and even developers looking to build new reserve types.
+Reserves are liquidity sources in Kyber Network that provide liquidity in terms of token inventory and prices on their smart contracts. There is no limitation to the design of the reserve, as long as it adheres to the Kyber Reserve Interface, is secure, and does not introduce high gas costs for takers.
 
-![Ways of contributing liquidity](/uploads/contributingliquidity.png "Ways of contributing liquidity")
+When a taker requests a trade, the protocol will scan the entire network to find the reserve with the best price and take liquidity from that particular reserve. The details for how reserves determine the prices and manage their inventory is not dictated in the protocol and is entirely up to the reserves, as long as the implementation complies with the Reserve Interface.
 
-There are currently 3 ways that anyone can help contribute liquidity to the network. Users with technical skills can choose to create their own reserve type and aggregate liquidity from other liquidity sources such as [Uniswap](https://twitter.com/UniswapExchange/status/1092821767134035968). Alternatively, a non technical user can opt for one of the predefined reserve types that have already been created, such as our [Automated Price Reserve](reserves-automatedpricereserve.md). Lastly, one may also decide to contribute their tokens directly to an existing reserve like loaning your tokens to Kyber or a professional market maker to market make on your behalf - this would be at the discretion of the Kyber team or the market makers. For more information, please ask in our [Kyber Developer](https://t.me/KyberDeveloper) telegram group.
+![Request for Trade](/uploads/request.png "Request for Trade")
 
-The key benefit reserves provide is *instant liquidity*. Takers such as DApps, vendors and wallets that integrate the protocol are able to immediately convert one token to another because of the liquidity made readily available by reserves.
+Kyber’s Reserve Routing mechanism also allows trades to pass through predetermined reserves, saving gas costs, and allowing many more reserves to be added to the network. That opens up a wide range of reserve types/models that can be part of the network including manually managed reserves (i.e. having market makers to actively manage the prices and inventory), automated market making reserves, as well as many other on-chain liquidity sources. 
 
-![Reserves Single Endpoint](/uploads/reservesSingleEndpoint.png "Reserves Single Endpoint")
+
+## RESERVE MODELS
+
+Reserve models are unique smart contracts which can be deployed and added to the Kyber Network, catering to specific DeFi liquidity provision use cases. Once deployed and added, it will serve as a production reserve on Kyber. 
+
+There are many reserve models available for different use cases. Based on their needs, anyone can deploy reserves using the reserve model of their choice, before registering it to the Protocol Smart Contracts and subsequently contributing liquidity to it. If there are no suitable reserve models, developers can create or customize a new model that is tailor-made for their needs.
+
+# Examples Of Reserve Models
+
+Anyone can use/customize existing models or create completely new ones. Here are examples of reserve models that have been deployed by Kyber and the ecosystem
+
+![Reserve Deployment](/uploads/deploy.png "Reserve Deployment")
+
+There are currently 3 ways you can deploy reserves :
+
+1. `Deploy existing reserve models:` One can opt to deploy any of the existing reserve models, such as our APR, FPR if you are  a token team willing to provide liquidity for the token, or are a professional market making team offering liquidity on kyber. More details [here](Reserves-automatedpricereserve.md).
+
+2. [`Customizing Existing Reserve Models:`] (reserves-Customize.md) If there's a specific requirement which can be tailored or can be added as an extension to the reserve models, teams can also decide to customize the existing reserve types to suit their needs.
+
+3. [`Creating New Reserve Models:`] (reserves-create.md) If it's a completely new use case, developers will have to design a reserve model from scratch. There is no restriction on the type of reserves that can be developed, as long as the reserve implements the kyberReserve interface. 
 
 - [Learn more about the existing reserve types and how they differ from each other](reserves-types.md)
 - [See the requirements for creating a custom reserve type](reserves-requirements.md)

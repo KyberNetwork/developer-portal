@@ -1,27 +1,23 @@
 ---
 id: Reserves-Types
-title: Reserve Types
+title: Existing Reserve Types
 ---
 [//]: # (tagline)
-## Introduction
-There are currently 2 different reserve types that liquidity providers can choose for deployment and operate, namely, the Fed Price Reserve and the Automated Price Reserve. The Orderbook Reserve is temporarily disabled as we will update it to be compatible with the Katalyst upgrade.
+## Overview
 
-There are also other reserve types that serve various functions to the ecosystem.
+There are currently 2 different reserve types that liquidity providers can choose for deployment and operate, namely, the Fed Price Reserve and the Automated Price Reserve. There are also other reserve types that serve various functions to the ecosystem. 
+
+*The Orderbook Reserve is temporarily disabled as we will update it to be compatible with the Katalyst upgrade.*
 
 ## Fed Price Reserve (FPR)
-A Fed Price Reserve utilises an off-chain component (e.g. a script running on a server) that pulls price
-feeds and calculates conversion rates. These rates are sent via on-chain transactions and stored in a pricing smart contract. A separate smart contract storing reserve funds will refer to the pricing smart contract for the expected token conversion rate.
-
-It is complex to setup and maintain, and requires Ether for making the periodic price updates on-chain.
+A Fed Price Reserve mainly utilized by professional market makers willing to provide liquidity on kyber for a wide number of tokens. Our  FPR’s are highly capital efficient, provide control over pricing strategies and risk exposure, and a range of safety mechanisms. It utilises an off-chain component (e.g. a script running on a server) that pulls price feeds and calculates conversion rates requires making periodic price updates on-chain.  
 
 ## Automated Price Reserve (APR)
-This reserve type relies on a predefined algorithm written in a smart contract to automatically provide rates for the token being served liquidity for. The initial rate is set based on the initial liquidity provided, and only adjusts after each executed trade.
+An APR helps token teams to provide liquidity for dedicated tokens.This reserve type relies on a predefined algorithm written in a smart contract to automatically provide rates for the token. The initial rate is set based on the initial inventory in the reserve, and only adjusts after each executed trade. 
 
-The ease of maintenance and low development cost of this reserve comes at the expense of high financial liquidity requirements. You can read more about the APR in our [blog post](https://blog.kyber.network/introducing-the-automated-price-reserve-77d41ed1aa70).
+This type of reserve is easy to maintain and involves low deployment cost, however will require high initial inventory lock up.You can read more about the APR in our [blog post](https://blog.kyber.network/introducing-the-automated-price-reserve-77d41ed1aa70).
 
 ## Orderbook Reserve (OR)
-As its name suggests, this fully on-chain reserve type allows anyone to provide liquidity to the ecosystem for any token of their choice through the placement of limit orders. It is also the first reserve type that can be listed permissionlessly, where no action is required from Kyber (such as the network administrator or operators).
-
 Deployment and operation of this reserve type has been temporarily halted, as we update it to be compatible with the Katalyst upgrade.
 
 ## Bridge Reserves
