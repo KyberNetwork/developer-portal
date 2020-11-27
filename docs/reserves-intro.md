@@ -30,9 +30,9 @@ There are currently 3 ways you can deploy reserves :
 
 1. `Deploy existing reserve models:` One can opt to deploy any of the existing reserve models, such as our APR, FPR if you are  a token team willing to provide liquidity for the token, or are a professional market making team offering liquidity on kyber. More details [here](Reserves-automatedpricereserve.md).
 
-2. [`Customizing Existing Reserve Models:`] (reserves-Customize.md) If there's a specific requirement which can be tailored or can be added as an extension to the reserve models, teams can also decide to customize the existing reserve types to suit their needs.
+2. `Customizing Existing Reserve Models:` If there's a specific requirement which can be tailored or can be added as an extension to the reserve models, teams can also decide to customize the existing reserve types to suit their needs. More details [here](reserves-Customize.md)
 
-3. [`Creating New Reserve Models:`] (reserves-create.md) If it's a completely new use case, developers will have to design a reserve model from scratch. There is no restriction on the type of reserves that can be developed, as long as the reserve implements the kyberReserve interface. 
+3. `Creating New Reserve Models:` If it's a completely new use case, developers will have to design a reserve model from scratch. There is no restriction on the type of reserves that can be developed, as long as the reserve implements the kyberReserve interface. Details [here] (reserves-create.md)
 
 - [Learn more about the existing reserve types and how they differ from each other](reserves-types.md)
 - [See the requirements for creating a custom reserve type](reserves-requirements.md)
