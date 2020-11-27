@@ -30,14 +30,14 @@ We believe there are an infinite use cases, some potential ideas could be:
 
 This section below lists some guidelines on creating a new reserve model.
 
-# Implement the Reserve Interface
+**Implement the Reserve Interface**
 
 The reserve interface provides a generic template of the contract functions one should implement in their smart contract. This interface may be tweaked depending on the needs and features of each blockchain. All existing reserve types, like the ones covered in the developer portal (e.g. Fed Price Reserve), as well as integrated reserves (e.g. Bridge Reserve), implement this interface.
 
 All Kyber reserves that enable liquidity provision have to use KyberReserveInterface. The example below, a snippet of kyber [WETH Reserve](https://github.com/KyberNetwork/kyber_reserves_sc/blob/master/contracts/sol4/weth/KyberWethReserve.sol), illustrates how to implement the 2 functions of the reserve interface.
 
 
-# Implement trade function
+**Implement trade function**
 
 ```js
   function getConversionRate(ERC20 src, ERC20 dest, uint srcQty, uint blockNumber) public view returns(uint) {
@@ -52,7 +52,7 @@ All Kyber reserves that enable liquidity provision have to use KyberReserveInter
         return 1 * PRECISION;
     }
 ```
-# Implement getConversionRates function
+**Implement getConversionRates function**
 
 ```js
 function doTrade(
@@ -98,6 +98,6 @@ function doTrade(
 ```
 You can refer to the reserve contract for detailed code [here] (https://github.com/KyberNetwork/kyber_reserves_sc/blob/master/contracts/sol4/weth/KyberWethReserve.sol).
 
-## Deploying the new reserve model
+**Deploying the new reserve model**
 
 You may refer to the [guide here](reserves-requirements.md) for how to deploy a new reserve model.
