@@ -1,6 +1,6 @@
 ---
 id: Reserves-Intro
-title: Overiew
+title: Overview
 ---
 [//]: # (tagline)
 ### Overview Of Kyber Reserve System 

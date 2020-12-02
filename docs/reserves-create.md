@@ -36,6 +36,8 @@ The reserve interface provides a generic template of the contract functions one 
 All Kyber reserves that enable liquidity provision have to use KyberReserveInterface. The example below, a snippet of kyber [WETH Reserve](https://github.com/KyberNetwork/kyber_reserves_sc/blob/master/contracts/sol4/weth/KyberWethReserve.sol), illustrates how to implement the 2 functions of the reserve interface.
 
 
+
+
 **Implement getConversionRate function**
 
 ```js
@@ -50,6 +52,7 @@ All Kyber reserves that enable liquidity provision have to use KyberReserveInter
         return 1 * PRECISION;
     }
 ```
+
 **Implement doTrade function**
 
 ```js
@@ -94,7 +97,7 @@ function doTrade(
     }
 }
 ```
-You can refer to the reserve contract for detailed code [here] (https://github.com/KyberNetwork/kyber_reserves_sc/blob/master/contracts/sol4/weth/KyberWethReserve.sol).
+You can refer to the reserve contract for detailed code [here](https://github.com/KyberNetwork/kyber_reserves_sc/blob/master/contracts/sol4/weth/KyberWethReserve.sol) .
 
 **Deploying the new reserve model**
 
