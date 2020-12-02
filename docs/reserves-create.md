@@ -96,7 +96,7 @@ function doTrade(
     }
 }
 ```
-You can refer to the reserve contract for detailed code [here] (https://github.com/KyberNetwork/kyber_reserves_sc/blob/master/contracts/sol4/weth/KyberWethReserve.sol).
+You can refer to the reserve contract for detailed code [here](https://github.com/KyberNetwork/kyber_reserves_sc/blob/master/contracts/sol4/weth/KyberWethReserve.sol) .
 
 **Deploying the new reserve model**
 
