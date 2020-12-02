@@ -6,13 +6,13 @@ title: Customize Existing Reserve Models
 
 ## Customising or Extending Existing Reserve Models
 
-This section includes discussion on customizing and extending reserve models to suit specific requirements. Customization will largely be to use the contracts already developed by kyber but change or override some key functions. By changing one or more of the functions in this contract, the developer can leverage much of the infrastructure already built up, however insert their own logic. 
+This section includes discussion on customizing and extending reserve models to suit specific requirements. Customization will largely be to use the contracts already developed by Kyber but change or override some key functions. By changing one or more of the functions in this contract, the developer can leverage much of the infrastructure already built up, however insert their own logic. 
 
 Extensions can be done with custom smart contracts, allowing for more flexibility and capital efficiency. This will not entail any changes to the existing smart contracts, but involves inserting optional steps into the trade flow. 
 
 **Sample Guide To Customizing The APR/FPR**
 
-In Kyber’s FPR & APR architecture there are 2 main smart contracts to take note of: Kyber Reserve Contract and Conversion Rates Contract. When trade is requested the protocol will perform a RFQ, will scan the entire network to find the reserve with the best price. The reserve smart contract will then interact with conversionRates contract to fetch the prices. 
+In Kyber’s FPR & APR architecture there are 2 main smart contracts to take note of: Kyber Reserve Contract and Conversion Rates Contract. When trade is requested, the protocol scans the entire network to find the reserve with the best price. The reserve smart contract will then interact with conversionRates contract to fetch the prices. 
 
 The Reserve contract handles inventory, enabling / disabling of trades, validation checks, whereas conversionRates or the Pricing contract handles the rate calculation based on certain parameters given by the reserve contract. One can create new models by tweaking either or both of these contracts.
 
@@ -30,7 +30,7 @@ uint qty)
 }
 ```
 
-The other way would be to tweak the Reserve contract and re construct  the trade , `getConversionRate` function or both
+Another way would be to tweak the Reserve contract and re-construct the `trade`, `getConversionRate` function or both.
 ```js
 function trade(
         IERC20Ext srcToken,

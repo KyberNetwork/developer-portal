@@ -115,7 +115,7 @@ const PRIVATE_KEY = "PRIVATE_KEY"; // Eg. 0x40ddbce3c7df9ab8d507d6b4af3861d22471
 const USER_WALLET = new ethers.Wallet(PRIVATE_KEY, provider);
 ```
 
-#### Platofrm Wallet and Fees
+#### Platform Wallet and Fees
 
 Find out more about platform fees [here](integrations-platformfees.md).
 
