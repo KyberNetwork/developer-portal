@@ -49,7 +49,7 @@ INFURA_API_KEY=********************************
 PRIVATE_KEY=0x****************************************************************
 ```
 
-You can also specify other node provider API keys as well (eg. Alchemy, Metamask). Note that this means editing the `.buidler.config.js` file too.
+You can also specify other node provider API keys as well (eg. Alchemy, Metamask). Note that this means editing the `.hardhat.config.js` file too.
 
 Navigate to the `./deployment/apr` directory and open `apr_input.json`, where you will the settings you have to define.
 
@@ -82,10 +82,10 @@ The contracts to be deployed are the reserve and pricing contracts:
 Run the command
 
 ```
-yarn buidler deployApr --network ropsten --network-address 0x920B322D4B8BAB34fb6233646F5c87F87e79952b
+yarn hardhat deployApr --network ropsten --network-address 0x920B322D4B8BAB34fb6233646F5c87F87e79952b
 ```
 
-For more information on the arguments, run `yarn buidler deployApr help`.
+For more information on the arguments, run `yarn hardhat deployApr help`.
 
 ### `Step 3: Test Deposits And Withdrawals`
 
@@ -161,7 +161,7 @@ We explain the JSON fields in the table below:
 #### Testnets
 
 ```
-yarn buidler setLiquidityParams --network ropsten --a false
+yarn hardhat setLiquidityParams --network ropsten --a false
 ```
 
 The `-a` flag disables the price fetch behaviour.
@@ -169,13 +169,13 @@ The `-a` flag disables the price fetch behaviour.
 #### Mainnet
 
 ```
-yarn buidler setLiquidityParams --network mainnet --r "0xcF76b605484Cd4bD46237c05B7De98d538ff44AE"
+yarn hardhat setLiquidityParams --network mainnet --r "0xcF76b605484Cd4bD46237c05B7De98d538ff44AE"
 ```
 
 The `-r` flag takes the reserve's address from the CLI instead of `liquidity_settings.json`.
 
 ```
-yarn buidler setLiquidityParams --network mainnet
+yarn hardhat setLiquidityParams --network mainnet
 ```
 
 ### `Step 5: Get your reserve authorized and running`
@@ -196,7 +196,7 @@ This section walks you through the necessary steps involved in case you want to 
 
 1. DISABLE trading in the reserve : The alerter can do this by calling `disableTrade()` function in the reserve contract.
 2. Rebalance the reserve : After and only when the reserve is disabled, the reserve manager can deposit or withdraw Ether/Tokens to the reserve.
-3. Recompute and set liquidity params. Run either `yarn buidler setLiquidityParams --network mainnet` or `yarn buidler setLiquidityParams --network mainnet --r <RESERVE_ADDRESS>`.
+3. Recompute and set liquidity params. Run either `yarn hardhat setLiquidityParams --network mainnet` or `yarn hardhat setLiquidityParams --network mainnet --r <RESERVE_ADDRESS>`.
 4. Enabling trading back : The admin can enable trades back by invoking the `enableTrade()` function in the reserve contract.
 
 ## Appendix
