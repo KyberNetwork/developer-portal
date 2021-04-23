@@ -5,7 +5,7 @@ title: Automated Price Reserve
 [//]: # (tagline)
 ## Objective
 
-In this guide, we will learn how to configure and deploy an Automated Price Reserve.
+In this guide, we will learn how to configure and deploy an Automated Price Reserve. Please note that the APR is centrally managed by the team setting it up and does not allow permissionless contribution. Should you wish to deploy or contribute liquidity to a permissionless AMM, kindly visit our [DMM guide](reserves-dmm.md).
 
 ## Introduction
 

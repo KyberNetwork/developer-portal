@@ -51,6 +51,7 @@
     ],
     "Deployment Gudies": [
       "Reserves-FedPriceReserve",
+      "Reserves-DynamicMarketMaker",
       "Reserves-AutomatedPriceReserve",
       "Reserves-OrderbookReserve",
       "Reserves-Ganache"
