@@ -1,8 +1,8 @@
 {
   "Home": {
     "Getting Started": [
-      "Katalyst-Intro",
       "Start",
+      "Katalyst-Intro",
       "Home-DesignPrinciples",
       "Home-ProtocolOverview",
       "Home-Architecture",
