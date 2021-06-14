@@ -162,6 +162,7 @@ worstRate - 97% rate of the conversion rate, allowaing a 3% buffer for use in mi
 Get the token conversion rate after processing the hint and includes the platform fee.
 ___
 function __getExpectedRateAfterFee__(IERC20 src, IERC20 dest, uint256 srcQty, uint256 platformFeeBps, bytes hint) external view override returns (uint256 expectedRate)
+| Parameter | Type  | Description |
 | --------- |:-----:|:-----------:|
 | `src`     | IERC20 | source ERC20 token contract address      |
 | `dest`    | IERC20 | destination ERC20 token contract address |

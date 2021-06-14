@@ -79,7 +79,7 @@ Get the conversion rate of 1 WBTC -> KNC, with a platform fee of 0.25%.
 uint256 expectedRate = kyberNetworkProxyContract.getExpectedRateAfterFee(
     0x2260fac5e5542a773aa44fbcfedf7c193bc2c599, // WBTC token address
     0xdd974d5c2e2928dea5f71b9825b8b646686bd200, // KNC token address
-    10000000, // 1 WBTC
+    100000000, // 1 WBTC
     25, // 0.25%
     '' // empty hint
     );
@@ -121,10 +121,10 @@ uint256 actualDestAmount = kyberNetworkProxyContract.tradeWithHintAndFee{value: 
     0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, // ETH address
     1000000000000000000, // 1 ETH
     0xdd974d5c2e2928dea5f71b9825b8b646686bd200, // KNC address
-    0x56178a0d5f301baf6cf3e1cd53d9863437345bf9, // destAddress
+    0xbeE6fFAFDE4A9cB252a5eA357a53f558dc8A6876, // destAddress
     9999999999999999999999999999999, // maxDestAmount: arbitarily large to swap full amount
     expectedRate, // minConversionRate: value from getExpectedRate call
-    0x56178a0d5f301baf6cf3e1cd53d9863437345bf9, // platform wallet
+    0xbeE6fFAFDE4A9cB252a5eA357a53f558dc8A6876, // platform wallet
     25, // 0.25%
     '' // empty hint
     );
