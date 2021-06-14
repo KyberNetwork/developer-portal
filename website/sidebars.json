@@ -51,6 +51,7 @@
     ],
     "Deployment Gudies": [
       "Reserves-FedPriceReserve",
+      "Reserves-DynamicMarketMaker",
       "Reserves-AutomatedPriceReserve",
       "Reserves-OrderbookReserve",
       "Reserves-Ganache"
@@ -97,6 +98,15 @@
     "Getting Started": [
       "API_ABI-Intro"
     ],
+    "RESTful API": [
+      "API_ABI-RESTfulAPIOverview",
+      "API_ABI-RESTfulAPI"
+    ],
+    "Widgets": [
+      "API_ABI-WidgetsOverview",
+      "API_ABI-KyberWidget",
+      "API_ABI-SignInWidget"
+    ],
     "Core Smart Contracts": [
       "API_ABI-IKyberNetworkProxy",
       "API_ABI-KyberNetworkProxy",
@@ -124,17 +134,8 @@
       "API_ABI-IEpochUtils",
       "API_ABI-EpochUtils"
     ],
-    "RESTful API": [
-      "API_ABI-RESTfulAPIOverview",
-      "API_ABI-RESTfulAPI"
-    ],
     "Contract ABIs": [
       "API_ABI-ABI"
-    ],
-    "Widgets": [
-      "API_ABI-WidgetsOverview",
-      "API_ABI-KyberWidget",
-      "API_ABI-SignInWidget"
     ],
     "Plugins": [
       "API_ABI-PluginsOverview",

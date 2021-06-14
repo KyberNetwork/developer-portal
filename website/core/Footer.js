@@ -47,6 +47,7 @@ class Footer extends React.Component {
               </div>
               <div className="kyber-link">
                 <span className="kyber-link__text semi-b">Reserves</span>
+                <a className="kyber-link__text" href={this.docUrl('Reserves-DynamicMarketMaker', '')}>DMM</a>
                 <a className="kyber-link__text" href={this.docUrl('Reserves-FedPriceReserve', '')}>Fed Price</a>
                 <a className="kyber-link__text" href={this.docUrl('Reserves-AutomatedPriceReserve', '')}>Automated Price</a>
               </div>
