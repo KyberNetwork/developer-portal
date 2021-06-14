@@ -1,5 +1,5 @@
 ---
-id: Start
+id: Home-Intro
 title: Kyber 3.0
 ---
 [//]: # (tagline)
