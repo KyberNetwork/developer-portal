@@ -6,7 +6,7 @@ title: IKyberHint
 # interface IKyberHint
 imports [IKyberReserve](api_abi-ikyberreserve.md)
 
-*Source*: [IKyberHint.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberHint.sol)
+*Source*: [IKyberHint.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/IKyberHint.sol)
 ___
 
 ## INDEX

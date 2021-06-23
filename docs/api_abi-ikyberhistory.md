@@ -5,7 +5,7 @@ title: IKyberHistory
 [//]: # (tagline)
 # interface IKyberHistory
 
-*Source*: [IKyberHistory.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberHistory.sol)
+*Source*: [IKyberHistory.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/IKyberHistory.sol)
 ___
 
 ## INDEX

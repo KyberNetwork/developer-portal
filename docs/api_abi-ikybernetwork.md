@@ -6,7 +6,7 @@ title: IKyberNetwork
 # interface IKyberNetwork
 imports IERC20
 
-*Source*: [IKyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberNetwork.sol)
+*Source*: [IKyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/IKyberNetwork.sol)
 ___
 
 ## INDEX

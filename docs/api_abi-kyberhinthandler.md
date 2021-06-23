@@ -7,7 +7,7 @@ title: KyberHintHandler
 is [IKyberHint](api_abi-ikyberhint.md), Utils5\
 imports Utils5, [IKyberHint](api_abi-ikyberhint.md)
 
-*Source*: [KyberHintHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberHintHandler.sol)
+*Source*: [KyberHintHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/KyberHintHandler.sol)
 ___
 
 ## INDEX

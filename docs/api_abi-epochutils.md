@@ -7,7 +7,7 @@ title: EpochUtils
 is [IEpochUtils](api_abi-iepochutils.md)
 imports SafeMath, [IEpochUtils](api_abi-iepochutils.md)
 
-*Source*: [EpochUtils.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/EpochUtils.sol)
+*Source*: [EpochUtils.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/Dao/EpochUtils.sol)
 ___
 
 ## INDEX

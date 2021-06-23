@@ -8,7 +8,7 @@ title: ConversionRates
 is [ConversionRatesInterface](api_abi-conversionratesinterface.md), VolumeImbalanceRecorder, Utils\
 imports ERC20Interface, VolumeImbalanceRecorder, [ConversionRatesInterface](api_abi-conversionratesinterface.md), Utils
 
-_Source_: [ConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/reserves/fprConversionRate/ConversionRates.sol)
+_Source_: [ConversionRates.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol4/reserves/fprConversionRate/ConversionRates.sol)
 
 The ConversionRates contract's role is to allow reserve operators to make simple on-chain adjustment to the prices and is an optimized cheap (w.r.t gas consumption) interface to enter rate feeds.
 

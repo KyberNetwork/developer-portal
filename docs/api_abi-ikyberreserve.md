@@ -6,7 +6,7 @@ title: IKyberReserve
 # interface IKyberReserve
 imports IERC20
 
-*Source*: [IKyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberReserve.sol)
+*Source*: [IKyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/IKyberReserve.sol)
 ___
 
 ## INDEX

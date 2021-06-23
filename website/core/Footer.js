@@ -19,7 +19,7 @@ class Footer extends React.Component {
         <div className="wrapper">
           <div className="footer-middle">
             <div className="kyber-icon">
-              <a href="/">
+              <a href="https://kyber.network/">
                 {this.props.config.footerIcon && (
                   <img
                     src={this.props.config.baseUrl + this.props.config.footerIcon}

@@ -1,13 +1,14 @@
 ---
 id: Home-Intro
-title: Kyber 3.0
+
+title: Kyber 3.0 - What's New
 ---
 [//]: # (tagline)
 
 ## What's New 
 
 Kyber is currently undergoing its Kyber 3.0 upgrade. Kyber 3.0 will transition Kyber from a single protocol into a liquidity hub of purpose-driven protocols that are catered to different DeFi use cases. This is the biggest change to Kyber’s architecture and token model since its inception and will be implemented over 2 phases — Katana and Kaizen.
-![kyber 3.0](/uploads/kyber3.png "Kyber 3.0")
+![kyber 3.0](/uploads/kyber3.jpg "Kyber 3.0")
 
 As the first major addition to the new network, we have launched a brand new liquidity protocol called the Kyber DMM — DeFi’s first automated Dynamic Market Maker. 
 

@@ -6,7 +6,7 @@ title: IKyberNetworkProxy
 # interface IKyberNetworkProxy
 imports IERC20
 
-*Source*: [IKyberNetworkProxy.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberNetworkProxy.sol)
+*Source*: [IKyberNetworkProxy.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/IKyberNetworkProxy.sol)
 ___
 
 ## INDEX

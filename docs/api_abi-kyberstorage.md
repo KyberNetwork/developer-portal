@@ -7,7 +7,7 @@ title: KyberStorage
 is [IKyberStorage](api_abi-ikyberstorage.md), PermissionGroupsNoModifiers, Utils5\
 imports [IKyberHistory](api_abi-ikyberhistory.md), [IKyberStorage](api_abi-ikyberstorage.md), [IKyberNetwork](api_abi-ikybernetwork.md), PermissionGroupsNoModifiers, Utils5
 
-*Source*: [KyberStorage.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberStorage.sol)
+*Source*: [KyberStorage.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/KyberStorage.sol)
 ___
 
 ## INDEX

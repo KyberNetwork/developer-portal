@@ -7,7 +7,7 @@ title: KyberDao
 is [IKyberDao](api_abi-ikyberdao.md), [EpochUtils](api_abi-epochutils.md), ReentrancyGuard, Utils5, DaoOperator\
 imports [EpochUtils](api_abi-epochutils.md), DaoOperator, [KyberStaking](api_abi-kyberstaking.md), IERC20, [IKyberDao](api_abi-ikyberdao.md), ReentrancyGuard, Utils5
 
-*Source*: [KyberDao.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberDao.sol)
+*Source*: [KyberDao.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/Dao/KyberDao.sol)
 ___
 
 ## INDEX

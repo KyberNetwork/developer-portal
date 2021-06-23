@@ -8,7 +8,7 @@ title: KyberFeeHandler
 is [IKyberFeeHandler](api_abi-ikyberfeehandler.md), Utils5, DaoOperator, ReentrancyGuard\
 imports Utils5, ReentrantcyGuard, [IKyberDao](api_abi-ikyberdao.md), [IKyberFeeHandler](api_abi-ikyberfeehandler.md), [IKyberNetworkProxy](api_abi-ikybernetworkproxy.md), [ISimpleKyberProxy](api_abi-isimplekyberproxy.md), IBurnableToken, ISanityRate, SafeMath, DaoOperator
 
-*Source*: [KyberFeeHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberFeeHandler.sol)
+*Source*: [KyberFeeHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/Dao/KyberFeeHandler.sol)
 ___
 
 ## INDEX

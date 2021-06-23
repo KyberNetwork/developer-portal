@@ -5,7 +5,7 @@ title: PermissionGroups
 [//]: # (tagline)
 # contract PermissionGroups
 
-*Source*: [PermissionGroups.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/PermissionGroups.sol)
+*Source*: [PermissionGroups.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol4/PermissionGroups.sol)
 
 The PermissionGroups contract's maintains function modifiers that makes sure permission conditions are met before executing any proceeding body of code.
 ___
