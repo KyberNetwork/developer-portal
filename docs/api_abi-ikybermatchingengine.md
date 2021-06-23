@@ -6,7 +6,7 @@ title: IKyberMatchingEngine
 # interface IKyberMatchingEngine
 is [IKyberReserve](api_abi-ikyberreserve.md), [IKyberNetwork](api_abi-ikybernetwork.md), [IKyberStorage](api_abi-ikyberstorage.md)\
 
-*Source*: [IKyberMatchingEngine.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberMatchingEngine.sol)
+*Source*: [IKyberMatchingEngine.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/IKyberMatchingEngine.sol)
 ___
 
 ## INDEX

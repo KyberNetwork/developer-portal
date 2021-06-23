@@ -7,7 +7,7 @@ title: KyberStaking
 is IERC20, ReentrancyGuard, [IKyberStaking](api_abi-ikyberstaking.md), [IKyberDao](api_abi-ikyberdao.md), [EpochUtils](api_abi-epochutils.md)\
 imports [IKyberStaking](api_abi-ikyberstaking.md), [EpochUtils](api_abi-epochutils.md), ReentrancyGuard
 
-*Source*: [KyberStaking.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberStaking.sol)
+*Source*: [KyberStaking.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/Dao/KyberStaking.sol)
 ___
 
 ## INDEX

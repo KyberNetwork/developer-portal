@@ -6,7 +6,7 @@ title: IKyberStorage
 # interface IKyberStorage
 imports [IKyberNetworkProxy](api_abi-ikybernetworkproxy.md), [IKyberReserve](api_abi-ikyberreserve.md)
 
-*Source*: [IKyberStorage.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberStorage.sol)
+*Source*: [IKyberStorage.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/IKyberStorage.sol)
 ___
 
 ## INDEX

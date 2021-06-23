@@ -5,7 +5,7 @@ title: ConversionRatesInterface
 [//]: # (tagline)
 # interface ConversionRatesInterface
 
-*Source*: [ConversionRatesInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ConversionRatesInterface.sol)
+*Source*: [ConversionRatesInterface.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol4/ConversionRatesInterface.sol)
 ___
 
 ## INDEX

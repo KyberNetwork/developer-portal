@@ -5,7 +5,7 @@ title: IKyberFeeHandler
 [//]: # (tagline)
 # interface IKyberFeeHandler
 
-*Source*: [IKyberFeeHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberFeeHandler.sol)
+*Source*: [IKyberFeeHandler.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/IKyberFeeHandler.sol)
 ___
 
 ## INDEX

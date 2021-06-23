@@ -6,7 +6,7 @@ title: ISimpleKyberProxy
 # interface ISimpleKyberProxy
 imports IERC20
 
-*Source*: [ISimpleKyberProxy.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/ISimpleKyberProxy.sol)
+*Source*: [ISimpleKyberProxy.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/ISimpleKyberProxy.sol)
 ___
 
 ## INDEX

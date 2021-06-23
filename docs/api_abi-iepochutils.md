@@ -5,7 +5,7 @@ title: IEpochUtils
 [//]: # (tagline)
 # interface IEpochUtils
 
-*Source*: [IEpochUtils.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IEpochUtils.sol)
+*Source*: [IEpochUtils.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/Dao/IEpochUtils.sol)
 ___
 
 ## INDEX

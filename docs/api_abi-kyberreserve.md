@@ -7,7 +7,7 @@ title: KyberReserve
 is [IKyberReserve](api_abi-ikyberreserve.md), [Withdrawable](api_abi-withdrawable.md), Utils\
 imports ERC20Interface, Utils, [Withdrawable](api_abi-withdrawable.md),  [ConversionRatesInterface](api_abi-conversionratesinterface.md), [SanityRatesInterface](api_abi-sanityratesinterface.md), [IKyberReserve](api_abi-ikyberreserve.md)
 
-*Source*: [KyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/reserves/KyberReserve.sol)
+*Source*: [KyberReserve.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol4/reserves/KyberReserve.sol)
 
 The KyberReserve contract's role is to execute exchanges and provide rates for Kyber Network. The contract has no direct interaction with the end users (the only interaction with them is via the network platform). Its main interaction is with the reserve operator who manages the token inventory and feeds exchange rates every few minutes.
 ___

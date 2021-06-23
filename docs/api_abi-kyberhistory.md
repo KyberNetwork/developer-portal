@@ -7,7 +7,7 @@ title: KyberHistory
 is [IKyberHistory](api_abi-ikyberhistory.md), PermissionGroupsNoModifiers\
 imports [IKyberHistory](api_abi-ikyberhistory.md), PermissionGroupsNoModifiers
 
-*Source*: [KyberHistory.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberHistory.sol)
+*Source*: [KyberHistory.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/KyberHistory.sol)
 ___
 
 ## INDEX

@@ -7,7 +7,7 @@ title: KyberNetwork
 is WithdrawableNoModifiers, Utils5, [IKyberNetwork](api_abi-ikybernetwork.md), ReentrancyGuard\
 imports WithdrawableNoModifiers, Utils5, ReentrancyGuard, SafeERC20, [IKyberNetwork](api_abi-ikybernetwork.md), [IKyberReserve](api_abi-ikyberreserve.md), [IKyberFeeHandler](api_abi-ikyberfeehandler.md), [IKyberDao](api_abi-ikyberdao.md), [IKyberMatchingEngine](api_abi-ikybermatchingengine.md), [IKyberStorage](api_abi-ikyberstorage.md), IGasHelper
 
-*Source*: [KyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetwork.sol)
+*Source*: [KyberNetwork.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/KyberNetwork.sol)
 ___
 
 ## INDEX

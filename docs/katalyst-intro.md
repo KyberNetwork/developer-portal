@@ -1,11 +1,11 @@
 ---
 id: Katalyst-Intro
-title: Katalyst - What's New
+title: Katalyst
 ---
 [//]: # (tagline)
 ## What's New with Katalyst?
 
-We give a brief summary on the technical changes regarding the Katalyst upgrade below.
+We give a brief summary on the technical changes regarding the Katalyst upgrade that was completed in 2020 below.
 
 ## Backwards Compatibility
 

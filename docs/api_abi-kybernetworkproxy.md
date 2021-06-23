@@ -7,7 +7,7 @@ title: KyberNetworkProxy
 is [IKyberNetworkProxy](api_abi-ikybernetworkproxy.md), [ISimpleKyberProxy](api_abi-isimplekyberproxy.md), WithdrawableNoModifiers, Utils5\
 imports WithdrawableNoModifiers, Utils5, SafeERC20, [IKyberNetwork](api_abi-ikybernetwork.md), [IKyberNetworkProxy](api_abi-ikybernetworkproxy.md), [ISimpleKyberProxy](api_abi-isimplekyberproxy.md), [IKyberHint](api_abi-ikyberhint.md)
 
-*Source*: [KyberNetworkProxy.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/KyberNetworkProxy.sol)
+*Source*: [KyberNetworkProxy.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/KyberNetworkProxy.sol)
 ___
 
 ## INDEX

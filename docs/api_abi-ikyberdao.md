@@ -7,7 +7,7 @@ title: IKyberDao
 is [IEpochUtils](api_abi-iepochutils.md)
 imports [IEpochUtils](api_abi-iepochutils.md)
 
-*Source*: [IKyberDao.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/IKyberDao.sol)
+*Source*: [IKyberDao.sol](https://github.com/KyberNetwork/smart-contracts/blob/master/contracts/sol6/IKyberDao.sol)
 ___
 
 ## INDEX
