@@ -1,5 +1,6 @@
 ---
 id: Home-Intro
+
 title: Kyber 3.0 - What's New
 ---
 [//]: # (tagline)
