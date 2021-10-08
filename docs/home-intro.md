@@ -16,9 +16,9 @@ As the first major addition to the new network, we have launched a brand new liq
 
 Unlike the static nature of typical AMMs and other liquidity platforms in the space, the Kyber DMM protocol is designed to react to token pairs and market conditions to optimise fees for liquidity providers and rates for takers. This is achieved via two simple yet novel mechanisms: Amplified Liquidity Pools (via Programmable Price Curves) based on the nature of the token pairs and Dynamic Fees based on market conditions.
 
-1. `Amplified Liquidity Pools` Less tokens required for high liquidity Kyber DMM’s Programmable Price Curve enables liquidity pool creators to set a suitable price curve and create amplified pools in advance, achieving much higher capital efficiency for providers and better slippage for users compared to AMMs.
+1. `Amplified Liquidity Pools` Less tokens required for high liquidity. Kyber DMM’s Programmable Price Curve enables liquidity pool creators to set a suitable price curve and create amplified pools in advance, achieving much higher capital efficiency for providers and better slippage for users compared to AMMs.
 
-2. `Dynamic Fees` Higher earnings potential, reducing the impact of IL Trading fees are adjusted dynamically according to on-chain market conditions. In a volatile market (higher than usual volume), fees automatically increase to an optimal level, reducing the impact of impermanent loss. In periods of low volatility, fees decrease to encourage more trading and total fees collected. ![dmm](/uploads/dmm.png 'DMM')
+2. `Dynamic Fees` Higher earnings potential, reducing the impact of IL. Trading fees are adjusted dynamically according to on-chain market conditions. In a volatile market (higher than usual volume), fees automatically increase to an optimal level, reducing the impact of impermanent loss. In periods of low volatility, fees decrease to encourage more trading and total fees collected. ![dmm](/uploads/dmm.png 'DMM')
 
 Kyber DMM allows fully permissionless liquidity contribution from anyone and access to this liquidity by any taker (e.g. Dapp, aggregators, end users).
 
