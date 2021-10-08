@@ -2,11 +2,13 @@
 id: Integrations-GettingHelp
 title: Getting Help
 ---
-[//]: # (tagline)
+
+[//]: # 'Reach us via email, Discord, or Telegram'
+
 ## Email
 
 You can reach us by our email at support@kyber.network
 
-## Telegram
+## Discord and Telegram
 
-You can also [join our developer telegram group!](https://t.me/kyberdeveloper)
+Join the DMM and Kyber developer community on [Discord](https://discord.com/invite/NB3vc8J9uv) and [Telegram](https://t.me/KyberDeveloper).
